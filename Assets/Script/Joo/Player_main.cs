@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player_main : MonoBehaviour
 {
+    PlayerInventory inven;
+    PlayerSkill Skill;
+
+    float fatigue; // ÇÇ·Îµµ
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        inven.MaxWeightChange_forStrength(Skill.Fitness_Level.Get_P_Level());
     }
 
     float Playermovement_speed = 1.0f;
