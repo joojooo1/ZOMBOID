@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class PlayerSkill : MonoBehaviour
 {
     // 신체 능력
-    protected float Min_Fitness = 0f;  // 최소 체력
-    protected float Max_Fitness = 10f;  // 최대 체력
-    protected float Min_Strength = 0f;  // 최소 근력
-    protected float Max_Strength = 10f;  // 최대 근력
+    public PlayerPassiveSkill_Level Fitness_Level;  // 체력
+    public PlayerPassiveSkill_Level Strength_Level;  // 근력
 
     // 생존 능력
     // float Fishing = 0f;  // 낚시
@@ -16,50 +15,60 @@ public class PlayerSkill : MonoBehaviour
     // float Foraging = 0f;  // 채집
 
     // 운동 능력
-    protected float Min_Sprinting = 0f;  // 달리기
-    protected float Max_Sprinting = 10f;  
-    protected float Min_Lightfooted = 0f;  // 민첩함
-    protected float Max_Lightfooted = 10f;  
-    protected float Min_Nimble = 0f;  // 날렵함
-    protected float Max_Nimble = 10f; 
-    protected float Min_Sneaking = 0f;  // 은밀함
-    protected float Max_Sneaking = 10f;  
+    public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기
+    public PlayerGeneralSkill_Level Lightfooted_Level;  // 조용한 발걸음 (플레이어의 발소리가 얼마나 멀리서 들리는지)
+    public PlayerGeneralSkill_Level Nimble_Level;  // 전투시 발걸음
+    public PlayerGeneralSkill_Level Sneaking_Level;  // 은밀함 (은밀히 걸을때 발소리 크기&좀비가 발견할 확률)
 
     // 전투 능력
-    protected float Min_Axe = 0f;  // 도끼
-    protected float Max_Axe = 10f;
-    protected float Min_LongBlunt = 0f;  // 긴 둔기
-    protected float Max_LongBlunt = 10f;
-    protected float Min_ShortBlunt = 0f;  // 짧은 둔기
-    protected float Max_ShortBlunt = 10f;
-    protected float Min_LongBlade = 0f;  // 장검
-    protected float Max_LongBlade = 10f;
-    protected float Min_ShortBlade = 0f;  // 단검
-    protected float Max_ShortBlade = 10f;
-    protected float Min_Spear = 0f;  // 창
-    protected float Max_Spear = 10f;
-    protected float Min_Maintenance = 0f;  // 물건관리
-    protected float Max_Maintenance = 10f;
+    public PlayerGeneralSkill_Level Axe_Level;  // 도끼
+    public PlayerGeneralSkill_Level LongBlunt_Level;  // 긴 둔기
+    public PlayerGeneralSkill_Level ShortBlunt_Level;  // 짧은 둔기
+    public PlayerGeneralSkill_Level LongBlade_Level;  // 장검
+    public PlayerGeneralSkill_Level ShortBlade_Level;  // 단검
+    public PlayerGeneralSkill_Level Spear_Level;  // 창
+    public PlayerGeneralSkill_Level Maintenance_Level;  // 물건관리
 
     // 제작 능력
-    protected float Min_Carpentry = 0f;  // 목공
-    protected float Max_Carpentry = 10f;
-    protected float Min_Cooking = 0f;  // 요리
-    protected float Max_Cooking = 10f;
-    protected float Min_Farming = 0f;  // 농사
-    protected float Max_Farming = 10f;
-    protected float Min_FirstAid = 0f;  // 의료
-    protected float Max_FirstAid = 10f;
-    protected float Min_Electrical = 0f;  // 전기공학
-    protected float Max_Electrical = 10f;
+    public PlayerGeneralSkill_Level Carpentry_Level;  // 목공
+    public PlayerGeneralSkill_Level Cooking_Level;  // 요리
+    public PlayerGeneralSkill_Level Farming_Level;  // 농사
+    public PlayerGeneralSkill_Level FirstAid_Level;  // 의료
+    public PlayerGeneralSkill_Level Electrical_Level;  // 전기공학
     // float Metalworking = 0f;  // 금속용접
     // float Mechanics = 0f;  // 차량정비
     // float Tailoring = 0f;  // 재단술
 
     // 총기
-    protected float Min_Aiming = 0f;  // 조준
-    protected float Max_Aiming = 10f;
-    protected float Min_Reloading = 0f;  // 재장전
-    protected float Max_Reloading = 10f;
+    public PlayerGeneralSkill_Level Aiming_Level;  // 조준
+    public PlayerGeneralSkill_Level Reloading_Level;  // 재장전
+
+    private void Awake()
+    {
+        Fitness_Level = new PlayerPassiveSkill_Level(5.0f);
+        Strength_Level = new PlayerPassiveSkill_Level(5.0f);
+
+        Sprinting_Level = new PlayerGeneralSkill_Level(0f);
+        Lightfooted_Level = new PlayerGeneralSkill_Level(0f);
+        Nimble_Level = new PlayerGeneralSkill_Level(0f);
+        Sneaking_Level = new PlayerGeneralSkill_Level(0f);
+
+        Axe_Level = new PlayerGeneralSkill_Level(0f);
+        LongBlunt_Level = new PlayerGeneralSkill_Level(0f);
+        ShortBlunt_Level = new PlayerGeneralSkill_Level(0f);
+        LongBlade_Level = new PlayerGeneralSkill_Level(0f);
+        ShortBlade_Level = new PlayerGeneralSkill_Level(0f);
+        Spear_Level = new PlayerGeneralSkill_Level(0f);
+        Maintenance_Level = new PlayerGeneralSkill_Level(0f);
+
+        Carpentry_Level = new PlayerGeneralSkill_Level(0f);
+        Cooking_Level = new PlayerGeneralSkill_Level(0f);
+        Farming_Level = new PlayerGeneralSkill_Level(0f);
+        FirstAid_Level = new PlayerGeneralSkill_Level(0f);
+        Electrical_Level = new PlayerGeneralSkill_Level(0f);
+
+        Aiming_Level = new PlayerGeneralSkill_Level(0f);
+        Reloading_Level = new PlayerGeneralSkill_Level(0f);
+    }
 
 }
