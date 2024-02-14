@@ -278,45 +278,59 @@ public class PlayerSkill_ActivationProbability
 
 
     // 밀쳐낼 확률 ( * )   // Strength
-    float Probability_of_Repelling = 0.45f;
-    public float Get_Probability_of_Repelling() { return Probability_of_Repelling; }
+    float HitForce = 0.45f;
+    public float Get_HitForce() { return HitForce; }
 
-    public void Set_Probability_of_Repelling_forSkill(float SkillLevel)
+    public void Set_HitForce_forSkill(float SkillLevel)
     {
-        switch (SkillLevel)
+        float player_Endurance = 1.0f;
+        if(Player_main.player_main.Get_Endurance() < 0.5)  // 지구력에 따른 밀쳐낼 확률 감소
+        {
+            player_Endurance = 0.4f;
+        }
+        else if(Player_main.player_main.Get_Endurance() >= 0.5 && Player_main.player_main.Get_Endurance() < 0.7)
+        {
+            player_Endurance = 0.7f;
+        }
+        else
+        {
+            player_Endurance = 1;
+        }
+
+        switch (SkillLevel)  // 밀쳐낼 확률 * 스태미나 * 근력
         {
             case 0:
-                Probability_of_Repelling = 0.45f;
+                HitForce = 0.45f * player_Endurance * 0.75f;  
                 break;
             case 1:
-                Probability_of_Repelling = 0.48f;
+                HitForce = 0.48f * player_Endurance * 0.8f;
                 break;
             case 2:
-                Probability_of_Repelling = 0.85f;
+                HitForce = 0.85f * player_Endurance * 0.85f;
                 break;
             case 3:
-                Probability_of_Repelling = 0.90f;
+                HitForce = 0.90f * player_Endurance * 0.9f;
                 break;
             case 4:
-                Probability_of_Repelling = 0.95f;
+                HitForce = 0.95f * player_Endurance * 0.95f;
                 break;
             case 5:
-                Probability_of_Repelling = 1.0f;
+                HitForce = 1.0f * player_Endurance * 1.0f;
                 break;
             case 6:
-                Probability_of_Repelling = 1.05f;
+                HitForce = 1.05f * player_Endurance * 1.05f;
                 break;
             case 7:
-                Probability_of_Repelling = 1.1f;
+                HitForce = 1.1f * player_Endurance * 1.1f;
                 break;
             case 8:
-                Probability_of_Repelling = 1.15f;
+                HitForce = 1.15f * player_Endurance * 1.15f;
                 break;
             case 9:
-                Probability_of_Repelling = 1.68f;
+                HitForce = 1.68f * player_Endurance * 1.2f;
                 break;
             case 10:
-                Probability_of_Repelling = 1.75f;
+                HitForce = 1.75f * player_Endurance * 1.25f;
                 break;
             default:
                 break;

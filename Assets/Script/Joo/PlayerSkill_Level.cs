@@ -43,7 +43,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             {
                 P_inven.Set_MaxWeight_forSkill(P_Level);
                 P_ActivationProb.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
-                P_ActivationProb.Set_Probability_of_Repelling_forSkill(P_Level);
+                P_ActivationProb.Set_HitForce_forSkill(P_Level);
                 P_ActivationProb.Set_Block_chance_forSkill("Strength", P_Level);
                 P_ActivationProb.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
@@ -101,7 +101,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             {
                 P_inven.Set_MaxWeight_forSkill(P_Level);
                 P_ActivationProb.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
-                P_ActivationProb.Set_Probability_of_Repelling_forSkill(P_Level);
+                P_ActivationProb.Set_HitForce_forSkill(P_Level);
                 P_ActivationProb.Set_Block_chance_forSkill("Strength", P_Level);
                 P_ActivationProb.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*

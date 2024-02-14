@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerSkill : MonoBehaviour
 {
+    public static PlayerSkill playerSkill;
+
     // 신체 능력
     public PlayerPassiveSkill_Level Fitness_Level;  // 체력
     public PlayerPassiveSkill_Level Strength_Level;  // 근력
@@ -27,7 +29,7 @@ public class PlayerSkill : MonoBehaviour
     public PlayerGeneralSkill_Level LongBlade_Level;  // 장검
     public PlayerGeneralSkill_Level ShortBlade_Level;  // 단검
     public PlayerGeneralSkill_Level Spear_Level;  // 창
-    public PlayerGeneralSkill_Level Maintenance_Level;  // 물건관리
+    public PlayerGeneralSkill_Level Maintenance_Level;  // 물건관리 ( 근접무기의 내구도 소모율에 영향을 끼침 )
 
     // 제작 능력
     public PlayerGeneralSkill_Level Carpentry_Level;  // 목공
