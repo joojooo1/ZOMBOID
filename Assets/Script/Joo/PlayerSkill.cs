@@ -45,30 +45,30 @@ public class PlayerSkill : MonoBehaviour
 
     private void Awake()
     {
-        Fitness_Level = new PlayerPassiveSkill_Level(5.0f);
-        Strength_Level = new PlayerPassiveSkill_Level(5.0f);
+        Fitness_Level = new PlayerPassiveSkill_Level(5.0f, "Fitness");
+        Strength_Level = new PlayerPassiveSkill_Level(5.0f, "Strength");
 
-        Sprinting_Level = new PlayerGeneralSkill_Level(0f);
-        Lightfooted_Level = new PlayerGeneralSkill_Level(0f);
-        Nimble_Level = new PlayerGeneralSkill_Level(0f);
-        Sneaking_Level = new PlayerGeneralSkill_Level(0f);
+        Sprinting_Level = new PlayerGeneralSkill_Level(0f, "Sprinting");
+        Lightfooted_Level = new PlayerGeneralSkill_Level(0f, "Lightfooted");
+        Nimble_Level = new PlayerGeneralSkill_Level(0f, "Nimble");
+        Sneaking_Level = new PlayerGeneralSkill_Level(0f, "Sneaking");
 
-        Axe_Level = new PlayerGeneralSkill_Level(0f);
-        LongBlunt_Level = new PlayerGeneralSkill_Level(0f);
-        ShortBlunt_Level = new PlayerGeneralSkill_Level(0f);
-        LongBlade_Level = new PlayerGeneralSkill_Level(0f);
-        ShortBlade_Level = new PlayerGeneralSkill_Level(0f);
-        Spear_Level = new PlayerGeneralSkill_Level(0f);
-        Maintenance_Level = new PlayerGeneralSkill_Level(0f);
+        Axe_Level = new PlayerGeneralSkill_Level(0f, "Axe");
+        LongBlunt_Level = new PlayerGeneralSkill_Level(0f, "LongBlunt");
+        ShortBlunt_Level = new PlayerGeneralSkill_Level(0f, "ShortBlunt");
+        LongBlade_Level = new PlayerGeneralSkill_Level(0f, "LongBlade");
+        ShortBlade_Level = new PlayerGeneralSkill_Level(0f, "ShortBlade");
+        Spear_Level = new PlayerGeneralSkill_Level(0f, "Spear");
+        Maintenance_Level = new PlayerGeneralSkill_Level(0f, "Maintenance");
 
-        Carpentry_Level = new PlayerGeneralSkill_Level(0f);
-        Cooking_Level = new PlayerGeneralSkill_Level(0f);
-        Farming_Level = new PlayerGeneralSkill_Level(0f);
-        FirstAid_Level = new PlayerGeneralSkill_Level(0f);
-        Electrical_Level = new PlayerGeneralSkill_Level(0f);
+        Carpentry_Level = new PlayerGeneralSkill_Level(0f, "Carpentry");
+        Cooking_Level = new PlayerGeneralSkill_Level(0f, "Cooking");
+        Farming_Level = new PlayerGeneralSkill_Level(0f, "Farming");
+        FirstAid_Level = new PlayerGeneralSkill_Level(0f, "FirstAid");
+        Electrical_Level = new PlayerGeneralSkill_Level(0f, "Electrical");
 
-        Aiming_Level = new PlayerGeneralSkill_Level(0f);
-        Reloading_Level = new PlayerGeneralSkill_Level(0f);
+        Aiming_Level = new PlayerGeneralSkill_Level(0f, "Aiming");
+        Reloading_Level = new PlayerGeneralSkill_Level(0f, "Reloading");
     }
 
 }
