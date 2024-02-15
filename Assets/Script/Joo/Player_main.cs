@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,23 +15,13 @@ public class Player_main : MonoBehaviour
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
     float Health_Player = 100.0f;  // 체력 ( Fitness_Level: 5 / Strength_Level: 5 )
     float Weight = 83.0f; // 체중
-    float Endurance = 1.0f; // 스태미너(지구력)  0 - 1
-    float fatigue = 0.0f; // 피로도 0 - 100
-    float Hunger = 0.0f; // 배고픔 0 - 100
     float Calories = 50.0f; // 칼로리 0 - 100
-    float Boredom = 0.0f; // 지루함 0 - 100
-    float Unhappiness = 0.0f; // 불행함 0 - 100
     float Temperature = 50.0f; // 온도 0 - 100
 
     float Attack_Power = 8.0f; // 공격력
     float Evasion = 0.15f;  // 회피율
     bool Equipping_Weapons = false;  // 시작시 무기 착용 X
     /* --------------------------------------------------------------------------------- */
-
-    public float Get_Endurance()
-    {
-        return Endurance;
-    }
 
     void Start()
     {
@@ -39,18 +30,8 @@ public class Player_main : MonoBehaviour
 
     float Playermovement_speed = 1.0f;
 
-    float Timer = 0.0f;
     void Update()
     {
-        Timer += Time.deltaTime;
-
-        if (Timer > 3.0f)
-        {
-            // 3초마다 피로도 +3.0f * 피로도 생성 비율 (임의로 설정)
-            fatigue += 3.0f * PlayerSkill_ActivationProbability.playerSkill_ActivationProbability.Get_Fatigue_Generation_Rate();  // * 피로도 생성 비율
-            Timer = 0.0f;
-        }
-
         /*
         if ()  // 무기를 착용하는 경우  ( 미정 )
         {
@@ -70,8 +51,88 @@ public class Player_main : MonoBehaviour
     }
 
 
+    // 밀쳐내기 전에 부위 계산부터 해야 됨
+    void Calculating_Probability_of_Injury_Location(float Zombie_Attack_power)
+    {
+        string Attack_point = "";
+        System.Random rand = new System.Random();
+        int randomNumber = rand.Next(100);
+
+        if(randomNumber >= 0 && randomNumber < 8)  // 8%
+        {
+            Attack_point = "Left_hand";
+        }
+        else if (randomNumber >= 8 && randomNumber < 16)  // 8%
+        {
+            Attack_point = "Right_hand";
+        }
+        else if (randomNumber >= 16 && randomNumber < 28)  // 12%
+        {
+            Attack_point = "Left_forearm";
+        }
+        else if (randomNumber >= 28 && randomNumber < 40)  // 12%
+        {
+            Attack_point = "Right_forearm";
+        }
+        else if (randomNumber >= 40 && randomNumber < 51)  // 11%
+        {
+            Attack_point = "Left_upper_arm";
+        }
+        else if (randomNumber >= 51 && randomNumber < 62)  // 11%
+        {
+            Attack_point = "Right_upper_arm";
+        }
+        else if (randomNumber >= 62 && randomNumber < 68)  // 6%
+        {
+            Attack_point = "upper_torso";
+        }
+        else if (randomNumber >= 68 && randomNumber < 74)  // 6%
+        {
+            Attack_point = "Lower_torso";
+        }
+        else if (randomNumber >= 74 && randomNumber < 78)  // 4%
+        {
+            Attack_point = "Head";
+        }
+        else if (randomNumber >= 78 && randomNumber < 85)  // 7%
+        {
+            Attack_point = "Neck";
+        }
+        else if (randomNumber >= 85 && randomNumber < 94)  // 9%
+        {
+            Attack_point = "Groin";
+        }
+        else if (randomNumber >= 94 && randomNumber < 95)  // 1%
+        {
+            Attack_point = "Left_thigh";
+        }
+        else if (randomNumber >= 95 && randomNumber < 96)  // 1%
+        {
+            Attack_point = "Right_thigh";
+        }
+        else if (randomNumber >= 96 && randomNumber < 97)  // 1%
+        {
+            Attack_point = "Left_shin";
+        }
+        else if (randomNumber >= 97 && randomNumber < 98)  // 1%
+        {
+            Attack_point = "Right_shin";
+        }
+        else if (randomNumber >= 98 && randomNumber < 99)  // 1%
+        {
+            Attack_point = "Left_foot";
+        }
+        else if (randomNumber >= 99 && randomNumber < 100)  // 1%
+        {
+            Attack_point = "Right_foot";
+        }
+
+
+    }
+
+
     // 공격 받으면 밀쳐낼 확률 계산 ( 밀쳐내지 못하면 밀쳐내지 못한 경우의 함수 호출 )
-    void Calculate_HitForce(float Zombie_Attack_power)
+    void Calculate_HitForce(string Attack_point, float Zombie_Attack_power)
     {
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
@@ -123,30 +184,6 @@ public class Player_main : MonoBehaviour
  아직 미구현 사항
 
  1. 각 스킬마다 경험치 오르는 조건
-
- 2. Moodles
-  - Hungry  // 배고픔, 배부름
-  - Thirsty  // 목마름
-  - Panic  // 긴장
-  - Bored  // 지루함
-  - Stressed  // 스트레스
-  - Unhappy  // 불행함
-  - Drunk  // 취함
-  - Heavy_Load  // 무거움
-  - Endurance  // 지침 ( 있음 )  
-  - Tired  // 피곤함
-  - Hyperthermia ( hot / cold )  // 더움, 추움
-  - Windchill  // 찬 바람
-  - Wet  // 젖음
-  - Injured  // 부상
-  - Pain  // 고통
-  - Bleeding  // 출혈
-  - Has_a_Cold  // 감기
-  - Sick  // 질병
-  - Dead  // 사망
-  - Zombie  // 좀비화
-  - Restricted_Movement  // 전력질주 할 수 없음
- 
 
 
 
