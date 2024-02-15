@@ -332,7 +332,8 @@ public class Moodles_state
                 break;
             case state.Restricted_Movement:
                 break;
-
+            default:
+                break;
 
         }
     }

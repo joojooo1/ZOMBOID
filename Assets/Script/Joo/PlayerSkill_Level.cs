@@ -43,7 +43,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             {
                 P_inven.Set_MaxWeight_forSkill(P_Level);
                 P_ActivationProb.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
-                P_ActivationProb.Set_HitForce_forSkill(P_Level);
+                //P_ActivationProb.Set_HitForce_forSkill(P_Level);
                 P_ActivationProb.Set_Block_chance_forSkill("Strength", P_Level);
                 P_ActivationProb.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
@@ -96,6 +96,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
                  미반영사항: 특성
                    (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
                  */
+                Player_main.player_main.Set_testText(P_Level);  // testText
             }
             else if (P_SkillName == "Strength")
             {
@@ -110,6 +111,9 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
                  */
             }
         }
+        /*
+         미반영사항: 운동을 통해 Fitness/Strength 레벨 상승하는 함수
+         */
     }
 
     public float Get_P_Level()
