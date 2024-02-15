@@ -2,57 +2,89 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Body_Durability
+{
+    string _Body_Name = "";
+    float _Body_Min_Durability = 0.0f;
+    float _Body_Max_Durability = 100.0f;
+    float _Body_Current_Durability = 0.0f;
+
+    public Body_Durability(string Body_Name, float Body_current_Durability)  // Æ¯¼º¿¡ µû¶ó ±âº» ¹æ¾î·Â ´Þ¶óÁú °¡´É¼º °í·Á
+    {
+        _Body_Name = Body_Name;
+        _Body_Current_Durability = Body_current_Durability;
+    }
+
+    enum Attack_from_Zombie
+    {
+        punches = 0,  // Å¸°Ý(ÇÇÇØo & »óÃ³x)
+        Scratches = 1,  // ±ÜÈû(7% È®·ü·Î °¨¿°)
+        Lacerations = 2,  // Âõ±è(25% È®·ü·Î °¨¿°)
+        Bites = 3  // ¹°¸²(100% È®·ü·Î °¨¿°)
+    }
+
+
+
+}
+
+
 public class PlayerState : MonoBehaviour
 {
-    // ¿Þ¼Õ
-    float Min_Left_hand = 0.0f;
-    float Max_Left_hand = 100.0f;
-    // ¿À¸¥¼Õ
-    float Min_Right_hand = 0.0f;
-    float Max_Right_hand = 100.0f;
-    // ¿ÞÆÈ¸ñ
-    float Min_Left_forearm = 0.0f; 
-    float Max_Left_forearm = 100.0f;
-    // ¿À¸¥ÆÈ¸ñ
-    float Min_Right_forearm = 0.0f;
-    float Max_Right_forearm = 100.0f;
-    // ¿Þ ÆÈ¶Ò
-    float Min_Left_upper_arm = 0.0f; 
-    float Max_Left_upper_arm = 100.0f;
-    // ¿À¸¥ ÆÈ¶Ò
-    float Min_Right_upper_arm = 0.0f; 
-    float Max_Right_upper_arm = 100.0f;
-    // °¡½¿
-    float Min_upper_torso = 0.0f; 
-    float Max_upper_torso = 100.0f;
-    // º¹ºÎ
-    float Min_Lower_torso = 0.0f;
-    float Max_Lower_torso = 100.0f;
-    // ¸Ó¸®
-    float Min_Head = 0.0f; 
-    float Max_Head = 100.0f;
-    // ¸ñ
-    float Min_Neck = 0.0f; 
-    float Max_Neck = 100.0f;
-    // »çÅ¸±¸´Ï
-    float Min_Groin = 0.0f;
-    float Max_Groin = 100.0f;
-    // ¿Þ Çã¹÷Áö
-    float Min_Left_thigh = 0.0f;
-    float Max_Left_thigh = 100.0f;
-    // ¿À¸¥ Çã¹÷Áö
-    float Min_Right_thigh = 0.0f;
-    float Max_Right_thigh = 100.0f;
-    // ¿Þ Á¤°­ÀÌ
-    float Min_Left_shin = 0.0f;
-    float Max_Left_shin = 100.0f;
-    // ¿À¸¥ Á¤°­ÀÌ
-    float Min_Right_shin = 0.0f;
-    float Max_Right_shin = 100.0f;
-    // ¿Þ¹ß
-    float Min_Left_foot = 0.0f;
-    float Max_Left_foot = 100.0f;
-    // ¿À¸¥¹ß
-    float Min_Right_foot = 0.0f;
-    float Max_Right_foot = 100.0f; 
+    // ¿Þ¼Õ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 8%
+    Body_Durability Left_hand;
+    // ¿À¸¥¼Õ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 8%
+    Body_Durability Right_hand;
+    // ¿ÞÆÈ¸ñ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 12%
+    Body_Durability Left_forearm;
+    // ¿À¸¥ÆÈ¸ñ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 12%
+    Body_Durability Right_forearm;
+    // ¿Þ ÆÈ¶Ò     °ø°Ý¹ÞÀ» È®·ü(±âº»): 11%
+    Body_Durability Left_upper_arm;
+    // ¿À¸¥ ÆÈ¶Ò     °ø°Ý¹ÞÀ» È®·ü(±âº»): 11%
+    Body_Durability Right_upper_arm;
+    // °¡½¿     °ø°Ý¹ÞÀ» È®·ü(±âº»): 6%
+    Body_Durability upper_torso;
+    // º¹ºÎ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 6%
+    Body_Durability Lower_torso;
+    // ¸Ó¸®     °ø°Ý¹ÞÀ» È®·ü(±âº»): 4%
+    Body_Durability Head;
+    // ¸ñ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 7%
+    Body_Durability Neck;
+    // »çÅ¸±¸´Ï     °ø°Ý¹ÞÀ» È®·ü(±âº»): 9%
+    Body_Durability Groin;
+    // ¿Þ Çã¹÷Áö     °ø°Ý¹ÞÀ» È®·ü(±âº»): 1%
+    Body_Durability Left_thigh;
+    // ¿À¸¥ Çã¹÷Áö     °ø°Ý¹ÞÀ» È®·ü(±âº»): 1%
+    Body_Durability Right_thigh;
+    // ¿Þ Á¤°­ÀÌ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 1%
+    Body_Durability Left_shin;
+    // ¿À¸¥ Á¤°­ÀÌ     °ø°Ý¹ÞÀ» È®·ü(±âº»): 1%
+    Body_Durability Right_shin;
+    // ¿Þ¹ß     °ø°Ý¹ÞÀ» È®·ü(±âº»): 1%
+    Body_Durability Left_foot;
+    // ¿À¸¥¹ß     °ø°Ý¹ÞÀ» È®·ü(±âº»): 1%
+    Body_Durability Right_foot;
+
+    private void Start()
+    {
+        Left_hand = new Body_Durability("Left_hand", 0f);
+        Right_hand = new Body_Durability("Right_hand", 0f);
+        Left_forearm = new Body_Durability("Left_forearm", 0f);
+        Right_forearm = new Body_Durability("Right_forearm", 0f);
+        Left_upper_arm = new Body_Durability("Left_upper_arm", 0f);
+        Right_upper_arm = new Body_Durability("Right_upper_arm", 0f);
+        upper_torso = new Body_Durability("upper_torso", 0f);
+        Lower_torso = new Body_Durability("Lower_torso", 0f);
+        Head = new Body_Durability("Head", 0f);
+        Neck = new Body_Durability("Neck", 0f);
+        Groin = new Body_Durability("Groin", 0f);
+        Left_thigh = new Body_Durability("Left_thigh", 0f);
+        Right_thigh = new Body_Durability("Right_thigh", 0f);
+        Left_shin = new Body_Durability("Left_shin", 0f);
+        Right_shin = new Body_Durability("Right_shin", 0f);
+        Left_foot = new Body_Durability("Left_foot", 0f);
+        Right_foot = new Body_Durability("Right_foot", 0f);
+    }
+
+
 }
