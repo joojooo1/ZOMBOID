@@ -30,8 +30,10 @@ public class Player_Moodles : MonoBehaviour
     public Moodles_state Moodle_Zombie; // 좀비화
     public Moodles_state Moodle_Restricted_Movement; // 전력질주 할 수 없음
 
-    private void Start()
+    private void Awake()
     {
+        playerMoodles = this;
+
         Moodle_Hungry = new Moodles_state("Hungry", 0f, 0.15f, 0.25f, 0.45f, 0.7f);
         /*
          15% 이상: -
@@ -305,7 +307,7 @@ public class Moodles_state
             case state.Endurance:
                 break;
             case state.Tired:
-                _Moodle_current_state += 3.0f * PlayerSkill_ActivationProbability.playerSkill_ActivationProbability.Get_Fatigue_Generation_Rate();  // * 피로도 생성 비율
+                _Moodle_current_state += 3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Fatigue_Generation_Rate();  // * 피로도 생성 비율
                 //if()
                 break;
             case state.Hyperthermia_Hot:

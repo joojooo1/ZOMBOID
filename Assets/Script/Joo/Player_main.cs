@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
+
+
+public enum Weapon_type
+{
+    Axe = 0,
+    LongBlunt = 1,
+    ShortBlunt = 2,
+    LongBlade = 3,
+    ShortBlade = 4,
+    Spear = 5,
+    Gun = 6
+}
 
 public class Player_main : MonoBehaviour
 {
@@ -22,13 +35,13 @@ public class Player_main : MonoBehaviour
 
     float Attack_Power = 8.0f; // 공격력
     float Evasion = 0.15f;  // 회피율
-    bool Equipping_Weapons = false;  // 시작시 무기 착용 X
+    public bool Equipping_Weapons = false;
     /* --------------------------------------------------------------------------------- */
 
-    public UnityEngine.UI.Text textText;
-
-    void Start()
+    void Awake()
     {
+        player_main = this;
+
         Skill = GetComponent<PlayerSkill>();
         Player_current_Health = Player_Max_Health;
     }
@@ -45,6 +58,21 @@ public class Player_main : MonoBehaviour
         }
         */
 
+        // test 함수 -------------------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.Z))  // 무기 스킬 Level-up
+        {
+            Skill.Axe_Level.SetEXP(9000);
+
+        }
+        //else if (Input.GetKeyDown(KeyCode.X))  // 무기 착용시 Bonus
+        //{
+        //    Equipping_Weapons = true;
+        //    Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe);
+        //}
+
+        // ------------------------------------------------------------- test 함수 
+
+
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
         Vector3 pos = transform.position;
@@ -55,15 +83,80 @@ public class Player_main : MonoBehaviour
 
     }
 
-    // test 함수
-    private void OnCollisionEnter(Collision collision)
-    {
-        Skill.Fitness_Level.SetEXP(2000);
-    }
+
+    public PlayerSkill_ActivationProbability playerSkill_ActivationProbability = new PlayerSkill_ActivationProbability();
+    // test 함수 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public UnityEngine.UI.Text[] textText;
     public void Set_testText(float Level)
     {
-        textText.text = Level.ToString();
+        textText[0].text = "Level: " + Level.ToString();
+        textText[1].text = "Increase_in_Attack_Power: " + playerSkill_ActivationProbability.Get_Increase_in_Attack_Power().ToString();
+        textText[2].text = "Attack_Speed: " + playerSkill_ActivationProbability.Get_Attack_Speed().ToString();
+        textText[3].text = "Critical_Hit_Chance: " + playerSkill_ActivationProbability.Get_Critical_Hit_Chance().ToString();
+        textText[4].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
+        textText[5].text = "Injury_chance: " + playerSkill_ActivationProbability.Get_Injury_chance().ToString();
+        //textText[6].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
+        //textText[7].text = "Probability_of_Crossing_a_High_Wall: " + playerSkill_ActivationProbability.Get_Probability_of_Crossing_a_High_Wall().ToString();
     }
+    // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- test 함수 
+
+
+    void Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon)  // 무기를 끼면 함수 호출 ( 미구현 사항 )
+    {
+        // 무기 Script 구현사항
+        // 무기별 타입
+        // 무기별 공격력
+        // 무기별 내구도
+
+        switch (weapon)
+        {
+            case Weapon_type.Axe:
+                Skill.Axe_Level.Set_Weapon_Equipping_Effect();
+                break;
+            case Weapon_type.LongBlunt:
+                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect();
+                break;
+            case Weapon_type.ShortBlunt:
+                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect();
+                break;
+            case Weapon_type.LongBlade:
+                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect();
+                break;
+            case Weapon_type.ShortBlade:
+                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect();
+                break;
+            case Weapon_type.Spear:
+                Skill.Spear_Level.Set_Weapon_Equipping_Effect();
+                break;
+            case Weapon_type.Gun:
+                Skill.Gun_Level.Set_Weapon_Equipping_Effect();
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    /*  무기 착용 함수 구현시 참고
+        if (Equipping_Weapons && Equipping_Axe == false)  // 도끼 착용
+        {
+            Equipping_Axe = true;
+            if (Equipping_Others)  // 다른 무기를 착용하고 있었으면
+            {
+                Equipping_Others = false;
+                Increase_in_Attack_Power = Increase_in_Attack_Power - Others_BonusState + Axe_BonusState;
+            }
+            else  // 모든 무기를 미착용하고 있었으면
+            {
+                Increase_in_Attack_Power += Axe_BonusState;
+            }
+        }
+        else  // 무기 해제
+        {
+            Equipping_Axe = false;
+            Increase_in_Attack_Power -= Axe_BonusState;
+        }
+     */
 
     // 공격받을 때 순서
     // 1. 공격 받으면 밀쳐낼 확률 계산
@@ -72,9 +165,13 @@ public class Player_main : MonoBehaviour
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
-        if (((float)randomNumber / 100) > PlayerSkill_ActivationProbability.playerSkill_ActivationProbability.Get_HitForce())
+        if (((float)randomNumber / 100) > playerSkill_ActivationProbability.Get_HitForce())
         {
             Calculating_Probability_of_Injury_Location(Zombie_Attack_power);
+        }
+        else
+        {
+            // 밀쳐낸 애니메이션
         }
     }
 

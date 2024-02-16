@@ -8,8 +8,8 @@ public class PlayerSkill : MonoBehaviour
     public static PlayerSkill playerSkill;
 
     // 신체 능력
-    public PlayerPassiveSkill_Level Fitness_Level;  // 체력
-    public PlayerPassiveSkill_Level Strength_Level;  // 근력
+    public PlayerPassiveSkill_Level Fitness_Level;  // 체력       /* 24.02.16.17:30 levelup, Act_Prob test */
+    public PlayerPassiveSkill_Level Strength_Level;  // 근력       /* 24.02.16.17:30 levelup, Act_Prob test */
 
     // 생존 능력
     // float Fishing = 0f;  // 낚시
@@ -17,19 +17,20 @@ public class PlayerSkill : MonoBehaviour
     // float Foraging = 0f;  // 채집
 
     // 운동 능력
-    public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기
-    public PlayerGeneralSkill_Level Lightfooted_Level;  // 조용한 발걸음 (플레이어의 발소리가 얼마나 멀리서 들리는지)
-    public PlayerGeneralSkill_Level Nimble_Level;  // 전투시 발걸음
-    public PlayerGeneralSkill_Level Sneaking_Level;  // 은밀함 (은밀히 걸을때 발소리 크기&좀비가 발견할 확률)
+    public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기                                                    /* 24.02.16.17:30 levelup, Act_Prob test */
+    public PlayerGeneralSkill_Level Lightfooted_Level;  // 조용한 발걸음 (플레이어의 발소리가 얼마나 멀리서 들리는지)        /* 24.02.16.17:30 levelup, Act_Prob test */
+    public PlayerGeneralSkill_Level Nimble_Level;  // 전투시 발걸음                                                       /* 24.02.16.17:30 levelup, Act_Prob test */
+    public PlayerGeneralSkill_Level Sneaking_Level;  // 은밀함 (은밀히 걸을때 발소리 크기&좀비가 발견할 확률)                /* 24.02.16.17:30 levelup, Act_Prob test */
 
     // 전투 능력
-    public PlayerGeneralSkill_Level Axe_Level;  // 도끼
-    public PlayerGeneralSkill_Level LongBlunt_Level;  // 긴 둔기
-    public PlayerGeneralSkill_Level ShortBlunt_Level;  // 짧은 둔기
-    public PlayerGeneralSkill_Level LongBlade_Level;  // 장검
-    public PlayerGeneralSkill_Level ShortBlade_Level;  // 단검
-    public PlayerGeneralSkill_Level Spear_Level;  // 창
-    public PlayerGeneralSkill_Level Maintenance_Level;  // 물건관리 ( 근접무기의 내구도 소모율에 영향을 끼침 )
+    public PlayerWeaponSkill_Level Axe_Level;  // 도끼
+    public PlayerWeaponSkill_Level LongBlunt_Level;  // 긴 둔기
+    public PlayerWeaponSkill_Level ShortBlunt_Level;  // 짧은 둔기
+    public PlayerWeaponSkill_Level LongBlade_Level;  // 장검
+    public PlayerWeaponSkill_Level ShortBlade_Level;  // 단검
+    public PlayerWeaponSkill_Level Spear_Level;  // 창
+    public PlayerWeaponSkill_Level Gun_Level;  // 창
+    public PlayerWeaponSkill_Level Maintenance_Level;  // 물건관리 ( 근접무기의 내구도 소모율에 영향을 끼침 )
 
     // 제작 능력
     public PlayerGeneralSkill_Level Carpentry_Level;  // 목공
@@ -42,11 +43,15 @@ public class PlayerSkill : MonoBehaviour
     // float Tailoring = 0f;  // 재단술
 
     // 총기
-    public PlayerGeneralSkill_Level Aiming_Level;  // 조준
-    public PlayerGeneralSkill_Level Reloading_Level;  // 재장전
+    public PlayerWeaponSkill_Level Aiming_Level;  // 조준
+    public PlayerWeaponSkill_Level Reloading_Level;  // 재장전
+
+
 
     private void Awake()
     {
+        playerSkill = this;
+
         Fitness_Level = new PlayerPassiveSkill_Level(5.0f, "Fitness");
         Strength_Level = new PlayerPassiveSkill_Level(5.0f, "Strength");
 
@@ -55,13 +60,14 @@ public class PlayerSkill : MonoBehaviour
         Nimble_Level = new PlayerGeneralSkill_Level(0f, "Nimble");
         Sneaking_Level = new PlayerGeneralSkill_Level(0f, "Sneaking");
 
-        Axe_Level = new PlayerGeneralSkill_Level(0f, "Axe");
-        LongBlunt_Level = new PlayerGeneralSkill_Level(0f, "LongBlunt");
-        ShortBlunt_Level = new PlayerGeneralSkill_Level(0f, "ShortBlunt");
-        LongBlade_Level = new PlayerGeneralSkill_Level(0f, "LongBlade");
-        ShortBlade_Level = new PlayerGeneralSkill_Level(0f, "ShortBlade");
-        Spear_Level = new PlayerGeneralSkill_Level(0f, "Spear");
-        Maintenance_Level = new PlayerGeneralSkill_Level(0f, "Maintenance");
+        Axe_Level = new PlayerWeaponSkill_Level(0f, "Axe");
+        LongBlunt_Level = new PlayerWeaponSkill_Level(0f, "LongBlunt");
+        ShortBlunt_Level = new  (0f, "ShortBlunt");
+        LongBlade_Level = new PlayerWeaponSkill_Level(0f, "LongBlade");
+        ShortBlade_Level = new PlayerWeaponSkill_Level(0f, "ShortBlade");
+        Spear_Level = new PlayerWeaponSkill_Level(0f, "Spear");
+        Gun_Level = new PlayerWeaponSkill_Level(0f, "Gun");
+        Maintenance_Level = new PlayerWeaponSkill_Level(0f, "Maintenance");
 
         Carpentry_Level = new PlayerGeneralSkill_Level(0f, "Carpentry");
         Cooking_Level = new PlayerGeneralSkill_Level(0f, "Cooking");
@@ -69,8 +75,8 @@ public class PlayerSkill : MonoBehaviour
         FirstAid_Level = new PlayerGeneralSkill_Level(0f, "FirstAid");
         Electrical_Level = new PlayerGeneralSkill_Level(0f, "Electrical");
 
-        Aiming_Level = new PlayerGeneralSkill_Level(0f, "Aiming");
-        Reloading_Level = new PlayerGeneralSkill_Level(0f, "Reloading");
+        Aiming_Level = new PlayerWeaponSkill_Level(0f, "Aiming");
+        Reloading_Level = new PlayerWeaponSkill_Level(0f, "Reloading");
     }
 
 }

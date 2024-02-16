@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerSkill_ActivationProbability
 {
-    public static PlayerSkill_ActivationProbability playerSkill_ActivationProbability;
-
     // 피로도 생성 비율 ( * )  // Fitness
     float Fatigue_Generation_Rate = 1.00f;
     public float Get_Fatigue_Generation_Rate() { return Fatigue_Generation_Rate; }
@@ -144,21 +142,44 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
-    // 공격력 증가 ( * )  // Axe 등 무기
+    // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용
     float Increase_in_Attack_Power = 0.3f;
     public float Get_Increase_in_Attack_Power() { return  Increase_in_Attack_Power; }
 
     public void Set_Increase_in_Attack_Power_forSkill(string SkillName, float SkillLevel)
     {
-        if(SkillName == "Axe")
-        {
-            Increase_in_Attack_Power = 0.3f + 0.1f * SkillLevel;
-        }
-        else if (SkillName == "LongBlunt" || SkillName == "ShortBlunt" || SkillName == "LongBlade"
-            || SkillName == "ShortBlade" || SkillName == "Spear")
-        {
-            Increase_in_Attack_Power = 0.3f + 0.1f * (SkillLevel - 1);
-        }
+        float Axe_BonusState = 0.1f * SkillLevel;
+        float Others_BonusState = 0.1f * (SkillLevel - 1);
+
+        //switch()
+        //if (SkillName == "Axe")  // 도끼
+        //{
+
+        //}
+        //else if (SkillName == "LongBlunt")
+        //{
+
+        //}
+        //else if (SkillName == "ShortBlunt")
+        //{
+
+        //}
+        //else if (SkillName == "LongBlade")
+        //{
+
+        //}
+        //else if (SkillName == "ShortBlade")
+        //{
+
+        //}
+        //else if (SkillName == "Spear")
+        //{
+
+        //}
+        //else if (SkillName == "Gun")
+        //{
+
+        //}
     }
 
 
