@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerPassiveSkill_Level  // 체력, 근력
 {
-    PlayerSkill_ActivationProbability P_ActivationProb = new PlayerSkill_ActivationProbability();
     PlayerInventory P_inven = new PlayerInventory();
 
     string P_SkillName = "";
@@ -27,13 +26,14 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
             if (P_SkillName == "Fitness")
             {
-                P_ActivationProb.Set_Fatigue_Generation_Rate_forSkill(P_Level);
-                P_ActivationProb.Set_Endurance_Recovery_Rate_forSkill(P_Level);
-                P_ActivationProb.Set_Endurance_Depletion_Rate_forSkill(P_Level);
-                P_ActivationProb.Set_Attack_Speed_forSkill("Fitness", P_Level);
-                P_ActivationProb.Set_Probability_of_Falling_forSkill(P_Level);
-                P_ActivationProb.Set_Block_chance_forSkill("Fitness", P_Level);
-                P_ActivationProb.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
                    (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
@@ -42,10 +42,10 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             else if(P_SkillName == "Strength")
             {
                 P_inven.Set_MaxWeight_forSkill(P_Level);
-                P_ActivationProb.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
-                //P_ActivationProb.Set_HitForce_forSkill(P_Level);
-                P_ActivationProb.Set_Block_chance_forSkill("Strength", P_Level);
-                P_ActivationProb.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
                    (0~1: 약함, 2~4: 연약함, 5: -, 6~8: 통통함, 9~10: 튼튼함)
@@ -85,26 +85,25 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
             if (P_SkillName == "Fitness")
             {
-                P_ActivationProb.Set_Fatigue_Generation_Rate_forSkill(P_Level);
-                P_ActivationProb.Set_Endurance_Recovery_Rate_forSkill(P_Level);
-                P_ActivationProb.Set_Endurance_Depletion_Rate_forSkill(P_Level);
-                P_ActivationProb.Set_Attack_Speed_forSkill("Fitness", P_Level);
-                P_ActivationProb.Set_Probability_of_Falling_forSkill(P_Level);
-                P_ActivationProb.Set_Block_chance_forSkill("Fitness", P_Level);
-                P_ActivationProb.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
                    (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
                  */
-                Player_main.player_main.Set_testText(P_Level);  // testText
             }
             else if (P_SkillName == "Strength")
             {
                 P_inven.Set_MaxWeight_forSkill(P_Level);
-                P_ActivationProb.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
-                P_ActivationProb.Set_HitForce_forSkill(P_Level);
-                P_ActivationProb.Set_Block_chance_forSkill("Strength", P_Level);
-                P_ActivationProb.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
                    (0~1: 약함, 2~4: 연약함, 5: -, 6~8: 통통함, 9~10: 튼튼함)
@@ -129,12 +128,12 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
 public class PlayerGeneralSkill_Level
 {
-    PlayerSkill_ActivationProbability G_ActivationProb = new PlayerSkill_ActivationProbability();
-
     string G_SkillName = "";
     float G_Level = 0f;
     float G_Min_Level = 0f;
     float G_Max_Level = 10f;
+
+    bool G_Is_Weapon = false;
 
     float G_EXP = 0f;
     List<float>[] G_expRequirements;
@@ -151,21 +150,21 @@ public class PlayerGeneralSkill_Level
 
             if (G_SkillName == "Sprinting")
             {
-                G_ActivationProb.Set_Running_Speed_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Running_Speed_forSkill(G_Level);
             }
             else if (G_SkillName == "Lightfooted")
             {
-                G_ActivationProb.Set_Footstep_Radius_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_forSkill(G_Level);
             }
             else if(G_SkillName == "Nimble")
             {
-                G_ActivationProb.Set_Movement_Speed_while_Aiming_forSkill(G_Level);
-                G_ActivationProb.Set_Footstep_Radius_while_Aiming_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Movement_Speed_while_Aiming_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Aiming_forSkill(G_Level);
             }
             else if(G_SkillName == "Sneaking")
             {
-                G_ActivationProb.Set_Footstep_Radius_while_Sneaking_forSkill(G_Level);
-                G_ActivationProb.Set_Probability_of_Detection_by_Zombies_while_Sneaking_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Sneaking_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Detection_by_Zombies_while_Sneaking_forSkill(G_Level);
             }
         }
     }
@@ -201,22 +200,131 @@ public class PlayerGeneralSkill_Level
 
             if (G_SkillName == "Sprinting")
             {
-                G_ActivationProb.Set_Running_Speed_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Running_Speed_forSkill(G_Level);
             }
             else if (G_SkillName == "Lightfooted")
             {
-                G_ActivationProb.Set_Footstep_Radius_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_forSkill(G_Level);
             }
             else if (G_SkillName == "Nimble")
             {
-                G_ActivationProb.Set_Movement_Speed_while_Aiming_forSkill(G_Level);
-                G_ActivationProb.Set_Footstep_Radius_while_Aiming_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Movement_Speed_while_Aiming_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Aiming_forSkill(G_Level);
             }
             else if (G_SkillName == "Sneaking")
             {
-                G_ActivationProb.Set_Footstep_Radius_while_Sneaking_forSkill(G_Level);
-                G_ActivationProb.Set_Probability_of_Detection_by_Zombies_while_Sneaking_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Sneaking_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Detection_by_Zombies_while_Sneaking_forSkill(G_Level);
             }
+
+        }
+    }
+
+    public float Get_G_Level()
+    {
+        return G_Level;
+    }
+
+    public float Get_G_CurrentEXP()
+    {
+        return G_EXP;
+    }
+}
+
+public class PlayerWeaponSkill_Level
+{
+    string G_SkillName = "";
+    float G_Level = 0f;
+    float G_Min_Level = 0f;
+    float G_Max_Level = 10f;
+
+    float G_EXP = 0f;
+    List<float>[] G_expRequirements;
+    // 레벨 0 ~ 10
+    // 레벨별 필요 경험치
+
+    public PlayerWeaponSkill_Level(float initialLevel, string skillname)
+    {
+        if (initialLevel >= G_Min_Level && initialLevel <= G_Max_Level)
+        {
+            G_SkillName = skillname;
+            G_Level = initialLevel;
+            InitializeExpRequirements();
+
+            if (G_SkillName == "Sprinting")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Running_Speed_forSkill(G_Level);
+            }
+            else if (G_SkillName == "Lightfooted")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_forSkill(G_Level);
+            }
+            else if (G_SkillName == "Nimble")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Movement_Speed_while_Aiming_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Aiming_forSkill(G_Level);
+            }
+            else if (G_SkillName == "Sneaking")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Sneaking_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Detection_by_Zombies_while_Sneaking_forSkill(G_Level);
+            }
+        }
+    }
+
+    void InitializeExpRequirements()
+    {
+        G_expRequirements = new List<float>[10];
+        for (int i = 0; i < G_expRequirements.Length; i++)
+        {
+            G_expRequirements[i] = new List<float>();
+        }
+
+        // _TotalEXP와 비교
+        G_expRequirements[0].Add(75f);  // Level 0 -> 1
+        G_expRequirements[1].Add(150f);  // Level 1 -> 2
+        G_expRequirements[2].Add(300f);  // Level 2 -> 3
+        G_expRequirements[3].Add(750f);  // Level 3 -> 4
+        G_expRequirements[4].Add(1500f);  // Level 4 -> 5
+        G_expRequirements[5].Add(3000f);  // Level 5 -> 6
+        G_expRequirements[6].Add(4500f);  // Level 6 -> 7
+        G_expRequirements[7].Add(6000f);  // Level 7 -> 8
+        G_expRequirements[8].Add(7500f);  // Level 8 -> 9
+        G_expRequirements[9].Add(9000f);  // Level 9 -> 10
+    }
+
+    public void SetEXP(float exp)
+    {
+        G_EXP += exp;
+        if (G_Level < G_Max_Level && G_EXP >= G_expRequirements[(int)G_Level][0])
+        {
+            G_EXP -= G_expRequirements[(int)G_Level][0];
+            G_Level++;
+
+            if (G_SkillName == "Sprinting")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(G_SkillName, G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(G_SkillName, G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(G_SkillName, G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(G_SkillName, G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(G_SkillName, G_Level);
+                Player_main.player_main.Set_testText(G_Level);  // testText
+            }
+            else if (G_SkillName == "Lightfooted")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_forSkill(G_Level);
+            }
+            else if (G_SkillName == "Nimble")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Movement_Speed_while_Aiming_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Aiming_forSkill(G_Level);
+            }
+            else if (G_SkillName == "Sneaking")
+            {
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Footstep_Radius_while_Sneaking_forSkill(G_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Detection_by_Zombies_while_Sneaking_forSkill(G_Level);
+            }
+
         }
     }
 
@@ -231,14 +339,9 @@ public class PlayerGeneralSkill_Level
     }
 
     // 무기 착용 시 각각 반영되는 효과 설정
-    public void Set_Weapon_Equipping_Effect(float SkillLevel)
+    public void Set_Weapon_Equipping_Effect()
     {
-        G_ActivationProb.Set_Increase_in_Attack_Power_forSkill(G_SkillName, SkillLevel);
-        G_ActivationProb.Set_Attack_Speed_forSkill(G_SkillName, SkillLevel);
-        G_ActivationProb.Set_Critical_Hit_Chance_forSkill(G_SkillName, SkillLevel);
-        G_ActivationProb.Set_Block_chance_forSkill(G_SkillName, SkillLevel);
-        G_ActivationProb.Set_Injury_chance_forSkill(G_SkillName, SkillLevel);
+
     }
 }
-
 
