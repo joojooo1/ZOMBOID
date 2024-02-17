@@ -14,7 +14,6 @@ public enum Weapon_type
     LongBlade = 3,
     ShortBlade = 4,
     Spear = 5,
-    Gun = 6
 }
 
 public class Player_main : MonoBehaviour
@@ -127,9 +126,6 @@ public class Player_main : MonoBehaviour
                 break;
             case Weapon_type.Spear:
                 Skill.Spear_Level.Set_Weapon_Equipping_Effect();
-                break;
-            case Weapon_type.Gun:
-                Skill.Gun_Level.Set_Weapon_Equipping_Effect();
                 break;
             default:
                 break;
