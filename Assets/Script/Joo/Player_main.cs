@@ -14,6 +14,28 @@ public enum Weapon_type
     LongBlade = 3,
     ShortBlade = 4,
     Spear = 5,
+    Gun = 6
+}
+
+public enum Player_body_Location
+{
+    Left_hand = 0,
+    Right_hand = 1,
+    Left_forearm = 2,
+    Right_forearm = 3,
+    Left_upper_arm = 4,
+    Right_upper_arm = 5,
+    upper_torso = 6,
+    Lower_torso = 7,
+    Head = 8,
+    Neck = 9,
+    Groin = 10,
+    Left_thigh = 11,
+    Right_thigh = 12,
+    Left_shin = 13,
+    Right_shin = 14,
+    Left_foot = 15,
+    Right_foot = 16
 }
 
 public class Player_main : MonoBehaviour
@@ -34,7 +56,8 @@ public class Player_main : MonoBehaviour
 
     float Attack_Power = 8.0f; // 공격력
     float Evasion = 0.15f;  // 회피율
-    public bool Equipping_Weapons = false;
+
+    public bool Is_Equipping_Weapons = false;
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -49,13 +72,10 @@ public class Player_main : MonoBehaviour
 
     void Update()
     {
-        /*
-        if ()  // 무기를 착용하는 경우  ( 미정 )
+        if (Is_Equipping_Weapons)  // 무기를 착용하는 경우 호출
         {
-            Equipping_Weapons = true;
-            
+            //Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, Is_Equipping_Weapons)
         }
-        */
 
         // test 함수 -------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Z))  // 무기 스킬 Level-up
@@ -63,12 +83,16 @@ public class Player_main : MonoBehaviour
             Skill.Axe_Level.SetEXP(9000);
 
         }
-        //else if (Input.GetKeyDown(KeyCode.X))  // 무기 착용시 Bonus
-        //{
-        //    Equipping_Weapons = true;
-        //    Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe);
-        //}
-
+        else if (Input.GetKeyDown(KeyCode.X))  // 무기 착용 시
+        {
+            Is_Equipping_Weapons = true;
+            Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe, Is_Equipping_Weapons);
+        }
+        else if (Input.GetKeyDown(KeyCode.C))  // 무기 해제 시
+        {
+            Is_Equipping_Weapons = false;
+            Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe, Is_Equipping_Weapons);
+        }
         // ------------------------------------------------------------- test 함수 
 
 
@@ -99,8 +123,15 @@ public class Player_main : MonoBehaviour
     }
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- test 함수 
 
+    public void Set_Is_Equipping_Weapons()
+    {
+        if (Is_Equipping_Weapons)
+            Is_Equipping_Weapons = false;
+        else
+            Is_Equipping_Weapons = true;
+    }
 
-    void Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon)  // 무기를 끼면 함수 호출 ( 미구현 사항 )
+    void Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, bool Is_Equipping_Weapons)  // 무기를 끼면 함수 호출
     {
         // 무기 Script 구현사항
         // 무기별 타입
@@ -110,60 +141,40 @@ public class Player_main : MonoBehaviour
         switch (weapon)
         {
             case Weapon_type.Axe:
-                Skill.Axe_Level.Set_Weapon_Equipping_Effect();
+                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
                 break;
             case Weapon_type.LongBlunt:
-                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect();
+                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
                 break;
             case Weapon_type.ShortBlunt:
-                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect();
+                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
                 break;
             case Weapon_type.LongBlade:
-                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect();
+                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
                 break;
             case Weapon_type.ShortBlade:
-                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect();
+                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
                 break;
             case Weapon_type.Spear:
-                Skill.Spear_Level.Set_Weapon_Equipping_Effect();
+                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
                 break;
             default:
                 break;
-
         }
+
     }
 
-    /*  무기 착용 함수 구현시 참고
-        if (Equipping_Weapons && Equipping_Axe == false)  // 도끼 착용
-        {
-            Equipping_Axe = true;
-            if (Equipping_Others)  // 다른 무기를 착용하고 있었으면
-            {
-                Equipping_Others = false;
-                Increase_in_Attack_Power = Increase_in_Attack_Power - Others_BonusState + Axe_BonusState;
-            }
-            else  // 모든 무기를 미착용하고 있었으면
-            {
-                Increase_in_Attack_Power += Axe_BonusState;
-            }
-        }
-        else  // 무기 해제
-        {
-            Equipping_Axe = false;
-            Increase_in_Attack_Power -= Axe_BonusState;
-        }
-     */
 
     // 공격받을 때 순서
     // 1. 공격 받으면 밀쳐낼 확률 계산
-    void Calculate_HitForce(string Attack_point, float Zombie_Attack_power)
+    public void Calculate_HitForce(bool Zombie_Attack)
     {
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
         if (((float)randomNumber / 100) > playerSkill_ActivationProbability.Get_HitForce())
         {
-            Calculating_Probability_of_Injury_Location(Zombie_Attack_power);
+            Calculating_Probability_of_Injury_Location();
         }
         else
         {
@@ -173,82 +184,82 @@ public class Player_main : MonoBehaviour
 
     // 못 밀쳐냈을때
     // 2. 공격받을 신체 위치 확률 계산
-    void Calculating_Probability_of_Injury_Location(float Zombie_Attack_power)
+    void Calculating_Probability_of_Injury_Location()
     {
-        string Attack_point = "";
+        Player_body_Location Attack_point = 0;
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
         if(randomNumber >= 0 && randomNumber < 8)  // 8%
         {
-            Attack_point = "Left_hand";
+            Attack_point = Player_body_Location.Left_hand;
         }
         else if (randomNumber >= 8 && randomNumber < 16)  // 8%
         {
-            Attack_point = "Right_hand";
+            Attack_point = Player_body_Location.Right_hand;
         }
         else if (randomNumber >= 16 && randomNumber < 28)  // 12%
         {
-            Attack_point = "Left_forearm";
+            Attack_point = Player_body_Location.Left_forearm;
         }
         else if (randomNumber >= 28 && randomNumber < 40)  // 12%
         {
-            Attack_point = "Right_forearm";
+            Attack_point = Player_body_Location.Right_forearm;
         }
         else if (randomNumber >= 40 && randomNumber < 51)  // 11%
         {
-            Attack_point = "Left_upper_arm";
+            Attack_point = Player_body_Location.Left_upper_arm;
         }
         else if (randomNumber >= 51 && randomNumber < 62)  // 11%
         {
-            Attack_point = "Right_upper_arm";
+            Attack_point = Player_body_Location.Right_upper_arm;
         }
         else if (randomNumber >= 62 && randomNumber < 68)  // 6%
         {
-            Attack_point = "upper_torso";
+            Attack_point = Player_body_Location.upper_torso;
         }
         else if (randomNumber >= 68 && randomNumber < 74)  // 6%
         {
-            Attack_point = "Lower_torso";
+            Attack_point = Player_body_Location.Lower_torso;
         }
         else if (randomNumber >= 74 && randomNumber < 78)  // 4%
         {
-            Attack_point = "Head";
+            Attack_point = Player_body_Location.Head;
         }
         else if (randomNumber >= 78 && randomNumber < 85)  // 7%
         {
-            Attack_point = "Neck";
+            Attack_point = Player_body_Location.Neck;
         }
         else if (randomNumber >= 85 && randomNumber < 94)  // 9%
         {
-            Attack_point = "Groin";
+            Attack_point = Player_body_Location.Groin;
         }
         else if (randomNumber >= 94 && randomNumber < 95)  // 1%
         {
-            Attack_point = "Left_thigh";
+            Attack_point = Player_body_Location.Left_thigh;
         }
         else if (randomNumber >= 95 && randomNumber < 96)  // 1%
         {
-            Attack_point = "Right_thigh";
+            Attack_point = Player_body_Location.Right_thigh;
         }
         else if (randomNumber >= 96 && randomNumber < 97)  // 1%
         {
-            Attack_point = "Left_shin";
+            Attack_point = Player_body_Location.Left_shin;
         }
         else if (randomNumber >= 97 && randomNumber < 98)  // 1%
         {
-            Attack_point = "Right_shin";
+            Attack_point = Player_body_Location.Right_shin;
         }
         else if (randomNumber >= 98 && randomNumber < 99)  // 1%
         {
-            Attack_point = "Left_foot";
+            Attack_point = Player_body_Location.Left_foot;
         }
         else if (randomNumber >= 99 && randomNumber < 100)  // 1%
         {
-            Attack_point = "Right_foot";
+            Attack_point = Player_body_Location.Right_foot;
         }
 
-        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zombie_Attack_power);
+        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point);
     }
 
     // 2. 좀비의 공격 패턴 확률 계산
@@ -260,16 +271,19 @@ public class Player_main : MonoBehaviour
         Bites = 3  
     }
 
-    void Calculating_the_Probability_of_Zombie_Attack_Pattern(string Attack_point, float Zombie_Attack_power)
+    void Calculating_the_Probability_of_Zombie_Attack_Pattern(Player_body_Location Attack_point)
     {
         System.Random rand = new System.Random();
         Zombie_Attack_Pattern Rand_pattern = (Zombie_Attack_Pattern)rand.Next(4);
+
+        float Zombie_Attack_power = 0.0f;
 
         switch (Rand_pattern)
         {
             case Zombie_Attack_Pattern.punches:
                 // 타격(피해o & 상처x)
 
+                //Zombie_Attack_power * Attack_point
 
                 break;
             case Zombie_Attack_Pattern.Scratches:

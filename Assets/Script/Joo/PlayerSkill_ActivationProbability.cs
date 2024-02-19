@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSkill_ActivationProbability
 {
+
     // 피로도 생성 비율 ( * )  // Fitness
     float Fatigue_Generation_Rate = 1.00f;
     public float Get_Fatigue_Generation_Rate() { return Fatigue_Generation_Rate; }
@@ -143,87 +144,122 @@ public class PlayerSkill_ActivationProbability
     }
 
     // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용
-    float Increase_in_Attack_Power = 0.3f;
+    float Basic_Increase_in_Attack_Power = 0.3f;  // 무기 미착용 시
+    float Increase_in_Attack_Power = 0.0f;  // 무기 착용 시
     public float Get_Increase_in_Attack_Power() { return  Increase_in_Attack_Power; }
 
-    public void Set_Increase_in_Attack_Power_forSkill(string SkillName, float SkillLevel)
+    public void Set_Increase_in_Attack_Power_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
     {
-        float Axe_BonusState = 0.1f * SkillLevel;
-        float Others_BonusState = 0.1f * (SkillLevel - 1);
+        float Axe_BonusState;
+        float Others_BonusState;
+        Increase_in_Attack_Power = Basic_Increase_in_Attack_Power;
 
-        //switch()
-        //if (SkillName == "Axe")  // 도끼
-        //{
+        switch (SkillName)
+        {
+            case Weapon_type.Axe:
+                Axe_BonusState = 0.1f * SkillLevel;
+                if (IsEquipping)
+                    Increase_in_Attack_Power = Basic_Increase_in_Attack_Power + Axe_BonusState;
+                break;
+            case Weapon_type.LongBlunt:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Increase_in_Attack_Power = Basic_Increase_in_Attack_Power + Others_BonusState;
+                break;
+            case Weapon_type.ShortBlunt:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Increase_in_Attack_Power = Basic_Increase_in_Attack_Power + Others_BonusState;
+                break;
+            case Weapon_type.LongBlade:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Increase_in_Attack_Power = Basic_Increase_in_Attack_Power + Others_BonusState;
+                break;
+            case Weapon_type.ShortBlade:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Increase_in_Attack_Power = Basic_Increase_in_Attack_Power + Others_BonusState;
+                break;
+            case Weapon_type.Spear:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Increase_in_Attack_Power = Basic_Increase_in_Attack_Power + Others_BonusState;
+                break;
+            case Weapon_type.Gun:
 
-        //}
-        //else if (SkillName == "LongBlunt")
-        //{
-
-        //}
-        //else if (SkillName == "ShortBlunt")
-        //{
-
-        //}
-        //else if (SkillName == "LongBlade")
-        //{
-
-        //}
-        //else if (SkillName == "ShortBlade")
-        //{
-
-        //}
-        //else if (SkillName == "Spear")
-        //{
-
-        //}
-        //else if (SkillName == "Gun")
-        //{
-
-        //}
+                break;
+            default:
+                break;
+        }
     }
 
 
     // 공격 속도 ( + )  // Fitness // Axe 등 무기
-    float Attack_Speed = 0f;
+    float Basic_Attack_Speed = 0f;  // 무기 미착용 시
+    float Attack_Speed = 0f;  // 무기 착용 시
     public float Get_Attack_Speed() { return Attack_Speed; }
 
-    public void Set_Attack_Speed_forSkill(string SkillName, float SkillLevel)
+    public void Set_Attack_Speed_forSkill(string SkillName, float SkillLevel, bool IsEquipping)
     {
-        if(SkillName == "Fitness")
+        float Axe_BonusState;
+        float Others_BonusState;
+        Attack_Speed = Basic_Attack_Speed;
+
+        if (SkillName == "Fitness")
         {
-            if (Attack_Speed == 0f)
-            {
-                Attack_Speed = 0.02f * SkillLevel;
-            }
-            else
-            {
-                Attack_Speed += 0.02f;
-            }
+            Basic_Attack_Speed = 0.02f * SkillLevel;
+            Attack_Speed = Basic_Attack_Speed;
         }
-        else if(SkillName == "Axe")
+        else
         {
-            if (Attack_Speed == 0f)
+            if (SkillName == "Axe")
             {
-                Attack_Speed = 0.03f * SkillLevel;
+                Axe_BonusState = 0.03f * SkillLevel;
+                if (IsEquipping)
+                    Attack_Speed = Basic_Attack_Speed + Axe_BonusState;
             }
-            else
+            else if (SkillName == "LongBlunt")
             {
-                Attack_Speed += 0.03f;
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
             }
-        }
-        else if (SkillName == "LongBlunt" || SkillName == "ShortBlunt" || SkillName == "LongBlade" 
-            || SkillName == "ShortBlade" || SkillName == "Spear")
-        {
-            if (Attack_Speed == 0f)
+            else if (SkillName == "ShortBlunt")
             {
-                Attack_Speed = 0.03f * (SkillLevel - 1);
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
             }
-            else
+            else if (SkillName == "LongBlade")
             {
-                Attack_Speed += 0.03f;
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+            }
+            else if (SkillName == "ShortBlade")
+            {
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+            }
+            else if (SkillName == "Spear")
+            {
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+            }
+            else if (SkillName == "Maintenance")
+            {
+
+            }
+            else if (SkillName == "Aiming" || SkillName == "Reloading")
+            {
+
             }
         }
     }
+
 
     // 넘어질 확률 ( - )  // Fitness
     float Probability_of_Falling = 0f;
@@ -267,34 +303,55 @@ public class PlayerSkill_ActivationProbability
     }
 
     // 치명타 확률 ( + )  // Axe 등 무기
+    float Basic_Critical_Hit_Chance = 0.0f;
     float Critical_Hit_Chance = 0.0f;
     public float Get_Critical_Hit_Chance() { return Critical_Hit_Chance; }
 
-    public void Set_Critical_Hit_Chance_forSkill(string SkillName, float SkillLevel)
+    public void Set_Critical_Hit_Chance_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
     {
-        if (SkillName == "Axe")
+        float Axe_BonusState;
+        float Others_BonusState;
+        Critical_Hit_Chance = Basic_Critical_Hit_Chance;
+
+        switch (SkillName)
         {
-            if (Critical_Hit_Chance == 0f)
-            {
-                Critical_Hit_Chance = 0.03f * SkillLevel;
-            }
-            else
-            {
-                Critical_Hit_Chance += 0.03f;
-            }
+            case Weapon_type.Axe:
+                Axe_BonusState = 0.03f * SkillLevel;
+                if (IsEquipping)
+                    Critical_Hit_Chance = Basic_Critical_Hit_Chance + Axe_BonusState;
+                break;
+            case Weapon_type.LongBlunt:
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Critical_Hit_Chance = Basic_Critical_Hit_Chance + Others_BonusState;
+                break;
+            case Weapon_type.ShortBlunt:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Critical_Hit_Chance = Basic_Critical_Hit_Chance + Others_BonusState;
+                break;
+            case Weapon_type.LongBlade:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Critical_Hit_Chance = Basic_Critical_Hit_Chance + Others_BonusState;
+                break;
+            case Weapon_type.ShortBlade:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Critical_Hit_Chance = Basic_Critical_Hit_Chance + Others_BonusState;
+                break;
+            case Weapon_type.Spear:
+                Others_BonusState = 0.1f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Critical_Hit_Chance = Basic_Critical_Hit_Chance + Others_BonusState;
+                break;
+            case Weapon_type.Gun:
+
+                break;
+            default:
+                break;
         }
-        else if (SkillName == "LongBlunt" || SkillName == "ShortBlunt" || SkillName == "LongBlade"
-            || SkillName == "ShortBlade" || SkillName == "Spear")
-        {
-            if (Critical_Hit_Chance == 0f)
-            {
-                Critical_Hit_Chance = 0.03f * (SkillLevel - 1);
-            }
-            else
-            {
-                Critical_Hit_Chance += 0.03f;
-            }
-        }
+
     }
 
 
@@ -359,76 +416,233 @@ public class PlayerSkill_ActivationProbability
     }
 
     // 막기 확률 ( + )  // Fitness, Strength // Axe 등 무기     // 좀비가 플레이어 공격 시 그 공격을 막을 확률
+    float Basic_Block_chance = 0.0f;
     float Block_chance = 0.0f;
     public float Get_Block_chance() { return Block_chance; }
 
-    public void Set_Block_chance_forSkill(string SkillName, float SkillLevel) // 근력, 체력 레벨에 따른 방어 확률
+    public void Set_Block_chance_forSkill(string SkillName, float SkillLevel, bool IsEquipping) // 근력, 체력 레벨에 따른 방어 확률
     {
+        float Axe_BonusState;
+        float Others_BonusState;
+        Block_chance = Basic_Block_chance;
+
         if (SkillName == "Fitness" || SkillName == "Strength")
         {
-            if (Block_chance == 0f)
+            if(Basic_Block_chance == 0)
             {
-                Block_chance = 0.02f * SkillLevel;
+                Basic_Block_chance = 0.02f * SkillLevel;
             }
             else
             {
-                Block_chance += 0.02f;
+                Basic_Block_chance += 0.02f * SkillLevel;
             }
+            Block_chance = Basic_Block_chance;
         }
-        else if (SkillName == "Axe")
+        else
         {
-            if (Block_chance == 0f)
+            if (SkillName == "Axe")
             {
-                Block_chance = 0.03f * SkillLevel;
+                Axe_BonusState = 0.03f * SkillLevel;
+                if (IsEquipping)
+                    Block_chance = Basic_Block_chance + Axe_BonusState;
             }
-            else
+            else if (SkillName == "LongBlunt")
             {
-                Block_chance += 0.03f;
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Block_chance = Basic_Block_chance + Others_BonusState;
+            }
+            else if (SkillName == "ShortBlunt")
+            {
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Block_chance = Basic_Block_chance + Others_BonusState;
+            }
+            else if (SkillName == "LongBlade")
+            {
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Block_chance = Basic_Block_chance + Others_BonusState;
+            }
+            else if (SkillName == "ShortBlade")
+            {
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Block_chance = Basic_Block_chance + Others_BonusState;
+            }
+            else if (SkillName == "Spear")
+            {
+                Others_BonusState = 0.03f * (SkillLevel - 1);
+                if (IsEquipping)
+                    Block_chance = Basic_Block_chance + Others_BonusState;
+            }
+            else if (SkillName == "Maintenance")
+            {
+
+            }
+            else if (SkillName == "Aiming" || SkillName == "Reloading")
+            {
+
             }
         }
-        else if (SkillName == "LongBlunt" || SkillName == "ShortBlunt" || SkillName == "LongBlade"
-            || SkillName == "ShortBlade" || SkillName == "Spear")
-        {
-            if (Block_chance == 0f)
-            {
-                Block_chance = 0.03f * (SkillLevel - 1);
-            }
-            else
-            {
-                Block_chance += 0.03f;
-            }
-        }
+
     }
 
     // 회피할 확률 ( + )  // Axe 등 무기     // 좀비가 플레이어 공격 시 그 공격이 성공한 후 회피할 확률
+    float Basic_Injury_chance = -0.05f;
     float Injury_chance = -0.05f;
     public float Get_Injury_chance() { return Injury_chance; }
 
-    public void Set_Injury_chance_forSkill(string SkillName, float SkillLevel)
+    public void Set_Injury_chance_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
     {
-        if (SkillName == "Axe")
-        { 
-            if (SkillLevel == 0)
-                Injury_chance = -0.05f;
-            else if(SkillLevel == 1)
-                Injury_chance = -0.02f;
-            else if(SkillLevel >= 2 && SkillLevel < 8)
-                Injury_chance = 0.01f * (SkillLevel - 2);
-            else if (SkillLevel >= 8)
-                Injury_chance = 0.01f * (SkillLevel - 3);
-        }
-        else if (SkillName == "LongBlunt" || SkillName == "ShortBlunt" || SkillName == "LongBlade"
-            || SkillName == "ShortBlade" || SkillName == "Spear")
+        float Axe_BonusState;
+        float Others_BonusState;
+        Injury_chance = Basic_Injury_chance;
+
+        switch (SkillName)
         {
-            if (SkillLevel <= 1)
-                Injury_chance = -0.05f;
-            else if (SkillLevel == 2)
-                Injury_chance = -0.02f;
-            else if (SkillLevel >= 3 && SkillLevel < 9)
-                Injury_chance = 0.01f * (SkillLevel - 3);
-            else if (SkillLevel >= 9)
-                Injury_chance = 0.01f * (SkillLevel - 4);
+            case Weapon_type.Axe:
+                if (IsEquipping)
+                {
+                    if (SkillLevel == 0)  // -0.05
+                    {
+                        Axe_BonusState = 0.0f;
+                        Injury_chance = Basic_Injury_chance + Axe_BonusState;
+                    }
+                    else if (SkillLevel == 1)  // -0.02
+                    {
+                        Axe_BonusState = 0.03f;
+                        Injury_chance = Basic_Injury_chance + Axe_BonusState;
+                    }
+                    else if (SkillLevel >= 2 && SkillLevel < 8)
+                    {
+                        Axe_BonusState = 0.05f + 0.01f * (SkillLevel - 2);
+                        Injury_chance = Basic_Injury_chance + Axe_BonusState;
+                    }
+                    else if (SkillLevel >= 8)
+                    {
+                        Axe_BonusState = 0.05f + 0.01f * (SkillLevel - 3);
+                        Injury_chance = Basic_Injury_chance + Axe_BonusState;
+                    }
+                }
+                break;
+            case Weapon_type.LongBlunt:
+                if (SkillLevel <= 1)  // -0.05
+                {
+                    Others_BonusState = 0.0f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel == 2)  // -0.02
+                {
+                    Others_BonusState = 0.03f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 3 && SkillLevel < 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 3);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 4);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                break;
+            case Weapon_type.ShortBlunt:
+                if (SkillLevel <= 1)  // -0.05
+                {
+                    Others_BonusState = 0.0f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel == 2)  // -0.02
+                {
+                    Others_BonusState = 0.03f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 3 && SkillLevel < 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 3);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 4);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                break;
+            case Weapon_type.LongBlade:
+                if (SkillLevel <= 1)  // -0.05
+                {
+                    Others_BonusState = 0.0f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel == 2)  // -0.02
+                {
+                    Others_BonusState = 0.03f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 3 && SkillLevel < 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 3);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 4);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                break;
+            case Weapon_type.ShortBlade:
+                if (SkillLevel <= 1)  // -0.05
+                {
+                    Others_BonusState = 0.0f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel == 2)  // -0.02
+                {
+                    Others_BonusState = 0.03f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 3 && SkillLevel < 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 3);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 4);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                break;
+            case Weapon_type.Spear:
+                if (SkillLevel <= 1)  // -0.05
+                {
+                    Others_BonusState = 0.0f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel == 2)  // -0.02
+                {
+                    Others_BonusState = 0.03f;
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 3 && SkillLevel < 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 3);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                else if (SkillLevel >= 9)
+                {
+                    Others_BonusState = 0.05f + 0.01f * (SkillLevel - 4);
+                    Injury_chance = Basic_Injury_chance + Others_BonusState;
+                }
+                break;
+            case Weapon_type.Gun:
+
+                break;
+            default:
+                break;
         }
+
     }
     
 
@@ -667,6 +881,157 @@ public class PlayerSkill_ActivationProbability
                 Probability_of_Detection_by_Zombies_while_Sneaking = 0.192f;
                 break;
             default:
+                break;
+        }
+    }
+
+    // 사격시 정확도 ( + )  ( 목표물에 명중할 기본 확률 )
+    float Accuracy = 0.0f;
+    public float Get_Accuracy() { return Accuracy; }
+    
+    public void Set_Accuracy(float SkillLevel)
+    {
+        switch (SkillLevel)
+        {
+            case 0: case 1:
+                Accuracy = 0.02f;
+                break;
+            case 2: case 3:
+                Accuracy = 0.05f;
+                break;
+            case 4: case 5:
+                Accuracy = 0.07f;
+                break;
+            case 6: case 7:
+                Accuracy = 0.10f;
+                break;
+            case 8:
+                Accuracy = 0.12f;
+                break;
+            case 9:
+                Accuracy = 0.15f;
+                break;
+            case 10:
+                Accuracy = 0.17f;
+                break;
+        }
+    }
+
+    // 사격시 정밀도 ( + )  ( 치명타를 맞을 확률. 치명타 시 2배 이상 피해를 크게 증가 )
+    float Precision = 0.0f;
+    public float Get_Precision() { return Precision; }
+
+    public void Set_Precision(float SkillLevel)
+    {
+        switch (SkillLevel)
+        {
+            case 0: case 1:
+                Precision = 0.00f;
+                break;
+            case 2: case 3:
+                Precision = 0.02f;
+                break;
+            case 4: case 5:
+                Precision = 0.05f;
+                break;
+            case 6: case 7:
+                Precision = 0.10f;
+                break;
+            case 8: case 9: case 10:
+                Precision = 0.15f;
+                break;
+        }
+    }
+
+    // 사거리 ( + )  ( 산탄총을 제외한 대부분의 총기류에 대한 플레이어의 최대 유효 범위를 약간 증가 )
+    float Range = 0.0f;
+    public float Get_Range() { return Range; }
+
+    public void Set_Range(float SkillLevel)
+    {
+        switch (SkillLevel)
+        {
+            case 0: case 1: case 2:
+                Range = 0f;
+                break;
+            case 3: case 4: case 5:
+                Range = 1f;
+                break;
+            case 6: case 7: case 8:
+                Range = 2f;
+                break;
+            case 9: case 10:
+                Range = 3f;
+                break;
+        }
+    }
+
+    // 발사 각도( + )  ( 범위가 좁을수록 특정 목표를 더 정확하게 겨냥 )
+    // 발사각도 TargetAngle ° = ( 1 - 무기.MinAngle ) * 360
+    float Launch_Angle = 0.0f;
+    public float Get_Launch_Angle() { return Launch_Angle; }
+
+    public void Set_Launch_Angle(float SkillLevel)
+    {
+        switch (SkillLevel)
+        {
+            case 0: case 1:
+                Launch_Angle = 0.05f;  // 5도 up
+                break;
+            case 3: case 4: case 5:
+                Launch_Angle = 0.15f;  // 15도 up
+                break;
+            case 6: case 7: case 8:
+                Launch_Angle = 0.25f;  // 25도 up
+                break;
+            case 9: case 10:
+                Launch_Angle = 0.35f;  // 35도 up
+                break;
+        }
+    }
+
+    // 조준 시간 ( * )  ( 플레이어가 이동 후 조준하는 데 걸리는 시간 )
+    float Time_for_aiming = 0.0f;
+    public float Get_Time_for_aiming() { return Time_for_aiming; }
+
+    public void Set_Time_for_aiming(float SkillLevel)
+    {
+        switch (SkillLevel)
+        {
+            case 0: case 1:
+                Launch_Angle = 0.95f;
+                break;
+            case 3: case 4: case 5:
+                Launch_Angle = 0.9f;
+                break;
+            case 6: case 7: case 8:
+                Launch_Angle = 0.8f;
+                break;
+            case 9: case 10:
+                Launch_Angle = 0.7f;
+                break;
+        }
+    }
+
+    // 재장전 시간
+    float Time_for_reloading = 0.0f;
+    public float Get_Time_for_reloading() { return Time_for_reloading; }
+
+    public void Set_Time_for_reloading(float SkillLevel)
+    {
+        switch (SkillLevel)
+        {
+            case 0: case 1:
+                Launch_Angle = 0.95f;
+                break;
+            case 3: case 4: case 5:
+                Launch_Angle = 0.9f;
+                break;
+            case 6: case 7: case 8:
+                Launch_Angle = 0.8f;
+                break;
+            case 9: case 10:
+                Launch_Angle = 0.7f;
                 break;
         }
     }

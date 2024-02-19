@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerPassiveSkill_Level  // 체력, 근력
 {
@@ -30,9 +31,9 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
@@ -44,7 +45,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
                 P_inven.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
@@ -88,9 +89,9 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
@@ -102,7 +103,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
                 P_inven.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level);
+                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
                 /*
                  미반영사항: 특성
@@ -238,6 +239,14 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     float W_Min_Level = 0f;
     float W_Max_Level = 10f;
 
+    // 총기
+    float W_Accuracy = 0f;  // 정확도
+    float W_Precision = 0f;  // 정밀도
+    float W_Range = 0f;  // 사거리
+    float W_Launch_Angle = 0;  // 발사각도
+    float W_Time_for_aiming = 0;  // 조준시간
+    float W_Time_for_reloading = 0;  // 재장전 시간
+
     float W_EXP = 0f;
     List<float>[] W_expRequirements;
     // 레벨 0 ~ 10
@@ -250,76 +259,6 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
             W_SkillName = skillname;
             W_Level = initialLevel;
             InitializeExpRequirements();
-
-            if (W_SkillName == "Axe")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.Set_testText(W_Level);  // testText
-            }
-            else if (W_SkillName == "LongBlunt")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "ShortBlunt")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "LongBlade")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "ShortBlade")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "Spear")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "Maintenance")
-            {
-
-            }
-            else if (W_SkillName == "Aiming")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "Reloading")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
         }
     }
 
@@ -346,82 +285,15 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
 
     public void SetEXP(float exp)
     {
-        W_EXP += exp;
+        if (W_Level < 5)
+            W_EXP += exp;
+        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
+            W_EXP += exp * 0.37f;
+
         if (W_Level < W_Max_Level && W_EXP >= W_expRequirements[(int)W_Level][0])
         {
             W_EXP -= W_expRequirements[(int)W_Level][0];
             W_Level++;
-
-            if (W_SkillName == "Axe")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.Set_testText(W_Level);  // testText
-            }
-            else if (W_SkillName == "LongBlunt")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "ShortBlunt")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "LongBlade")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "ShortBlade")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "Spear")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "Maintenance")
-            {
-
-            }
-            else if (W_SkillName == "Aiming")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-            else if (W_SkillName == "Reloading")
-            {
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(W_SkillName, W_Level);
-            }
-
         }
     }
 
@@ -435,10 +307,89 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
         return W_EXP;
     }
 
-    // 무기 착용 시 각각 반영되는 효과 설정
-    public void Set_Weapon_Equipping_Effect()
+    // 무기 착용, 해제 시 각각 반영되는 효과 설정
+    public void Set_Weapon_Equipping_Effect(bool IsEquipping)
     {
+        if (W_SkillName == "Axe")
+        {
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(Weapon_type.Axe, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(Weapon_type.Axe, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.Axe, W_Level, IsEquipping);
+        }
+        else if (W_SkillName == "LongBlunt")
+        {
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(Weapon_type.LongBlunt, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(Weapon_type.LongBlunt, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.LongBlunt, W_Level, IsEquipping);
+        }
+        else if (W_SkillName == "ShortBlunt")
+        {
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(Weapon_type.ShortBlunt, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(Weapon_type.ShortBlunt, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.ShortBlunt, W_Level, IsEquipping);
+        }
+        else if (W_SkillName == "LongBlade")
+        {
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(Weapon_type.LongBlade, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(Weapon_type.LongBlade, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.LongBlade, W_Level, IsEquipping);
+        }
+        else if (W_SkillName == "ShortBlade")
+        {
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(Weapon_type.ShortBlade, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(Weapon_type.ShortBlade, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.ShortBlade, W_Level, IsEquipping);
+        }
+        else if (W_SkillName == "Spear")
+        {
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forSkill(Weapon_type.Spear, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forSkill(Weapon_type.Spear, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.Spear, W_Level, IsEquipping);
+        }
+        else if (W_SkillName == "Maintenance")
+        {
 
+        }
+        Player_main.player_main.Set_testText(W_Level);
+
+    }
+
+    public void Set_Gun_Equipping_Effect(bool IsEquipping)
+    {
+        // 무기 정보 받아서 정확도 등 계산
+
+
+
+        if (W_SkillName == "Aiming")
+        {
+            // 정확도
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Accuracy(W_Level);
+            // 정밀도
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Precision(W_Level);
+            // 사거리
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Range(W_Level);
+            // 발사각도
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Launch_Angle(W_Level);
+            // 조준시간 감소
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_aiming(W_Level);
+        }
+        else if (W_SkillName == "Reloading")
+        {
+            // 재장전 시간 감소
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_reloading(W_Level);
+        }
     }
 }
 
