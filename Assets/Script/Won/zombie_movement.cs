@@ -25,16 +25,19 @@ public class zombie_movement : MonoBehaviour
     float atk_distance = 1f; //좀비 공격시도 범위
     zombieHp zomhp;//좀비의 상태 스크립트
     bool atking = false;//좀비가 공격중인가
+    public bool live = true;
+    float dieday= 0f;
 
     void Start()
     {
+        live = true;
         int crawl_spawn = Random.Range(0, 10);
         zomhp = gameObject.GetComponent<zombieHp>();
         animator = GetComponent<Animator>();
         lastPosition = transform.position;
         zombieTransform = transform;
         StartCoroutine(RandomMoveCoroutine());
-        if (crawl_spawn <= 10)//스크립트 시작시 좀비가 기어서 움직이는가 서서 움직이는가 판단
+        if (crawl_spawn <= 1)//스크립트 시작시 좀비가 기어서 움직이는가 서서 움직이는가 판단
         {
             Debug.Log(crawl_spawn);
             zombie_crawl = true;
@@ -44,25 +47,35 @@ public class zombie_movement : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        if (player != null)//플레이어 탐지후 행동
+        if (live)
         {
-            StopCoroutine(zomidlemove());//좀비 idle중지
-
-            targetTime += Time.deltaTime;
-            if (targetTime > durationTime)//플레이어가 탐지 범위를 벗어났을때 추적시간을 넘었을시
+            if (player != null)//플레이어 탐지후 행동
             {
-                player = null;
-                targetTime = 0f;
-                StartCoroutine(RandomMoveCoroutine());//좀비 idle시작
+                StopCoroutine(zomidlemove());//좀비 idle중지
+
+                targetTime += Time.deltaTime;
+                if (targetTime > durationTime)//플레이어가 탐지 범위를 벗어났을때 추적시간을 넘었을시
+                {
+                    player = null;
+                    targetTime = 0f;
+                    StartCoroutine(RandomMoveCoroutine());//좀비 idle시작
+                }
             }
+            else if (player == null)
+            {
+                findplayer();//좀비가 플레이어 재탐색
+                StopCoroutine(zommove());//플레이어 추적 중지
+            }
+            animatorwalk();//좀비가 움직이는 애니메이션으로 이동
         }
-        else if(player == null)
-        {
-            findplayer();//좀비가 플레이어 재탐색
-            StopCoroutine(zommove());//플레이어 추적 중지
+        else
+        {/*
+            dieday = 서버 날짜;
+            if(dieday+30 < 서버 날짜)
+            {
+                Destroy(gameObject);
+            }*/
         }
-        animatorwalk();//좀비가 움직이는 애니메이션으로 이동
     }
     void findplayer() //주변 플레이어 탐색
     {
@@ -188,8 +201,9 @@ public class zombie_movement : MonoBehaviour
             Debug.Log("일어서다");
         }
     }
-    void zom_down()//좀비가 넘어질때
+    public void zom_down(GameObject player)//좀비가 넘어질때
     {
+        atk_player = player;
         int zom_down_percentage = Random.Range(0, 10);
         if (zom_down_percentage > 1)
         {
@@ -215,11 +229,8 @@ public class zombie_movement : MonoBehaviour
             }
 
         }
-    }
-    public void zombie_hit(GameObject player)//좀비가 공격받을떄 모션
-    {
-        atk_player = player;
-        animator.SetBool("hit", true);
+        else
+            animator.SetBool("hit", true);
     }
     void zom_atk_anim()//좀비가 공격시작 애니메이션
     {
