@@ -167,7 +167,7 @@ public class Player_main : MonoBehaviour
 
     // 공격받을 때 순서
     // 1. 공격 받으면 밀쳐낼 확률 계산
-    void Calculate_HitForce(bool Zombie_Attack)
+    public void Calculate_HitForce(bool Zombie_Attack)
     {
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
