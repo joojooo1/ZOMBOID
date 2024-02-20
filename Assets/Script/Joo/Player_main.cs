@@ -167,14 +167,14 @@ public class Player_main : MonoBehaviour
 
     // °ø°İ¹ŞÀ» ¶§ ¼ø¼­
     // 1. °ø°İ ¹ŞÀ¸¸é ¹ĞÃÄ³¾ È®·ü °è»ê
-    public void Calculate_HitForce(bool Zombie_Attack)
+    public void Calculate_HitForce(bool Zombie_Attack, string Zom_Type, bool IsBack)
     {
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
         if (((float)randomNumber / 100) > playerSkill_ActivationProbability.Get_HitForce())
         {
-            Calculating_Probability_of_Injury_Location();
+            Calculating_Probability_of_Injury_Location(Zom_Type, IsBack);
         }
         else
         {
@@ -184,82 +184,90 @@ public class Player_main : MonoBehaviour
 
     // ¸ø ¹ĞÃÄ³ÂÀ»¶§
     // 2. °ø°İ¹ŞÀ» ½ÅÃ¼ À§Ä¡ È®·ü °è»ê
-    void Calculating_Probability_of_Injury_Location()
+    void Calculating_Probability_of_Injury_Location(string Zom_Type, bool IsBack)
     {
         Player_body_Location Attack_point = 0;
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
-        if(randomNumber >= 0 && randomNumber < 8)  // 8%
+        if (!IsBack)
         {
-            Attack_point = Player_body_Location.Left_hand;
+            if (randomNumber >= 0 && randomNumber < 8)  // 8%
+            {
+                Attack_point = Player_body_Location.Left_hand;
+            }
+            else if (randomNumber >= 8 && randomNumber < 16)  // 8%
+            {
+                Attack_point = Player_body_Location.Right_hand;
+            }
+            else if (randomNumber >= 16 && randomNumber < 28)  // 12%
+            {
+                Attack_point = Player_body_Location.Left_forearm;
+            }
+            else if (randomNumber >= 28 && randomNumber < 40)  // 12%
+            {
+                Attack_point = Player_body_Location.Right_forearm;
+            }
+            else if (randomNumber >= 40 && randomNumber < 51)  // 11%
+            {
+                Attack_point = Player_body_Location.Left_upper_arm;
+            }
+            else if (randomNumber >= 51 && randomNumber < 62)  // 11%
+            {
+                Attack_point = Player_body_Location.Right_upper_arm;
+            }
+            else if (randomNumber >= 62 && randomNumber < 68)  // 6%
+            {
+                Attack_point = Player_body_Location.upper_torso;
+            }
+            else if (randomNumber >= 68 && randomNumber < 74)  // 6%
+            {
+                Attack_point = Player_body_Location.Lower_torso;
+            }
+            else if (randomNumber >= 74 && randomNumber < 78)  // 4%
+            {
+                Attack_point = Player_body_Location.Head;
+            }
+            else if (randomNumber >= 78 && randomNumber < 85)  // 7%
+            {
+                Attack_point = Player_body_Location.Neck;
+            }
+            else if (randomNumber >= 85 && randomNumber < 94)  // 9%
+            {
+                Attack_point = Player_body_Location.Groin;
+            }
+            else if (randomNumber >= 94 && randomNumber < 95)  // 1%
+            {
+                Attack_point = Player_body_Location.Left_thigh;
+            }
+            else if (randomNumber >= 95 && randomNumber < 96)  // 1%
+            {
+                Attack_point = Player_body_Location.Right_thigh;
+            }
+            else if (randomNumber >= 96 && randomNumber < 97)  // 1%
+            {
+                Attack_point = Player_body_Location.Left_shin;
+            }
+            else if (randomNumber >= 97 && randomNumber < 98)  // 1%
+            {
+                Attack_point = Player_body_Location.Right_shin;
+            }
+            else if (randomNumber >= 98 && randomNumber < 99)  // 1%
+            {
+                Attack_point = Player_body_Location.Left_foot;
+            }
+            else if (randomNumber >= 99 && randomNumber < 100)  // 1%
+            {
+                Attack_point = Player_body_Location.Right_foot;
+            }
         }
-        else if (randomNumber >= 8 && randomNumber < 16)  // 8%
+        else
         {
-            Attack_point = Player_body_Location.Right_hand;
-        }
-        else if (randomNumber >= 16 && randomNumber < 28)  // 12%
-        {
-            Attack_point = Player_body_Location.Left_forearm;
-        }
-        else if (randomNumber >= 28 && randomNumber < 40)  // 12%
-        {
-            Attack_point = Player_body_Location.Right_forearm;
-        }
-        else if (randomNumber >= 40 && randomNumber < 51)  // 11%
-        {
-            Attack_point = Player_body_Location.Left_upper_arm;
-        }
-        else if (randomNumber >= 51 && randomNumber < 62)  // 11%
-        {
-            Attack_point = Player_body_Location.Right_upper_arm;
-        }
-        else if (randomNumber >= 62 && randomNumber < 68)  // 6%
-        {
-            Attack_point = Player_body_Location.upper_torso;
-        }
-        else if (randomNumber >= 68 && randomNumber < 74)  // 6%
-        {
-            Attack_point = Player_body_Location.Lower_torso;
-        }
-        else if (randomNumber >= 74 && randomNumber < 78)  // 4%
-        {
-            Attack_point = Player_body_Location.Head;
-        }
-        else if (randomNumber >= 78 && randomNumber < 85)  // 7%
-        {
-            Attack_point = Player_body_Location.Neck;
-        }
-        else if (randomNumber >= 85 && randomNumber < 94)  // 9%
-        {
-            Attack_point = Player_body_Location.Groin;
-        }
-        else if (randomNumber >= 94 && randomNumber < 95)  // 1%
-        {
-            Attack_point = Player_body_Location.Left_thigh;
-        }
-        else if (randomNumber >= 95 && randomNumber < 96)  // 1%
-        {
-            Attack_point = Player_body_Location.Right_thigh;
-        }
-        else if (randomNumber >= 96 && randomNumber < 97)  // 1%
-        {
-            Attack_point = Player_body_Location.Left_shin;
-        }
-        else if (randomNumber >= 97 && randomNumber < 98)  // 1%
-        {
-            Attack_point = Player_body_Location.Right_shin;
-        }
-        else if (randomNumber >= 98 && randomNumber < 99)  // 1%
-        {
-            Attack_point = Player_body_Location.Left_foot;
-        }
-        else if (randomNumber >= 99 && randomNumber < 100)  // 1%
-        {
-            Attack_point = Player_body_Location.Right_foot;
-        }
 
-        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point);
+        }
+        
+
+        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
     }
 
     // 2. Á»ºñÀÇ °ø°İ ÆĞÅÏ È®·ü °è»ê
@@ -271,34 +279,41 @@ public class Player_main : MonoBehaviour
         Bites = 3  
     }
 
-    void Calculating_the_Probability_of_Zombie_Attack_Pattern(Player_body_Location Attack_point)
+    void Calculating_the_Probability_of_Zombie_Attack_Pattern(Player_body_Location Attack_point, string Zom_Type, bool IsBack)
     {
         System.Random rand = new System.Random();
-        Zombie_Attack_Pattern Rand_pattern = (Zombie_Attack_Pattern)rand.Next(4);
+        Zombie_Attack_Pattern Rand_pattern = (Zombie_Attack_Pattern)rand.Next(100);
 
-        float Zombie_Attack_power = 0.0f;
-
-        switch (Rand_pattern)
+        float Zombie_Attack_power = 5.0f;
+        if (!IsBack)
         {
-            case Zombie_Attack_Pattern.punches:
-                // Å¸°İ(ÇÇÇØo & »óÃ³x)
+            switch (Rand_pattern)
+            {
+                case Zombie_Attack_Pattern.punches:
+                    // Å¸°İ(ÇÇÇØo & »óÃ³x)
 
-                //Zombie_Attack_power * Attack_point
+                    //Zombie_Attack_power * Attack_point
 
-                break;
-            case Zombie_Attack_Pattern.Scratches:
-                // ±ÜÈû(7% È®·ü·Î °¨¿°)
-                break;
-            case Zombie_Attack_Pattern.Lacerations:
-                // Âõ±è(25% È®·ü·Î °¨¿°)
-                break;
-            case Zombie_Attack_Pattern.Bites:
-                // ¹°¸²(100% È®·ü·Î °¨¿°)
-                break;
-            default:
-                break;
+                    break;
+                case Zombie_Attack_Pattern.Scratches:
+                    // ±ÜÈû(7% È®·ü·Î °¨¿°)
+                    break;
+                case Zombie_Attack_Pattern.Lacerations:
+                    // Âõ±è(25% È®·ü·Î °¨¿°)
+                    break;
+                case Zombie_Attack_Pattern.Bites:
+                    // ¹°¸²(100% È®·ü·Î °¨¿°)
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        else
+        {
 
         }
+
     }
 
 
