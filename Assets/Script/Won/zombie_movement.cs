@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class zombie_movement : MonoBehaviour
 {
-    public float speed = 10f; //좀비 이동속도
+    public float speed; //좀비 이동속도
     private Transform zombieTransform;
     public GameObject player; //플레이어 
     private float targetTime = 0f;//플레이어 감지하는 시간
@@ -20,7 +20,7 @@ public class zombie_movement : MonoBehaviour
     private Vector3 targetPosition;// 좀비 idle 배회시 렌덤 좌표
     public bool isMoving = false; // 좀비가 idle 배회중인가
     const float moveInterval = 5f; // 좀비 idle 배회시 렌덤 좌표 재설정 시간 
-    bool zombie_crawl = false;//좀비가 넘어져있은지
+    bool zombie_crawl = false;//좀비가 넘어져있은지 (hp전송)
     GameObject atk_player;//좀비에서 공격한 플레이어
     float atk_distance = 1f; //좀비 공격시도 범위
     zombieHp zomhp;//좀비의 상태 스크립트
@@ -42,7 +42,10 @@ public class zombie_movement : MonoBehaviour
             Debug.Log(crawl_spawn);
             zombie_crawl = true;
             animator.SetBool("crawl_walk", zombie_crawl);
+            zom_situation();
         }
+        speed = zomhp.curret_speed;
+        zom_anim_speed();
     }
 
     void FixedUpdate()
@@ -93,6 +96,7 @@ public class zombie_movement : MonoBehaviour
             {
                if (hit.collider.gameObject.tag == "Player")
                {
+                    zom_situation();
                     targetTime = 0f;
                     player = hit.collider.gameObject;
                     StopCoroutine(zommove());
@@ -193,11 +197,17 @@ public class zombie_movement : MonoBehaviour
         StartCoroutine(zomidlemove());
     }
 
-    void zom_up()
+    void zom_up()//좀비가 일어날 확률
     {
         if (Random.Range(0, 10) > 5)
         {
+            speed = 0;
+            zombie_crawl = false;
+            animator.SetBool("crawl_walk", false);
+            animator.SetBool("down", false);
+            animator.SetBool("backdown", false);
             animator.SetBool("up", true);
+            zom_situation();
             Debug.Log("일어서다");
         }
     }
@@ -207,6 +217,7 @@ public class zombie_movement : MonoBehaviour
         int zom_down_percentage = Random.Range(0, 10);
         if (zom_down_percentage > 1)
         {
+            zombie_crawl = true;
             if (atk_player != null)//플레이어가 공격해서 넘어졌을떄
             {
                 Vector3 relativePosition = atk_player.transform.position - transform.position;
@@ -227,7 +238,7 @@ public class zombie_movement : MonoBehaviour
                 zombie_crawl = true;
                 animator.SetBool("backdown", true);
             }
-
+            zom_situation();
         }
         else
             animator.SetBool("hit", true);
@@ -255,5 +266,33 @@ public class zombie_movement : MonoBehaviour
     {
         atking = false;
         findplayer();
+    }
+
+    void zom_situation()
+    {
+        zomhp.zom_data(player, zombie_crawl);
+    }
+    void zom_anim_speed()
+    {
+        switch (speed)
+        {
+            case 7:
+                animator.SetFloat("Typespeed", 2f);
+                break;
+            case 10:
+                animator.SetFloat("Typespeed", 3f);
+                break;
+            case 13:
+                animator.SetFloat("Typespeed", 4f);
+                break;
+            default:
+                animator.SetFloat("Typespeed", 1f);
+                break;
+        }
+    }
+    void zom_up_off()
+    {
+        speed = zomhp.curret_speed;
+        animator.SetBool("up", false);
     }
 }
