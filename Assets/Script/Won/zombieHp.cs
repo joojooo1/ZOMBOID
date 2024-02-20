@@ -23,19 +23,14 @@ public class zombieHp : MonoBehaviour
     public void GetDamage(GameObject player,float Damage)
     {
         curret_zombie_hp -= Damage;
-        _Movement.zombie_hit(player);
+        _Movement.zom_down(player);
         if (curret_zombie_hp <= 0)
         {
-            zombieDie();
+            _Movement.live = false;
         }
     }
     public void zombie_atk(GameObject player)
     {
         //플레이어 데미지 보내기 bool로 성공보내기
-    }
-
-    void zombieDie()
-    {
-        Debug.Log("좀비 죽음");
     }
 }
