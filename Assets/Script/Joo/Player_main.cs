@@ -17,25 +17,12 @@ public enum Weapon_type
     Gun = 6
 }
 
-public enum Player_body_Location
+public enum Zombie_Attack_Pattern
 {
-    Left_hand = 0,
-    Right_hand = 1,
-    Left_forearm = 2,
-    Right_forearm = 3,
-    Left_upper_arm = 4,
-    Right_upper_arm = 5,
-    upper_torso = 6,
-    Lower_torso = 7,
-    Head = 8,
-    Neck = 9,
-    Groin = 10,
-    Left_thigh = 11,
-    Right_thigh = 12,
-    Left_shin = 13,
-    Right_shin = 14,
-    Left_foot = 15,
-    Right_foot = 16
+    punches = 0,
+    Scratches = 1,
+    Lacerations = 2,
+    Bites = 3
 }
 
 public class Player_main : MonoBehaviour
@@ -45,17 +32,19 @@ public class Player_main : MonoBehaviour
     PlayerInventory inven = new PlayerInventory();
     PlayerSkill Skill;
 
+    public PlayerSkill_ActivationProbability playerSkill_ActivationProbability = new PlayerSkill_ActivationProbability();
+    public PlayerState playerState = new PlayerState();
+    public Player_HP player_HP = new Player_HP();
+
     /* --------------------------------------------------------------------------------- */
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
-    float Player_Max_Health = 100.0f;  // 체력 ( Fitness_Level: 5 / Strength_Level: 5 )
-    float Player_Min_Health = 0f;
-    float Player_current_Health = 0f;
     float Weight = 83.0f; // 체중
     float Calories = 50.0f; // 칼로리 0 - 100
     float Temperature = 50.0f; // 온도 0 - 100
 
     float Attack_Power = 8.0f; // 공격력
     float Evasion = 0.15f;  // 회피율
+    float Moving_Speed = 3f;  // 이동속도
 
     public bool Is_Equipping_Weapons = false;
     /* --------------------------------------------------------------------------------- */
@@ -65,7 +54,6 @@ public class Player_main : MonoBehaviour
         player_main = this;
 
         Skill = GetComponent<PlayerSkill>();
-        Player_current_Health = Player_Max_Health;
     }
 
     float Playermovement_speed = 1.0f;
@@ -95,7 +83,7 @@ public class Player_main : MonoBehaviour
         }
         // ------------------------------------------------------------- test 함수 
 
-
+        
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
         Vector3 pos = transform.position;
@@ -103,11 +91,9 @@ public class Player_main : MonoBehaviour
 
         transform.position = pos;
 
-
     }
 
 
-    public PlayerSkill_ActivationProbability playerSkill_ActivationProbability = new PlayerSkill_ActivationProbability();
     // test 함수 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public UnityEngine.UI.Text[] textText;
     public void Set_testText(float Level)
@@ -167,14 +153,14 @@ public class Player_main : MonoBehaviour
 
     // 공격받을 때 순서
     // 1. 공격 받으면 밀쳐낼 확률 계산
-    public void Calculate_HitForce(bool Zombie_Attack, string Zom_Type, bool IsBack)
+    public void Calculate_HitForce(bool Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
     {
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
         if (((float)randomNumber / 100) > playerSkill_ActivationProbability.Get_HitForce())
         {
-            Calculating_Probability_of_Injury_Location(Zom_Type, IsBack);
+            Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
         }
         else
         {
@@ -184,135 +170,209 @@ public class Player_main : MonoBehaviour
 
     // 못 밀쳐냈을때
     // 2. 공격받을 신체 위치 확률 계산
-    void Calculating_Probability_of_Injury_Location(string Zom_Type, bool IsBack)
+
+    void Calculating_Probability_of_Injury_Location(string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 강도, 후방 여부
     {
-        Player_body_Location Attack_point = 0;
+        Player_body_Location Attack_point  = new Player_body_Location("");
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
-        if (!IsBack)
+        if (!IsBack && !IsDown)  // 서있는 좀비한테 정면에서 공격 당하는 경우
         {
-            if (randomNumber >= 0 && randomNumber < 8)  // 8%
+            if (randomNumber >= 0 && randomNumber < 12)  // 12%
             {
-                Attack_point = Player_body_Location.Left_hand;
+                Attack_point = playerState.Left_forearm;
             }
-            else if (randomNumber >= 8 && randomNumber < 16)  // 8%
+            else if (randomNumber >= 12 && randomNumber < 24)  // 12%
             {
-                Attack_point = Player_body_Location.Right_hand;
+                Attack_point = playerState.Right_forearm;
             }
-            else if (randomNumber >= 16 && randomNumber < 28)  // 12%
+            else if (randomNumber >= 24 && randomNumber < 35)  // 11%
             {
-                Attack_point = Player_body_Location.Left_forearm;
+                Attack_point = playerState.Left_upper_arm;
             }
-            else if (randomNumber >= 28 && randomNumber < 40)  // 12%
+            else if (randomNumber >= 35 && randomNumber < 46)  // 11%
             {
-                Attack_point = Player_body_Location.Right_forearm;
+                Attack_point = playerState.Right_upper_arm;
             }
-            else if (randomNumber >= 40 && randomNumber < 51)  // 11%
+            else if (randomNumber >= 46 && randomNumber < 55)  // 9%
             {
-                Attack_point = Player_body_Location.Left_upper_arm;
+                Attack_point = playerState.Groin;
             }
-            else if (randomNumber >= 51 && randomNumber < 62)  // 11%
+            else if (randomNumber >= 55 && randomNumber < 63)  // 8%
             {
-                Attack_point = Player_body_Location.Right_upper_arm;
+                Attack_point = playerState.Left_hand;
             }
-            else if (randomNumber >= 62 && randomNumber < 68)  // 6%
+            else if (randomNumber >= 63 && randomNumber < 71)  // 8%
             {
-                Attack_point = Player_body_Location.upper_torso;
+                Attack_point = playerState.Right_hand;
             }
-            else if (randomNumber >= 68 && randomNumber < 74)  // 6%
+            else if (randomNumber >= 71 && randomNumber < 78)  // 7%
             {
-                Attack_point = Player_body_Location.Lower_torso;
+                Attack_point = playerState.Neck;
             }
-            else if (randomNumber >= 74 && randomNumber < 78)  // 4%
+            else if (randomNumber >= 78 && randomNumber < 84)  // 6%
             {
-                Attack_point = Player_body_Location.Head;
+                Attack_point = playerState.upper_torso;
             }
-            else if (randomNumber >= 78 && randomNumber < 85)  // 7%
+            else if (randomNumber >= 84 && randomNumber < 90)  // 6%
             {
-                Attack_point = Player_body_Location.Neck;
+                Attack_point = playerState.Lower_torso;
             }
-            else if (randomNumber >= 85 && randomNumber < 94)  // 9%
+            else if (randomNumber >= 90 && randomNumber < 94)  // 4%
             {
-                Attack_point = Player_body_Location.Groin;
+                Attack_point = playerState.Head;
             }
             else if (randomNumber >= 94 && randomNumber < 95)  // 1%
             {
-                Attack_point = Player_body_Location.Left_thigh;
+                Attack_point = playerState.Left_thigh;
             }
             else if (randomNumber >= 95 && randomNumber < 96)  // 1%
             {
-                Attack_point = Player_body_Location.Right_thigh;
+                Attack_point = playerState.Right_thigh;
             }
             else if (randomNumber >= 96 && randomNumber < 97)  // 1%
             {
-                Attack_point = Player_body_Location.Left_shin;
+                Attack_point = playerState.Left_shin;
             }
             else if (randomNumber >= 97 && randomNumber < 98)  // 1%
             {
-                Attack_point = Player_body_Location.Right_shin;
+                Attack_point = playerState.Right_shin;
             }
             else if (randomNumber >= 98 && randomNumber < 99)  // 1%
             {
-                Attack_point = Player_body_Location.Left_foot;
+                Attack_point = playerState.Left_foot;
             }
             else if (randomNumber >= 99 && randomNumber < 100)  // 1%
             {
-                Attack_point = Player_body_Location.Right_foot;
+                Attack_point = playerState.Right_foot;
             }
         }
-        else
+        else if (IsBack && !IsDown) // 서있는 좀비한테 후방에서 공격 당하는 경우
         {
-
+            if (randomNumber >= 0 && randomNumber < 50)  // 7% -> 50%
+            {
+                Attack_point = playerState.Neck;
+            }
+            else if (randomNumber >= 50 && randomNumber < 90)  // 4% -> 40%
+            {
+                Attack_point = playerState.Head;
+            }
+            else if (randomNumber >= 90 && randomNumber < 92)  // 6% -> 2%
+            {
+                Attack_point = playerState.upper_torso;
+            }
+            else if (randomNumber >= 92 && randomNumber < 94)  // 6% -> 2%
+            {
+                Attack_point = playerState.Lower_torso;
+            }
+            else if (randomNumber >= 94 && randomNumber < 95)  // 8% -> 1%
+            {
+                Attack_point = playerState.Left_hand;
+            }
+            else if (randomNumber >= 95 && randomNumber < 96)  // 8% -> 1%
+            {
+                Attack_point = playerState.Right_hand;
+            }
+            else if (randomNumber >= 96 && randomNumber < 97)  // 11% -> 1%
+            {
+                Attack_point = playerState.Left_upper_arm;
+            }
+            else if (randomNumber >= 97 && randomNumber < 98)  // 11% -> 1%
+            {
+                Attack_point = playerState.Right_upper_arm;
+            }
+            else if (randomNumber >= 98 && randomNumber < 99)  // 12% -> 1%
+            {
+                Attack_point = playerState.Left_forearm;
+            }
+            else if (randomNumber >= 99 && randomNumber < 100)  // 12% -> 1%
+            {
+                Attack_point = playerState.Right_forearm;
+            }
+        }
+        else  // 기어다니는 좀비한테 공격 당하는 경우
+        {
+            if (randomNumber >= 0 && randomNumber < 17)  // 1% -> 17%
+            {
+                Attack_point = playerState.Left_foot;
+            }
+            else if (randomNumber >= 17 && randomNumber < 34)  // 1% -> 17%
+            {
+                Attack_point = playerState.Right_foot;
+            }
+            else if (randomNumber >= 34 && randomNumber < 49)  // 1% -> 15%
+            {
+                Attack_point = playerState.Left_shin;
+            }
+            else if (randomNumber >= 49 && randomNumber < 64)  // 1% -> 15%
+            {
+                Attack_point = playerState.Right_shin;
+            }
+            else if (randomNumber >= 64 && randomNumber < 77)  // 1% -> 13%
+            {
+                Attack_point = playerState.Left_thigh;
+            }
+            else if (randomNumber >= 77 && randomNumber < 90)  // 1% -> 13%
+            {
+                Attack_point = playerState.Right_thigh;
+            }
+            else if (randomNumber >= 90 && randomNumber < 100)  // 10%
+            {
+                Attack_point = playerState.Groin;
+            }
         }
         
-
         Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
     }
 
-    // 2. 좀비의 공격 패턴 확률 계산
-    enum Zombie_Attack_Pattern
-    {
-        punches = 0,
-        Scratches = 1,
-        Lacerations = 2,  
-        Bites = 3  
-    }
+    // 3. 좀비의 공격 패턴 확률 계산
 
-    void Calculating_the_Probability_of_Zombie_Attack_Pattern(Player_body_Location Attack_point, string Zom_Type, bool IsBack)
+    void Calculating_the_Probability_of_Zombie_Attack_Pattern(Player_body_Location Attack_point, string Zom_Type, bool IsBack)  // 좀비 -> 플레이어: 공격 당하는 위치, 좀비의 강도, 후방 여부
     {
         System.Random rand = new System.Random();
-        Zombie_Attack_Pattern Rand_pattern = (Zombie_Attack_Pattern)rand.Next(100);
+        int Rand_pattern = rand.Next(100);
 
-        float Zombie_Attack_power = 5.0f;
-        if (!IsBack)
+
+        if (!IsBack)  // 앞에서 공격 당하는 경우
         {
-            switch (Rand_pattern)
+            if (Rand_pattern >= 0 && Rand_pattern < 25)  // 25%
             {
-                case Zombie_Attack_Pattern.punches:
-                    // 타격(피해o & 상처x)
-
-                    //Zombie_Attack_power * Attack_point
-
-                    break;
-                case Zombie_Attack_Pattern.Scratches:
-                    // 긁힘(7% 확률로 감염)
-                    break;
-                case Zombie_Attack_Pattern.Lacerations:
-                    // 찢김(25% 확률로 감염)
-                    break;
-                case Zombie_Attack_Pattern.Bites:
-                    // 물림(100% 확률로 감염)
-                    break;
-                default:
-                    break;
-
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type);
+            }
+            else if (Rand_pattern >= 25 && Rand_pattern < 50)  // 25%
+            {
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type);
+            }
+            else if (Rand_pattern >= 50 && Rand_pattern < 75)  // 25%
+            {
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type);
+            }
+            else if (Rand_pattern >= 75 && Rand_pattern < 100)  // 25%
+            {
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type);
             }
         }
-        else
+        else  // 뒤에서 공격 당하는 경우
         {
-
+            if (Rand_pattern >= 0 && Rand_pattern < 70)  // 70%
+            {
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type);
+            }
+            else if (Rand_pattern >= 70 && Rand_pattern < 80)  // 10%
+            {
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type);
+            }
+            else if (Rand_pattern >= 80 && Rand_pattern < 90)  // 10%
+            {
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type);
+            }
+            else if (Rand_pattern >= 90 && Rand_pattern < 100)  // 10%
+            {
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type);
+            }
         }
+
 
     }
 

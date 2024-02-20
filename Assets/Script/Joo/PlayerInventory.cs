@@ -10,6 +10,13 @@ public class PlayerInventory
     // 근력 10일 때 MaxWeight = 20.0f
     // 수납도구 착용 시 증가
 
+    float Moodles_point = 0.0f;
+
+    public void Set_Add_Moodles_Point(float Set_point)
+    {
+
+    }
+
     public float Get_MaxWeight()
     {
         return MaxWeight;
@@ -56,7 +63,6 @@ public class PlayerInventory
             default:
                 break;
         }
-
     }
 
 

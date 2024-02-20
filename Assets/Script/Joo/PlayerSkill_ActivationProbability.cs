@@ -893,7 +893,10 @@ public class PlayerSkill_ActivationProbability
     {
         switch (SkillLevel)
         {
-            case 0: case 1:
+            case 0:
+                Accuracy = 0.00f;
+                break;
+            case 1:
                 Accuracy = 0.02f;
                 break;
             case 2: case 3:
