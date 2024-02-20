@@ -368,27 +368,40 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
 
     public void Set_Gun_Equipping_Effect(bool IsEquipping)
     {
-        // 무기 정보 받아서 정확도 등 계산
+        /* 무기 정보 받아서 정확도 등 계산
+         * 
+        W_Accuracy = 0f;  // 정확도
+        W_Precision = 0f;  // 정밀도
+        W_Range = 0f;  // 사거리
+        W_Launch_Angle = 0;  // 발사각도
+        W_Time_for_aiming = 0;  // 조준시간
+        W_Time_for_reloading = 0;  // 재장전 시간
 
-
+        */
 
         if (W_SkillName == "Aiming")
         {
             // 정확도
             Player_main.player_main.playerSkill_ActivationProbability.Set_Accuracy(W_Level);
+            W_Accuracy += Player_main.player_main.playerSkill_ActivationProbability.Get_Accuracy();
             // 정밀도
             Player_main.player_main.playerSkill_ActivationProbability.Set_Precision(W_Level);
+            W_Precision += Player_main.player_main.playerSkill_ActivationProbability.Get_Precision();
             // 사거리
             Player_main.player_main.playerSkill_ActivationProbability.Set_Range(W_Level);
+            W_Range += Player_main.player_main.playerSkill_ActivationProbability.Get_Range();
             // 발사각도
             Player_main.player_main.playerSkill_ActivationProbability.Set_Launch_Angle(W_Level);
+            W_Launch_Angle += Player_main.player_main.playerSkill_ActivationProbability.Get_Launch_Angle();
             // 조준시간 감소
             Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_aiming(W_Level);
+            W_Time_for_reloading *= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_aiming();
         }
         else if (W_SkillName == "Reloading")
         {
             // 재장전 시간 감소
             Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_reloading(W_Level);
+            W_Time_for_reloading -= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_reloading();
         }
     }
 }
