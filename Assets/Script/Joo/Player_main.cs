@@ -35,6 +35,7 @@ public class Player_main : MonoBehaviour
     public PlayerSkill_ActivationProbability playerSkill_ActivationProbability = new PlayerSkill_ActivationProbability();
     public PlayerState playerState = new PlayerState();
     public Player_HP player_HP = new Player_HP();
+    public Player_Moodles playerMoodles = new Player_Moodles();
 
     /* --------------------------------------------------------------------------------- */
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
@@ -90,7 +91,6 @@ public class Player_main : MonoBehaviour
         pos += input * Time.deltaTime * Playermovement_speed;
 
         transform.position = pos;
-
     }
 
 

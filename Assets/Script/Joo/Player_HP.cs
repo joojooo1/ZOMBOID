@@ -17,7 +17,39 @@ public class Player_HP : MonoBehaviour
         Player_current_Health = Player_Max_Health;
     }
 
-    public void Set_HP_Reduction_Rate()
+    float Bleeding_Timer = 0.0f;
+    private void Update()
+    {
+        Bleeding_Timer += Time.deltaTime;
+
+        //if (Timer > 3.0f)
+        //{
+        //    // 3초마다 피로도 +3.0f * 피로도 생성 비율 (임의로 설정)
+        //    // Moodle_Tired.Set_Moodles_state();
+        //    Timer = 0.0f;
+        //}
+
+        if (Get_HP_Reduction_Rate() != 0)
+        {
+
+        }
+
+        if (Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_step() > 0)
+        {
+            if (Bleeding_Timer > 3.0f)
+            {
+                Player_current_Health -= Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_value();
+                Bleeding_Timer = 0;
+            }
+        }
+    }
+
+    public float Get_HP_Reduction_Rate()
+    {
+        return HP_Reduction_Rate;
+    }
+
+    public void Set_HP_Reduction_Rate(float Persistent_Damage)
     {
 
     }
