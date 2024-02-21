@@ -362,11 +362,11 @@ public class PlayerSkill_ActivationProbability
     public void Set_HitForce_forSkill(float SkillLevel)
     {
         float player_Endurance = 1.0f;
-        if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodles_state() < 0.5)  // 지구력에 따른 밀쳐낼 확률 감소
+        if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodle_current_value() < 0.5)  // 지구력에 따른 밀쳐낼 확률 감소
         {
             player_Endurance = 0.4f;
         }
-        else if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodles_state() >= 0.5 && Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodles_state() < 0.7)
+        else if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodle_current_value() >= 0.5 && Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodle_current_value() < 0.7)
         {
             player_Endurance = 0.7f;
         }

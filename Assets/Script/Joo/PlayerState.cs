@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -10,7 +11,8 @@ public class Player_body_Location
     bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
     bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     bool _Infection = false;  // 감염 여부 확인
-    // bool Bleeding = false; // 출혈.. Moodles
+    float Persistent_Damage = 0.0f;  // 출혈 시 지속적으로 깎여나갈 Damage
+    int Bleeding = 0; // 출혈.. Moodles
 
     public Player_body_Location(string Body_Name)
     {
@@ -19,34 +21,38 @@ public class Player_body_Location
 
     public void Set_Body_state(Zombie_Attack_Pattern Attack_Pattern, string Zom_Type)  // 좀비의 공격패턴, 좀비의 강도
     {
+        System.Random rand = new System.Random();
+        int randomNum = rand.Next(100);
+
         _Body_Current_state = Attack_Pattern;
 
         float Zombie_Attack_power = 5.0f;
         if (Zom_Type == "easy")
         {
-            Zombie_Attack_power *= 0.8f;
+            Zombie_Attack_power *= 0.7f;  // 3.5
         }
         else if(Zom_Type == "normal")
         {
-            Zombie_Attack_power *= 1.0f;
+            Zombie_Attack_power *= 1.0f;  // 5
         }
         else if(Zom_Type == "hard")
         {
-            Zombie_Attack_power *= 1.2f;
+            Zombie_Attack_power *= 1.5f;  // 7.5
         }
 
         switch(Attack_Pattern)
         {
-            case Zombie_Attack_Pattern.punches:  // 타격(피해o & 상처x)
+            case Zombie_Attack_Pattern.punches:  // 타격(피해o & 상처x) : 일시적으로 Damage
                 Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
                 break;
             case Zombie_Attack_Pattern.Scratches:  // 긁힘(7% 확률로 감염)
                 // hp 깎이는 속도 조절
+                Player_main.player_main.playerMoodles.Moodle_Bleeding.Set_Moodles_state(++Bleeding);
                 if (_disinfection == true)
-                {
+                {                    
                     if (_Bandage)
                     {
-
+                        Player_main.player_main.playerMoodles.Moodle_Bleeding.Set_Moodles_state(--Bleeding);
                     }
                     else
                     {
