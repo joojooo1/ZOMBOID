@@ -25,8 +25,8 @@ public class zombie_movement : MonoBehaviour
     float atk_distance = 1f; //좀비 공격시도 범위
     zombieHp zomhp;//좀비의 상태 스크립트
     bool atking = false;//좀비가 공격중인가
-    public bool live = true;
-    float dieday= 0f;
+    public bool live = true;//좀비의 생존여부
+    float dieday= 0f;//죽은 날짜
 
     void Start()
     {
@@ -67,7 +67,6 @@ public class zombie_movement : MonoBehaviour
             else if (player == null)
             {
                 findplayer();//좀비가 플레이어 재탐색
-                StopCoroutine(zommove());//플레이어 추적 중지
             }
             animatorwalk();//좀비가 움직이는 애니메이션으로 이동
         }
@@ -147,9 +146,11 @@ public class zombie_movement : MonoBehaviour
             if (player_atk <= atk_distance) 
             {
                 Debug.Log("좀비 공격시도");
-                if(!atking)
-                 zom_atk_anim();
-                yield break;
+                if (!atking)
+                {
+                    zom_atk_anim();
+                    yield break;
+                }
             }
             yield return null;
         }
@@ -265,14 +266,13 @@ public class zombie_movement : MonoBehaviour
     void zom_atk_end()//좀비의 다시 공격하기위한 작업
     {
         atking = false;
-        findplayer();
     }
 
-    void zom_situation()
+    void zom_situation()//좀비의 정보 전송
     {
         zomhp.zom_data(player, zombie_crawl);
     }
-    void zom_anim_speed()
+    void zom_anim_speed()//좀비의 이동속도에 따라 애니메이션 속도 변경
     {
         switch (speed)
         {
@@ -290,7 +290,7 @@ public class zombie_movement : MonoBehaviour
                 break;
         }
     }
-    void zom_up_off()
+    void zom_up_off()//좀비가 일어나뒤 이동속도 변경
     {
         speed = zomhp.curret_speed;
         animator.SetBool("up", false);
