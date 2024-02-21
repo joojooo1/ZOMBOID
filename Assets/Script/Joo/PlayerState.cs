@@ -9,8 +9,8 @@ public class Player_body_Location
     Zombie_Attack_Pattern _Body_Current_state;
     bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
     bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
-    bool _Infection = false;  // 감염
-    // bool Bleeding = false; // 출혈
+    bool _Infection = false;  // 감염 여부 확인
+    // bool Bleeding = false; // 출혈.. Moodles
 
     public Player_body_Location(string Body_Name)
     {
@@ -21,20 +21,24 @@ public class Player_body_Location
     {
         _Body_Current_state = Attack_Pattern;
 
-        float Zombie_Attack_power = 3.0f;  /* 1.8 / 3.0 / 4.2 */ 
-        if (Zom_Type == "약함")
+        float Zombie_Attack_power = 5.0f;
+        if (Zom_Type == "easy")
         {
-            Zombie_Attack_power -= 1.2f;
+            Zombie_Attack_power *= 0.8f;
         }
-        else if(Zom_Type == "강함")
+        else if(Zom_Type == "normal")
         {
-            Zombie_Attack_power += 1.2f;
+            Zombie_Attack_power *= 1.0f;
+        }
+        else if(Zom_Type == "hard")
+        {
+            Zombie_Attack_power *= 1.2f;
         }
 
         switch(Attack_Pattern)
         {
             case Zombie_Attack_Pattern.punches:  // 타격(피해o & 상처x)
-
+                Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
                 break;
             case Zombie_Attack_Pattern.Scratches:  // 긁힘(7% 확률로 감염)
                 // hp 깎이는 속도 조절
