@@ -197,16 +197,17 @@ public class PlayerSkill_ActivationProbability
     // 근접 공격력 비율 ( * )  // Strength
     float Melee_Attack_Power_Ratio = 0.75f;
     float Melee_Attack_Power_Ratio_forMoodle = 1f;
-    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio; }
+    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio * Melee_Attack_Power_Ratio_forMoodle; }
 
     public void Set_Melee_Attack_Power_Ratio_forSkill(float SkillLevel)
     {
-        Melee_Attack_Power_Ratio = (0.75f + 0.05f * SkillLevel) * Melee_Attack_Power_Ratio_forMoodle;
+        Melee_Attack_Power_Ratio = (0.75f + 0.05f * SkillLevel);
     }
 
     public void Set_Melee_Attack_Power_Ratio_forMoodle(float value)
     {
         Melee_Attack_Power_Ratio_forMoodle = 1 - value;
+
     }
 
 
@@ -215,7 +216,7 @@ public class PlayerSkill_ActivationProbability
     float Attack_Speed_for_Weapon = 0f;  // 무기 착용 시
     float Attack_Speed_for_Moodle = 1f;
     float Total_Attack_Speed = 0f;
-    public float Get_Attack_Speed() { return Total_Attack_Speed; }
+    public float Get_Attack_Speed() { return Total_Attack_Speed * Attack_Speed_for_Moodle; }
 
     public void Set_Attack_Speed_forSkill(string SkillName, float SkillLevel, bool IsEquipping)
     {
@@ -234,37 +235,37 @@ public class PlayerSkill_ActivationProbability
             {
                 Axe_BonusState = 0.03f * SkillLevel;
                 if (IsEquipping)
-                    Total_Attack_Speed = (Basic_Attack_Speed + Axe_BonusState) * Attack_Speed_for_Moodle;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Axe_BonusState);
             }
             else if (SkillName == "LongBlunt")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "ShortBlunt")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "LongBlade")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "ShortBlade")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "Spear")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "Maintenance")
             {
@@ -287,7 +288,7 @@ public class PlayerSkill_ActivationProbability
     float Probability_of_Falling = 0f;
     float Probability_of_Falling_forSkill = 0f;
     float Probability_of_Falling_forMoodle = 0f;
-    public float Get_Probability_of_Falling() { return Probability_of_Falling; }
+    public float Get_Probability_of_Falling() { return Probability_of_Falling + Probability_of_Falling_forMoodle; }
 
     public void Set_Probability_of_Falling_forSkill(float SkillLevel)
     {
@@ -299,7 +300,7 @@ public class PlayerSkill_ActivationProbability
         {
             Probability_of_Falling_forSkill = Probability_of_Falling_forSkill + 0.02f;
         }
-        Probability_of_Falling = Probability_of_Falling_forSkill + Probability_of_Falling_forMoodle;
+        Probability_of_Falling = Probability_of_Falling_forSkill;
     }
 
     public void Set_Probability_of_Falling_forMoodle(float value)
@@ -311,7 +312,7 @@ public class PlayerSkill_ActivationProbability
     float Probability_of_Crossing_a_High_Wall = 0f;
     float Probability_of_Crossing_a_High_Wall_forSkill = 0f;
     float Probability_of_Crossing_a_High_Wall_forMoodle = 0f;
-    public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall; }
+    public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall - Probability_of_Crossing_a_High_Wall_forMoodle; }
 
     public void Set_Probability_of_Crossing_a_High_Wall_forSkill(float SkillLevel)
     {
@@ -323,7 +324,7 @@ public class PlayerSkill_ActivationProbability
         {
             Probability_of_Crossing_a_High_Wall_forSkill += 0.02f;
         }
-        Probability_of_Crossing_a_High_Wall = Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle;
+        Probability_of_Crossing_a_High_Wall = Probability_of_Crossing_a_High_Wall_forSkill;
     }
 
     public void Set_Probability_of_Crossing_a_High_Wall_forMoodle(float value)

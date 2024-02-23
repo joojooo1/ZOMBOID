@@ -9,6 +9,9 @@ public class Player_HP : MonoBehaviour
     [SerializeField] float Player_Max_Health = 100.0f;  // 체력 ( Fitness_Level: 5 / Strength_Level: 5 )
     float Player_Min_Health = 0f;
     [SerializeField] float Player_current_Health = 0f;
+    [SerializeField] float HP_Recovery_Speed = 1f;  // 체력 회복속도
+
+    bool Is_HP_Recovery = true;
 
     private void Awake()
     {
@@ -17,17 +20,27 @@ public class Player_HP : MonoBehaviour
     }
 
     float Bleeding_Timer = 0.0f;
+    float HP_Recovery_Timer = 0.0f;
     private void Update()
     {
-        //if (Timer > 3.0f)
-        //{
-        //    // 3초마다 피로도 +3.0f * 피로도 생성 비율 (임의로 설정)
-        //    // Moodle_Tired.Set_Moodles_state();
-        //    Timer = 0.0f;
-        //}
+        if (Is_HP_Recovery)  // 1초마다 체력 회복
+        {
+            HP_Recovery_Timer += Time.deltaTime;
+            if (HP_Recovery_Timer > HP_Recovery_Speed)
+            {
 
 
-        if(Player_current_Health > Player_Min_Health)
+
+                HP_Recovery_Timer = 0.0f;
+            }
+        }
+        else
+        {
+            HP_Recovery_Timer = 0.0f;
+        }
+
+
+        if (Player_current_Health > Player_Min_Health)
         {
             if (Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_step() > 0)
             {

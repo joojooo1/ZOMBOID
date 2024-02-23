@@ -23,8 +23,45 @@ public class PlayerInventory_Weight
     {
         switch (Moodles_name)
         {
-            case Moodles_private_code.Hungry: break;
-            case Moodles_private_code.Stuffed: break;
+            case Moodles_private_code.Hungry:
+                float Set_point_for_Hungry = 0f;
+                switch (Moodles_step)
+                {
+                    case 0: 
+                    case 1:
+                        break;
+                    case 2:
+                        Set_point_for_Hungry = -1;
+                        break;
+                    case 3:
+                        Set_point_for_Hungry = -2;
+                        break;
+                    case 4:
+                        Set_point_for_Hungry = -2;
+                        break;
+                }
+                Moodles_point = Moodles_point + Set_point_for_Hungry;
+                break;
+            case Moodles_private_code.Stuffed:
+                float Set_point_for_Stuffed = 0f;
+                switch (Moodles_step)
+                {
+                    case 0:
+                    case 1:
+                        Set_point_for_Stuffed = +2;
+                        break;
+                    case 2:
+                        Set_point_for_Stuffed = +2;
+                        break;
+                    case 3:
+                        Set_point_for_Stuffed = +2;
+                        break;
+                    case 4:
+                        Set_point_for_Stuffed = +2;
+                        break;
+                }
+                Moodles_point = Moodles_point + Set_point_for_Stuffed;
+                break;
             case Moodles_private_code.Thirsty: break;
             case Moodles_private_code.Panic: break;
             case Moodles_private_code.Bored: break;
@@ -32,7 +69,6 @@ public class PlayerInventory_Weight
             case Moodles_private_code.Unhappy: break;
             case Moodles_private_code.Drunk: break;
             case Moodles_private_code.Heavy_Load: break;
-            case Moodles_private_code.Endurance: break;
             case Moodles_private_code.Tired: break;
             case Moodles_private_code.Hyperthermia_Hot: break;
             case Moodles_private_code.Hyperthermia_Cold: break;
@@ -42,6 +78,7 @@ public class PlayerInventory_Weight
                 float Set_point_for_Injured = 0f;
                 switch (Moodles_step)
                 {
+                    case 0:
                     case 1:
                         break;
                     case 2:
@@ -61,6 +98,7 @@ public class PlayerInventory_Weight
                 float Set_point_for_Bleeding = 0f;
                 switch (Moodles_step)
                 {
+                    case 0:
                     case 1:
                         break;
                     case 2:
