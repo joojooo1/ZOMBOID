@@ -56,11 +56,12 @@ public class Player_main : MonoBehaviour
         player_main = this;
 
         Skill = GetComponent<PlayerSkill>();
+        
     }
 
     void Update()
     {
-        Set_testText(playerMoodles.Moodle_Injured.Get_Moodle_current_step());
+        Set_testText(playerMoodles.Moodle_Endurance.Get_Moodle_current_step());
         if (Is_Equipping_Weapons)  // 무기를 착용하는 경우 호출
         {
             //Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, Is_Equipping_Weapons)
@@ -69,7 +70,7 @@ public class Player_main : MonoBehaviour
         // test 함수 -------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Z))  // 좀비한테 공격당할때
         {
-            Calculate_HitForce(true, "normal", false, false);
+            playerMoodles.Moodle_Endurance.Set_Moodles_state(20f);
         }
         else if (Input.GetKeyDown(KeyCode.X))  // 무기 착용 시
         {
@@ -90,21 +91,27 @@ public class Player_main : MonoBehaviour
         pos += input * Time.deltaTime * Get_Moving_Speed();
 
         transform.position = pos;
+
+        //if (Timer > 3.0f)
+        //{
+        //    // 3초마다 피로도 +3.0f * 피로도 생성 비율 (임의로 설정)
+        //    // Moodle_Tired.Set_Moodles_state();
+        //    Timer = 0.0f;
+        //}
     }
 
     // test 함수 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public UnityEngine.UI.Text[] textText;
     public void Set_testText(float Level)
     {
-        textText[0].text = "HP: " + player_HP.Get_Player_HP().ToString();
-        textText[1].text = "Inven_Weight: " + inven.Get_MaxWeight().ToString();
-        textText[2].text = "level: " + playerMoodles.Moodle_Injured.Get_Moodle_current_step().ToString();
-        //textText[2].text = "Attack_Speed: " + playerSkill_ActivationProbability.Get_Attack_Speed().ToString();
-        //textText[3].text = "Critical_Hit_Chance: " + playerSkill_ActivationProbability.Get_Critical_Hit_Chance().ToString();
-        //textText[4].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
-        //textText[5].text = "Injury_chance: " + playerSkill_ActivationProbability.Get_Injury_chance().ToString();
-        //textText[6].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
-        //textText[7].text = "Probability_of_Crossing_a_High_Wall: " + playerSkill_ActivationProbability.Get_Probability_of_Crossing_a_High_Wall().ToString();
+        textText[0].text = "Melee_Attack_Power_Ratio: " + playerSkill_ActivationProbability.Get_Melee_Attack_Power_Ratio().ToString();
+        textText[1].text = "Attack_Speed: " + playerSkill_ActivationProbability.Get_Attack_Speed().ToString();
+        textText[2].text = "Moving_Speed: " + Get_Moving_Speed().ToString();
+        textText[3].text = "Probability_of_Falling: " + playerSkill_ActivationProbability.Get_Probability_of_Falling().ToString();
+        textText[4].text = "Probability_of_Crossing_a_High_Wall: " + playerSkill_ActivationProbability.Get_Probability_of_Crossing_a_High_Wall().ToString();
+        textText[5].text = "Chance_of_Blocking_zombie_frontal_attack: " + playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack().ToString();
+        textText[6].text = playerMoodles.Moodle_Endurance.Get_current_state_to_string();
+        textText[7].text = playerMoodles.Moodle_Endurance.Get_current_detail_state_to_string();
     }
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- test 함수 
 
