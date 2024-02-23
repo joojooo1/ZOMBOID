@@ -29,7 +29,7 @@ public class Player_main : MonoBehaviour
 {
     public static Player_main player_main;
 
-    PlayerInventory inven = new PlayerInventory();
+    public PlayerInventory_Weight inven = new PlayerInventory_Weight();
     PlayerSkill Skill;
 
     public PlayerSkill_ActivationProbability playerSkill_ActivationProbability = new PlayerSkill_ActivationProbability();
@@ -39,15 +39,16 @@ public class Player_main : MonoBehaviour
 
     /* --------------------------------------------------------------------------------- */
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
-    float Weight = 83.0f; // 체중
-    float Calories = 50.0f; // 칼로리 0 - 100
-    float Temperature = 50.0f; // 온도 0 - 100
+    [SerializeField] float Weight = 83.0f; // 체중
+    [SerializeField] float Calories = 50.0f; // 칼로리 0 - 100
+    [SerializeField] float Temperature = 50.0f; // 온도 0 - 100
 
-    float Attack_Power = 8.0f; // 공격력
-    float Evasion = 0.15f;  // 회피율
-    float Moving_Speed = 3f;  // 이동속도
+    [SerializeField] float Attack_Power = 8.0f; // 공격력
+    [SerializeField] float Evasion = 0.15f;  // 회피율
+    [SerializeField] float Moving_Speed = 3f;  // 이동속도
 
     public bool Is_Equipping_Weapons = false;
+    public bool Is_Aiming = false;
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -57,20 +58,18 @@ public class Player_main : MonoBehaviour
         Skill = GetComponent<PlayerSkill>();
     }
 
-    float Playermovement_speed = 1.0f;
-
     void Update()
     {
+        Set_testText(playerMoodles.Moodle_Injured.Get_Moodle_current_step());
         if (Is_Equipping_Weapons)  // 무기를 착용하는 경우 호출
         {
             //Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, Is_Equipping_Weapons)
         }
 
         // test 함수 -------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Z))  // 무기 스킬 Level-up
+        if (Input.GetKeyDown(KeyCode.Z))  // 좀비한테 공격당할때
         {
-            Skill.Axe_Level.SetEXP(9000);
-
+            Calculate_HitForce(true, "normal", false, false);
         }
         else if (Input.GetKeyDown(KeyCode.X))  // 무기 착용 시
         {
@@ -88,26 +87,44 @@ public class Player_main : MonoBehaviour
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
         Vector3 pos = transform.position;
-        pos += input * Time.deltaTime * Playermovement_speed;
+        pos += input * Time.deltaTime * Get_Moving_Speed();
 
         transform.position = pos;
     }
-
 
     // test 함수 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public UnityEngine.UI.Text[] textText;
     public void Set_testText(float Level)
     {
-        textText[0].text = "Level: " + Level.ToString();
-        textText[1].text = "Increase_in_Attack_Power: " + playerSkill_ActivationProbability.Get_Increase_in_Attack_Power().ToString();
-        textText[2].text = "Attack_Speed: " + playerSkill_ActivationProbability.Get_Attack_Speed().ToString();
-        textText[3].text = "Critical_Hit_Chance: " + playerSkill_ActivationProbability.Get_Critical_Hit_Chance().ToString();
-        textText[4].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
-        textText[5].text = "Injury_chance: " + playerSkill_ActivationProbability.Get_Injury_chance().ToString();
+        textText[0].text = "HP: " + player_HP.Get_Player_HP().ToString();
+        textText[1].text = "Inven_Weight: " + inven.Get_MaxWeight().ToString();
+        textText[2].text = "level: " + playerMoodles.Moodle_Injured.Get_Moodle_current_step().ToString();
+        //textText[2].text = "Attack_Speed: " + playerSkill_ActivationProbability.Get_Attack_Speed().ToString();
+        //textText[3].text = "Critical_Hit_Chance: " + playerSkill_ActivationProbability.Get_Critical_Hit_Chance().ToString();
+        //textText[4].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
+        //textText[5].text = "Injury_chance: " + playerSkill_ActivationProbability.Get_Injury_chance().ToString();
         //textText[6].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
         //textText[7].text = "Probability_of_Crossing_a_High_Wall: " + playerSkill_ActivationProbability.Get_Probability_of_Crossing_a_High_Wall().ToString();
     }
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- test 함수 
+
+    public float Get_Moving_Speed()
+    {
+        if (Is_Aiming)
+            return Moving_Speed * playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+        else
+            return Moving_Speed;
+    }
+
+    public void Set_Moving_Speed_forMoodle(float Speed_rate)
+    {
+        Moving_Speed = Moving_Speed * ( 1 - Speed_rate );
+    }
+
+    public float Get_Evasion()
+    {
+        return Evasion + playerSkill_ActivationProbability.Get_Injury_chance();
+    }
 
     public void Set_Is_Equipping_Weapons()
     {
@@ -164,6 +181,7 @@ public class Player_main : MonoBehaviour
         }
         else
         {
+            Debug.Log("Miss !!");
             // 밀쳐낸 애니메이션
         }
     }
@@ -173,7 +191,7 @@ public class Player_main : MonoBehaviour
 
     void Calculating_Probability_of_Injury_Location(string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 강도, 후방 여부
     {
-        Player_body_Location Attack_point  = new Player_body_Location("");
+        Player_body_Location Attack_point  = new Player_body_Location(0);
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
@@ -338,38 +356,38 @@ public class Player_main : MonoBehaviour
         {
             if (Rand_pattern >= 0 && Rand_pattern < 25)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 25 && Rand_pattern < 50)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 50 && Rand_pattern < 75)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 75 && Rand_pattern < 100)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
             }
         }
         else  // 뒤에서 공격 당하는 경우
         {
             if (Rand_pattern >= 0 && Rand_pattern < 70)  // 70%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 70 && Rand_pattern < 80)  // 10%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 80 && Rand_pattern < 90)  // 10%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 90 && Rand_pattern < 100)  // 10%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
             }
         }
 

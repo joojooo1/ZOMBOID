@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class PlayerPassiveSkill_Level  // Ã¼·Â, ±Ù·Â
 {
-    PlayerInventory P_inven = new PlayerInventory();
+    PlayerInventory_Weight P_inven = new PlayerInventory_Weight();
 
     string P_SkillName = "";
     float P_Level = 0f;
@@ -362,7 +362,6 @@ public class PlayerWeaponSkill_Level  // µµ³¢, ±ä µÐ±â, ÂªÀº µÐ±â, Àå°Ë, ´Ü°Ë, Ã
         {
 
         }
-        Player_main.player_main.Set_testText(W_Level);
 
     }
 

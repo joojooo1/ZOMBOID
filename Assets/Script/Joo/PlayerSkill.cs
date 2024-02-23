@@ -8,8 +8,8 @@ public class PlayerSkill : MonoBehaviour
     public static PlayerSkill playerSkill;
 
     // 신체 능력
-    public PlayerPassiveSkill_Level Fitness_Level;  // 체력       /* 24.02.16.17:30 levelup, Act_Prob test */
-    public PlayerPassiveSkill_Level Strength_Level;  // 근력       /* 24.02.16.17:30 levelup, Act_Prob test */
+    public PlayerPassiveSkill_Level Fitness_Level;  // 체력       /* 24.02.16 test */
+    public PlayerPassiveSkill_Level Strength_Level;  // 근력       /* 24.02.16 test */
 
     // 생존 능력
     // float Fishing = 0f;  // 낚시
@@ -17,10 +17,10 @@ public class PlayerSkill : MonoBehaviour
     // float Foraging = 0f;  // 채집
 
     // 운동 능력
-    public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기                                                    /* 24.02.16.17:30 levelup, Act_Prob test */
-    public PlayerGeneralSkill_Level Lightfooted_Level;  // 조용한 발걸음 (플레이어의 발소리가 얼마나 멀리서 들리는지)        /* 24.02.16.17:30 levelup, Act_Prob test */
-    public PlayerGeneralSkill_Level Nimble_Level;  // 전투시 발걸음                                                       /* 24.02.16.17:30 levelup, Act_Prob test */
-    public PlayerGeneralSkill_Level Sneaking_Level;  // 은밀한 움직임 (은밀히 걸을때 발소리 크기&좀비가 발견할 확률)                /* 24.02.16.17:30 levelup, Act_Prob test */
+    public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기                                                    /* 24.02.16 test */
+    public PlayerGeneralSkill_Level Lightfooted_Level;  // 조용한 발걸음 (플레이어의 발소리가 얼마나 멀리서 들리는지)        /* 24.02.16 test */
+    public PlayerGeneralSkill_Level Nimble_Level;  // 전투시 발걸음                                                       /* 24.02.16 test */
+    public PlayerGeneralSkill_Level Sneaking_Level;  // 은밀한 움직임 (은밀히 걸을때 발소리 크기&좀비가 발견할 확률)                /* 24.02.16 test */
 
     // 전투 능력
     public PlayerWeaponSkill_Level Axe_Level;  // 도끼
