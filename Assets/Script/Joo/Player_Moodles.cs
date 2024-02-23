@@ -138,19 +138,19 @@ public class Player_Moodles : MonoBehaviour
                                 지구력 회복 중지 및 적당한 비율로 감소, 체력 75% 될 떄까지 감소, 
                                 좀비의 정면공격을 막아낼 확률 -8%
          */
-        Moodle_Endurance = new Moodles_state(Moodles_private_code.Endurance, 0.25f, 0.5f, 0.75f, 0.9f);
+        Moodle_Endurance = new Moodles_state(Moodles_private_code.Endurance, 75f, 50f, 25f, 9f);
         /*
-         25% 이상: 근접데미지 -50%, 공격속도 -7%, 낮은 울타리 넘을때 넘어질 확률 +10%,
-                   달리기/파워워크 때 넘어질 확률 +10%, 높은 울타리를 오를 확률 -5%, 걷기/달리기/파워워크 속도 -19%,
+         75% 이하: 근접데미지 -50%, 공격속도 -7%, 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +10%,
+                   높은 울타리를 오를 확률 -5%, 걷기/달리기/파워워크 속도 -19%,
                    좀비의 정면공격을 막아낼 확률 -2%
-         50% 이상: 근접데미지 -80%, 공격속도 -14%, 낮은 울타리 넘을때 넘어질 확률 +20%,
-                   달리기/파워워크 때 넘어질 확률 +20%, 높은 울타리를 오를 확률 -10%, 걷기/파워워크 속도 -37%,
+         50% 이하: 근접데미지 -80%, 공격속도 -14%, 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +20%,
+                   높은 울타리를 오를 확률 -10%, 걷기/파워워크 속도 -37%,
                    달리기 비활성화, 좀비의 정면공격을 막아낼 확률 -4%
-         75% 이상: 근접데미지 -90%, 공격속도 -21%, 낮은 울타리 넘을때 넘어질 확률 +30%,
-                   달리기/파워워크 때 넘어질 확률 +30%, 높은 울타리를 오를 확률 -15%, 걷기 속도 -56%,
+         25% 이하: 근접데미지 -90%, 공격속도 -21%, 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +30%,
+                   높은 울타리를 오를 확률 -15%, 걷기 속도 -56%,
                    달리기/파워워크 비활성화, 좀비의 정면공격을 막아낼 확률 -6%, 운동 비활성화
-         90% 이상: 근접데미지 -95%, 공격속도 -28%, 낮은 울타리 넘을때 넘어질 확률 +40%,
-                   달리기/파워워크 때 넘어질 확률 +40%, 높은 울타리를 오를 확률 -20%, 걷기 속도 -75%, 큰 망치 사용불가
+         9% 이하: 근접데미지 -95%, 공격속도 -28%, 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +40%,
+                   높은 울타리를 오를 확률 -20%, 걷기 속도 -75%, 큰 망치 사용불가
                    달리기/파워워크 비활성화, 좀비의 정면공격을 막아낼 확률 -8%, 운동 비활성화
          */
         Moodle_Tired = new Moodles_state(Moodles_private_code.Tired, 0.6f, 0.7f, 0.8f, 0.9f);
@@ -274,7 +274,7 @@ public class Moodles_state
 
     public void Set_Moodles_state(float current_value)
     {
-        switch(_Moodle_Code)
+        switch (_Moodle_Code)
         {
             case Moodles_private_code.Hungry:
                 if (current_value < _First_state)
@@ -610,40 +610,65 @@ public class Moodles_state
                 }
                 break;
             case Moodles_private_code.Endurance:
-                if (current_value < _First_state)
+                if (current_value > _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0f);
                 }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
+                else if (current_value <= _First_state && current_value > _Second_state)  // 1단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "약간 지침";
+                    _current_detail_state_to_string = "조금만 쉬십시오.";
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.5f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.07f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.19f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.1f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.05f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.02f);
                 }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
+                else if (current_value <= _Second_state && current_value > _Third_state)  // 2단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "많이 지침";
+                    _current_detail_state_to_string = "달리기도 힘듦.";
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.8f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.14f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.37f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.2f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.1f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.04f);
                 }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
+                else if (current_value <= _Third_state && current_value > _Fourth_state)  // 3단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "매우 지침";
+                    _current_detail_state_to_string = "걷는 것도 힘듦.";
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.9f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.21f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.56f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.3f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.15f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.06f);
                 }
-                else if (current_value > _Fourth_state)  // 4단계
+                else if (current_value <= _Fourth_state)  // 4단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "기진맥진";
+                    _current_detail_state_to_string = "움직이기도 힘듦.";
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.95f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.28f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.75f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.4f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.2f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.08f);
                 }
                 break;
             case Moodles_private_code.Tired:
@@ -833,42 +858,41 @@ public class Moodles_state
                 }
                 break;
             case Moodles_private_code.Injured:
-                if (current_value < _First_state)
+                if (current_value > _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
                 }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
+                else if (current_value <= _First_state && current_value > _Second_state)  // 1단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "경상";
+                    _current_detail_state_to_string = "응급조치가 필요함.";
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Injured, _Moodle_current_step);
                 }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
+                else if (current_value <= _Second_state && current_value > _Third_state)  // 2단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "부상";
+                    _current_detail_state_to_string = "근력과 이동속도가 저하됨.";
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Injured, _Moodle_current_step);
                 }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
+                else if (current_value <= _Third_state && current_value > _Fourth_state)  // 3단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "심각한 부상";
+                    _current_detail_state_to_string = "근력과 이동속도가 크게 저하됨.";
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Injured, _Moodle_current_step);
                 }
-                else if (current_value > _Fourth_state)  // 4단계
+                else if (current_value <= _Fourth_state)  // 4단계
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
+                    _current_state_to_string = "치명적인 부상";
+                    _current_detail_state_to_string = "편히 잠들지 못할 것 같다...";
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Injured, _Moodle_current_step);
                 }
-                break;
+                break;     /* 24.02.22 */
             case Moodles_private_code.Pain:
                 if (current_value < _First_state)
                 {
@@ -920,29 +944,33 @@ public class Moodles_state
                     _current_detail_state_to_string = "붕대가 필요합니다.";
                     _Moodle_current_step = 1;
                     _Moodle_current_value = 2;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
                     _current_state_to_string = "출혈";
-                    _current_detail_state_to_string = "힘과 속도가 감소합니다.";
+                    _current_detail_state_to_string = "근력과 이동속도가 저하됨.";
                     _Moodle_current_step = 2;
                     _Moodle_current_value = 3;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
                     _current_state_to_string = "심한 출혈";
-                    _current_detail_state_to_string = "힘과 속도가 크게 감소했습니다.";
+                    _current_detail_state_to_string = "근력과 이동속도가 크게 저하됨.";
                     _Moodle_current_step = 3;
                     _Moodle_current_value = 5;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
                     _current_state_to_string = "대규모 혈액 손실";
-                    _current_detail_state_to_string = "죽음이 임박했습니다.";
+                    _current_detail_state_to_string = "사망 직전.";
                     _Moodle_current_step = 4;
                     _Moodle_current_value = 7;
+                    Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
                 }
-                break;
+                break;     /* 24.02.22 */
             case Moodles_private_code.Has_a_Cold:
                 if (current_value < _First_state)
                 {
@@ -1017,78 +1045,22 @@ public class Moodles_state
                     _Moodle_current_value = 0;
                 }
                 break;
-            case Moodles_private_code.Dead:
-                if (current_value < _First_state)
+            case Moodles_private_code.Dead:  // 비감염 && 사망
+                if (current_value == _First_state && 
+                    Player_main.player_main.playerState.Get_Is_Infection() == false)
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value > _Fourth_state)  // 4단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    _current_state_to_string = "사망";
+                    _current_detail_state_to_string = "쥐 먹이가 될 확률이 높음.";
+                    /* 죽는 animation 필요함 */
                 }
                 break;
-            case Moodles_private_code.Zombie:
-                if (current_value < _First_state)
+            case Moodles_private_code.Zombie:  // 감염 && 사망
+                if (current_value == _First_state &&
+                    Player_main.player_main.playerState.Get_Is_Infection() == true)
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
-                }
-                else if (current_value > _Fourth_state)  // 4단계
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    _current_state_to_string = "좀비화";
+                    _current_detail_state_to_string = "사람이 맛있어 보임.";
+                    /* 좀비화되는 animation 필요함 */
                 }
                 break;
             case Moodles_private_code.Restricted_Movement:

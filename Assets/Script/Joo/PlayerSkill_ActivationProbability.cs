@@ -194,22 +194,39 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
+    // 근접 공격력 비율 ( * )  // Strength
+    float Melee_Attack_Power_Ratio = 0.75f;
+    float Melee_Attack_Power_Ratio_forMoodle = 1f;
+    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio; }
+
+    public void Set_Melee_Attack_Power_Ratio_forSkill(float SkillLevel)
+    {
+        Melee_Attack_Power_Ratio = (0.75f + 0.05f * SkillLevel) * Melee_Attack_Power_Ratio_forMoodle;
+    }
+
+    public void Set_Melee_Attack_Power_Ratio_forMoodle(float value)
+    {
+        Melee_Attack_Power_Ratio_forMoodle = 1 - value;
+    }
+
 
     // 공격 속도 ( + )  // Fitness // Axe 등 무기
     float Basic_Attack_Speed = 0f;  // 무기 미착용 시
-    float Attack_Speed = 0f;  // 무기 착용 시
-    public float Get_Attack_Speed() { return Attack_Speed; }
+    float Attack_Speed_for_Weapon = 0f;  // 무기 착용 시
+    float Attack_Speed_for_Moodle = 1f;
+    float Total_Attack_Speed = 0f;
+    public float Get_Attack_Speed() { return Total_Attack_Speed; }
 
     public void Set_Attack_Speed_forSkill(string SkillName, float SkillLevel, bool IsEquipping)
     {
         float Axe_BonusState;
         float Others_BonusState;
-        Attack_Speed = Basic_Attack_Speed;
+        Total_Attack_Speed = Basic_Attack_Speed * Attack_Speed_for_Moodle;
 
         if (SkillName == "Fitness")
         {
             Basic_Attack_Speed = 0.02f * SkillLevel;
-            Attack_Speed = Basic_Attack_Speed;
+            Total_Attack_Speed = Basic_Attack_Speed * Attack_Speed_for_Moodle;
         }
         else
         {
@@ -217,37 +234,37 @@ public class PlayerSkill_ActivationProbability
             {
                 Axe_BonusState = 0.03f * SkillLevel;
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Axe_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Axe_BonusState) * Attack_Speed_for_Moodle;
             }
             else if (SkillName == "LongBlunt")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
             }
             else if (SkillName == "ShortBlunt")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
             }
             else if (SkillName == "LongBlade")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
             }
             else if (SkillName == "ShortBlade")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
             }
             else if (SkillName == "Spear")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState) * Attack_Speed_for_Moodle;
             }
             else if (SkillName == "Maintenance")
             {
@@ -260,46 +277,58 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
+    public void Set_Attack_Speed_forMoodle(float value)
+    {
+        Attack_Speed_for_Moodle = 1 - value;
+    }
+
 
     // 넘어질 확률 ( - )  // Fitness
     float Probability_of_Falling = 0f;
+    float Probability_of_Falling_forSkill = 0f;
+    float Probability_of_Falling_forMoodle = 0f;
     public float Get_Probability_of_Falling() { return Probability_of_Falling; }
 
     public void Set_Probability_of_Falling_forSkill(float SkillLevel)
     {
-        if (Probability_of_Falling == 0f)
+        if (Probability_of_Falling_forSkill == 0f)
         {
-            Probability_of_Falling = 0.02f * SkillLevel;
+            Probability_of_Falling_forSkill = 0.02f * SkillLevel;
         }
         else
         {
-            Probability_of_Falling += 0.02f;
+            Probability_of_Falling_forSkill = Probability_of_Falling_forSkill + 0.02f;
         }
+        Probability_of_Falling = Probability_of_Falling_forSkill + Probability_of_Falling_forMoodle;
+    }
+
+    public void Set_Probability_of_Falling_forMoodle(float value)
+    {
+        Probability_of_Falling_forMoodle = value;
     }
 
     // 높은 담을 넘을 확률 ( + )  // Fitness, Strength
     float Probability_of_Crossing_a_High_Wall = 0f;
+    float Probability_of_Crossing_a_High_Wall_forSkill = 0f;
+    float Probability_of_Crossing_a_High_Wall_forMoodle = 0f;
     public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall; }
 
     public void Set_Probability_of_Crossing_a_High_Wall_forSkill(float SkillLevel)
     {
-        if (Probability_of_Crossing_a_High_Wall == 0f)
+        if (Probability_of_Crossing_a_High_Wall_forSkill == 0f)
         {
-            Probability_of_Crossing_a_High_Wall = 0.02f * SkillLevel;
+            Probability_of_Crossing_a_High_Wall_forSkill = 0.02f * SkillLevel;
         }
         else
         {
-            Probability_of_Crossing_a_High_Wall += 0.02f;
+            Probability_of_Crossing_a_High_Wall_forSkill += 0.02f;
         }
+        Probability_of_Crossing_a_High_Wall = Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle;
     }
 
-    // 근접 공격력 비율 ( * )  // Strength
-    float Melee_Attack_Power_Ratio = 0.75f;
-    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio; }
-
-    public void Set_Melee_Attack_Power_Ratio_forSkill(float SkillLevel)
+    public void Set_Probability_of_Crossing_a_High_Wall_forMoodle(float value)
     {
-        Melee_Attack_Power_Ratio = 0.75f + 0.05f * SkillLevel;
+        Probability_of_Crossing_a_High_Wall_forMoodle = value;
     }
 
     // 치명타 확률 ( + )  // Axe 등 무기
@@ -487,6 +516,16 @@ public class PlayerSkill_ActivationProbability
         }
 
     }
+
+
+    // 좀비에 대한 정면공격 방어 확률 감소 ( Moodle_Endurance )
+    float Chance_of_Blocking_zombie_frontal_attack = 0f;
+    public float Get_Chance_of_Blocking_zombie_frontal_attack() { return Chance_of_Blocking_zombie_frontal_attack; }
+    public void Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(float value)
+    {
+        Chance_of_Blocking_zombie_frontal_attack = (1 - value);
+    }
+
 
     // 회피할 확률 ( + )  // Axe 등 무기     // 좀비가 플레이어 공격 시 그 공격이 성공한 후 회피할 확률
     float Basic_Injury_chance = -0.05f;
@@ -1024,19 +1063,28 @@ public class PlayerSkill_ActivationProbability
     {
         switch (SkillLevel)
         {
-            case 0: case 1:
+            case 0:
+            case 1:
                 Launch_Angle = 0.95f;
                 break;
-            case 3: case 4: case 5:
+            case 3:
+            case 4:
+            case 5:
                 Launch_Angle = 0.9f;
                 break;
-            case 6: case 7: case 8:
+            case 6:
+            case 7:
+            case 8:
                 Launch_Angle = 0.8f;
                 break;
-            case 9: case 10:
+            case 9:
+            case 10:
                 Launch_Angle = 0.7f;
                 break;
         }
     }
+
+
+
 }
 
