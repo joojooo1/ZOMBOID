@@ -6,8 +6,8 @@ public class UI_main : MonoBehaviour
 {
     public static UI_main ui_main;
 
-    bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
-    void Start()
+    public bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
+    void Awake()
     {
         ui_main = this;;
     }
@@ -18,6 +18,7 @@ public class UI_main : MonoBehaviour
     }
     void Update()
     {
+        Player_main.player_main.playerMoodles.Set_Player_Language(player_Setting_Language_to_Korean);
         if (Input.GetKeyDown(KeyCode.L))
         {
             if (player_Setting_Language_to_Korean)  // Korean -> English

@@ -10,6 +10,7 @@ public class Player_HP : MonoBehaviour
     float Player_Min_Health = 0f;
     [SerializeField] float Player_current_Health = 0f;
     [SerializeField] float HP_Recovery_Speed = 1f;  // 체력 회복속도
+    float HP_Recovery_Speed_forMoodle = 1.0f;
 
     bool Is_HP_Recovery = true;
 
@@ -23,14 +24,15 @@ public class Player_HP : MonoBehaviour
     float HP_Recovery_Timer = 0.0f;
     private void Update()
     {
-        if (Is_HP_Recovery)  // 1초마다 체력 회복
+        if (Is_HP_Recovery)  // 1초 * 체력회복속도(Moodle)마다 체력 회복
         {
             HP_Recovery_Timer += Time.deltaTime;
-            if (HP_Recovery_Timer > HP_Recovery_Speed)
+            if (HP_Recovery_Timer > HP_Recovery_Speed * HP_Recovery_Speed_forMoodle)
             {
-
-
-
+                if(Player_current_Health < Player_Max_Health)
+                {
+                    Set_Player_HP_for_Heal(3);
+                }
                 HP_Recovery_Timer = 0.0f;
             }
         }
@@ -49,6 +51,10 @@ public class Player_HP : MonoBehaviour
                 if (Bleeding_Timer > 2.0f)
                 {
                     Player_current_Health -= Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_value();
+                    if(Player_main.player_main.playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 3 && Player_current_Health / Player_Max_Health > 0.25)
+                    {
+                        Player_current_Health -= 2;
+                    }
                     Bleeding_Timer = 0;
                 }
             }
@@ -89,4 +95,22 @@ public class Player_HP : MonoBehaviour
         return Player_current_Health;
     }
 
+    float HP_Recovery_Speed_for_Hungry = 1;
+    float HP_Recovery_Speed_for_Has_A_Cold = 1;
+    public void Set_HP_Recovery_Speed_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Hungry:
+            case Moodles_private_code.Stuffed:
+                HP_Recovery_Speed_for_Hungry = 1 - value;
+                break;
+            case Moodles_private_code.Endurance:
+                HP_Recovery_Speed_for_Has_A_Cold = 1 - value;
+                break;
+        }
+        HP_Recovery_Speed_forMoodle = HP_Recovery_Speed_for_Hungry * HP_Recovery_Speed_for_Has_A_Cold;
+    }
+
+    public float Get_HP_Recovery_Speed() { return HP_Recovery_Speed; }
 }

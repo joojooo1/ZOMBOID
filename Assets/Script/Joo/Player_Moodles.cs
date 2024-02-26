@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UI_main;
 
 public enum Moodles_private_code
 {
@@ -115,28 +114,28 @@ public class Player_Moodles : MonoBehaviour
          */
         Moodle_Drunk = new Moodles_state(Moodles_private_code.Drunk, 0.1f, 0.3f, 0.5f, 0.7f);
         /*
-         10% 이상: 피로도 약간증가, 체온발생량 약간감소
-         30% 이상: 피로도 약간증가, 체온발생량 약간감소
-         50% 이상: 피로도 증가, 체온발생량 감소
-         70% 이상: 피로도 증가, 체온발생량 감소
+         10% 이상: 피로도 약간증가, 긴장 감소 속도 증가, 고통 무들 상쇄, 불행 감소
+         30% 이상: 피로도 약간증가, 긴장 감소 속도 증가, 고통 무들 상쇄, 불행 감소
+         50% 이상: 피로도 증가, 긴장 감소 속도 증가, 고통 무들 상쇄, 불행 감소
+         70% 이상: 피로도 증가, 긴장 감소 속도 증가, 고통 무들 상쇄, 불행 감소
          */
         Moodle_Heavy_Load = new Moodles_state(Moodles_private_code.Heavy_Load, 1f, 1.25f, 1.5f, 1.75f);
         /*
-         총 부담 > 100% Weight: 낮은 울타리 넘을때 넘어질 확률 +13%, 달리기/파워워크 때 넘어질 확률 +13%, 
+         총 부담 > 100% Weight: 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +13%, 
                                 크리티컬 확률 -5%, 공격 속도 -7%, 높은 울타리를 오를 확률 -8%, 
-                                걷기/달리기/파워워크 속도 -19%, 지구력 회복량 감소, 좀비의 정면공격을 막아낼 확률 -2%
-         총 부담 > 125% Weight: 낮은 울타리 넘을때 넘어질 확률 +26%, 달리기/파워워크 때 넘어질 확률 +26%, 
-                                크리티컬 확률 -10%, 공격 속도 -14%, 높은 울타리를 오를 확률 -16%, 
-                                걷기/달리기/파워워크 속도 -37%, 지구력 회복량 심각히 감소, 좀비의 정면공격을 막아낼 확률 -4%
-         총 부담 > 150% Weight: 낮은 울타리 넘을때 넘어질 확률 +39%, 달리기/파워워크 때 넘어질 확률 +39%, 
+                                이동속도 -19%, 지구력 회복량 감소, 좀비의 정면공격을 막아낼 확률 -2%
+         총 부담 > 125% Weight: 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +26%, 
+                                크리티컬 확률 -10%, 공격 속도 -14%, 높은 울타리를 오를 확률 -16%, 전력질주 불가,
+                                이동속도 -37%, 지구력 회복량 심각히 감소, 좀비의 정면공격을 막아낼 확률 -4%
+         총 부담 > 150% Weight: 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +39%, 
                                 크리티컬 확률 -15%, 공격 속도 -21%, 높은 울타리를 오를 확률 -24%, 
-                                걷기/달리기/파워워크 속도 -56%, 달리기 비활성화(파워워크 가능),
-                                지구력 회복 중지 및 천천히 감소, 체력 75% 될 떄까지 감소, 
+                                이동속도 -56%, 달리기 비활성화(파워워크 가능),
+                                지구력 회복 중지 및 천천히 감소, 체력 75% 될 떄까지 서서히 감소, 
                                 좀비의 정면공격을 막아낼 확률 -6%
-         총 부담 > 175% Weight: 낮은 울타리 넘을때 넘어질 확률 +52%, 달리기/파워워크 때 넘어질 확률 +52%, 
+         총 부담 > 175% Weight: 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +52%, 
                                 크리티컬 확률 -20%, 공격 속도 -28%, 높은 울타리를 오를 확률 -32%, 
-                                걷기/달리기/파워워크 속도 -75%, 달리기 비활성화(파워워크 가능),
-                                지구력 회복 중지 및 적당한 비율로 감소, 체력 75% 될 떄까지 감소, 
+                                이동속도 -75%, 달리기 비활성화(파워워크 가능),
+                                지구력 회복 중지 및 적당한 비율로 감소, 체력 75% 될 떄까지 감소, 걷는 상태에서 지구력 감소
                                 좀비의 정면공격을 막아낼 확률 -8%
          */
         Moodle_Endurance = new Moodles_state(Moodles_private_code.Endurance, 25f, 50f, 75f, 91f);
@@ -246,6 +245,18 @@ public class Player_Moodles : MonoBehaviour
          달리기/파워워킹 할 수 없음
          */
     }
+
+    bool _Player_Setting_Language_to_Korean;
+    public void Set_Player_Language(bool Language_type)
+    {
+        _Player_Setting_Language_to_Korean = Language_type;
+    }
+
+    public bool Get_Player_Language_Is_Korean()
+    {
+        return _Player_Setting_Language_to_Korean;
+    }
+
 }
 
 public class Moodles_state
@@ -254,7 +265,6 @@ public class Moodles_state
     string _Moodle_Name = "";
     float _Moodle_current_value = 0;  // 이 무들의 현재 상태
     int _Moodle_current_step = 0;
-    bool _Player_Setting_Language_to_Korean;
 
     // 설정된 수치를 넘기면 그 상태로 바뀜
     float _First_state = 0;
@@ -272,35 +282,25 @@ public class Moodles_state
         _Second_state = Second_state;
         _Third_state = Third_state;
         _Fourth_state = Fourth_state;
-        _Player_Setting_Language_to_Korean = UI_main.ui_main.Get_Setting_Language_Type();
-    }
-
-    public void Set_Player_Language(bool Language_type)
-    {
-        _Player_Setting_Language_to_Korean = Language_type;
-    }
-
-    public bool Get_Player_Language_Is_Korean()
-    {
-        return _Player_Setting_Language_to_Korean;
     }
 
     public void Set_Moodles_state(float current_value)
     {
         switch (_Moodle_Code)
         {
-            case Moodles_private_code.Hungry:
+            case Moodles_private_code.Hungry:  //  0.15f, 0.25f, 0.45f, 0.7f  // Player_main_Update
+                _Moodle_current_value = -(current_value / 100);
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if(Get_Player_Language_Is_Korean())
+                    if(Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "출출함";
                         _current_detail_state_to_string = "먹을 게 있으면 좋겠음.";
@@ -312,12 +312,12 @@ public class Moodles_state
                     }
                     
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "배고픔";
                         _current_detail_state_to_string = "말이라도 있으면 먹고 싶음.";
@@ -329,12 +329,12 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, - 0.35f);
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "매우 배고픔";
                         _current_detail_state_to_string = "근력과 치유능력이 크게 저하됨.";
@@ -346,12 +346,12 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, - 0.6f);
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "굶주림";
                         _current_detail_state_to_string = "체력이 지속적으로 깎임.";
@@ -363,22 +363,24 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, -0.6f);
+                    /* 서서히 체력 닳아야 함 ( 미구현 사항 ) */
                 }
-                break;
+                break;     /* 24.02.26 */
             case Moodles_private_code.Stuffed:
+                _Moodle_current_value = (current_value / 100);
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "요기는 때움";
                         _current_detail_state_to_string = "신경 쓰이는 배고픔이 사라졌다.";
@@ -390,12 +392,12 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.05f);
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "적당한 포만감";
                         _current_detail_state_to_string = "배가 꽉찼다. 당신의 몸을 이롭게 할 겁니다.";
@@ -407,12 +409,12 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.15f);
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "배가 든든함";
                         _current_detail_state_to_string = "위장이 만족했다. 잠깐 체력과 근력이 증가한다.";
@@ -424,12 +426,12 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.2f);
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "어머니의 밥상";
                         _current_detail_state_to_string = "한 입 더 먹는 걸 멈추지 못했어... 근력과 치유능력이 장시간 유지됨.";
@@ -441,10 +443,10 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.2f);
                 }
-                break;
+                break;     /* 24.02.26 */
             case Moodles_private_code.Thirsty:
                 if (current_value < _First_state)
                 {
@@ -455,7 +457,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "살짝 목마름";
                         _current_detail_state_to_string = "입이 마름.";
@@ -471,7 +473,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "많이 목마름";
                         _current_detail_state_to_string = "수분 부족.";
@@ -487,7 +489,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심한 갈증";
                         _current_detail_state_to_string = "정신이 혼미하고 어지러움.";
@@ -503,7 +505,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "말라죽기 직전";
                         _current_detail_state_to_string = "물을 찾아 눈이 돌아감.";
@@ -528,7 +530,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "살짝 긴장됨";
                         _current_detail_state_to_string = "숨어서 심호흡을 하십시오.";
@@ -544,7 +546,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "긴장됨";
                         _current_detail_state_to_string = "명중률이 저하됨.";
@@ -560,7 +562,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심하게 긴장됨";
                         _current_detail_state_to_string = "명중률이 크게 저하됨.";
@@ -576,7 +578,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "공황상태";
                         _current_detail_state_to_string = "명중률과 시야가 심각하게 저하됨.";
@@ -601,7 +603,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심심함";
                         _current_detail_state_to_string = "할 일이나 즐거운 일을 만들어 보십시오.";
@@ -617,7 +619,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "지루함";
                         _current_detail_state_to_string = "우울증에 걸릴 수 있음.";
@@ -633,7 +635,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "매우 지루함";
                         _current_detail_state_to_string = "우울증에 걸릴 확률이 높음.";
@@ -649,7 +651,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "극심한 지루함";
                         _current_detail_state_to_string = "우울증으로 가는 길.";
@@ -674,7 +676,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "불안함";
                         _current_detail_state_to_string = "굉장히 예민함.";
@@ -690,7 +692,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "동요함";
                         _current_detail_state_to_string = "신경과민.";
@@ -706,7 +708,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심한 스트레스";
                         _current_detail_state_to_string = "식은땀이 나고 불안감이 엄습.";
@@ -722,7 +724,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "신경과민";
                         _current_detail_state_to_string = "정신분열이 일어남.";
@@ -747,7 +749,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "슬퍼짐";
                         _current_detail_state_to_string = "기분 전환을 할만한 것을 찾으십시오.";
@@ -763,7 +765,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "울고 싶음";
                         _current_detail_state_to_string = "흥분될만한 행동이나 사람들을 찾으십시오.";
@@ -779,7 +781,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "우울함";
                         _current_detail_state_to_string = "쓸쓸함과 슬픔에 휩싸이고 있음.";
@@ -795,7 +797,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "극심한 우울함";
                         _current_detail_state_to_string = "현실도피를 할 방법을 찾으십시오.";
@@ -810,7 +812,7 @@ public class Moodles_state
                     _Moodle_current_value = 0;
                 }
                 break;
-            case Moodles_private_code.Drunk:
+            case Moodles_private_code.Drunk:  //  0.1f, 0.3f, 0.5f, 0.7f  // 
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
@@ -820,7 +822,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "약한 술기운";
                         _current_detail_state_to_string = "술기운이 돌기 시작.";
@@ -836,7 +838,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "조금 취함";
                         _current_detail_state_to_string = "몸이 마음대로 잘 안 움직임.";
@@ -852,7 +854,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "많이 취함";
                         _current_detail_state_to_string = "몸을 가누기가 힘듦.";
@@ -868,7 +870,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "꽐라";
                         _current_detail_state_to_string = "느어랑 나밖에 업쓰어~ 이 세상은 쓰렉기야! 사랑해~사랑해...";
@@ -883,17 +885,22 @@ public class Moodles_state
                     _Moodle_current_value = 0;
                 }
                 break;
-            case Moodles_private_code.Heavy_Load:
+            case Moodles_private_code.Heavy_Load:  //  1f, 1.25f, 1.5f, 1.75f  // playerInventory_Weight_Update
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0f);
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "약간 무거움";
                         _current_detail_state_to_string = "짐이 버거움.";
@@ -905,11 +912,16 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.07f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.05f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.19f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.13f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.08f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.02f);
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "많이 무거움";
                         _current_detail_state_to_string = "이동속도가 저하됨.";
@@ -921,11 +933,16 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.14f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.10f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.37f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.26f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.16f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.04f);
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "매우 무거움";
                         _current_detail_state_to_string = "이동속도가 크게 저하됨.";
@@ -937,11 +954,16 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.21f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.15f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.56f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.39f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.24f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.06f);
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "용량초과";
                         _current_detail_state_to_string = "등을 다칠 위험이 있음. 움직임이 제한됨.";
@@ -953,10 +975,16 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.28f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.2f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.75f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.52f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.32f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.08f);
+                    /*걷는 상태에서 지구력 감소 ( 미구현 사항 )*/
                 }
-                break;
-            case Moodles_private_code.Endurance:
+                break;     /* 24.02.26 */
+            case Moodles_private_code.Endurance:  //  25f, 50f, 75f, 91f  // PlayerState_Update
                 _Moodle_current_value += current_value;
                 if (_Moodle_current_value < _First_state)
                 {
@@ -964,15 +992,15 @@ public class Moodles_state
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0f);
-                    Player_main.player_main.Set_Moving_Speed_forMoodle(0f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0f);
                 }
                 else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "약간 지침";
                         _current_detail_state_to_string = "조금만 쉬십시오.";
@@ -985,15 +1013,15 @@ public class Moodles_state
 
                     _Moodle_current_step = 1;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.5f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.07f);
-                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.19f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.1f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.05f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.02f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.07f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.19f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.1f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.05f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.02f);
                 }
                 else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "많이 지침";
                         _current_detail_state_to_string = "달리기도 힘듦.";
@@ -1006,15 +1034,15 @@ public class Moodles_state
 
                     _Moodle_current_step = 2;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.8f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.14f);
-                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.37f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.2f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.1f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.04f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.14f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.37f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.2f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.1f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.04f);
                 }
                 else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "매우 지침";
                         _current_detail_state_to_string = "걷는 것도 힘듦.";
@@ -1027,15 +1055,15 @@ public class Moodles_state
 
                     _Moodle_current_step = 3;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.9f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.21f);
-                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.56f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.3f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.15f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.06f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.21f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.56f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.3f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.15f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.06f);
                 }
                 else if (_Moodle_current_value >= _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "기진맥진";
                         _current_detail_state_to_string = "움직이기도 힘듦.";
@@ -1048,11 +1076,11 @@ public class Moodles_state
 
                     _Moodle_current_step = 4;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forMoodle(0.95f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(0.28f);
-                    Player_main.player_main.Set_Moving_Speed_forMoodle(0.75f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(0.4f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(0.2f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(0.08f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.28f);
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.75f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.4f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.2f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.08f);
                 }
                 break;     /* 24.02.23 */
             case Moodles_private_code.Tired:
@@ -1066,7 +1094,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "피곤함";
                         _current_detail_state_to_string = "누울 데가 있으면 좋겠음.";
@@ -1082,7 +1110,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "졸림";
                         _current_detail_state_to_string = "집중력이 저하됨.";
@@ -1098,7 +1126,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심한 졸림";
                         _current_detail_state_to_string = "집중력이 크게 저하됨.";
@@ -1114,7 +1142,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "비몽사몽";
                         _current_detail_state_to_string = "너무 피곤하고. 힘이 안 난다. 무시무시하게 피곤하다.";
@@ -1129,7 +1157,7 @@ public class Moodles_state
                     _Moodle_current_value = 0;
                 }
                 break;
-            case Moodles_private_code.Hyperthermia_Hot:
+            case Moodles_private_code.Hyperthermia_Hot:  //  1.5f, 3f, 4f, 5f  // player_main_Update
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
@@ -1139,7 +1167,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "약간 더움";
                         _current_detail_state_to_string = "더워지기 시작함. 옷을 벗고 싶음. 갈증이 증가함.";
@@ -1155,7 +1183,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "지나치게 더움";
                         _current_detail_state_to_string = "목이 마르고 땀이 남. 햇빛에 과다 노출됨.";
@@ -1171,7 +1199,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "찜통";
                         _current_detail_state_to_string = "메스껍고 집중력이 떨어짐. 수분을 찾아 혈안이 됨.";
@@ -1187,7 +1215,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "열사병";
                         _current_detail_state_to_string = "열사병으로 의식이 혼미함. 심각한 위기상황.";
@@ -1212,7 +1240,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "쌀쌀함";
                         _current_detail_state_to_string = "여긴 좀 추운 것 같은데...";
@@ -1228,7 +1256,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "추움";
                         _current_detail_state_to_string = "따뜻하게 있을 방법을 찾으십시오.";
@@ -1244,7 +1272,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "매우 추움";
                         _current_detail_state_to_string = "아직 살아있다. 엄청나게 추워.";
@@ -1260,7 +1288,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "저체온증";
                         _current_detail_state_to_string = "몸과 마음이 추위에 사로잡혔음. 얼어죽는다.";
@@ -1285,7 +1313,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "가벼운 찬 바람";
                         _current_detail_state_to_string = "실제보다 5-10도 정도 차갑게 느낀다.";
@@ -1301,7 +1329,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "성가신 찬 바람";
                         _current_detail_state_to_string = "실제보다 10-15도 정도 차갑게 느낀다.";
@@ -1317,7 +1345,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "얼음같은 찬 바람";
                         _current_detail_state_to_string = "실제보다 15-20도 정도 차갑게 느낀다.";
@@ -1333,7 +1361,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "엄청나게 추운 바람";
                         _current_detail_state_to_string = "실제보다 20도 넘게 차갑게 느낀다.";
@@ -1358,7 +1386,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "축축함";
                         _current_detail_state_to_string = "약간 축축하다. 비인가? 땀인가?";
@@ -1374,7 +1402,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "젖음";
                         _current_detail_state_to_string = "축축하다. 땀이 많이 나는 건가? 비가 많이 오는 건가?";
@@ -1390,7 +1418,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "많이 젖음";
                         _current_detail_state_to_string = "감기에 걸릴 것 같다.";
@@ -1406,7 +1434,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "흠뻑 젖음";
                         _current_detail_state_to_string = "몹시 감기에 걸릴 것 같다.";
@@ -1421,7 +1449,7 @@ public class Moodles_state
                     _Moodle_current_value = 0;
                 }
                 break;
-            case Moodles_private_code.Injured:
+            case Moodles_private_code.Injured:  //  0.8f, 0.6f, 0.4f, 0.25f  // Player_HP_Update
                 if (current_value > _First_state)
                 {
                     _current_state_to_string = "";
@@ -1431,7 +1459,7 @@ public class Moodles_state
                 }
                 else if (current_value <= _First_state && current_value > _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "경상";
                         _current_detail_state_to_string = "응급조치가 필요함.";
@@ -1447,7 +1475,7 @@ public class Moodles_state
                 }
                 else if (current_value <= _Second_state && current_value > _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "부상";
                         _current_detail_state_to_string = "근력과 이동속도가 저하됨.";
@@ -1463,7 +1491,7 @@ public class Moodles_state
                 }
                 else if (current_value <= _Third_state && current_value > _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심각한 부상";
                         _current_detail_state_to_string = "근력과 이동속도가 크게 저하됨.";
@@ -1479,7 +1507,7 @@ public class Moodles_state
                 }
                 else if (current_value <= _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "치명적인 부상";
                         _current_detail_state_to_string = "편히 잠들지 못할 것 같다...";
@@ -1504,7 +1532,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "약간 아픔";
                         _current_detail_state_to_string = "약간의 고통을 느낌.";
@@ -1520,7 +1548,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "고통";
                         _current_detail_state_to_string = "이동속도와 명중률이 조금 저하됨.";
@@ -1536,7 +1564,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심한 고통";
                         _current_detail_state_to_string = "이동속도와 명중률이 저하됨.";
@@ -1552,7 +1580,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "극도의 고통";
                         _current_detail_state_to_string = "이동속도와 명중률이 크게 저하됨.";
@@ -1567,8 +1595,8 @@ public class Moodles_state
                     _Moodle_current_value = 0;
                 }
                 break;
-            case Moodles_private_code.Bleeding:
-                if(current_value < _First_state)
+            case Moodles_private_code.Bleeding:  //  1f, 2f, 3f, 4f  // Player_HP_Update
+                if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
@@ -1578,7 +1606,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "경미한 출혈";
                         _current_detail_state_to_string = "붕대가 필요합니다.";
@@ -1595,7 +1623,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "출혈";
                         _current_detail_state_to_string = "근력과 이동속도가 저하됨.";
@@ -1612,7 +1640,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "심한 출혈";
                         _current_detail_state_to_string = "근력과 이동속도가 크게 저하됨.";
@@ -1629,7 +1657,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "대규모 혈액 손실";
                         _current_detail_state_to_string = "사망 직전.";
@@ -1645,17 +1673,18 @@ public class Moodles_state
                     Player_main.player_main.inven.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
                 }
                 break;     /* 24.02.22 */
-            case Moodles_private_code.Has_a_Cold:
+            case Moodles_private_code.Has_a_Cold:  //  0.2f, 0.4f, 0.6f, 0.8f  // PlayerState_Update
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "콧물이 남";
                         _current_detail_state_to_string = "가끔씩 재채기를 함.";
@@ -1667,11 +1696,13 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
+                    /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "두통이 동반된 콧물";
                         _current_detail_state_to_string = "자꾸만 재채기를 함.";
@@ -1683,11 +1714,13 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0f);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
+                    /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "감기";
                         _current_detail_state_to_string = "기침을 동반한 재채기. 이동속도와 치유능력이 저하됨.";
@@ -1697,13 +1730,15 @@ public class Moodles_state
                         _current_state_to_string = "You Have A Cold";
                         _current_detail_state_to_string = "Sneezing and coughing. Speed and healing reduced.";
                     }
-
+                   
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.2f);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.1f);
+                    /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "지독한 감기";
                         _current_detail_state_to_string = "이동속도와 치유능력이 크게 저하됨.";
@@ -1715,9 +1750,11 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.6f);
+                    Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.4f);
+                    /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
                 }
-                break;
+                break;     /* 24.02.26 */
             case Moodles_private_code.Sick:
                 if (current_value < _First_state)
                 {
@@ -1728,7 +1765,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "속이 안 좋음";
                         _current_detail_state_to_string = "쉬어가면서 행동하십시오.";
@@ -1744,7 +1781,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "메스꺼움";
                         _current_detail_state_to_string = "근력과 치유능력이 저하됨.";
@@ -1760,7 +1797,7 @@ public class Moodles_state
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "아픔";
                         _current_detail_state_to_string = "근력과 치유능력이 크게 저하됨.";
@@ -1776,7 +1813,7 @@ public class Moodles_state
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "고열";
                         _current_detail_state_to_string = "죽음의 위험이 점점 커짐.";
@@ -1795,7 +1832,7 @@ public class Moodles_state
                 if (current_value == _First_state && 
                     Player_main.player_main.playerState.Get_Is_Infection() == false)
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "사망";
                         _current_detail_state_to_string = "쥐 먹이가 될 확률이 높음.";
@@ -1813,7 +1850,7 @@ public class Moodles_state
                 if (current_value == _First_state &&
                     Player_main.player_main.playerState.Get_Is_Infection() == true)
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "좀비화";
                         _current_detail_state_to_string = "사람이 맛있어 보임.";
@@ -1831,7 +1868,7 @@ public class Moodles_state
             case Moodles_private_code.Restricted_Movement:
                 if (current_value < _First_state)
                 {
-                    if (Get_Player_Language_Is_Korean())
+                    if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
                         _current_state_to_string = "전력질주 불가";
                         _current_detail_state_to_string = "무거운 옷을 벗는 것을 고려해보세요.";

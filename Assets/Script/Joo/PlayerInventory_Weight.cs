@@ -9,22 +9,35 @@ public class PlayerInventory_Weight
     float MinWeight = 0.0f;
     float Basic_MaxWeight = 6.0f;
     float Moodles_point = 0.0f;
-    float Bag_point = 0.0f;
+    float Main_Bag_point = 0.0f;
+    float Sub_Bag_point = 0.0f;
     float Skill_point = 0.0f;
     public float Total_MaxWeight = 0.0f;
+    float Current_Weight = 0.0f;
 
     public void Awake()
     {
         playerInventory_Weight = this;
-        Total_MaxWeight = Basic_MaxWeight + Moodles_point + Skill_point + Bag_point;
+        Total_MaxWeight = Basic_MaxWeight + Moodles_point + Skill_point + Main_Bag_point + Sub_Bag_point;
     }
 
+    public void Update()
+    {
+        Total_MaxWeight = Basic_MaxWeight + Moodles_point + Skill_point + Main_Bag_point + Sub_Bag_point;
+        Player_main.player_main.playerMoodles.Moodle_Heavy_Load.Set_Moodles_state(Current_Weight / Total_MaxWeight);
+
+
+    }
+
+    float Set_point_for_Hungry = 0f;
+    float Set_point_for_Stuffed = 0f;
+    float Set_point_for_Injured = 0f;
+    float Set_point_for_Bleeding = 0f;
     public void Set_Add_Moodles_Point(Moodles_private_code Moodles_name, int Moodles_step)
     {
         switch (Moodles_name)
         {
             case Moodles_private_code.Hungry:
-                float Set_point_for_Hungry = 0f;
                 switch (Moodles_step)
                 {
                     case 0: 
@@ -40,10 +53,8 @@ public class PlayerInventory_Weight
                         Set_point_for_Hungry = -2;
                         break;
                 }
-                Moodles_point = Moodles_point + Set_point_for_Hungry;
                 break;
             case Moodles_private_code.Stuffed:
-                float Set_point_for_Stuffed = 0f;
                 switch (Moodles_step)
                 {
                     case 0:
@@ -60,7 +71,6 @@ public class PlayerInventory_Weight
                         Set_point_for_Stuffed = +2;
                         break;
                 }
-                Moodles_point = Moodles_point + Set_point_for_Stuffed;
                 break;
             case Moodles_private_code.Thirsty: break;
             case Moodles_private_code.Panic: break;
@@ -75,7 +85,6 @@ public class PlayerInventory_Weight
             case Moodles_private_code.Windchill: break;
             case Moodles_private_code.Wet: break;
             case Moodles_private_code.Injured:
-                float Set_point_for_Injured = 0f;
                 switch (Moodles_step)
                 {
                     case 0:
@@ -91,11 +100,9 @@ public class PlayerInventory_Weight
                         Set_point_for_Injured = -3;
                         break;
                 }
-                Moodles_point = Moodles_point + Set_point_for_Injured;
                 break;
             case Moodles_private_code.Pain: break;
             case Moodles_private_code.Bleeding:
-                float Set_point_for_Bleeding = 0f;
                 switch (Moodles_step)
                 {
                     case 0:
@@ -111,13 +118,12 @@ public class PlayerInventory_Weight
                         Set_point_for_Bleeding = -2;
                         break;
                 }
-                Moodles_point = Moodles_point + Set_point_for_Bleeding;
                 break;
             case Moodles_private_code.Has_a_Cold: break;
             case Moodles_private_code.Sick: break;
             case Moodles_private_code.Restricted_Movement: break;
         }
-
+        Moodles_point = Set_point_for_Hungry + Set_point_for_Stuffed + Set_point_for_Injured + Set_point_for_Bleeding;
     }
 
     public void Set_Add_Skill_point(float Set_point)
@@ -125,9 +131,14 @@ public class PlayerInventory_Weight
         Skill_point += Set_point;
     }
 
-    public void Set_Add_Bag_point(float Set_point)
+    public void Set_Add_Main_Bag_point(float Set_point)
     {
-        Bag_point += Set_point;
+        Main_Bag_point += Set_point;
+    }
+
+    public void Set_Add_Sub_Bag_point(float Set_point)
+    {
+        Sub_Bag_point += Set_point;
     }
 
     public float Get_MaxWeight()
