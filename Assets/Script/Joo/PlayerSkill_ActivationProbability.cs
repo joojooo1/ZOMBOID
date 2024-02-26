@@ -211,7 +211,7 @@ public class PlayerSkill_ActivationProbability
     }
 
 
-    // 공격 속도 ( + )  // Fitness // Axe 등 무기
+    // 공격 속도 ( + )  // Fitness // Axe 등 무기  // Moodle_Heavy_Load
     float Basic_Attack_Speed = 0f;  // 무기 미착용 시
     float Attack_Speed_for_Weapon = 0f;  // 무기 착용 시
     float Attack_Speed_for_Moodle = 1f;
@@ -278,13 +278,25 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
-    public void Set_Attack_Speed_forMoodle(float value)
+    float Attack_Speed_for_Endurance = 1;
+    float Attack_Speed_for_Heavy_Load = 1;
+
+    public void Set_Attack_Speed_forMoodle(Moodles_private_code _Moodle_Code, float value)
     {
-        Attack_Speed_for_Moodle = 1 - value;
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Attack_Speed_for_Endurance = 1 - value;
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Attack_Speed_for_Heavy_Load = 1 - value;
+                break;
+        }
+        Attack_Speed_for_Moodle = Attack_Speed_for_Endurance + Attack_Speed_for_Heavy_Load;
     }
 
 
-    // 넘어질 확률 ( - )  // Fitness
+    // 넘어질 확률 ( - )  // Fitness  // Moodle_Heavy_Load
     float Probability_of_Falling = 0f;
     float Probability_of_Falling_forSkill = 0f;
     float Probability_of_Falling_forMoodle = 0f;
@@ -303,16 +315,27 @@ public class PlayerSkill_ActivationProbability
         Probability_of_Falling = Probability_of_Falling_forSkill;
     }
 
-    public void Set_Probability_of_Falling_forMoodle(float value)
+    float Probability_of_Falling_for_Endurance = 0;
+    float Probability_of_Falling_for_Heavy_Load = 0;
+    public void Set_Probability_of_Falling_forMoodle(Moodles_private_code _Moodle_Code, float value)
     {
-        Probability_of_Falling_forMoodle = value;
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Probability_of_Falling_for_Endurance = value;
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Probability_of_Falling_for_Heavy_Load = value;
+                break;
+        }
+        Probability_of_Falling_forMoodle = Probability_of_Falling_for_Endurance + Probability_of_Falling_for_Heavy_Load;
     }
 
-    // 높은 담을 넘을 확률 ( + )  // Fitness, Strength
-    float Probability_of_Crossing_a_High_Wall = 0f;
+    // 높은 담을 넘을 확률 ( + )  // Fitness, Strength  // Moodle_Heavy_Load
+    float Probability_of_Crossing_a_High_Wall = 0.5f;
     float Probability_of_Crossing_a_High_Wall_forSkill = 0f;
     float Probability_of_Crossing_a_High_Wall_forMoodle = 0f;
-    public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall - Probability_of_Crossing_a_High_Wall_forMoodle; }
+    public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall + Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle; }
 
     public void Set_Probability_of_Crossing_a_High_Wall_forSkill(float SkillLevel)
     {
@@ -324,18 +347,30 @@ public class PlayerSkill_ActivationProbability
         {
             Probability_of_Crossing_a_High_Wall_forSkill += 0.02f;
         }
-        Probability_of_Crossing_a_High_Wall = Probability_of_Crossing_a_High_Wall_forSkill;
+        
     }
 
-    public void Set_Probability_of_Crossing_a_High_Wall_forMoodle(float value)
+    float Probability_of_Crossing_a_High_Wall_for_Endurance = 0;
+    float Probability_of_Crossing_a_High_Wall_for_Heavy_Load = 0;
+    public void Set_Probability_of_Crossing_a_High_Wall_forMoodle(Moodles_private_code _Moodle_Code, float value)
     {
-        Probability_of_Crossing_a_High_Wall_forMoodle = value;
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Probability_of_Crossing_a_High_Wall_for_Endurance = value;
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Probability_of_Crossing_a_High_Wall_for_Heavy_Load = value;
+                break;
+        }
+        Probability_of_Crossing_a_High_Wall_forMoodle = Probability_of_Crossing_a_High_Wall_for_Endurance + Probability_of_Crossing_a_High_Wall_for_Heavy_Load;
     }
 
-    // 치명타 확률 ( + )  // Axe 등 무기
+    // 치명타 확률 ( + )  // Axe 등 무기  // Moodle_Heavy_Load 
     float Basic_Critical_Hit_Chance = 0.0f;
     float Critical_Hit_Chance = 0.0f;
-    public float Get_Critical_Hit_Chance() { return Critical_Hit_Chance; }
+    float Critical_Hit_Chance_forMoodle = 1;
+    public float Get_Critical_Hit_Chance() { return Critical_Hit_Chance * Critical_Hit_Chance_forMoodle; }
 
     public void Set_Critical_Hit_Chance_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
     {
@@ -384,6 +419,10 @@ public class PlayerSkill_ActivationProbability
 
     }
 
+    public void Set_Critical_Hit_Chance_forMoodle(float value)
+    {
+        Critical_Hit_Chance_forMoodle = (1 - value);
+    }
 
     // 밀쳐낼 확률 ( * )   // Strength
     float HitForce = 0.45f;
@@ -519,12 +558,24 @@ public class PlayerSkill_ActivationProbability
     }
 
 
-    // 좀비에 대한 정면공격 방어 확률 감소 ( Moodle_Endurance )
+    // 좀비에 대한 정면공격 방어 감소 확률 // Moodle_Endurance, Moodle_Heavy_Load
     float Chance_of_Blocking_zombie_frontal_attack = 0f;
-    public float Get_Chance_of_Blocking_zombie_frontal_attack() { return Chance_of_Blocking_zombie_frontal_attack; }
-    public void Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(float value)
+    float Chance_of_Blocking_zombie_frontal_attack_for_Endurance = 0;
+    float Chance_of_Blocking_zombie_frontal_attack_for_Heavy_Load = 0;
+    public float Get_Chance_of_Blocking_zombie_frontal_attack() { return (1 - Chance_of_Blocking_zombie_frontal_attack); }
+    public void Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(Moodles_private_code _Moodle_Code, float value)
     {
-        Chance_of_Blocking_zombie_frontal_attack = (1 - value);
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Chance_of_Blocking_zombie_frontal_attack_for_Endurance = (1 - value);
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Chance_of_Blocking_zombie_frontal_attack_for_Heavy_Load = (1 - value);
+                break;
+        }
+
+        Chance_of_Blocking_zombie_frontal_attack = Chance_of_Blocking_zombie_frontal_attack_for_Endurance + Chance_of_Blocking_zombie_frontal_attack_for_Heavy_Load;
     }
 
 

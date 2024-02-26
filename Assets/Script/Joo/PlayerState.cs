@@ -43,14 +43,14 @@ public class Player_body_Location
         bool Is_Block = false;
         if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
         {
-            if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack())
+            if (rand_Block / 100 < (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack()))
             {
                 Is_Block = true;
             }
         }
         else
         {
-            if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
+            if (rand_Block / 100 < Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
             {
                 Is_Block = true;
             }
@@ -257,9 +257,30 @@ public class PlayerState : MonoBehaviour
         Player_body_point.Add(Right_foot);
     }
 
+    float Endurance_Timer = 0.0f;
     private void Update()
     {
-        
+        /****************** Player_Endurance ******************/
+        if (Player_main.player_main.Is_Running)
+        {
+            Endurance_Timer += Time.deltaTime;
+            if(Endurance_Timer > 0.3f)
+            {
+                Set_Endurance(-2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate());
+                Endurance_Timer = 0.0f;
+            }
+        }
+        else
+        {
+            Endurance_Timer = 0.0f;
+            Endurance_Timer += Time.deltaTime;
+            if (Endurance_Timer > 0.5f)
+            {
+                Set_Endurance(3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate());
+                Endurance_Timer = 0.0f;
+            }
+
+        }
     }
 
     int Bleeding_total_count = 0;
@@ -275,7 +296,6 @@ public class PlayerState : MonoBehaviour
     }
 
     [SerializeField] bool _Infection = false;  // 감염 여부 확인
-    [SerializeField] float _Endurance = 100f;  // 지구력
 
     public void Set_Is_Infection(bool Is_Infection) { _Infection = Is_Infection; }
     public bool Get_Is_Infection() { return _Infection; }
@@ -291,5 +311,45 @@ public class PlayerState : MonoBehaviour
         return _Infection;
     }
 
+    [SerializeField] float _Endurance = 100f;  // 지구력
+
+    public void Set_Endurance(float value)
+    {
+        _Endurance += value;
+        Player_main.player_main.playerMoodles.Moodle_Endurance.Set_Moodles_state(value);
+    }
+
+    public float Get_Endurance() {  return _Endurance; }
+
+    [SerializeField] float _P_Has_a_Cold = 0.0f;
+
+    public void Set__P_Has_a_Cold(float value)
+    {
+        _P_Has_a_Cold += value;
+        Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Set_Moodles_state(_P_Has_a_Cold);
+    }
+
+    public float Get_P_Has_a_Cold()
+    {
+        return _P_Has_a_Cold;
+    }
+
+    [SerializeField] float _Thirsty = 0.0f;
+
+    public void Set_Thirsty(float value)
+    {
+
+    }
+
+    public float Get_Thirsty() {  return _Thirsty; }
+
+    [SerializeField] float _Tired = 0.0f;
+
+    public void Set_Tired(float value)
+    {
+
+    }
+
+    public float Get_Tired() { return _Tired; }
 
 }
