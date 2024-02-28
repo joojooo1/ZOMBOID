@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerInventory_Weight
 {
-    public static PlayerInventory_Weight playerInventory_Weight;
-
     float MinWeight = 0.0f;
     float Basic_MaxWeight = 6.0f;
     float Moodles_point = 0.0f;
@@ -17,7 +15,6 @@ public class PlayerInventory_Weight
 
     public void Awake()
     {
-        playerInventory_Weight = this;
         Total_MaxWeight = Basic_MaxWeight + Moodles_point + Skill_point + Main_Bag_point + Sub_Bag_point;
     }
 
@@ -27,6 +24,21 @@ public class PlayerInventory_Weight
         Player_main.player_main.playerMoodles.Moodle_Heavy_Load.Set_Moodles_state(Current_Weight / Total_MaxWeight);
 
 
+    }
+
+    public void Add_Weight(float weight)
+    {
+        Current_Weight += weight;
+    }
+
+    public float Get_Current_Weight()
+    {
+        return Current_Weight;
+    }
+
+    public float Get_MaxWeight()
+    {
+        return Total_MaxWeight;
     }
 
     float Set_point_for_Hungry = 0f;
@@ -139,11 +151,6 @@ public class PlayerInventory_Weight
     public void Set_Add_Sub_Bag_point(float Set_point)
     {
         Sub_Bag_point += Set_point;
-    }
-
-    public float Get_MaxWeight()
-    {
-        return Total_MaxWeight;
     }
 
     // 소지 한도  // Strength

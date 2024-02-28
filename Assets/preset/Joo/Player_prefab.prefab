@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 4501799666224471547}
   - component: {fileID: 682236801796081560}
   - component: {fileID: 6709710899631478558}
+  - component: {fileID: 367789335178478904}
   m_Layer: 0
   m_Name: Player_prefab
   m_TagString: Untagged
@@ -707,11 +708,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5970513084ceeb94b9ea7b1b374a8c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Skill: {fileID: 367789335178478904}
   playerState: {fileID: 4501799666224471547}
   player_HP: {fileID: 682236801796081560}
   playerMoodles: {fileID: 6709710899631478558}
+  Weight: 83
+  Calories: 300
+  Temperature: 36
+  Satiety: 50
+  Attack_Power: 8
+  Evasion: 0.15
+  Moving_Speed: 3
+  Accuracy: 0.7
   Is_Equipping_Weapons: 0
+  Is_Aiming: 0
+  Is_Running: 0
+  Is_Sleeping: 0
   textText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
 --- !u!114 &4501799666224471547
 MonoBehaviour:
@@ -725,6 +745,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e776be6ec65e40902cb60002c3fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Infection: 0
+  _Endurance: 100
+  _P_Has_a_Cold: 0
+  _Thirsty: 0
+  _Tired: 0
 --- !u!114 &682236801796081560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player_Max_Health: 100
   Player_current_Health: 0
+  HP_Recovery_Speed: 1
 --- !u!114 &6709710899631478558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,6 +775,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f566c0bfb1cb914391702f41a122ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &367789335178478904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4876846059261434598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c254e4c140fab74d88bcd487b79fea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5264492318086727840
