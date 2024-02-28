@@ -12,6 +12,7 @@ public class PlayerSkill : MonoBehaviour
     public PlayerPassiveSkill_Level Strength_Level;  // 근력       /* 24.02.16 test */
 
     // 생존 능력
+    // 사냥
     // float Fishing = 0f;  // 낚시
     // float Trapping = 0f;  // 함정
     // float Foraging = 0f;  // 채집
@@ -30,10 +31,11 @@ public class PlayerSkill : MonoBehaviour
     public PlayerWeaponSkill_Level ShortBlade_Level;  // 단검
     public PlayerWeaponSkill_Level Spear_Level;  // 창
     public PlayerWeaponSkill_Level Maintenance_Level;  // 물건관리 ( 근접무기의 내구도 소모율에 영향을 끼침 )
+    public PlayerWeaponSkill_Level Gun_Level;  // 총 ( 조준, 재장전 )
 
-    // 총기
-    public PlayerWeaponSkill_Level Aiming_Level;  // 조준
-    public PlayerWeaponSkill_Level Reloading_Level;  // 재장전
+    //// 총기
+    //public PlayerGunSkill_Level Aiming_Level;  // 조준
+    //public PlayerGunSkill_Level Reloading_Level;  // 재장전
 
     // 제작 능력
     public PlayerCraftingSkill_Level Carpentry_Level;  // 목공
@@ -58,16 +60,17 @@ public class PlayerSkill : MonoBehaviour
         Nimble_Level = new PlayerGeneralSkill_Level(0f, "Nimble");
         Sneaking_Level = new PlayerGeneralSkill_Level(0f, "Sneaking");
 
-        Axe_Level = new PlayerWeaponSkill_Level(0f, "Axe");
-        LongBlunt_Level = new PlayerWeaponSkill_Level(0f, "LongBlunt");
-        ShortBlunt_Level = new  (0f, "ShortBlunt");
-        LongBlade_Level = new PlayerWeaponSkill_Level(0f, "LongBlade");
-        ShortBlade_Level = new PlayerWeaponSkill_Level(0f, "ShortBlade");
-        Spear_Level = new PlayerWeaponSkill_Level(0f, "Spear");
-        Maintenance_Level = new PlayerWeaponSkill_Level(0f, "Maintenance");
+        Axe_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Axe);
+        LongBlunt_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlunt);
+        ShortBlunt_Level = new  (0f, Weapon_type.ShortBlunt);
+        LongBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlade);
+        ShortBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.ShortBlade);
+        Spear_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Spear);
+        Maintenance_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Maintenance);
+        Gun_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Gun);
 
-        Aiming_Level = new PlayerWeaponSkill_Level(0f, "Aiming");
-        Reloading_Level = new PlayerWeaponSkill_Level(0f, "Reloading");
+        //Aiming_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Aiming");
+        //Reloading_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Reloading");
 
         Carpentry_Level = new PlayerCraftingSkill_Level(0f, "Carpentry");
         Cooking_Level = new PlayerCraftingSkill_Level(0f, "Cooking");

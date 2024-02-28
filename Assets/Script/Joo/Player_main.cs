@@ -14,7 +14,8 @@ public enum Weapon_type
     LongBlade = 3,
     ShortBlade = 4,
     Spear = 5,
-    Gun = 6
+    Maintenance = 6,
+    Gun = 7
 }
 
 public enum Zombie_Attack_Pattern
@@ -29,8 +30,8 @@ public class Player_main : MonoBehaviour
 {
     public static Player_main player_main;
 
-    public PlayerInventory_Weight inven = new PlayerInventory_Weight();
-    PlayerSkill Skill;
+    public PlayerInventory_main Inven_main = new PlayerInventory_main();
+    public PlayerSkill Skill;
 
     public PlayerSkill_ActivationProbability playerSkill_ActivationProbability = new PlayerSkill_ActivationProbability();
     public PlayerState playerState = new PlayerState();
@@ -47,11 +48,12 @@ public class Player_main : MonoBehaviour
     [SerializeField] float Attack_Power = 8.0f; // 공격력
     [SerializeField] float Evasion = 0.15f;  // 회피율
     [SerializeField] float Moving_Speed = 3f;  // 이동속도
-    float Moving_Speed_forMoodle = 1f;
+    [SerializeField] float Accuracy = 0.7f;  // 명중률
 
     public bool Is_Equipping_Weapons = false;
     public bool Is_Aiming = false;
     public bool Is_Running = false;
+    public bool Is_Sleeping = false;
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -65,7 +67,7 @@ public class Player_main : MonoBehaviour
     float Satiety_Timer = 0.0f;
     void Update()
     {
-        Set_testText(playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_step());
+        Set_testText(playerMoodles.Moodle_Pain.Get_Moodle_current_step());
         if (Is_Equipping_Weapons)  // 무기를 착용하는 경우 호출
         {
             //Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, Is_Equipping_Weapons)
@@ -74,18 +76,13 @@ public class Player_main : MonoBehaviour
         // test 함수 -------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Z)) 
         {
-            playerState.Set__P_Has_a_Cold(0.1f);
+            player_HP.Set_Player_HP_for_Damage(20f);
         }
-        else if (Input.GetKeyDown(KeyCode.X))  // 무기 착용 시
+        else if (Input.GetKeyDown(KeyCode.X))
         {
-            Is_Equipping_Weapons = true;
-            Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe, Is_Equipping_Weapons);
+            player_HP.Set_Player_HP_for_Heal(20f);
         }
-        else if (Input.GetKeyDown(KeyCode.C))  // 무기 해제 시
-        {
-            Is_Equipping_Weapons = false;
-            Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe, Is_Equipping_Weapons);
-        }
+
         // ------------------------------------------------------------- test 함수 
 
         /************************************* Player_Movement *************************************/
@@ -118,6 +115,11 @@ public class Player_main : MonoBehaviour
         if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
             Is_Running = false;
 
+        /************************************* Player_Sleeping **************************************/
+        if(playerMoodles.Moodle_Pain.Get_Moodle_current_step() > 1)  // Moodle_Pain 2단계부터 수면 불가
+        {
+            Is_Sleeping = false;
+        }
 
     }
 
@@ -125,13 +127,13 @@ public class Player_main : MonoBehaviour
     public UnityEngine.UI.Text[] textText;
     public void Set_testText(float Level)
     {
-        textText[0].text = "Moving_Speed: " + Get_Moving_Speed().ToString();
-        textText[1].text = "HP_Recovery_Speed: " + player_HP.Get_HP_Recovery_Speed().ToString();
-        textText[2].text = "Has_a_Cold_Level: " + Level.ToString();
-        textText[3].text = playerMoodles.Moodle_Has_a_Cold.Get_current_state_to_string();
-        textText[4].text = playerMoodles.Moodle_Has_a_Cold.Get_current_detail_state_to_string();
-        //textText[5].text = "Chance_of_Blocking_zombie_frontal_attack: " + playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack().ToString();
-        //textText[6].text = playerMoodles.Moodle_Endurance.Get_current_state_to_string();
+        textText[0].text = "Probability_of_Falling: " + playerSkill_ActivationProbability.Get_Probability_of_Falling().ToString();
+        textText[1].text = "Moving_Speed: " + Get_Moving_Speed().ToString();
+        textText[2].text = "Pain_Level: " + Level.ToString();
+        textText[3].text = "Accuracy: " + Get_Accuracy().ToString();
+        textText[4].text = playerMoodles.Moodle_Pain.Get_current_state_to_string();
+        textText[5].text = playerMoodles.Moodle_Pain.Get_current_detail_state_to_string();
+        //textText[6].text = playerMoodles.Moodle_Endurance.Get_current_state_to_string();  
         //textText[7].text = playerMoodles.Moodle_Endurance.Get_current_detail_state_to_string();
     }
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- test 함수 
@@ -153,9 +155,11 @@ public class Player_main : MonoBehaviour
         }
     }
 
-    float Speed_rate_for_Endurance = 1;
-    float Speed_rate_for_Has_a_Cold = 1;
-    float Speed_rate_for_Heavy_Load = 1;
+    float Moving_Speed_forMoodle = 1f;
+    float Speed_rate_for_Endurance = 1f;
+    float Speed_rate_for_Has_a_Cold = 1f;
+    float Speed_rate_for_Heavy_Load = 1f;
+    float Speed_rate_for_Pain = 1f;
     public void Set_Moving_Speed_forMoodle(Moodles_private_code _Moodle_Code, float Speed_rate) 
     {
         switch (_Moodle_Code)
@@ -169,8 +173,30 @@ public class Player_main : MonoBehaviour
             case Moodles_private_code.Heavy_Load:
                 Speed_rate_for_Heavy_Load = (1 - Speed_rate);
                 break;
+            case Moodles_private_code.Pain:
+                Speed_rate_for_Pain = (1 - Speed_rate);
+                break;
         }
-        Moving_Speed_forMoodle = Speed_rate_for_Endurance * Speed_rate_for_Has_a_Cold * Speed_rate_for_Heavy_Load;
+        Moving_Speed_forMoodle = Speed_rate_for_Endurance * Speed_rate_for_Has_a_Cold * Speed_rate_for_Heavy_Load + Speed_rate_for_Pain;
+    }
+
+    public float Get_Accuracy()
+    {
+        return Accuracy - Accuracy_forMoodle;
+    }
+
+
+    float Accuracy_forMoodle = 0f;
+    float Accuracy_for_Pain = 0f;
+    public void Set_Accuracy_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Pain:
+                Speed_rate_for_Pain = value;
+                break;
+        }
+        Accuracy_forMoodle = Accuracy_for_Pain;
     }
 
     public float Get_Evasion()
@@ -178,40 +204,33 @@ public class Player_main : MonoBehaviour
         return Evasion + playerSkill_ActivationProbability.Get_Injury_chance();
     }
 
-    public void Set_Is_Equipping_Weapons()
-    {
-        if (Is_Equipping_Weapons)
-            Is_Equipping_Weapons = false;
-        else
-            Is_Equipping_Weapons = true;
-    }
 
-    void Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, bool Is_Equipping_Weapons)  // 무기를 끼면 함수 호출
+    public void Set_Attack_Power_for_Equipping_Weapons(Weapon_Detail Current_Equipping_weapon)  // 무기를 끼면 함수 호출
     {
         // 무기 Script 구현사항
         // 무기별 타입
         // 무기별 공격력
         // 무기별 내구도
 
-        switch (weapon)
+        switch ((Weapon_type)Current_Equipping_weapon.WeaponType)
         {
             case Weapon_type.Axe:
-                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.LongBlunt:
-                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.ShortBlunt:
-                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.LongBlade:
-                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.ShortBlade:
-                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.Spear:
-                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             default:
                 break;

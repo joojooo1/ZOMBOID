@@ -296,7 +296,7 @@ public class PlayerSkill_ActivationProbability
     }
 
 
-    // 넘어질 확률 ( - )  // Fitness  // Moodle_Heavy_Load
+    // 넘어질 확률 ( - )  // Fitness  // Moodle_Heavy_Load, Moodle_Pain
     float Probability_of_Falling = 0f;
     float Probability_of_Falling_forSkill = 0f;
     float Probability_of_Falling_forMoodle = 0f;
@@ -317,6 +317,7 @@ public class PlayerSkill_ActivationProbability
 
     float Probability_of_Falling_for_Endurance = 0;
     float Probability_of_Falling_for_Heavy_Load = 0;
+    float Probability_of_Falling_for_Pain = 0;
     public void Set_Probability_of_Falling_forMoodle(Moodles_private_code _Moodle_Code, float value)
     {
         switch (_Moodle_Code)
@@ -327,8 +328,12 @@ public class PlayerSkill_ActivationProbability
             case Moodles_private_code.Heavy_Load:
                 Probability_of_Falling_for_Heavy_Load = value;
                 break;
+            case Moodles_private_code.Pain:
+                Probability_of_Falling_for_Pain = value;
+                break;
+
         }
-        Probability_of_Falling_forMoodle = Probability_of_Falling_for_Endurance + Probability_of_Falling_for_Heavy_Load;
+        Probability_of_Falling_forMoodle = Probability_of_Falling_for_Endurance + Probability_of_Falling_for_Heavy_Load + Probability_of_Falling_for_Pain;
     }
 
     // 높은 담을 넘을 확률 ( + )  // Fitness, Strength  // Moodle_Heavy_Load
@@ -977,36 +982,36 @@ public class PlayerSkill_ActivationProbability
     }
 
     // 사격시 정확도 ( + )  ( 목표물에 명중할 기본 확률 )
-    float Accuracy = 0.0f;
-    public float Get_Accuracy() { return Accuracy; }
+    float Gun_Accuracy = 0.0f;
+    public float Get_Gun_Accuracy() { return Gun_Accuracy; }
     
-    public void Set_Accuracy(float SkillLevel)
+    public void Set_Gun_Accuracy(float SkillLevel)
     {
         switch (SkillLevel)
         {
             case 0:
-                Accuracy = 0.00f;
+                Gun_Accuracy = 0.00f;
                 break;
             case 1:
-                Accuracy = 0.02f;
+                Gun_Accuracy = 0.02f;
                 break;
             case 2: case 3:
-                Accuracy = 0.05f;
+                Gun_Accuracy = 0.05f;
                 break;
             case 4: case 5:
-                Accuracy = 0.07f;
+                Gun_Accuracy = 0.07f;
                 break;
             case 6: case 7:
-                Accuracy = 0.10f;
+                Gun_Accuracy = 0.10f;
                 break;
             case 8:
-                Accuracy = 0.12f;
+                Gun_Accuracy = 0.12f;
                 break;
             case 9:
-                Accuracy = 0.15f;
+                Gun_Accuracy = 0.15f;
                 break;
             case 10:
-                Accuracy = 0.17f;
+                Gun_Accuracy = 0.17f;
                 break;
         }
     }

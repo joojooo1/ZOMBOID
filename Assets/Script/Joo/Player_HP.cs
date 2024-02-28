@@ -63,7 +63,8 @@ public class Player_HP : MonoBehaviour
                 Bleeding_Timer = 0;
             }
 
-            Player_main.player_main.playerMoodles.Moodle_Injured.Set_Moodles_state(Player_current_Health/Player_Max_Health);
+            Player_main.player_main.playerMoodles.Moodle_Injured.Set_Moodles_state(Player_current_Health / Player_Max_Health);
+            Player_main.player_main.playerMoodles.Moodle_Pain.Set_Moodles_state(Player_current_Health / Player_Max_Health);
         }
         else
         {
