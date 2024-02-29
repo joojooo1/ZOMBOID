@@ -28,17 +28,17 @@ public class Weapon_Detail : MonoBehaviour
 
     float W_Current_Condition;
 
-    private void Start()
-    {
-        W_Current_Condition = W_Max_Condition;
-    }
+    //private void Start()
+    //{
+    //    W_Current_Condition = W_Max_Condition;
+    //}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Player_main.player_main.Inven_main.Add_Weapon_Item(This_Weapon);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Player_main.player_main.Inven_main.Add_Weapon_Item(This_Weapon);
+    //    }
+    //}
 
 }
