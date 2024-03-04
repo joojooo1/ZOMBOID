@@ -5,6 +5,7 @@ using UnityEngine;
 public class UI_main : MonoBehaviour
 {
     public static UI_main ui_main;
+    public UI_Player_State ui_player_state = new UI_Player_State();
 
     public bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
     void Awake()
@@ -30,6 +31,7 @@ public class UI_main : MonoBehaviour
                 player_Setting_Language_to_Korean = true;
             }
         }
+
 
     }
 }
