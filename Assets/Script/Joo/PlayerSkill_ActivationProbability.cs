@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -143,10 +144,14 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
-    // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용
+    // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용  // Moodle_Panic
     float Basic_Increase_in_Attack_Power = 0.3f;  // 무기 미착용 시
     float Increase_in_Attack_Power = 0.0f;  // 무기 착용 시
-    public float Get_Increase_in_Attack_Power() { return  Increase_in_Attack_Power; }
+    float Increase_in_Attack_Power_forMoodle = 0.0f;
+    public float Get_Increase_in_Attack_Power()
+    {
+        return Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle;
+    }
 
     public void Set_Increase_in_Attack_Power_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
     {
@@ -194,6 +199,20 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
+    float Increase_in_Attack_Power_for_Panic = 0f;
+    public void Set_Increase_in_Attack_Power_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Panic:
+                Increase_in_Attack_Power_for_Panic = value;
+                break;
+        }
+
+        Increase_in_Attack_Power_forMoodle = Increase_in_Attack_Power_for_Panic;
+    }
+
+
     // 근접 공격력 비율 ( * )  // Strength
     float Melee_Attack_Power_Ratio = 0.75f;
     float Melee_Attack_Power_Ratio_forMoodle = 1f;
@@ -211,7 +230,7 @@ public class PlayerSkill_ActivationProbability
     }
 
 
-    // 공격 속도 ( + )  // Fitness // Axe 등 무기  // Moodle_Heavy_Load
+    // 공격 속도 ( + )  // Fitness // Axe 등 무기  // Moodle_Heavy_Load, Endurance
     float Basic_Attack_Speed = 0f;  // 무기 미착용 시
     float Attack_Speed_for_Weapon = 0f;  // 무기 착용 시
     float Attack_Speed_for_Moodle = 1f;
@@ -424,9 +443,20 @@ public class PlayerSkill_ActivationProbability
 
     }
 
-    public void Set_Critical_Hit_Chance_forMoodle(float value)
+    float Set_Critical_Hit_Chance_forMoodle_for_Heavy_Load = 0;
+    float Set_Critical_Hit_Chance_forMoodle_for_Panic = 0;
+    public void Set_Critical_Hit_Chance_forMoodle(Moodles_private_code _Moodle_Code, float value)  // Moodle_Heavy_Load
     {
-        Critical_Hit_Chance_forMoodle = (1 - value);
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Heavy_Load:
+                Set_Critical_Hit_Chance_forMoodle_for_Heavy_Load = (1 - value);
+                break;
+            case Moodles_private_code.Panic:
+                Set_Critical_Hit_Chance_forMoodle_for_Panic = (1 - value);
+                break;
+        }
+        Critical_Hit_Chance_forMoodle = Set_Critical_Hit_Chance_forMoodle_for_Heavy_Load * Set_Critical_Hit_Chance_forMoodle_for_Panic;
     }
 
     // 밀쳐낼 확률 ( * )   // Strength
@@ -983,7 +1013,7 @@ public class PlayerSkill_ActivationProbability
 
     // 사격시 정확도 ( + )  ( 목표물에 명중할 기본 확률 )
     float Gun_Accuracy = 0.0f;
-    public float Get_Gun_Accuracy() { return Gun_Accuracy; }
+    public float Get_Gun_Accuracy() { return Gun_Accuracy - Player_main.player_main.Get_Accuracy_forMoodle(); }
     
     public void Set_Gun_Accuracy(float SkillLevel)
     {
@@ -995,23 +1025,32 @@ public class PlayerSkill_ActivationProbability
             case 1:
                 Gun_Accuracy = 0.02f;
                 break;
-            case 2: case 3:
-                Gun_Accuracy = 0.05f;
+            case 2:
+                Gun_Accuracy = 0.04f;
                 break;
-            case 4: case 5:
-                Gun_Accuracy = 0.07f;
+            case 3:
+                Gun_Accuracy = 0.06f;
                 break;
-            case 6: case 7:
+            case 4:
+                Gun_Accuracy = 0.08f;
+                break;
+            case 5:
                 Gun_Accuracy = 0.10f;
                 break;
-            case 8:
+            case 6:
                 Gun_Accuracy = 0.12f;
                 break;
+            case 7:
+                Gun_Accuracy = 0.14f;
+                break;
+            case 8:
+                Gun_Accuracy = 0.16f;
+                break;
             case 9:
-                Gun_Accuracy = 0.15f;
+                Gun_Accuracy = 0.18f;
                 break;
             case 10:
-                Gun_Accuracy = 0.17f;
+                Gun_Accuracy = 0.20f;
                 break;
         }
     }
@@ -1024,20 +1063,38 @@ public class PlayerSkill_ActivationProbability
     {
         switch (SkillLevel)
         {
-            case 0: case 1:
+            case 0:
                 Precision = 0.00f;
                 break;
-            case 2: case 3:
-                Precision = 0.02f;
+            case 1:
+                Precision = 0.03f;
                 break;
-            case 4: case 5:
-                Precision = 0.05f;
+            case 2:
+                Precision = 0.06f;
                 break;
-            case 6: case 7:
-                Precision = 0.10f;
+            case 3:
+                Precision = 0.09f;
                 break;
-            case 8: case 9: case 10:
+            case 4:
+                Precision = 0.12f;
+                break;
+            case 5:
                 Precision = 0.15f;
+                break;
+            case 6:
+                Precision = 0.18f;
+                break;
+            case 7:
+                Precision = 0.21f;
+                break;
+            case 8:
+                Precision = 0.24f;
+                break;
+            case 9:
+                Precision = 0.27f;
+                break;
+            case 10:
+                Precision = 0.30f;
                 break;
         }
     }

@@ -14,8 +14,7 @@ public enum Weapon_type
     LongBlade = 3,
     ShortBlade = 4,
     Spear = 5,
-    Maintenance = 6,
-    Gun = 7
+    Gun = 6,
 }
 
 public enum Zombie_Attack_Pattern
@@ -45,10 +44,10 @@ public class Player_main : MonoBehaviour
     [SerializeField] float Temperature = 36.0f; // 온도 20 - 50
     [SerializeField] float Satiety = 50.0f;  // 포만감 -100 - 100
 
-    [SerializeField] float Attack_Power = 8.0f; // 공격력
+    [SerializeField] float Min_Attack_Power = 8.0f; // 공격력
+    [SerializeField] float Max_Attack_Power = 8.0f;
     [SerializeField] float Evasion = 0.15f;  // 회피율
     [SerializeField] float Moving_Speed = 3f;  // 이동속도
-    [SerializeField] float Accuracy = 0.7f;  // 명중률
 
     public bool Is_Equipping_Weapons = false;
     public bool Is_Aiming = false;
@@ -67,11 +66,6 @@ public class Player_main : MonoBehaviour
     float Satiety_Timer = 0.0f;
     void Update()
     {
-        Set_testText(playerMoodles.Moodle_Pain.Get_Moodle_current_step());
-        if (Is_Equipping_Weapons)  // 무기를 착용하는 경우 호출
-        {
-            //Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, Is_Equipping_Weapons)
-        }
 
         // test 함수 -------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Z)) 
@@ -123,20 +117,7 @@ public class Player_main : MonoBehaviour
 
     }
 
-    // test 함수 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public UnityEngine.UI.Text[] textText;
-    public void Set_testText(float Level)
-    {
-        textText[0].text = "Probability_of_Falling: " + playerSkill_ActivationProbability.Get_Probability_of_Falling().ToString();
-        textText[1].text = "Moving_Speed: " + Get_Moving_Speed().ToString();
-        textText[2].text = "Pain_Level: " + Level.ToString();
-        textText[3].text = "Accuracy: " + Get_Accuracy().ToString();
-        textText[4].text = playerMoodles.Moodle_Pain.Get_current_state_to_string();
-        textText[5].text = playerMoodles.Moodle_Pain.Get_current_detail_state_to_string();
-        //textText[6].text = playerMoodles.Moodle_Endurance.Get_current_state_to_string();  
-        //textText[7].text = playerMoodles.Moodle_Endurance.Get_current_detail_state_to_string();
-    }
-    // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- test 함수 
+
 
     public float Get_Moving_Speed()
     {
@@ -180,9 +161,9 @@ public class Player_main : MonoBehaviour
         Moving_Speed_forMoodle = Speed_rate_for_Endurance * Speed_rate_for_Has_a_Cold * Speed_rate_for_Heavy_Load + Speed_rate_for_Pain;
     }
 
-    public float Get_Accuracy()
+    public float Get_Accuracy_forMoodle()
     {
-        return Accuracy - Accuracy_forMoodle;
+        return Accuracy_forMoodle;
     }
 
 
@@ -205,7 +186,7 @@ public class Player_main : MonoBehaviour
     }
 
 
-    public void Set_Attack_Power_for_Equipping_Weapons(Weapon_Detail Current_Equipping_weapon)  // 무기를 끼면 함수 호출
+    public void Set_Attack_Power_for_Equipping_Weapons(Item_Weapons Current_Equipping_weapon)  // 무기를 끼면 함수 호출
     {
         // 무기 Script 구현사항
         // 무기별 타입
@@ -231,6 +212,8 @@ public class Player_main : MonoBehaviour
                 break;
             case Weapon_type.Spear:
                 Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.Gun:
                 break;
             default:
                 break;
@@ -468,7 +451,8 @@ public class Player_main : MonoBehaviour
 
     public float Calculate_damage_to_Zombie()  // Player -> Zombie 공격
     {
-        float Total_Damage = Attack_Power;
+        System.Random rand_Damage = new System.Random();
+        float Total_Damage = (rand_Damage.Next((int)(Min_Attack_Power*100), (int)(Max_Attack_Power*100)))/100;
 
         if (Is_Equipping_Weapons)
         {

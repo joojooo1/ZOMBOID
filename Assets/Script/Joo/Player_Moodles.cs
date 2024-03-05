@@ -447,13 +447,12 @@ public class Moodles_state
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.2f);
                 }
                 break;     /* 24.02.26 */
-            case Moodles_private_code.Thirsty:
+            case Moodles_private_code.Thirsty:  //  0.13f, 0.25f, 0.7f, 0.85f  // PlayerState_Update, Player_HP_Update
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
@@ -469,7 +468,6 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
@@ -485,7 +483,7 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Thirsty, _Moodle_current_step);
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
@@ -501,7 +499,7 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Thirsty, _Moodle_current_step);
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
@@ -517,9 +515,9 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Thirsty, _Moodle_current_step);
                 }
-                break;
+                break;     /* 24.03.05 */
             case Moodles_private_code.Panic:  //  0.3f, 0.5f, 0.8f, 0.9f  // Player_main_Update
                 if (current_value < _First_state)
                 {
@@ -542,7 +540,8 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.013f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, 0.1f);
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
@@ -558,7 +557,8 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.026f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, 0.2f);
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
@@ -574,7 +574,8 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.039f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, 0.3f);
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
@@ -590,7 +591,7 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.052f);
                 }
                 break;
             case Moodles_private_code.Bored:
@@ -892,7 +893,7 @@ public class Moodles_state
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0f);
                     Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0f);
@@ -913,7 +914,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 1;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.07f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.05f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.05f);
                     Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.19f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.13f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.08f);
@@ -934,7 +935,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 2;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.14f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.10f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.10f);
                     Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.37f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.26f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.16f);
@@ -955,7 +956,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 3;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.21f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.15f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.15f);
                     Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.56f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.39f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.24f);
@@ -976,7 +977,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 4;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forMoodle(_Moodle_Code, 0.28f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(0.2f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.2f);
                     Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0.75f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forMoodle(_Moodle_Code, 0.52f);
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forMoodle(_Moodle_Code, 0.32f);

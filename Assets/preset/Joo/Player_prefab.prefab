@@ -585,6 +585,7 @@ GameObject:
   - component: {fileID: 682236801796081560}
   - component: {fileID: 6709710899631478558}
   - component: {fileID: 367789335178478904}
+  - component: {fileID: 4015221462191616058}
   m_Layer: 0
   m_Name: Player_prefab
   m_TagString: Untagged
@@ -708,6 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5970513084ceeb94b9ea7b1b374a8c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Inven_main: {fileID: 4015221462191616058}
   Skill: {fileID: 367789335178478904}
   playerState: {fileID: 4501799666224471547}
   player_HP: {fileID: 682236801796081560}
@@ -789,6 +791,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c254e4c140fab74d88bcd487b79fea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4015221462191616058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4876846059261434598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5019b9eaf3c71ab468ed36993c757f94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Inventory: []
+  weapon_ID: 0
 --- !u!1 &5264492318086727840
 GameObject:
   m_ObjectHideFlags: 0

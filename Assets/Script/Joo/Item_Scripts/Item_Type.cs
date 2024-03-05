@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public enum Bandages_Type
 {
     Adhesive_Bandages = 0,  // 접착 붕대 ( 출혈 멈춤, 치유 속도 높임 )
@@ -10,11 +11,33 @@ public enum Bandages_Type
     Ripped_Sheets = 4,  // 찢어진 천 ( 출혈 멈춤, 치유 속도 높임 )
     Sterilized_Rag = 5,  // 살균된 천 ( 출혈 멈춤, 치유 속도 높임, 감염확률 감소 )
     Dirty_Rag = 6,  // 더러운 천 ( 출혈 멈춤, 감염확률 상승 )
-    Splint = 7  // 부목 ( 부러진 뼈 회복에 도움, 치료 소요시간 단축 )
+    Splint = 7,  // 부목 ( 부러진 뼈 회복에 도움, 치료 소요시간 단축 )
+    None = 8
 }
 
-
-public class Item_Type : MonoBehaviour
+public enum AMMO_Type
 {
-    
+    Round_223 = 0,
+    Round_308 = 1,
+    Special_Round_38 = 2,
+    Magnum_Round_44 = 3,
+    Auto_Round_45 = 4,
+    Round_556mm = 5,
+    Round_9mm = 6,
+    Shotgun_Shells = 7,
+    None = 8
 }
+
+public enum Magazine_Type
+{
+    M9_Magazine = 0,
+    M1911_Auto_Magazine = 1,
+    D_E_Magazine = 2,
+    MSR700_Magazine = 3,
+    MSR788_Magazine = 4,
+    M16_Magazine = 5,
+    M14_Magazine = 6,
+    None = 7
+}
+
+
