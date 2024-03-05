@@ -258,6 +258,7 @@ public class PlayerState : MonoBehaviour
     }
 
     float Endurance_Timer = 0.0f;
+    float Thirsty_Timer = 0.0f;
     private void Update()
     {
         /****************** Player_Endurance ******************/
@@ -281,6 +282,16 @@ public class PlayerState : MonoBehaviour
             }
 
         }
+
+        /****************** Player_Thirsty ******************/
+        Thirsty_Timer += Time.deltaTime;
+        if(Thirsty_Timer > 2f)
+        {
+            _Thirsty++;
+            Thirsty_Timer = 0;
+        }
+
+
     }
 
     int Bleeding_total_count = 0;
@@ -338,7 +349,7 @@ public class PlayerState : MonoBehaviour
 
     public void Set_Thirsty(float value)
     {
-
+        _Thirsty -= value;
     }
 
     public float Get_Thirsty() {  return _Thirsty; }

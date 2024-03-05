@@ -45,6 +45,7 @@ public class PlayerInventory_Weight
     float Set_point_for_Stuffed = 0f;
     float Set_point_for_Injured = 0f;
     float Set_point_for_Bleeding = 0f;
+    float Set_point_for_Thirsty = 0f;
     public void Set_Add_Moodles_Point(Moodles_private_code Moodles_name, int Moodles_step)
     {
         switch (Moodles_name)
@@ -84,7 +85,23 @@ public class PlayerInventory_Weight
                         break;
                 }
                 break;
-            case Moodles_private_code.Thirsty: break;
+            case Moodles_private_code.Thirsty:
+                switch (Moodles_step)
+                {
+                    case 0:
+                    case 1:
+                        break;
+                    case 2:
+                        Set_point_for_Thirsty = -1;
+                        break;
+                    case 3:
+                        Set_point_for_Thirsty = -2;
+                        break;
+                    case 4:
+                        Set_point_for_Thirsty = -2;
+                        break;
+                }
+                break;
             case Moodles_private_code.Panic: break;
             case Moodles_private_code.Bored: break;
             case Moodles_private_code.Stressed: break;
@@ -135,7 +152,7 @@ public class PlayerInventory_Weight
             case Moodles_private_code.Sick: break;
             case Moodles_private_code.Restricted_Movement: break;
         }
-        Moodles_point = Set_point_for_Hungry + Set_point_for_Stuffed + Set_point_for_Injured + Set_point_for_Bleeding;
+        Moodles_point = Set_point_for_Hungry + Set_point_for_Stuffed + Set_point_for_Injured + Set_point_for_Bleeding + Set_point_for_Thirsty;
     }
 
     public void Set_Add_Skill_point(float Set_point)

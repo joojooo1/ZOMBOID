@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1333044d3d8744f893776360c46754, type: 3}
+  m_Name: Weapons_Gun2
+  m_EditorClassIdentifier: 
+  WeaponType: 6
+  Weapon_ID: 2
+  WeaponName: Shotgun
+  ItemImage: {fileID: 21300000, guid: 738c7590176bd39479d4a89dc462ac58, type: 3}
+  Is_Equipping: 0
+  Is_TwoHand: 1
+  Equipping_Position: 0000000001000000
+  WeaponWeight: 4
+  W_Minimum_damage: 1.5
+  W_Maximum_damage: 2.2
+  W_Damage_done_to_doors: 0
+  W_Damage_done_to_trees: 0
+  W_Minimum_Range: 0.61
+  W_Maximum_Range: 7
+  W_Attack_speed: 1
+  W_Critical_chance: 0.6
+  W_Critical_multiplier: 0
+  W_Knockback: 0.8
+  W_Knockdown: 8
+  W_Max_Condition: 10
+  W_Condition_lower_chance: 0.016666668
+  W_Multi_Hit: 4
+  Gun_Ammunition: 7
+  Gun_Magazine: 7
+  Gun_Accuracy: 70
+  Gun_Additional_Accuracy_point: 5
+  Gun_Additional_Critical_chance: 0.04
+  Gun_Noise_radius: 100
+  Gun_Max_Capacity: 6
+  Gun_Aiming_time: 20
+  Gun_Reload_time: 25

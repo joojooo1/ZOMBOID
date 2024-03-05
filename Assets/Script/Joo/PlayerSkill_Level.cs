@@ -232,21 +232,13 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
     }
 }
 
-public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, 창, 물건관리, 조준(총), 재장전(총)
+public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, 창
 {
     Weapon_type W_type;
     string W_SkillName = "";
     float W_Level = 0f;
     float W_Min_Level = 0f;
     float W_Max_Level = 10f;
-
-    // 총기
-    float Gun_Accuracy = 0f;  // 정확도
-    float Gun_Precision = 0f;  // 정밀도
-    float Gun_Range = 0f;  // 사거리
-    float Gun_Launch_Angle = 0;  // 발사각도
-    float Gun_Time_for_aiming = 0;  // 조준시간
-    float Gun_Time_for_reloading = 0;  // 재장전 시간
 
     float W_EXP = 0f;
     List<float>[] W_expRequirements;
@@ -288,8 +280,6 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     {
         if (W_Level < 5)
             W_EXP += exp;
-        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
-            W_EXP += exp * 0.37f;
 
         if (W_Level < W_Max_Level && W_EXP >= W_expRequirements[(int)W_Level][0])
         {
@@ -301,6 +291,11 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     public float Get_W_Level()
     {
         return W_Level;
+    }
+
+    public int Get_W_Level(Weapon_type type)
+    {
+        return (int)W_Level;
     }
 
     public float Get_W_CurrentEXP()
@@ -359,50 +354,101 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
             Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
             Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.Spear, W_Level, IsEquipping);
         }
-        else if (W_SkillName == "Maintenance")
-        {
-
-        }
-
     }
 
-    public void Set_Gun_Equipping_Effect(bool IsEquipping)
+}
+
+public class PlayerMaintenanceSkill_Level  // 물건관리
+{
+    string M_SkillName = "";
+    float M_Level = 0f;
+    float M_Min_Level = 0f;
+    float M_Max_Level = 10f;
+
+    float M_EXP = 0f;
+    List<float>[] M_expRequirements;
+    // 레벨 0 ~ 10
+    // 레벨별 필요 경험치
+
+    public PlayerMaintenanceSkill_Level(float initialLevel)
     {
-        /* 무기 정보 받아서 정확도 등 계산
-         * 
-        W_Accuracy = 0f;  // 정확도
-        W_Precision = 0f;  // 정밀도
-        W_Range = 0f;  // 사거리
-        W_Launch_Angle = 0;  // 발사각도
-        W_Time_for_aiming = 0;  // 조준시간
-        W_Time_for_reloading = 0;  // 재장전 시간
-
-        */
-
-        if (W_SkillName == "Aiming")
+        if (initialLevel >= M_Min_Level && initialLevel <= M_Max_Level)
         {
-            // 정확도
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Gun_Accuracy(W_Level);
-            Gun_Accuracy += Player_main.player_main.playerSkill_ActivationProbability.Get_Gun_Accuracy();
-            // 정밀도
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Precision(W_Level);
-            Gun_Precision += Player_main.player_main.playerSkill_ActivationProbability.Get_Precision();
-            // 사거리
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Range(W_Level);
-            Gun_Range += Player_main.player_main.playerSkill_ActivationProbability.Get_Range();
-            // 발사각도
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Launch_Angle(W_Level);
-            Gun_Launch_Angle += Player_main.player_main.playerSkill_ActivationProbability.Get_Launch_Angle();
-            // 조준시간 감소
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_aiming(W_Level);
-            Gun_Time_for_reloading *= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_aiming();
+            M_Level = initialLevel;
+            InitializeExpRequirements();
         }
-        else if (W_SkillName == "Reloading")
+    }
+
+    void InitializeExpRequirements()
+    {
+        M_expRequirements = new List<float>[10];
+        for (int i = 0; i < M_expRequirements.Length; i++)
         {
-            // 재장전 시간 감소
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_reloading(W_Level);
-            Gun_Time_for_reloading -= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_reloading();
+            M_expRequirements[i] = new List<float>();
         }
+
+        // _TotalEXP와 비교
+        M_expRequirements[0].Add(75f);  // Level 0 -> 1
+        M_expRequirements[1].Add(150f);  // Level 1 -> 2
+        M_expRequirements[2].Add(300f);  // Level 2 -> 3
+        M_expRequirements[3].Add(750f);  // Level 3 -> 4
+        M_expRequirements[4].Add(1500f);  // Level 4 -> 5
+        M_expRequirements[5].Add(3000f);  // Level 5 -> 6
+        M_expRequirements[6].Add(4500f);  // Level 6 -> 7
+        M_expRequirements[7].Add(6000f);  // Level 7 -> 8
+        M_expRequirements[8].Add(7500f);  // Level 8 -> 9
+        M_expRequirements[9].Add(9000f);  // Level 9 -> 10
+    }
+
+    public void SetEXP(float exp)
+    {
+        if (M_Level < 5)
+            M_EXP += exp;
+
+        if (M_Level < M_Max_Level && M_EXP >= M_expRequirements[(int)M_Level][0])
+        {
+            M_EXP -= M_expRequirements[(int)M_Level][0];
+            M_Level++;
+        }
+    }
+
+    public float Get_M_Level()
+    {
+        return M_Level;
+    }
+
+    public float Get_M_CurrentEXP()
+    {
+        return M_EXP;
+    }
+
+    public float Set_Maintenance(Item_Weapons Weapon)  // 근접무기의 내구도 소모율에 영향
+    {
+        float maintenancemod = 1;
+        switch (Weapon.WeaponType)
+        {
+            case Weapon_type.Axe:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.Axe_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.LongBlunt:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.LongBlunt_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.ShortBlunt:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.ShortBlunt_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.LongBlade:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.LongBlade_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.ShortBlade:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.ShortBlade_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.Spear:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.Spear_Level.Get_W_Level() / 2)) / 2;
+                break;
+            default: break;
+
+        }
+        return 1 / (Weapon.W_Condition_lower_chance + (maintenancemod * 2));
     }
 
 }
@@ -502,25 +548,19 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
         {
             // 정확도
             Player_main.player_main.playerSkill_ActivationProbability.Set_Gun_Accuracy(Gun_Level);
-            Gun_Accuracy += Player_main.player_main.playerSkill_ActivationProbability.Get_Gun_Accuracy();
             // 정밀도
             Player_main.player_main.playerSkill_ActivationProbability.Set_Precision(Gun_Level);
-            Gun_Precision += Player_main.player_main.playerSkill_ActivationProbability.Get_Precision();
             // 사거리
             Player_main.player_main.playerSkill_ActivationProbability.Set_Range(Gun_Level);
-            Gun_Range += Player_main.player_main.playerSkill_ActivationProbability.Get_Range();
             // 발사각도
             Player_main.player_main.playerSkill_ActivationProbability.Set_Launch_Angle(Gun_Level);
-            Gun_Launch_Angle += Player_main.player_main.playerSkill_ActivationProbability.Get_Launch_Angle();
             // 조준시간 감소
             Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_aiming(Gun_Level);
-            Gun_Time_for_reloading *= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_aiming();
         }
         else if (Gun_SkillName == "Reloading")
         {
             // 재장전 시간 감소
             Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_reloading(Gun_Level);
-            Gun_Time_for_reloading -= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_reloading();
         }
     }
 }

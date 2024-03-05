@@ -22,6 +22,7 @@ public class Player_HP : MonoBehaviour
 
     float Bleeding_Timer = 0.0f;
     float HP_Recovery_Timer = 0.0f;
+    float Thirsty_Timer = 0.0f;
     private void Update()
     {
         if (Is_HP_Recovery)  // 1초 * 체력회복속도(Moodle)마다 체력 회복
@@ -61,6 +62,20 @@ public class Player_HP : MonoBehaviour
             else
             {
                 Bleeding_Timer = 0;
+            }
+
+            if (Player_main.player_main.playerMoodles.Moodle_Thirsty.Get_Moodle_current_step() > 3)  // Thirsty 4단계 이상
+            {
+                Thirsty_Timer += Time.deltaTime;
+                if (Thirsty_Timer > 2.0f)
+                {
+                    Player_current_Health -= 1;
+                    Thirsty_Timer = 0f;
+                }
+            }
+            else
+            {
+                Thirsty_Timer = 0f;
             }
 
             Player_main.player_main.playerMoodles.Moodle_Injured.Set_Moodles_state(Player_current_Health / Player_Max_Health);
