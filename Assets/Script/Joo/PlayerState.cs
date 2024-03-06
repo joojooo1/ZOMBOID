@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -259,6 +260,7 @@ public class PlayerState : MonoBehaviour
 
     float Endurance_Timer = 0.0f;
     float Thirsty_Timer = 0.0f;
+    float unhappy_Timer = 0.0f;
     private void Update()
     {
         /****************** Player_Endurance ******************/
@@ -285,11 +287,13 @@ public class PlayerState : MonoBehaviour
 
         /****************** Player_Thirsty ******************/
         Thirsty_Timer += Time.deltaTime;
-        if(Thirsty_Timer > 2f)
+        if(Thirsty_Timer > 1f)
         {
-            _Thirsty++;
+            Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.01f);
             Thirsty_Timer = 0;
         }
+
+        
 
 
     }
@@ -327,6 +331,9 @@ public class PlayerState : MonoBehaviour
     public void Set_Endurance(float value)
     {
         _Endurance += value;
+        if(_Endurance > 100) { _Endurance = 100; }
+        else if(_Endurance < 0) { _Endurance = 0; }
+
         Player_main.player_main.playerMoodles.Moodle_Endurance.Set_Moodles_state(value);
     }
 
@@ -345,14 +352,6 @@ public class PlayerState : MonoBehaviour
         return _P_Has_a_Cold;
     }
 
-    [SerializeField] float _Thirsty = 0.0f;
-
-    public void Set_Thirsty(float value)
-    {
-        _Thirsty -= value;
-    }
-
-    public float Get_Thirsty() {  return _Thirsty; }
 
     [SerializeField] float _Tired = 0.0f;
 

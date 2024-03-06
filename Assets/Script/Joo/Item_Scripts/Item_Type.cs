@@ -40,4 +40,11 @@ public enum Magazine_Type
     None = 7
 }
 
+public enum Food_Type
+{
+    Canned_food = 0,  // 통조림. 개봉해야 상함
+    Cooking = 1,  // 
+    Drink = 2,
 
+
+}

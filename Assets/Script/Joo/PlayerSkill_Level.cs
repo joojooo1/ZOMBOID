@@ -27,7 +27,6 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
             if (P_SkillName == "Fitness")
             {
-
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
@@ -402,9 +401,7 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
 
     public void SetEXP(float exp)
     {
-        if (M_Level < 5)
-            M_EXP += exp;
-
+        M_EXP += exp;
         if (M_Level < M_Max_Level && M_EXP >= M_expRequirements[(int)M_Level][0])
         {
             M_EXP -= M_expRequirements[(int)M_Level][0];
@@ -422,9 +419,9 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
         return M_EXP;
     }
 
-    public float Set_Maintenance(Item_Weapons Weapon)  // 근접무기의 내구도 소모율에 영향
+    float maintenancemod = 1;
+    public float Get_Maintenance(Item_Weapons Weapon)  // 근접무기의 내구도 소모율에 영향
     {
-        float maintenancemod = 1;
         switch (Weapon.WeaponType)
         {
             case Weapon_type.Axe:
@@ -460,14 +457,6 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
     float Gun_Level = 0f;
     float Gun_Min_Level = 0f;
     float Gun_Max_Level = 10f;
-
-    // 총기
-    float Gun_Accuracy = 0f;  // 정확도
-    float Gun_Precision = 0f;  // 정밀도
-    float Gun_Range = 0f;  // 사거리
-    float Gun_Launch_Angle = 0;  // 발사각도
-    float Gun_Time_for_aiming = 0;  // 조준시간
-    float Gun_Time_for_reloading = 0;  // 재장전 시간
 
     float Gun_EXP = 0f;
     List<float>[] Gun_expRequirements;
@@ -533,16 +522,7 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
     // 무기 착용, 해제 시 각각 반영되는 효과 설정
     public void Set_Gun_Equipping_Effect(bool IsEquipping)
     {
-        /* 무기 정보 받아서 정확도 등 계산
-         * 
-        W_Accuracy = 0f;  // 정확도
-        W_Precision = 0f;  // 정밀도
-        W_Range = 0f;  // 사거리
-        W_Launch_Angle = 0;  // 발사각도
-        W_Time_for_aiming = 0;  // 조준시간
-        W_Time_for_reloading = 0;  // 재장전 시간
-
-        */
+        // 무기 정보 받아서 정확도 등 계산
 
         if (Gun_SkillName == "Aiming")
         {

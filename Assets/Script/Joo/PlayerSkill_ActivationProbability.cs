@@ -148,9 +148,16 @@ public class PlayerSkill_ActivationProbability
     float Basic_Increase_in_Attack_Power = 0.3f;  // 무기 미착용 시
     float Increase_in_Attack_Power = 0.0f;  // 무기 착용 시
     float Increase_in_Attack_Power_forMoodle = 0.0f;
-    public float Get_Increase_in_Attack_Power()
+    public float Get_Increase_in_Attack_Power(Item_Weapons current_weapon)
     {
-        return Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle;
+        if(current_weapon.WeaponType == Weapon_type.Gun)
+        {
+            return Increase_in_Attack_Power - Increase_in_Attack_Power_for_Panic_with_Gun;
+        }
+        else
+        {
+            return Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle;
+        }
     }
 
     public void Set_Increase_in_Attack_Power_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
@@ -200,12 +207,24 @@ public class PlayerSkill_ActivationProbability
     }
 
     float Increase_in_Attack_Power_for_Panic = 0f;
-    public void Set_Increase_in_Attack_Power_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    float Increase_in_Attack_Power_for_Panic_with_Gun = 0f;
+    public void Set_Increase_in_Attack_Power_forMoodle(Moodles_private_code _Moodle_Code, int _Moodle_step,float value)
     {
         switch (_Moodle_Code)
         {
             case Moodles_private_code.Panic:
                 Increase_in_Attack_Power_for_Panic = value;
+                if(_Moodle_step > 1)  // 2단계부터 총기데미지 감소반영
+                {
+                    if(Player_main.player_main.Skill.Aiming_Level.Get_Gun_Level() < 6)
+                    {
+                        Increase_in_Attack_Power_for_Panic_with_Gun = value * 2;
+                    }
+                    else
+                    {
+                        Increase_in_Attack_Power_for_Panic_with_Gun = 0f;
+                    }
+                }
                 break;
         }
 
