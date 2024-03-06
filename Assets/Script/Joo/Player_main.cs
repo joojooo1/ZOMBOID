@@ -50,9 +50,11 @@ public class Player_main : MonoBehaviour
     [SerializeField] float Moving_Speed = 3f;  // 이동속도
 
     public bool Is_Equipping_Weapons = false;
+    public Item_Weapons Current_equipping_Weapon = null;  // 무기 착용시, 착용한 무기로 변경
     public bool Is_Aiming = false;
     public bool Is_Running = false;
     public bool Is_Sleeping = false;
+    public bool Is_Resting = false;
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -64,6 +66,7 @@ public class Player_main : MonoBehaviour
     }
 
     float Satiety_Timer = 0.0f;
+    float Panic_Timer = 0.0f;
     void Update()
     {
 
@@ -115,6 +118,16 @@ public class Player_main : MonoBehaviour
             Is_Sleeping = false;
         }
 
+        /************************************* Player_Sleeping **************************************/
+        if (Is_Resting)
+        {
+            Panic_Timer += Time.deltaTime;
+            if(Panic_Timer > 1.0f)  // 휴식중에 Panic 수치 down
+            {                
+                Set_Panic(-0.05f);
+                Panic_Timer = 0.0f;
+            }
+        }
     }
 
 
@@ -185,6 +198,16 @@ public class Player_main : MonoBehaviour
         return Evasion + playerSkill_ActivationProbability.Get_Injury_chance();
     }
 
+    [SerializeField] float _Panic;  // 좀비 발견시 up
+    public void Set_Panic(float value)
+    {
+        _Panic += value;
+        if( _Panic > 1 ) { _Panic = 1; }
+        else if(_Panic < 0) { _Panic = 0; }
+
+        playerMoodles.Moodle_Panic.Set_Moodles_state(_Panic);
+    }
+
 
     public void Set_Attack_Power_for_Equipping_Weapons(Item_Weapons Current_Equipping_weapon)  // 무기를 끼면 함수 호출
     {
@@ -226,6 +249,7 @@ public class Player_main : MonoBehaviour
     // 1. 공격 받으면 밀쳐낼 확률 계산
     public void Calculate_HitForce(bool Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
     {
+        Set_Panic(0.05f);
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
@@ -460,7 +484,7 @@ public class Player_main : MonoBehaviour
             // 무기 공격력 불러오는 함수
             // + 근접 무기일 경우 * 근접 공격력
             // + 총기 사용시 조준 등 반영
-            Weapon_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power();  // 무기 레벨에 따른 공격력 증가
+            Weapon_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Current_equipping_Weapon);  // 무기 레벨에 따른 공격력 증가
         }
 
         // 치명타 확률

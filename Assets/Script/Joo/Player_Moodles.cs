@@ -448,13 +448,17 @@ public class Moodles_state
                 }
                 break;     /* 24.02.26 */
             case Moodles_private_code.Thirsty:  //  0.13f, 0.25f, 0.7f, 0.85f  // PlayerState_Update, Player_HP_Update
-                if (current_value < _First_state)
+                _Moodle_current_value += current_value;
+                if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }
+                else if (_Moodle_current_value < 0) { _Moodle_current_value = 0; }
+
+                if (_Moodle_current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
                 }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
+                else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -469,7 +473,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 1;
                 }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
+                else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -485,7 +489,7 @@ public class Moodles_state
                     _Moodle_current_step = 2;
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Thirsty, _Moodle_current_step);
                 }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
+                else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -501,7 +505,7 @@ public class Moodles_state
                     _Moodle_current_step = 3;
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Thirsty, _Moodle_current_step);
                 }
-                else if (current_value > _Fourth_state)  // 4단계
+                else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -518,13 +522,12 @@ public class Moodles_state
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Thirsty, _Moodle_current_step);
                 }
                 break;     /* 24.03.05 */
-            case Moodles_private_code.Panic:  //  0.3f, 0.5f, 0.8f, 0.9f  // Player_main_Update
+            case Moodles_private_code.Panic:  //  0.3f, 0.5f, 0.8f, 0.9f  // Player_main_Update  // Player_main_Calculate_HitForce
                 if (current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
                 }
                 else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
                 {
@@ -541,7 +544,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 1;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.013f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, 0.1f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0f);
                 }
                 else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
                 {
@@ -558,7 +561,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 2;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.026f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, 0.2f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.1f);
                 }
                 else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
                 {
@@ -575,7 +578,7 @@ public class Moodles_state
 
                     _Moodle_current_step = 3;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.039f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, 0.3f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.2f);
                 }
                 else if (current_value > _Fourth_state)  // 4단계
                 {
@@ -592,17 +595,21 @@ public class Moodles_state
 
                     _Moodle_current_step = 4;
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.052f);
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.3f);
                 }
-                break;
-            case Moodles_private_code.Bored:
-                if (current_value < _First_state)
+                break;     /* 24.03.06 */
+            case Moodles_private_code.Bored:  //  0.25f, 0.5f, 0.75f, 0.9f  // 질나쁜 음식 먹을때만 반영하도록 구현 예정
+                _Moodle_current_value += current_value;
+                if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }
+                else if(_Moodle_current_value < 0) { _Moodle_current_value = 0; }
+
+                if (_Moodle_current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
-                    _Moodle_current_value = 0;
                 }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
+                else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -616,9 +623,8 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 1;
-                    _Moodle_current_value = 0;
                 }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
+                else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -632,9 +638,8 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 2;
-                    _Moodle_current_value = 0;
                 }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
+                else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -648,9 +653,8 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 3;
-                    _Moodle_current_value = 0;
                 }
-                else if (current_value > _Fourth_state)  // 4단계
+                else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
                     {
@@ -664,9 +668,8 @@ public class Moodles_state
                     }
 
                     _Moodle_current_step = 4;
-                    _Moodle_current_value = 0;
                 }
-                break;
+                break;     /* 24.03.06 */
             case Moodles_private_code.Stressed:
                 if (current_value < _First_state)
                 {

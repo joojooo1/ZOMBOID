@@ -14,7 +14,6 @@ public class PlayerSkill : MonoBehaviour
     // 생존 능력
     // 사냥
     // float Fishing = 0f;  // 낚시
-    // float Trapping = 0f;  // 함정
     // float Foraging = 0f;  // 채집
     // 승마
 
