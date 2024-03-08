@@ -46,6 +46,7 @@ public class PlayerInventory_Weight
     float Set_point_for_Injured = 0f;
     float Set_point_for_Bleeding = 0f;
     float Set_point_for_Thirsty = 0f;
+    float Set_point_for_Sick = 0f;
     public void Set_Add_Moodles_Point(Moodles_private_code Moodles_name, int Moodles_step)
     {
         switch (Moodles_name)
@@ -102,17 +103,8 @@ public class PlayerInventory_Weight
                         break;
                 }
                 break;
-            case Moodles_private_code.Panic: break;
-            case Moodles_private_code.Bored: break;
-            case Moodles_private_code.Stressed: break;
             case Moodles_private_code.Unhappy: break;
             case Moodles_private_code.Drunk: break;
-            case Moodles_private_code.Heavy_Load: break;
-            case Moodles_private_code.Tired: break;
-            case Moodles_private_code.Hyperthermia_Hot: break;
-            case Moodles_private_code.Hyperthermia_Cold: break;
-            case Moodles_private_code.Windchill: break;
-            case Moodles_private_code.Wet: break;
             case Moodles_private_code.Injured:
                 switch (Moodles_step)
                 {
@@ -130,7 +122,6 @@ public class PlayerInventory_Weight
                         break;
                 }
                 break;
-            case Moodles_private_code.Pain: break;
             case Moodles_private_code.Bleeding:
                 switch (Moodles_step)
                 {
@@ -148,8 +139,21 @@ public class PlayerInventory_Weight
                         break;
                 }
                 break;
-            case Moodles_private_code.Has_a_Cold: break;
-            case Moodles_private_code.Sick: break;
+            case Moodles_private_code.Sick:
+                switch (Moodles_step)
+                {
+                    case 0:
+                    case 1:
+                        break;
+                    case 2:
+                    case 3:
+                        Set_point_for_Sick = -1;
+                        break;
+                    case 4:
+                        Set_point_for_Sick = -2;
+                        break;
+                }
+                break;
             case Moodles_private_code.Restricted_Movement: break;
         }
         Moodles_point = Set_point_for_Hungry + Set_point_for_Stuffed + Set_point_for_Injured + Set_point_for_Bleeding + Set_point_for_Thirsty;

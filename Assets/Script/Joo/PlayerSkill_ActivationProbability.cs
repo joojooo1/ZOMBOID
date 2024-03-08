@@ -152,11 +152,25 @@ public class PlayerSkill_ActivationProbability
     {
         if(current_weapon.WeaponType == Weapon_type.Gun)
         {
-            return Increase_in_Attack_Power - Increase_in_Attack_Power_for_Panic_with_Gun;
+            if((Increase_in_Attack_Power - Increase_in_Attack_Power_for_Panic_with_Gun) > 0)
+            {
+                return Increase_in_Attack_Power - Increase_in_Attack_Power_for_Panic_with_Gun;
+            }
+            else
+            {
+                return 0;
+            }
         }
         else
         {
-            return Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle;
+            if((Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle) > 0)
+            {
+                return Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 
@@ -208,6 +222,7 @@ public class PlayerSkill_ActivationProbability
 
     float Increase_in_Attack_Power_for_Panic = 0f;
     float Increase_in_Attack_Power_for_Panic_with_Gun = 0f;
+    float Increase_in_Attack_Power_for_Tired = 0f;
     public void Set_Increase_in_Attack_Power_forMoodle(Moodles_private_code _Moodle_Code, int _Moodle_step,float value)
     {
         switch (_Moodle_Code)
@@ -226,9 +241,12 @@ public class PlayerSkill_ActivationProbability
                     }
                 }
                 break;
+            case Moodles_private_code.Tired:
+                Increase_in_Attack_Power_for_Tired = value;
+                break;
         }
 
-        Increase_in_Attack_Power_forMoodle = Increase_in_Attack_Power_for_Panic;
+        Increase_in_Attack_Power_forMoodle = Increase_in_Attack_Power_for_Panic + Increase_in_Attack_Power_for_Tired;
     }
 
 
@@ -318,7 +336,8 @@ public class PlayerSkill_ActivationProbability
 
     float Attack_Speed_for_Endurance = 1;
     float Attack_Speed_for_Heavy_Load = 1;
-
+    float Attack_Speed_for_HHyperthermia_Hot = 1;
+    float Attack_Speed_for_Hyperthermia_Cold = 1;
     public void Set_Attack_Speed_forMoodle(Moodles_private_code _Moodle_Code, float value)
     {
         switch (_Moodle_Code)
@@ -329,8 +348,14 @@ public class PlayerSkill_ActivationProbability
             case Moodles_private_code.Heavy_Load:
                 Attack_Speed_for_Heavy_Load = 1 - value;
                 break;
+            case Moodles_private_code.Hyperthermia_Hot:
+                Attack_Speed_for_HHyperthermia_Hot = 1 - value;
+                break;
+            case Moodles_private_code.Hyperthermia_Cold:
+                Attack_Speed_for_Hyperthermia_Cold = 1 - value;
+                break;
         }
-        Attack_Speed_for_Moodle = Attack_Speed_for_Endurance + Attack_Speed_for_Heavy_Load;
+        Attack_Speed_for_Moodle = Attack_Speed_for_Endurance * Attack_Speed_for_Heavy_Load * Attack_Speed_for_HHyperthermia_Hot * Attack_Speed_for_Hyperthermia_Cold;
     }
 
 
@@ -338,7 +363,17 @@ public class PlayerSkill_ActivationProbability
     float Probability_of_Falling = 0f;
     float Probability_of_Falling_forSkill = 0f;
     float Probability_of_Falling_forMoodle = 0f;
-    public float Get_Probability_of_Falling() { return Probability_of_Falling + Probability_of_Falling_forMoodle; }
+    public float Get_Probability_of_Falling() 
+    { 
+        if(Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+        {
+            return Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain;
+        }
+        else
+        {
+            return Probability_of_Falling + Probability_of_Falling_forMoodle;
+        }
+    }
 
     public void Set_Probability_of_Falling_forSkill(float SkillLevel)
     {
@@ -1032,7 +1067,17 @@ public class PlayerSkill_ActivationProbability
 
     // 사격시 정확도 ( + )  ( 목표물에 명중할 기본 확률 )
     float Gun_Accuracy = 0.0f;
-    public float Get_Gun_Accuracy() { return Gun_Accuracy - Player_main.player_main.Get_Accuracy_forMoodle(); }
+    public float Get_Gun_Accuracy() 
+    { 
+        if(Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+        {
+            return Gun_Accuracy;
+        }
+        else
+        {
+            return Gun_Accuracy - Player_main.player_main.Get_Accuracy_forMoodle();
+        }
+    }
     
     public void Set_Gun_Accuracy(float SkillLevel)
     {
