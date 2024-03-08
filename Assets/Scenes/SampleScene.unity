@@ -610,10 +610,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 8494904685334991931, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
+      propertyPath: player_Characteristic
+      value: 
+      objectReference: {fileID: 1035265162}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4876846059261434598, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1035265162}
   m_SourcePrefab: {fileID: 100100000, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
 --- !u!1 &692986644
 GameObject:
@@ -1007,6 +1014,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50.005, y: 0, z: 0}
+--- !u!1 &1035265150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4876846059261434598, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
+  m_PrefabInstance: {fileID: 682063022}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1035265162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035265150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 857874ebb7bae7f45bfebf2512bfa6f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1128601082
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,6 +1042,7 @@ GameObject:
   - component: {fileID: 1128601084}
   - component: {fileID: 1128601083}
   - component: {fileID: 1128601085}
+  - component: {fileID: 1128601086}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1097,6 +1122,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   food_Ins: []
   Food_Prefab: {fileID: 5522030123044732375, guid: 9f2234ff335257f49adafba081b89db3, type: 3}
+--- !u!114 &1128601086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128601082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd4402648f59c74ab718437e6802982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Is_AM: 0
+  Is_PM: 0
+  Temperature: 36
 --- !u!1 &1164354524
 GameObject:
   m_ObjectHideFlags: 0

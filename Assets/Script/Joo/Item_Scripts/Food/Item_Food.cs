@@ -13,6 +13,15 @@ public class Item_Food : ScriptableObject
 
     public bool Is_Perishable;  // false = 유통기한 없는 식품
     public Sprite[] fresh_stale_rotten;
+    public bool Is_freezing;
+    public bool Is_Cooking;  // false = 단독으로 조리 불가. 요리 재료로 첨가는 가능
+
+
+
+
+
+
+
 
 
 

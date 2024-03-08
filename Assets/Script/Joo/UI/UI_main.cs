@@ -22,6 +22,7 @@ public class UI_main : MonoBehaviour
     {
         return player_Setting_Language_to_Korean;
     }
+
     void Update()
     {
         Player_main.player_main.playerMoodles.Set_Player_Language(player_Setting_Language_to_Korean);

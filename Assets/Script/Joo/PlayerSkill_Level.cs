@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 
 public class PlayerPassiveSkill_Level  // 체력, 근력
 {
-    PlayerInventory_main P_Inven = new PlayerInventory_main();
-
     string P_SkillName = "";
     float P_Level = 0f;
     float P_Min_Level = 0f;
@@ -41,7 +39,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             }
             else if(P_SkillName == "Strength")
             {
-                P_Inven.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
+                Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
@@ -99,7 +97,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             }
             else if (P_SkillName == "Strength")
             {
-                P_Inven.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
+                Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
