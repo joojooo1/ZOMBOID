@@ -42,11 +42,17 @@ public enum Magazine_Type
 
 public enum Food_Type
 {
-    Canned_food = 0,  // 통조림. 개봉해야 상함
-    Cooking = 1,  // 요리해야 먹을 수 있는 음식
-    Drink = 2,  // 음료
-
-
+    Canned_food = 0,  // 통조림 식품
+    Spice = 1,  // 향신료
+    Drink = 2, 
+    Meat = 3,
+    Fish = 4,
+    Fruit = 5,
+    Grain = 6,
+    Sweet = 7,
+    Vegetable = 8,
+    etc = 9,
+    Cooking = 10
 }
 
 public enum Freshness_Level
@@ -60,5 +66,5 @@ public enum Cooking_State
 {
     uncooked = 0,
     cooked = 1,
-    burnt = 2
+    burned = 2
 }

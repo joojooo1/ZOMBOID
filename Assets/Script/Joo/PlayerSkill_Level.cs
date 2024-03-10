@@ -542,12 +542,14 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
         }
     }
 }
-public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
+public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학, 재단술
 {
     string C_SkillName = "";
     float C_Level = 0f;
     float C_Min_Level = 0f;
     float C_Max_Level = 10f;
+
+    float C_Additional_points_through_Books = 1f;
 
     float C_EXP = 0f;
     List<float>[] C_expRequirements;
@@ -582,6 +584,10 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
             {
 
             }
+            else if (C_SkillName == "Tailoring")
+            {
+
+            }
         }
     }
 
@@ -608,7 +614,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
     public void SetEXP(float exp)
     {
-        C_EXP += exp;
+        C_EXP = C_EXP + (exp * C_Additional_points_through_Books);
         if (C_Level < C_Max_Level && C_EXP >= C_expRequirements[(int)C_Level][0])
         {
             C_EXP -= C_expRequirements[(int)C_Level][0];
@@ -634,6 +640,10 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
             {
 
             }
+            else if (C_SkillName == "Tailoring")
+            {
+
+            }
 
         }
     }
@@ -648,5 +658,189 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         return C_EXP;
     }
 
+    public void Set_C_Books_Point(int Book_level)
+    {
+        if(Book_level > C_Level)
+        {
+            C_Additional_points_through_Books = 1f;
+            Debug.Log("어려워서 읽지 못함");
+            // 책 못 읽음
+        }
+        else if(Book_level < C_Level)
+        {
+            C_Additional_points_through_Books = 1f;
+            Debug.Log("이미 다 아는 내용임");
+            // 책을 읽긴하지만 아무 변화 없음
+        }
+        else
+        {
+            switch (Book_level)
+            {
+                case 0:
+                    break;
+                case 1:
+                    C_Additional_points_through_Books = 3f;
+                    break;
+                case 2:
+                    C_Additional_points_through_Books = 5f;
+                    break;
+                case 3:
+                    C_Additional_points_through_Books = 8f;
+                    break;
+                case 4:
+                    C_Additional_points_through_Books = 12f;
+                    break;
+                case 5:
+                    C_Additional_points_through_Books = 16f;
+                    break;
+                default: break;
+            }
+        }
+
+    }
+
 }
 
+public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
+{
+    string S_SkillName = "";
+    float S_Level = 0f;
+    float S_Min_Level = 0f;
+    float S_Max_Level = 10f;
+
+    float S_Additional_points_through_Books = 1f;
+
+    float S_EXP = 0f;
+    List<float>[] S_expRequirements;
+    // 레벨 0 ~ 10
+    // 레벨별 필요 경험치
+
+    public PlayerSurvivalSkill_Level(float initialLevel, string skillname)
+    {
+        if (initialLevel >= S_Min_Level && initialLevel <= S_Max_Level)
+        {
+            S_SkillName = skillname;
+            S_Level = initialLevel;
+            InitializeExpRequirements();
+
+            if (S_SkillName == "Hunting")
+            {
+
+            }
+            else if (S_SkillName == "Fishing")
+            {
+
+            }
+            else if (S_SkillName == "Foraging")
+            {
+
+            }
+            else if (S_SkillName == "Riding")
+            {
+
+            }
+
+        }
+    }
+
+    void InitializeExpRequirements()
+    {
+        S_expRequirements = new List<float>[10];
+        for (int i = 0; i < S_expRequirements.Length; i++)
+        {
+            S_expRequirements[i] = new List<float>();
+        }
+
+        // _TotalEXP와 비교
+        S_expRequirements[0].Add(75f);  // Level 0 -> 1
+        S_expRequirements[1].Add(150f);  // Level 1 -> 2
+        S_expRequirements[2].Add(300f);  // Level 2 -> 3
+        S_expRequirements[3].Add(750f);  // Level 3 -> 4
+        S_expRequirements[4].Add(1500f);  // Level 4 -> 5
+        S_expRequirements[5].Add(3000f);  // Level 5 -> 6
+        S_expRequirements[6].Add(4500f);  // Level 6 -> 7
+        S_expRequirements[7].Add(6000f);  // Level 7 -> 8
+        S_expRequirements[8].Add(7500f);  // Level 8 -> 9
+        S_expRequirements[9].Add(9000f);  // Level 9 -> 10
+    }
+
+    public void SetEXP(float exp)
+    {
+        S_EXP = S_EXP + (exp * S_Additional_points_through_Books);
+        if (S_Level < S_Max_Level && S_EXP >= S_expRequirements[(int)S_Level][0])
+        {
+            S_EXP -= S_expRequirements[(int)S_Level][0];
+            S_Level++;
+
+            if (S_SkillName == "Hunting")
+            {
+
+            }
+            else if (S_SkillName == "Fishing")
+            {
+
+            }
+            else if (S_SkillName == "Foraging")
+            {
+
+            }
+            else if (S_SkillName == "Riding")
+            {
+
+            }
+
+
+        }
+    }
+
+    public float Get_S_Level()
+    {
+        return S_Level;
+    }
+
+    public float Get_S_CurrentEXP()
+    {
+        return S_EXP;
+    }
+
+    public void Set_S_Books_Point(int Book_level)
+    {
+        if (Book_level > S_Level)
+        {
+            S_Additional_points_through_Books = 1f;
+            Debug.Log("어려워서 읽지 못함");
+            // 책 못 읽음
+        }
+        else if (Book_level < S_Level)
+        {
+            S_Additional_points_through_Books = 1f;
+            Debug.Log("이미 다 아는 내용임");
+            // 책을 읽긴하지만 아무 변화 없음
+        }
+        else
+        {
+            switch (Book_level)
+            {
+                case 0:
+                    break;
+                case 1:
+                    S_Additional_points_through_Books = 3f;
+                    break;
+                case 2:
+                    S_Additional_points_through_Books = 5f;
+                    break;
+                case 3:
+                    S_Additional_points_through_Books = 8f;
+                    break;
+                case 4:
+                    S_Additional_points_through_Books = 12f;
+                    break;
+                case 5:
+                    S_Additional_points_through_Books = 16f;
+                    break;
+                default: break;
+            }
+        }
+
+    }
+}
