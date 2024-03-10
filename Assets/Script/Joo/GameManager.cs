@@ -20,12 +20,25 @@ public class GameManager : MonoBehaviour
         Player_main.player_main.playerState.Set_Apparent_Temperature(Temperature);
     }
 
-    float Timer = 1200f;
+    float Timer = 1800f;
     float Windchill_TImer = 0f;
     private void Update()
     {
         Timer += Time.deltaTime;
-        if (Timer > 1200f)  // 20분마다 바뀜
+
+        if (Is_PM == true && Timer > 1650)  // 오후 11시에 칼로리 체크해서 체중 변동
+        {
+            if (Player_main.player_main.Get_Calories() < 0)
+            {
+                Player_main.player_main.Set_Weight(2);
+            }
+            else if (Player_main.player_main.Get_Calories() > 1600)
+            {
+                Player_main.player_main.Set_Weight(-1);
+            }
+        }
+
+        if (Timer > 1800f)  // 30분마다 바뀜
         {
             System.Random rand = new System.Random();
             float Temp = rand.Next(0, 10);
@@ -48,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
 
         Windchill_TImer += Time.deltaTime;
-        if(Windchill_TImer > 600f)
+        if(Windchill_TImer > 3600f)  // 60분(하루)마다 바뀜
         {
             System.Random rand = new System.Random();
             float Temp = rand.Next(0, 10);

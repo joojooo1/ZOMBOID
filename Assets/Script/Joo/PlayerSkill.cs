@@ -12,10 +12,10 @@ public class PlayerSkill : MonoBehaviour
     public PlayerPassiveSkill_Level Strength_Level;  // 근력       /* 24.02.16 test */
 
     // 생존 능력
-    // 사냥
-    // float Fishing = 0f;  // 낚시
-    // float Foraging = 0f;  // 채집
-    // 승마
+    public PlayerSurvivalSkill_Level Hunting_Level;  // 사냥
+    public PlayerSurvivalSkill_Level Fishing_Level;  // 낚시
+    public PlayerSurvivalSkill_Level Foraging_Level;  // 채집
+    public PlayerSurvivalSkill_Level Riding_Level;  // 승마 등
 
     // 운동 능력
     public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기                                                    /* 24.02.16 test */
@@ -43,9 +43,9 @@ public class PlayerSkill : MonoBehaviour
     public PlayerCraftingSkill_Level Farming_Level;  // 농사
     public PlayerCraftingSkill_Level FirstAid_Level;  // 의료
     public PlayerCraftingSkill_Level Electrical_Level;  // 전기공학
+    public PlayerCraftingSkill_Level Tailoring_Level;  // 재단술
     // float Metalworking = 0f;  // 금속용접
     // float Mechanics = 0f;  // 차량정비
-    // float Tailoring = 0f;  // 재단술
 
     private void Awake()
     {
@@ -53,6 +53,11 @@ public class PlayerSkill : MonoBehaviour
 
         Fitness_Level = new PlayerPassiveSkill_Level(5.0f, "Fitness");
         Strength_Level = new PlayerPassiveSkill_Level(5.0f, "Strength");
+
+        Hunting_Level = new PlayerSurvivalSkill_Level(0f, "Hunting");
+        Fishing_Level = new PlayerSurvivalSkill_Level(0f, "Fishing");
+        Foraging_Level = new PlayerSurvivalSkill_Level(0f, "Foraging");
+        Riding_Level = new PlayerSurvivalSkill_Level(0f, "Riding");
 
         Sprinting_Level = new PlayerGeneralSkill_Level(0f, "Sprinting");
         Lightfooted_Level = new PlayerGeneralSkill_Level(0f, "Lightfooted");
@@ -65,18 +70,18 @@ public class PlayerSkill : MonoBehaviour
         LongBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlade);
         ShortBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.ShortBlade);
         Spear_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Spear);
+
         Maintenance_Level = new PlayerMaintenanceSkill_Level(0f);
 
         Aiming_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Aiming");
         Reloading_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Reloading");
-
 
         Carpentry_Level = new PlayerCraftingSkill_Level(0f, "Carpentry");
         Cooking_Level = new PlayerCraftingSkill_Level(0f, "Cooking");
         Farming_Level = new PlayerCraftingSkill_Level(0f, "Farming");
         FirstAid_Level = new PlayerCraftingSkill_Level(0f, "FirstAid");
         Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical");
-
+        Tailoring_Level = new PlayerCraftingSkill_Level(0f, "Tailoring");
 
     }
 

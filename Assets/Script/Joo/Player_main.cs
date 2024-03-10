@@ -40,9 +40,10 @@ public class Player_main : MonoBehaviour
 
     /* --------------------------------------------------------------------------------- */
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
-    [SerializeField] float Weight = 83.0f; // 체중
-    // [SerializeField] float Calories = 300.0f; // 칼로리 0 - 1000   // Stuffed 3단계부터는 칼로리 1000 이상이면 음식섭취 불가능
-    [SerializeField] float Satiety = 50.0f;  // 포만감 -100 - 100
+    [SerializeField] float Weight = 83.0f; // 체중 0 ~ 150
+    [SerializeField] float Calories = 800.0f; // 칼로리 -2200 ~ 3700   // Stuffed 3단계부터는 칼로리 1000 이상이면 음식섭취 불가능
+    [SerializeField] float Satiety = 20.0f;  // 포만감 -300 ~ 300
+    [SerializeField] float Rate_of_Hunger_increase = 1f;  // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
 
     [SerializeField] float Min_Attack_Power = 8.0f; // 공격력
     [SerializeField] float Max_Attack_Power = 8.0f;
@@ -59,6 +60,7 @@ public class Player_main : MonoBehaviour
     public bool Is_Resting = false;
     public bool Is_drunk = false;
     public bool Is_Cold = false;
+    public bool Is_Eat = true;
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -69,6 +71,7 @@ public class Player_main : MonoBehaviour
         
     }
 
+    float Calories_Timer = 0.0f;
     float Satiety_Timer = 0.0f;
     float Panic_Timer = 0.0f;
     float Cold_Timer = 0.0f;
@@ -96,14 +99,14 @@ public class Player_main : MonoBehaviour
         transform.position = pos;
 
         /************************************* Player_Satiety **************************************/
-        Satiety_Timer += Time.deltaTime;
-        if (Satiety_Timer > 2.0f)  // 포만감 2초에 1.5씩 감소
+        Satiety_Timer += Time.deltaTime; 
+        if (Satiety_Timer > 1.0f)  // 포만감 2초에 1.5씩 감소
         {
-            Satiety -= 1.5f;
-            if(Satiety <= -100) { Satiety = -100.0f; }
-            else if (Satiety >= 100) { Satiety = 100.0f; }
+            Satiety -= 0.06f;  // 포만감 -300 ~ 300
+            if (Satiety < -300) { Satiety = -300.0f; }
+            else if (Satiety > 300) { Satiety = 300.0f; }
 
-            if(Satiety >= 0)
+            if (Satiety >= 0)
             {
                 playerMoodles.Moodle_Stuffed.Set_Moodles_state(Satiety);
             }
@@ -113,7 +116,25 @@ public class Player_main : MonoBehaviour
             }
             Satiety_Timer = 0.0f;
         }
+        // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
 
+
+        /************************************* Player_Calories **************************************/
+
+        Calories_Timer += Time.deltaTime;  // 칼로리 -2200 ~ 3700 
+        if (Calories_Timer > 1f)
+        {
+            if (Is_Running)
+            {
+                Set_Calories(-1f);
+            }
+            else
+            {
+                Set_Calories(-0.5f);
+            }
+        }
+
+        /************************************* Player_Heavy_Load **************************************/
         if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
             Is_Running = false;
 
@@ -239,7 +260,29 @@ public class Player_main : MonoBehaviour
         Driving_control = value;
     }
 
+    public float Get_Calories()
+    {
+        return Calories;
+    }
 
+    public void Set_Calories(float value)
+    {
+        Calories += value;
+
+        if (Calories < -2200) { Calories = -2200.0f; }
+        else if (Calories > 3700) { Calories = 3700.0f; }
+    }
+    public float Get_Weight()
+    {
+        return Weight;
+    }
+
+    public void Set_Weight(float value)
+    {
+        Weight += value;
+        if (Weight < 0) { Weight = 0.0f; }
+        else if (Weight > 150) { Weight = 150.0f; }
+    }
 
 
     public void Set_Attack_Power_for_Equipping_Weapons(Item_Weapons Current_Equipping_weapon)  // 무기를 끼면 함수 호출
