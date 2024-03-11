@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 
 public class PlayerPassiveSkill_Level  // 체력, 근력
 {
-    PlayerInventory P_inven = new PlayerInventory();
-
     string P_SkillName = "";
     float P_Level = 0f;
     float P_Min_Level = 0f;
@@ -27,7 +25,6 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
             if (P_SkillName == "Fitness")
             {
-
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
@@ -42,7 +39,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             }
             else if(P_SkillName == "Strength")
             {
-                P_inven.Set_MaxWeight_forSkill(P_Level);
+                Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
@@ -100,7 +97,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             }
             else if (P_SkillName == "Strength")
             {
-                P_inven.Set_MaxWeight_forSkill(P_Level);
+                Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
@@ -232,31 +229,24 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
     }
 }
 
-public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, 창, 물건관리, 조준(총), 재장전(총)
+public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, 창
 {
+    Weapon_type W_type;
     string W_SkillName = "";
     float W_Level = 0f;
     float W_Min_Level = 0f;
     float W_Max_Level = 10f;
-
-    // 총기
-    float W_Accuracy = 0f;  // 정확도
-    float W_Precision = 0f;  // 정밀도
-    float W_Range = 0f;  // 사거리
-    float W_Launch_Angle = 0;  // 발사각도
-    float W_Time_for_aiming = 0;  // 조준시간
-    float W_Time_for_reloading = 0;  // 재장전 시간
 
     float W_EXP = 0f;
     List<float>[] W_expRequirements;
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerWeaponSkill_Level(float initialLevel, string skillname)
+    public PlayerWeaponSkill_Level(float initialLevel, Weapon_type type)
     {
         if (initialLevel >= W_Min_Level && initialLevel <= W_Max_Level)
         {
-            W_SkillName = skillname;
+            W_type = type;
             W_Level = initialLevel;
             InitializeExpRequirements();
         }
@@ -287,8 +277,6 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     {
         if (W_Level < 5)
             W_EXP += exp;
-        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
-            W_EXP += exp * 0.37f;
 
         if (W_Level < W_Max_Level && W_EXP >= W_expRequirements[(int)W_Level][0])
         {
@@ -300,6 +288,11 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     public float Get_W_Level()
     {
         return W_Level;
+    }
+
+    public int Get_W_Level(Weapon_type type)
+    {
+        return (int)W_Level;
     }
 
     public float Get_W_CurrentEXP()
@@ -358,60 +351,205 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
             Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill(W_SkillName, W_Level, IsEquipping);
             Player_main.player_main.playerSkill_ActivationProbability.Set_Injury_chance_forSkill(Weapon_type.Spear, W_Level, IsEquipping);
         }
-        else if (W_SkillName == "Maintenance")
-        {
-
-        }
-        Player_main.player_main.Set_testText(W_Level);
-
     }
 
+}
+
+public class PlayerMaintenanceSkill_Level  // 물건관리
+{
+    string M_SkillName = "";
+    float M_Level = 0f;
+    float M_Min_Level = 0f;
+    float M_Max_Level = 10f;
+
+    float M_EXP = 0f;
+    List<float>[] M_expRequirements;
+    // 레벨 0 ~ 10
+    // 레벨별 필요 경험치
+
+    public PlayerMaintenanceSkill_Level(float initialLevel)
+    {
+        if (initialLevel >= M_Min_Level && initialLevel <= M_Max_Level)
+        {
+            M_Level = initialLevel;
+            InitializeExpRequirements();
+        }
+    }
+
+    void InitializeExpRequirements()
+    {
+        M_expRequirements = new List<float>[10];
+        for (int i = 0; i < M_expRequirements.Length; i++)
+        {
+            M_expRequirements[i] = new List<float>();
+        }
+
+        // _TotalEXP와 비교
+        M_expRequirements[0].Add(75f);  // Level 0 -> 1
+        M_expRequirements[1].Add(150f);  // Level 1 -> 2
+        M_expRequirements[2].Add(300f);  // Level 2 -> 3
+        M_expRequirements[3].Add(750f);  // Level 3 -> 4
+        M_expRequirements[4].Add(1500f);  // Level 4 -> 5
+        M_expRequirements[5].Add(3000f);  // Level 5 -> 6
+        M_expRequirements[6].Add(4500f);  // Level 6 -> 7
+        M_expRequirements[7].Add(6000f);  // Level 7 -> 8
+        M_expRequirements[8].Add(7500f);  // Level 8 -> 9
+        M_expRequirements[9].Add(9000f);  // Level 9 -> 10
+    }
+
+    public void SetEXP(float exp)
+    {
+        M_EXP += exp;
+        if (M_Level < M_Max_Level && M_EXP >= M_expRequirements[(int)M_Level][0])
+        {
+            M_EXP -= M_expRequirements[(int)M_Level][0];
+            M_Level++;
+        }
+    }
+
+    public float Get_M_Level()
+    {
+        return M_Level;
+    }
+
+    public float Get_M_CurrentEXP()
+    {
+        return M_EXP;
+    }
+
+    float maintenancemod = 1;
+    public float Get_Maintenance(Item_Weapons Weapon)  // 근접무기의 내구도 소모율에 영향
+    {
+        switch (Weapon.WeaponType)
+        {
+            case Weapon_type.Axe:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.Axe_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.LongBlunt:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.LongBlunt_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.ShortBlunt:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.ShortBlunt_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.LongBlade:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.LongBlade_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.ShortBlade:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.ShortBlade_Level.Get_W_Level() / 2)) / 2;
+                break;
+            case Weapon_type.Spear:
+                maintenancemod = (Get_M_Level() + (Player_main.player_main.Skill.Spear_Level.Get_W_Level() / 2)) / 2;
+                break;
+            default: break;
+
+        }
+        return 1 / (Weapon.W_Condition_lower_chance + (maintenancemod * 2));
+    }
+
+}
+
+public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
+{
+    Weapon_type Gun_type;
+    string Gun_SkillName = "";
+    float Gun_Level = 0f;
+    float Gun_Min_Level = 0f;
+    float Gun_Max_Level = 10f;
+
+    float Gun_EXP = 0f;
+    List<float>[] Gun_expRequirements;
+    // 레벨 0 ~ 10
+    // 레벨별 필요 경험치
+
+    public PlayerGunSkill_Level(float initialLevel, Weapon_type type, string SkillName)
+    {
+        if (initialLevel >= Gun_Min_Level && initialLevel <= Gun_Max_Level)
+        {
+            Gun_type = type;
+            Gun_SkillName = SkillName;
+            Gun_Level = initialLevel;
+            InitializeExpRequirements();
+        }
+    }
+
+    void InitializeExpRequirements()
+    {
+        Gun_expRequirements = new List<float>[10];
+        for (int i = 0; i < Gun_expRequirements.Length; i++)
+        {
+            Gun_expRequirements[i] = new List<float>();
+        }
+
+        // _TotalEXP와 비교
+        Gun_expRequirements[0].Add(75f);  // Level 0 -> 1
+        Gun_expRequirements[1].Add(150f);  // Level 1 -> 2
+        Gun_expRequirements[2].Add(300f);  // Level 2 -> 3
+        Gun_expRequirements[3].Add(750f);  // Level 3 -> 4
+        Gun_expRequirements[4].Add(1500f);  // Level 4 -> 5
+        Gun_expRequirements[5].Add(3000f);  // Level 5 -> 6
+        Gun_expRequirements[6].Add(4500f);  // Level 6 -> 7
+        Gun_expRequirements[7].Add(6000f);  // Level 7 -> 8
+        Gun_expRequirements[8].Add(7500f);  // Level 8 -> 9
+        Gun_expRequirements[9].Add(9000f);  // Level 9 -> 10
+    }
+
+    public void SetEXP(float exp)
+    {
+        if (Gun_Level < 5)
+            Gun_EXP += exp;
+        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
+            Gun_EXP += exp * 0.37f;
+
+        if (Gun_Level < Gun_Max_Level && Gun_EXP >= Gun_expRequirements[(int)Gun_Level][0])
+        {
+            Gun_EXP -= Gun_expRequirements[(int)Gun_Level][0];
+            Gun_Level++;
+        }
+    }
+
+    public float Get_Gun_Level()
+    {
+        return Gun_Level;
+    }
+
+    public float Get_Gun_CurrentEXP()
+    {
+        return Gun_EXP;
+    }
+
+    // 무기 착용, 해제 시 각각 반영되는 효과 설정
     public void Set_Gun_Equipping_Effect(bool IsEquipping)
     {
-        /* 무기 정보 받아서 정확도 등 계산
-         * 
-        W_Accuracy = 0f;  // 정확도
-        W_Precision = 0f;  // 정밀도
-        W_Range = 0f;  // 사거리
-        W_Launch_Angle = 0;  // 발사각도
-        W_Time_for_aiming = 0;  // 조준시간
-        W_Time_for_reloading = 0;  // 재장전 시간
+        // 무기 정보 받아서 정확도 등 계산
 
-        */
-
-        if (W_SkillName == "Aiming")
+        if (Gun_SkillName == "Aiming")
         {
             // 정확도
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Accuracy(W_Level);
-            W_Accuracy += Player_main.player_main.playerSkill_ActivationProbability.Get_Accuracy();
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Gun_Accuracy(Gun_Level);
             // 정밀도
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Precision(W_Level);
-            W_Precision += Player_main.player_main.playerSkill_ActivationProbability.Get_Precision();
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Precision(Gun_Level);
             // 사거리
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Range(W_Level);
-            W_Range += Player_main.player_main.playerSkill_ActivationProbability.Get_Range();
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Range(Gun_Level);
             // 발사각도
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Launch_Angle(W_Level);
-            W_Launch_Angle += Player_main.player_main.playerSkill_ActivationProbability.Get_Launch_Angle();
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Launch_Angle(Gun_Level);
             // 조준시간 감소
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_aiming(W_Level);
-            W_Time_for_reloading *= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_aiming();
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_aiming(Gun_Level);
         }
-        else if (W_SkillName == "Reloading")
+        else if (Gun_SkillName == "Reloading")
         {
             // 재장전 시간 감소
-            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_reloading(W_Level);
-            W_Time_for_reloading -= Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_reloading();
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_reloading(Gun_Level);
         }
     }
 }
-
-public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
+public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학, 재단술
 {
     string C_SkillName = "";
     float C_Level = 0f;
     float C_Min_Level = 0f;
     float C_Max_Level = 10f;
+
+    float C_Additional_points_through_Books = 1f;
 
     float C_EXP = 0f;
     List<float>[] C_expRequirements;
@@ -446,6 +584,10 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
             {
 
             }
+            else if (C_SkillName == "Tailoring")
+            {
+
+            }
         }
     }
 
@@ -472,7 +614,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
     public void SetEXP(float exp)
     {
-        C_EXP += exp;
+        C_EXP = C_EXP + (exp * C_Additional_points_through_Books);
         if (C_Level < C_Max_Level && C_EXP >= C_expRequirements[(int)C_Level][0])
         {
             C_EXP -= C_expRequirements[(int)C_Level][0];
@@ -498,6 +640,10 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
             {
 
             }
+            else if (C_SkillName == "Tailoring")
+            {
+
+            }
 
         }
     }
@@ -512,5 +658,189 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         return C_EXP;
     }
 
+    public void Set_C_Books_Point(int Book_level)
+    {
+        if(Book_level > C_Level)
+        {
+            C_Additional_points_through_Books = 1f;
+            Debug.Log("어려워서 읽지 못함");
+            // 책 못 읽음
+        }
+        else if(Book_level < C_Level)
+        {
+            C_Additional_points_through_Books = 1f;
+            Debug.Log("이미 다 아는 내용임");
+            // 책을 읽긴하지만 아무 변화 없음
+        }
+        else
+        {
+            switch (Book_level)
+            {
+                case 0:
+                    break;
+                case 1:
+                    C_Additional_points_through_Books = 3f;
+                    break;
+                case 2:
+                    C_Additional_points_through_Books = 5f;
+                    break;
+                case 3:
+                    C_Additional_points_through_Books = 8f;
+                    break;
+                case 4:
+                    C_Additional_points_through_Books = 12f;
+                    break;
+                case 5:
+                    C_Additional_points_through_Books = 16f;
+                    break;
+                default: break;
+            }
+        }
+
+    }
+
 }
 
+public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
+{
+    string S_SkillName = "";
+    float S_Level = 0f;
+    float S_Min_Level = 0f;
+    float S_Max_Level = 10f;
+
+    float S_Additional_points_through_Books = 1f;
+
+    float S_EXP = 0f;
+    List<float>[] S_expRequirements;
+    // 레벨 0 ~ 10
+    // 레벨별 필요 경험치
+
+    public PlayerSurvivalSkill_Level(float initialLevel, string skillname)
+    {
+        if (initialLevel >= S_Min_Level && initialLevel <= S_Max_Level)
+        {
+            S_SkillName = skillname;
+            S_Level = initialLevel;
+            InitializeExpRequirements();
+
+            if (S_SkillName == "Hunting")
+            {
+
+            }
+            else if (S_SkillName == "Fishing")
+            {
+
+            }
+            else if (S_SkillName == "Foraging")
+            {
+
+            }
+            else if (S_SkillName == "Riding")
+            {
+
+            }
+
+        }
+    }
+
+    void InitializeExpRequirements()
+    {
+        S_expRequirements = new List<float>[10];
+        for (int i = 0; i < S_expRequirements.Length; i++)
+        {
+            S_expRequirements[i] = new List<float>();
+        }
+
+        // _TotalEXP와 비교
+        S_expRequirements[0].Add(75f);  // Level 0 -> 1
+        S_expRequirements[1].Add(150f);  // Level 1 -> 2
+        S_expRequirements[2].Add(300f);  // Level 2 -> 3
+        S_expRequirements[3].Add(750f);  // Level 3 -> 4
+        S_expRequirements[4].Add(1500f);  // Level 4 -> 5
+        S_expRequirements[5].Add(3000f);  // Level 5 -> 6
+        S_expRequirements[6].Add(4500f);  // Level 6 -> 7
+        S_expRequirements[7].Add(6000f);  // Level 7 -> 8
+        S_expRequirements[8].Add(7500f);  // Level 8 -> 9
+        S_expRequirements[9].Add(9000f);  // Level 9 -> 10
+    }
+
+    public void SetEXP(float exp)
+    {
+        S_EXP = S_EXP + (exp * S_Additional_points_through_Books);
+        if (S_Level < S_Max_Level && S_EXP >= S_expRequirements[(int)S_Level][0])
+        {
+            S_EXP -= S_expRequirements[(int)S_Level][0];
+            S_Level++;
+
+            if (S_SkillName == "Hunting")
+            {
+
+            }
+            else if (S_SkillName == "Fishing")
+            {
+
+            }
+            else if (S_SkillName == "Foraging")
+            {
+
+            }
+            else if (S_SkillName == "Riding")
+            {
+
+            }
+
+
+        }
+    }
+
+    public float Get_S_Level()
+    {
+        return S_Level;
+    }
+
+    public float Get_S_CurrentEXP()
+    {
+        return S_EXP;
+    }
+
+    public void Set_S_Books_Point(int Book_level)
+    {
+        if (Book_level > S_Level)
+        {
+            S_Additional_points_through_Books = 1f;
+            Debug.Log("어려워서 읽지 못함");
+            // 책 못 읽음
+        }
+        else if (Book_level < S_Level)
+        {
+            S_Additional_points_through_Books = 1f;
+            Debug.Log("이미 다 아는 내용임");
+            // 책을 읽긴하지만 아무 변화 없음
+        }
+        else
+        {
+            switch (Book_level)
+            {
+                case 0:
+                    break;
+                case 1:
+                    S_Additional_points_through_Books = 3f;
+                    break;
+                case 2:
+                    S_Additional_points_through_Books = 5f;
+                    break;
+                case 3:
+                    S_Additional_points_through_Books = 8f;
+                    break;
+                case 4:
+                    S_Additional_points_through_Books = 12f;
+                    break;
+                case 5:
+                    S_Additional_points_through_Books = 16f;
+                    break;
+                default: break;
+            }
+        }
+
+    }
+}

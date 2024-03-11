@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -143,10 +144,35 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
-    // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용
+    // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용  // Moodle_Panic
     float Basic_Increase_in_Attack_Power = 0.3f;  // 무기 미착용 시
     float Increase_in_Attack_Power = 0.0f;  // 무기 착용 시
-    public float Get_Increase_in_Attack_Power() { return  Increase_in_Attack_Power; }
+    float Increase_in_Attack_Power_forMoodle = 0.0f;
+    public float Get_Increase_in_Attack_Power(Item_Weapons current_weapon)
+    {
+        if(current_weapon.WeaponType == Weapon_type.Gun)
+        {
+            if((Increase_in_Attack_Power - Increase_in_Attack_Power_for_Panic_with_Gun) > 0)
+            {
+                return Increase_in_Attack_Power - Increase_in_Attack_Power_for_Panic_with_Gun;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            if((Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle) > 0)
+            {
+                return Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
 
     public void Set_Increase_in_Attack_Power_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
     {
@@ -194,22 +220,70 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
+    float Increase_in_Attack_Power_for_Panic = 0f;
+    float Increase_in_Attack_Power_for_Panic_with_Gun = 0f;
+    float Increase_in_Attack_Power_for_Tired = 0f;
+    public void Set_Increase_in_Attack_Power_forMoodle(Moodles_private_code _Moodle_Code, int _Moodle_step,float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Panic:
+                Increase_in_Attack_Power_for_Panic = value;
+                if(_Moodle_step > 1)  // 2단계부터 총기데미지 감소반영
+                {
+                    if(Player_main.player_main.Skill.Aiming_Level.Get_Gun_Level() < 6)
+                    {
+                        Increase_in_Attack_Power_for_Panic_with_Gun = value * 2;
+                    }
+                    else
+                    {
+                        Increase_in_Attack_Power_for_Panic_with_Gun = 0f;
+                    }
+                }
+                break;
+            case Moodles_private_code.Tired:
+                Increase_in_Attack_Power_for_Tired = value;
+                break;
+        }
 
-    // 공격 속도 ( + )  // Fitness // Axe 등 무기
+        Increase_in_Attack_Power_forMoodle = Increase_in_Attack_Power_for_Panic + Increase_in_Attack_Power_for_Tired;
+    }
+
+
+    // 근접 공격력 비율 ( * )  // Strength
+    float Melee_Attack_Power_Ratio = 0.75f;
+    float Melee_Attack_Power_Ratio_forMoodle = 1f;
+    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio * Melee_Attack_Power_Ratio_forMoodle; }
+
+    public void Set_Melee_Attack_Power_Ratio_forSkill(float SkillLevel)
+    {
+        Melee_Attack_Power_Ratio = (0.75f + 0.05f * SkillLevel);
+    }
+
+    public void Set_Melee_Attack_Power_Ratio_forMoodle(float value)
+    {
+        Melee_Attack_Power_Ratio_forMoodle = 1 - value;
+
+    }
+
+
+    // 공격 속도 ( + )  // Fitness // Axe 등 무기  // Moodle_Heavy_Load, Endurance
     float Basic_Attack_Speed = 0f;  // 무기 미착용 시
-    float Attack_Speed = 0f;  // 무기 착용 시
-    public float Get_Attack_Speed() { return Attack_Speed; }
+    float Attack_Speed_for_Weapon = 0f;  // 무기 착용 시
+    float Attack_Speed_for_Moodle = 1f;
+    float Total_Attack_Speed = 0f;
+    public float Get_Attack_Speed() { return Total_Attack_Speed * Attack_Speed_for_Moodle; }
 
     public void Set_Attack_Speed_forSkill(string SkillName, float SkillLevel, bool IsEquipping)
     {
         float Axe_BonusState;
         float Others_BonusState;
-        Attack_Speed = Basic_Attack_Speed;
+        Total_Attack_Speed = Basic_Attack_Speed * Attack_Speed_for_Moodle;
 
         if (SkillName == "Fitness")
         {
             Basic_Attack_Speed = 0.02f * SkillLevel;
-            Attack_Speed = Basic_Attack_Speed;
+            Total_Attack_Speed = Basic_Attack_Speed * Attack_Speed_for_Moodle;
         }
         else
         {
@@ -217,37 +291,37 @@ public class PlayerSkill_ActivationProbability
             {
                 Axe_BonusState = 0.03f * SkillLevel;
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Axe_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Axe_BonusState);
             }
             else if (SkillName == "LongBlunt")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "ShortBlunt")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "LongBlade")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "ShortBlade")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "Spear")
             {
                 Others_BonusState = 0.03f * (SkillLevel - 1);
                 if (IsEquipping)
-                    Attack_Speed = Basic_Attack_Speed + Others_BonusState;
+                    Total_Attack_Speed = (Basic_Attack_Speed + Others_BonusState);
             }
             else if (SkillName == "Maintenance")
             {
@@ -260,52 +334,121 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
+    float Attack_Speed_for_Endurance = 1;
+    float Attack_Speed_for_Heavy_Load = 1;
+    float Attack_Speed_for_HHyperthermia_Hot = 1;
+    float Attack_Speed_for_Hyperthermia_Cold = 1;
+    public void Set_Attack_Speed_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Attack_Speed_for_Endurance = 1 - value;
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Attack_Speed_for_Heavy_Load = 1 - value;
+                break;
+            case Moodles_private_code.Hyperthermia_Hot:
+                Attack_Speed_for_HHyperthermia_Hot = 1 - value;
+                break;
+            case Moodles_private_code.Hyperthermia_Cold:
+                Attack_Speed_for_Hyperthermia_Cold = 1 - value;
+                break;
+        }
+        Attack_Speed_for_Moodle = Attack_Speed_for_Endurance * Attack_Speed_for_Heavy_Load * Attack_Speed_for_HHyperthermia_Hot * Attack_Speed_for_Hyperthermia_Cold;
+    }
 
-    // 넘어질 확률 ( - )  // Fitness
+
+    // 넘어질 확률 ( - )  // Fitness  // Moodle_Heavy_Load, Moodle_Pain
     float Probability_of_Falling = 0f;
-    public float Get_Probability_of_Falling() { return Probability_of_Falling; }
+    float Probability_of_Falling_forSkill = 0f;
+    float Probability_of_Falling_forMoodle = 0f;
+    public float Get_Probability_of_Falling() 
+    { 
+        if(Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+        {
+            return Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain;
+        }
+        else
+        {
+            return Probability_of_Falling + Probability_of_Falling_forMoodle;
+        }
+    }
 
     public void Set_Probability_of_Falling_forSkill(float SkillLevel)
     {
-        if (Probability_of_Falling == 0f)
+        if (Probability_of_Falling_forSkill == 0f)
         {
-            Probability_of_Falling = 0.02f * SkillLevel;
+            Probability_of_Falling_forSkill = 0.02f * SkillLevel;
         }
         else
         {
-            Probability_of_Falling += 0.02f;
+            Probability_of_Falling_forSkill = Probability_of_Falling_forSkill + 0.02f;
         }
+        Probability_of_Falling = Probability_of_Falling_forSkill;
     }
 
-    // 높은 담을 넘을 확률 ( + )  // Fitness, Strength
-    float Probability_of_Crossing_a_High_Wall = 0f;
-    public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall; }
+    float Probability_of_Falling_for_Endurance = 0;
+    float Probability_of_Falling_for_Heavy_Load = 0;
+    float Probability_of_Falling_for_Pain = 0;
+    public void Set_Probability_of_Falling_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Probability_of_Falling_for_Endurance = value;
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Probability_of_Falling_for_Heavy_Load = value;
+                break;
+            case Moodles_private_code.Pain:
+                Probability_of_Falling_for_Pain = value;
+                break;
+
+        }
+        Probability_of_Falling_forMoodle = Probability_of_Falling_for_Endurance + Probability_of_Falling_for_Heavy_Load + Probability_of_Falling_for_Pain;
+    }
+
+    // 높은 담을 넘을 확률 ( + )  // Fitness, Strength  // Moodle_Heavy_Load
+    float Probability_of_Crossing_a_High_Wall = 0.5f;
+    float Probability_of_Crossing_a_High_Wall_forSkill = 0f;
+    float Probability_of_Crossing_a_High_Wall_forMoodle = 0f;
+    public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall + Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle; }
 
     public void Set_Probability_of_Crossing_a_High_Wall_forSkill(float SkillLevel)
     {
-        if (Probability_of_Crossing_a_High_Wall == 0f)
+        if (Probability_of_Crossing_a_High_Wall_forSkill == 0f)
         {
-            Probability_of_Crossing_a_High_Wall = 0.02f * SkillLevel;
+            Probability_of_Crossing_a_High_Wall_forSkill = 0.02f * SkillLevel;
         }
         else
         {
-            Probability_of_Crossing_a_High_Wall += 0.02f;
+            Probability_of_Crossing_a_High_Wall_forSkill += 0.02f;
         }
+        
     }
 
-    // 근접 공격력 비율 ( * )  // Strength
-    float Melee_Attack_Power_Ratio = 0.75f;
-    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio; }
-
-    public void Set_Melee_Attack_Power_Ratio_forSkill(float SkillLevel)
+    float Probability_of_Crossing_a_High_Wall_for_Endurance = 0;
+    float Probability_of_Crossing_a_High_Wall_for_Heavy_Load = 0;
+    public void Set_Probability_of_Crossing_a_High_Wall_forMoodle(Moodles_private_code _Moodle_Code, float value)
     {
-        Melee_Attack_Power_Ratio = 0.75f + 0.05f * SkillLevel;
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Probability_of_Crossing_a_High_Wall_for_Endurance = value;
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Probability_of_Crossing_a_High_Wall_for_Heavy_Load = value;
+                break;
+        }
+        Probability_of_Crossing_a_High_Wall_forMoodle = Probability_of_Crossing_a_High_Wall_for_Endurance + Probability_of_Crossing_a_High_Wall_for_Heavy_Load;
     }
 
-    // 치명타 확률 ( + )  // Axe 등 무기
+    // 치명타 확률 ( + )  // Axe 등 무기  // Moodle_Heavy_Load 
     float Basic_Critical_Hit_Chance = 0.0f;
     float Critical_Hit_Chance = 0.0f;
-    public float Get_Critical_Hit_Chance() { return Critical_Hit_Chance; }
+    float Critical_Hit_Chance_forMoodle = 1;
+    public float Get_Critical_Hit_Chance() { return Critical_Hit_Chance * Critical_Hit_Chance_forMoodle; }
 
     public void Set_Critical_Hit_Chance_forSkill(Weapon_type SkillName, float SkillLevel, bool IsEquipping)
     {
@@ -354,6 +497,21 @@ public class PlayerSkill_ActivationProbability
 
     }
 
+    float Set_Critical_Hit_Chance_forMoodle_for_Heavy_Load = 0;
+    float Set_Critical_Hit_Chance_forMoodle_for_Panic = 0;
+    public void Set_Critical_Hit_Chance_forMoodle(Moodles_private_code _Moodle_Code, float value)  // Moodle_Heavy_Load
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Heavy_Load:
+                Set_Critical_Hit_Chance_forMoodle_for_Heavy_Load = (1 - value);
+                break;
+            case Moodles_private_code.Panic:
+                Set_Critical_Hit_Chance_forMoodle_for_Panic = (1 - value);
+                break;
+        }
+        Critical_Hit_Chance_forMoodle = Set_Critical_Hit_Chance_forMoodle_for_Heavy_Load * Set_Critical_Hit_Chance_forMoodle_for_Panic;
+    }
 
     // 밀쳐낼 확률 ( * )   // Strength
     float HitForce = 0.45f;
@@ -362,11 +520,11 @@ public class PlayerSkill_ActivationProbability
     public void Set_HitForce_forSkill(float SkillLevel)
     {
         float player_Endurance = 1.0f;
-        if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodles_state() < 0.5)  // 지구력에 따른 밀쳐낼 확률 감소
+        if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodle_current_value() < 0.5)  // 지구력에 따른 밀쳐낼 확률 감소
         {
             player_Endurance = 0.4f;
         }
-        else if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodles_state() >= 0.5 && Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodles_state() < 0.7)
+        else if(Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodle_current_value() >= 0.5 && Player_Moodles.playerMoodles.Moodle_Endurance.Get_Moodle_current_value() < 0.7)
         {
             player_Endurance = 0.7f;
         }
@@ -487,6 +645,28 @@ public class PlayerSkill_ActivationProbability
         }
 
     }
+
+
+    // 좀비에 대한 정면공격 방어 감소 확률 // Moodle_Endurance, Moodle_Heavy_Load
+    float Chance_of_Blocking_zombie_frontal_attack = 0f;
+    float Chance_of_Blocking_zombie_frontal_attack_for_Endurance = 0;
+    float Chance_of_Blocking_zombie_frontal_attack_for_Heavy_Load = 0;
+    public float Get_Chance_of_Blocking_zombie_frontal_attack() { return (1 - Chance_of_Blocking_zombie_frontal_attack); }
+    public void Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Chance_of_Blocking_zombie_frontal_attack_for_Endurance = (1 - value);
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Chance_of_Blocking_zombie_frontal_attack_for_Heavy_Load = (1 - value);
+                break;
+        }
+
+        Chance_of_Blocking_zombie_frontal_attack = Chance_of_Blocking_zombie_frontal_attack_for_Endurance + Chance_of_Blocking_zombie_frontal_attack_for_Heavy_Load;
+    }
+
 
     // 회피할 확률 ( + )  // Axe 등 무기     // 좀비가 플레이어 공격 시 그 공격이 성공한 후 회피할 확률
     float Basic_Injury_chance = -0.05f;
@@ -886,36 +1066,55 @@ public class PlayerSkill_ActivationProbability
     }
 
     // 사격시 정확도 ( + )  ( 목표물에 명중할 기본 확률 )
-    float Accuracy = 0.0f;
-    public float Get_Accuracy() { return Accuracy; }
+    float Gun_Accuracy = 0.0f;
+    public float Get_Gun_Accuracy() 
+    { 
+        if(Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+        {
+            return Gun_Accuracy;
+        }
+        else
+        {
+            return Gun_Accuracy - Player_main.player_main.Get_Accuracy_forMoodle();
+        }
+    }
     
-    public void Set_Accuracy(float SkillLevel)
+    public void Set_Gun_Accuracy(float SkillLevel)
     {
         switch (SkillLevel)
         {
             case 0:
-                Accuracy = 0.00f;
+                Gun_Accuracy = 0.00f;
                 break;
             case 1:
-                Accuracy = 0.02f;
+                Gun_Accuracy = 0.02f;
                 break;
-            case 2: case 3:
-                Accuracy = 0.05f;
+            case 2:
+                Gun_Accuracy = 0.04f;
                 break;
-            case 4: case 5:
-                Accuracy = 0.07f;
+            case 3:
+                Gun_Accuracy = 0.06f;
                 break;
-            case 6: case 7:
-                Accuracy = 0.10f;
+            case 4:
+                Gun_Accuracy = 0.08f;
+                break;
+            case 5:
+                Gun_Accuracy = 0.10f;
+                break;
+            case 6:
+                Gun_Accuracy = 0.12f;
+                break;
+            case 7:
+                Gun_Accuracy = 0.14f;
                 break;
             case 8:
-                Accuracy = 0.12f;
+                Gun_Accuracy = 0.16f;
                 break;
             case 9:
-                Accuracy = 0.15f;
+                Gun_Accuracy = 0.18f;
                 break;
             case 10:
-                Accuracy = 0.17f;
+                Gun_Accuracy = 0.20f;
                 break;
         }
     }
@@ -928,20 +1127,38 @@ public class PlayerSkill_ActivationProbability
     {
         switch (SkillLevel)
         {
-            case 0: case 1:
+            case 0:
                 Precision = 0.00f;
                 break;
-            case 2: case 3:
-                Precision = 0.02f;
+            case 1:
+                Precision = 0.03f;
                 break;
-            case 4: case 5:
-                Precision = 0.05f;
+            case 2:
+                Precision = 0.06f;
                 break;
-            case 6: case 7:
-                Precision = 0.10f;
+            case 3:
+                Precision = 0.09f;
                 break;
-            case 8: case 9: case 10:
+            case 4:
+                Precision = 0.12f;
+                break;
+            case 5:
                 Precision = 0.15f;
+                break;
+            case 6:
+                Precision = 0.18f;
+                break;
+            case 7:
+                Precision = 0.21f;
+                break;
+            case 8:
+                Precision = 0.24f;
+                break;
+            case 9:
+                Precision = 0.27f;
+                break;
+            case 10:
+                Precision = 0.30f;
                 break;
         }
     }
@@ -1024,19 +1241,28 @@ public class PlayerSkill_ActivationProbability
     {
         switch (SkillLevel)
         {
-            case 0: case 1:
+            case 0:
+            case 1:
                 Launch_Angle = 0.95f;
                 break;
-            case 3: case 4: case 5:
+            case 3:
+            case 4:
+            case 5:
                 Launch_Angle = 0.9f;
                 break;
-            case 6: case 7: case 8:
+            case 6:
+            case 7:
+            case 8:
                 Launch_Angle = 0.8f;
                 break;
-            case 9: case 10:
+            case 9:
+            case 10:
                 Launch_Angle = 0.7f;
                 break;
         }
     }
+
+
+
 }
 

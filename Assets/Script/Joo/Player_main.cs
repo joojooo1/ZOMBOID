@@ -14,7 +14,7 @@ public enum Weapon_type
     LongBlade = 3,
     ShortBlade = 4,
     Spear = 5,
-    Gun = 6
+    Gun = 6,
 }
 
 public enum Zombie_Attack_Pattern
@@ -29,24 +29,38 @@ public class Player_main : MonoBehaviour
 {
     public static Player_main player_main;
 
-    PlayerInventory inven = new PlayerInventory();
-    PlayerSkill Skill;
+    public PlayerInventory_main Inven_main;
+    public PlayerSkill Skill;
 
     public PlayerSkill_ActivationProbability playerSkill_ActivationProbability = new PlayerSkill_ActivationProbability();
-    public PlayerState playerState = new PlayerState();
-    public Player_HP player_HP = new Player_HP();
+    public PlayerState playerState;
+    public Player_HP player_HP;
+    public Player_Moodles playerMoodles;
+    public Player_Characteristic player_Characteristic;
 
     /* --------------------------------------------------------------------------------- */
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
-    float Weight = 83.0f; // 체중
-    float Calories = 50.0f; // 칼로리 0 - 100
-    float Temperature = 50.0f; // 온도 0 - 100
+    [SerializeField] float Weight = 83.0f; // 체중 0 ~ 150
+    [SerializeField] float Calories = 800.0f; // 칼로리 -2200 ~ 3700   // Stuffed 3단계부터는 칼로리 1000 이상이면 음식섭취 불가능
+    [SerializeField] float Satiety = 20.0f;  // 포만감 -300 ~ 300
+    [SerializeField] float Rate_of_Hunger_increase = 1f;  // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
 
-    float Attack_Power = 8.0f; // 공격력
-    float Evasion = 0.15f;  // 회피율
-    float Moving_Speed = 3f;  // 이동속도
+    [SerializeField] float Min_Attack_Power = 8.0f; // 공격력
+    [SerializeField] float Max_Attack_Power = 8.0f;
+    [SerializeField] float Evasion = 0.15f;  // 회피율
+    [SerializeField] float Moving_Speed = 3f;  // 이동속도
+    [SerializeField] float Coughing_Noise_radius = 15f;  // 기침 어그로 범위
+    [SerializeField] float Driving_control = 1f;  // 운전 제어력
 
     public bool Is_Equipping_Weapons = false;
+    public Item_Weapons Current_equipping_Weapon = null;  // 무기 착용시, 착용한 무기로 변경
+    public bool Is_Aiming = false;
+    public bool Is_Running = false;
+    public bool Is_Sleeping = false;
+    public bool Is_Resting = false;
+    public bool Is_drunk = false;
+    public bool Is_Cold = false;
+    public bool Is_Eat = true;
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -54,95 +68,251 @@ public class Player_main : MonoBehaviour
         player_main = this;
 
         Skill = GetComponent<PlayerSkill>();
+        
     }
 
-    float Playermovement_speed = 1.0f;
-
+    float Calories_Timer = 0.0f;
+    float Satiety_Timer = 0.0f;
+    float Panic_Timer = 0.0f;
+    float Cold_Timer = 0.0f;
     void Update()
     {
-        if (Is_Equipping_Weapons)  // 무기를 착용하는 경우 호출
-        {
-            //Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, Is_Equipping_Weapons)
-        }
 
         // test 함수 -------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Z))  // 무기 스킬 Level-up
+        if (Input.GetKeyDown(KeyCode.Z)) 
         {
-            Skill.Axe_Level.SetEXP(9000);
+            player_HP.Set_Player_HP_for_Damage(20f);
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            player_HP.Set_Player_HP_for_Heal(20f);
+        }
 
-        }
-        else if (Input.GetKeyDown(KeyCode.X))  // 무기 착용 시
-        {
-            Is_Equipping_Weapons = true;
-            Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe, Is_Equipping_Weapons);
-        }
-        else if (Input.GetKeyDown(KeyCode.C))  // 무기 해제 시
-        {
-            Is_Equipping_Weapons = false;
-            Set_Attack_Power_for_Equipping_Weapons(Weapon_type.Axe, Is_Equipping_Weapons);
-        }
         // ------------------------------------------------------------- test 함수 
 
-        
+        /************************************* Player_Movement *************************************/
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
         Vector3 pos = transform.position;
-        pos += input * Time.deltaTime * Playermovement_speed;
+        pos += input * Time.deltaTime * Get_Moving_Speed();
 
         transform.position = pos;
 
+        /************************************* Player_Satiety **************************************/
+        Satiety_Timer += Time.deltaTime; 
+        if (Satiety_Timer > 1.0f)  // 포만감 2초에 1.5씩 감소
+        {
+            Satiety -= 0.06f;  // 포만감 -300 ~ 300
+            if (Satiety < -300) { Satiety = -300.0f; }
+            else if (Satiety > 300) { Satiety = 300.0f; }
+
+            if (Satiety >= 0)
+            {
+                playerMoodles.Moodle_Stuffed.Set_Moodles_state(Satiety);
+            }
+            else
+            {
+                playerMoodles.Moodle_Hungry.Set_Moodles_state(Satiety);
+            }
+            Satiety_Timer = 0.0f;
+        }
+        // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
+
+
+        /************************************* Player_Calories **************************************/
+
+        Calories_Timer += Time.deltaTime;  // 칼로리 -2200 ~ 3700 
+        if (Calories_Timer > 1f)
+        {
+            if (Is_Running)
+            {
+                Set_Calories(-1f);
+            }
+            else
+            {
+                Set_Calories(-0.5f);
+            }
+        }
+
+        /************************************* Player_Heavy_Load **************************************/
+        if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
+            Is_Running = false;
+
+        /************************************* Player_Pain (Sleeping) **************************************/
+        if(playerMoodles.Moodle_Pain.Get_Moodle_current_step() > 1)  // Moodle_Pain 2단계부터 수면 불가
+        {
+            Is_Sleeping = false;
+        }
+
+        /************************************* Player_Panic **************************************/
+        if (Is_Resting)
+        {
+            Panic_Timer += Time.deltaTime;
+            if(Panic_Timer > 1.0f)  // 휴식중에 Panic 수치 down
+            {                
+                if(Is_drunk == false)
+                {
+                    playerMoodles.Moodle_Panic.Set_Moodles_state(-0.05f);
+                }
+                else
+                {
+                    playerMoodles.Moodle_Panic.Set_Moodles_state(-0.08f);
+                }
+                Panic_Timer = 0.0f;
+            }
+        }
+
+        /****************** Player_Has_a_Cold ******************/
+        if (Is_Cold)
+        {
+            Cold_Timer += Time.deltaTime;
+            if (Cold_Timer > (20 / playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_step()))
+            {
+                /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
+            }
+        }
+
+
     }
 
-
-    // test 함수 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    public UnityEngine.UI.Text[] textText;
-    public void Set_testText(float Level)
+    public float Get_Moving_Speed()
     {
-        textText[0].text = "Level: " + Level.ToString();
-        textText[1].text = "Increase_in_Attack_Power: " + playerSkill_ActivationProbability.Get_Increase_in_Attack_Power().ToString();
-        textText[2].text = "Attack_Speed: " + playerSkill_ActivationProbability.Get_Attack_Speed().ToString();
-        textText[3].text = "Critical_Hit_Chance: " + playerSkill_ActivationProbability.Get_Critical_Hit_Chance().ToString();
-        textText[4].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
-        textText[5].text = "Injury_chance: " + playerSkill_ActivationProbability.Get_Injury_chance().ToString();
-        //textText[6].text = "Block_chance: " + playerSkill_ActivationProbability.Get_Block_chance().ToString();
-        //textText[7].text = "Probability_of_Crossing_a_High_Wall: " + playerSkill_ActivationProbability.Get_Probability_of_Crossing_a_High_Wall().ToString();
-    }
-    // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- test 함수 
+        float speed_forMoodle = Moving_Speed_forMoodle;
+        if (playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+        {
+            speed_forMoodle = Moving_Speed_forMoodle / Speed_rate_for_Pain;
+        }
 
-    public void Set_Is_Equipping_Weapons()
-    {
-        if (Is_Equipping_Weapons)
-            Is_Equipping_Weapons = false;
+        if (Is_Aiming)
+            return Moving_Speed * speed_forMoodle * playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
         else
-            Is_Equipping_Weapons = true;
+        {
+            if (Is_Running)  // 달리면 1.2배로 빨라짐.
+            {
+                return Moving_Speed * 1.2f * speed_forMoodle;
+            }
+            else
+            {
+                return Moving_Speed * speed_forMoodle;
+            }
+        }
     }
 
-    void Set_Attack_Power_for_Equipping_Weapons(Weapon_type weapon, bool Is_Equipping_Weapons)  // 무기를 끼면 함수 호출
+    float Moving_Speed_forMoodle = 1f;
+    float Speed_rate_for_Endurance = 1f;
+    float Speed_rate_for_Has_a_Cold = 1f;
+    float Speed_rate_for_Heavy_Load = 1f;
+    float Speed_rate_for_Pain = 1f;
+    float Speed_rate_for_Hyperthermia_Hot = 1f;
+    float Speed_rate_for_Hyperthermia_Cold = 1f;
+    public void Set_Moving_Speed_forMoodle(Moodles_private_code _Moodle_Code, float Speed_rate) 
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Endurance:
+                Speed_rate_for_Endurance = (1 - Speed_rate);
+                break;
+            case Moodles_private_code.Has_a_Cold:
+                Speed_rate_for_Has_a_Cold = (1 - Speed_rate);
+                break;
+            case Moodles_private_code.Heavy_Load:
+                Speed_rate_for_Heavy_Load = (1 - Speed_rate);
+                break;
+            case Moodles_private_code.Pain:
+                Speed_rate_for_Pain = (1 - Speed_rate);
+                break;
+            case Moodles_private_code.Hyperthermia_Hot:
+                Speed_rate_for_Hyperthermia_Hot = (1 - Speed_rate);
+                break;
+            case Moodles_private_code.Hyperthermia_Cold:
+                Speed_rate_for_Hyperthermia_Cold = (1 - Speed_rate);
+                break;
+        }
+        Moving_Speed_forMoodle = Speed_rate_for_Endurance * Speed_rate_for_Has_a_Cold * Speed_rate_for_Heavy_Load * Speed_rate_for_Pain * Speed_rate_for_Hyperthermia_Hot * Speed_rate_for_Hyperthermia_Cold;
+    }
+
+    public float Get_Accuracy_forMoodle()
+    {
+        return Accuracy_forMoodle;
+    }
+
+
+    float Accuracy_forMoodle = 0f;
+    float Accuracy_for_Pain = 0f;
+    public void Set_Accuracy_forMoodle(Moodles_private_code _Moodle_Code, float value)
+    {
+        switch (_Moodle_Code)
+        {
+            case Moodles_private_code.Pain:
+                Speed_rate_for_Pain = value;
+                break;
+        }
+        Accuracy_forMoodle = Accuracy_for_Pain;
+    }
+
+    public float Get_Evasion()
+    {
+        return Evasion + playerSkill_ActivationProbability.Get_Injury_chance();
+    }
+
+    public void Set_Driving_control(float value)
+    {
+        Driving_control = value;
+    }
+
+    public float Get_Calories()
+    {
+        return Calories;
+    }
+
+    public void Set_Calories(float value)
+    {
+        Calories += value;
+
+        if (Calories < -2200) { Calories = -2200.0f; }
+        else if (Calories > 3700) { Calories = 3700.0f; }
+    }
+    public float Get_Weight()
+    {
+        return Weight;
+    }
+
+    public void Set_Weight(float value)
+    {
+        Weight += value;
+        if (Weight < 0) { Weight = 0.0f; }
+        else if (Weight > 150) { Weight = 150.0f; }
+    }
+
+
+    public void Set_Attack_Power_for_Equipping_Weapons(Item_Weapons Current_Equipping_weapon)  // 무기를 끼면 함수 호출
     {
         // 무기 Script 구현사항
         // 무기별 타입
         // 무기별 공격력
         // 무기별 내구도
 
-        switch (weapon)
+        switch ((Weapon_type)Current_Equipping_weapon.WeaponType)
         {
             case Weapon_type.Axe:
-                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.LongBlunt:
-                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.ShortBlunt:
-                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.LongBlade:
-                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.ShortBlade:
-                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.Spear:
-                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Is_Equipping_Weapons);
+                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.Gun:
                 break;
             default:
                 break;
@@ -155,6 +325,7 @@ public class Player_main : MonoBehaviour
     // 1. 공격 받으면 밀쳐낼 확률 계산
     public void Calculate_HitForce(bool Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
     {
+        playerMoodles.Moodle_Panic.Set_Moodles_state(0.01f);  /* 마주친 좀비의 수 확인가능하면 받아서   0.01 x 좀비수  로 수정*/
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
@@ -164,6 +335,7 @@ public class Player_main : MonoBehaviour
         }
         else
         {
+            Debug.Log("Miss !!");
             // 밀쳐낸 애니메이션
         }
     }
@@ -173,7 +345,7 @@ public class Player_main : MonoBehaviour
 
     void Calculating_Probability_of_Injury_Location(string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 강도, 후방 여부
     {
-        Player_body_Location Attack_point  = new Player_body_Location("");
+        Player_body_Location Attack_point  = new Player_body_Location(0);
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
@@ -338,38 +510,38 @@ public class Player_main : MonoBehaviour
         {
             if (Rand_pattern >= 0 && Rand_pattern < 25)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 25 && Rand_pattern < 50)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 50 && Rand_pattern < 75)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 75 && Rand_pattern < 100)  // 25%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
             }
         }
         else  // 뒤에서 공격 당하는 경우
         {
             if (Rand_pattern >= 0 && Rand_pattern < 70)  // 70%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 70 && Rand_pattern < 80)  // 10%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 80 && Rand_pattern < 90)  // 10%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 90 && Rand_pattern < 100)  // 10%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type);
+                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
             }
         }
 
@@ -377,28 +549,31 @@ public class Player_main : MonoBehaviour
     }
 
 
-    void Calculate_damage_from_Zombie(string Attack_point, float Zombie_Attack_power)  // Zombie -> Player 공격
+    public float Calculate_damage_to_Zombie()  // Player -> Zombie 공격
     {
-        // Zombie
-        // 공격력
+        System.Random rand_Damage = new System.Random();
+        float Total_Damage = (rand_Damage.Next((int)(Min_Attack_Power*100), (int)(Max_Attack_Power*100)))/100;
 
+        if (Is_Equipping_Weapons)
+        {
+            float Weapon_Power = 0;
+            // 무기 공격력 불러오는 함수
+            // + 근접 무기일 경우 * 근접 공격력
+            // + 총기 사용시 조준 등 반영
+            Weapon_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Current_equipping_Weapon);  // 무기 레벨에 따른 공격력 증가
+        }
 
-        // player
-        // 방어력
-        // 막을 확률
-        // 못막았을때 회피할 확률
-        // 
-    }
-
-    void Calculate_damage_to_Zombie()  // Player -> Zombie 공격
-    {
-        // player
-        // 기본 공격력
-        // 무기 착용 시 추가되는 공격력
-        // + 근접 무기일 경우 근접 공격력
-        // + 총기 사용시 조준 등 반영
         // 치명타 확률
+        float Critical_Attack_Bonus = 0;
+        System.Random rand = new System.Random();
+        int rand_Critical = rand.Next(100);
+        if(rand_Critical/100 > playerSkill_ActivationProbability.Get_Critical_Hit_Chance())
+        {
+            Total_Damage *= 1.2f;
+        }
 
+
+        return Total_Damage;
         /* 참고사항
 
           1. Get damage from weapon/wielder.
@@ -409,6 +584,7 @@ public class Player_main : MonoBehaviour
           6. damage = damage*2 (Axe)
  
          */
+
 
     }
 }
