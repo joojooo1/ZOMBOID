@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [CreateAssetMenu]
 public class Item_Food : ScriptableObject
 {
     public Food_Type FoodType;
+    public Location_Type Location;
     public int Food_ID; // 각 음식에 대한 고유ID
     public Cooking_State FoodState;
-    public float Cooking_time_to_NextStep;
-
+    public float Cooking_time_to_NextStep;  // 다음 단계로 넘어가는데 걸리는 시간 ( 기존값 / 5 )
+    
 
     public string FoodName;
     public string FoodName_Kr;
@@ -20,12 +22,14 @@ public class Item_Food : ScriptableObject
     public Freshness_Level Freshness;
     public float Preservation_period_for_freshness;  // 신선한 상태 유지기간(days)
     public float Preservation_period_for_stale;  // 신선하지 않은 상태 유지기간(days)
+    
 
     public bool Is_freezing;
 
     public bool Is_Canned;
     public bool Is_Alcoholic;
     public bool Is_Spice;
+    public bool Usable_as_bottle;
 
     public float F_Calories;  // 칼로리
     public float F_Thirst;  // 갈증
@@ -39,7 +43,7 @@ public class Item_Food : ScriptableObject
 
     // public bool[] Probability_of_poisoning;  
     // 식중독 일으킬 확률   true면 15% 상승 ( 임의 설정 )
-    // Uncooked(state) || Burned(state) || Rotten(freshness) 이면 true
+    // Uncooked(state) || Burned(state) || Rotten(freshness) 이면 true ( 제외: Instant Popcorn_Uncooked )
 
 
 }

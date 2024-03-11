@@ -15,6 +15,15 @@ public enum Bandages_Type
     None = 8
 }
 
+public enum Medical_Type
+{
+    Bandage = 0,
+    Disinfectant = 1,
+    Herb = 2,
+    Medical_equipment = 3,
+    Pharmaceutical = 4
+}
+
 public enum AMMO_Type
 {
     Round_223 = 0,
@@ -67,4 +76,13 @@ public enum Cooking_State
     uncooked = 0,
     cooked = 1,
     burned = 2
+}
+
+public enum Location_Type
+{
+    None = 0,
+    Container = 1,
+    Refrigeration = 2,
+    freezer = 3,
+    Fishing = 4
 }

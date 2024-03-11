@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
+  m_Name: ETC_TeaBag
+  m_EditorClassIdentifier: 
+  FoodType: 9
+  Location: 1
+  Food_ID: 2
+  FoodState: 0
+  Cooking_time_to_NextStep: 0
+  FoodName: Tea Bag
+  FoodName_Kr: "\uD2F0\uBC31"
+  FoodWeight: 0.1
+  Food_Image:
+  - {fileID: 21300000, guid: 53f400bda59d94846a193047ee3d8ed3, type: 3}
+  Is_Perishable: 0
+  Freshness: 0
+  Preservation_period_for_freshness: 0
+  Preservation_period_for_stale: 0
+  Is_freezing: 0
+  Is_Canned: 0
+  Is_Alcoholic: 0
+  Is_Spice: 0
+  Usable_as_bottle: 0
+  F_Calories: 0
+  F_Thirst: -10
+  F_Satiety:
+  - 5
+  F_Unhappiness: 10
+  F_Boredom: 0
+  F_Fatigue: -15
