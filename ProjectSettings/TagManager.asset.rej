@@ -1,0 +1,26 @@
+diff a/ProjectSettings/TagManager.asset b/ProjectSettings/TagManager.asset	(rejected hunks)
+@@ -3,17 +3,19 @@
+ --- !u!78 &1
+ TagManager:
+   serializedVersion: 2
+-  tags: []
++  tags:
++  - Wall
++  - stair
+   layers:
+   - Default
+   - TransparentFX
+   - Ignore Raycast
+-  - Player
++  - Character
+   - Water
+   - UI
+-  - 
+-  - 
+-  - 
++  - NavMeshIgnore
++  - PlayerInteraction
++  - WallBehindLayer
+   - 
+   - 
+   - 

@@ -42,3 +42,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Level1_Tile
+    uniqueID: 4030825041
+    locked: 0
+  - name: Level1_Wall
+    uniqueID: 2576389317
+    locked: 0
+  - name: Level1_DW
+    uniqueID: 1072855423
+    locked: 0
+  - name: Level2_Tile
+    uniqueID: 3739665449
+    locked: 0
+  - name: Level2_Wall
+    uniqueID: 464287725
+    locked: 0
+  - name: Level2_DW
+    uniqueID: 1114963647
+    locked: 0
+  - name: New Layer 7
+    uniqueID: 3004696779
+    locked: 0
