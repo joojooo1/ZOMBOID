@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Vegetable_Avocado
   m_EditorClassIdentifier: 
   FoodType: 8
+  Location: 2
   Food_ID: 0
   FoodState: 0
   Cooking_time_to_NextStep: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   Is_Canned: 0
   Is_Alcoholic: 0
   Is_Spice: 0
+  Usable_as_bottle: 0
   F_Calories: 227
   F_Thirst: -7
   F_Satiety:

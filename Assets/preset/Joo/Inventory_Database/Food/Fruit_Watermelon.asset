@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
+  m_Name: Fruit_Watermelon
+  m_EditorClassIdentifier: 
+  FoodType: 5
+  Location: 2
+  Food_ID: 3
+  FoodState: 0
+  Cooking_time_to_NextStep: 0
+  FoodName: Watermelon
+  FoodName_Kr: "\uC218\uBC15"
+  FoodWeight: 3
+  Food_Image:
+  - {fileID: 21300000, guid: 77e9904109ac7db4d807074ea097b0ef, type: 3}
+  - {fileID: 21300000, guid: c8c42c2bf8938e142981557c6ef1f19e, type: 3}
+  Is_Perishable: 1
+  Freshness: 0
+  Preservation_period_for_freshness: 6
+  Preservation_period_for_stale: 2
+  Is_freezing: 0
+  Is_Canned: 0
+  Is_Alcoholic: 0
+  Is_Spice: 0
+  Usable_as_bottle: 0
+  F_Calories: 1355
+  F_Thirst: -140
+  F_Satiety:
+  - 60
+  - 40
+  - 27
+  F_Unhappiness: 0
+  F_Boredom: 0
+  F_Fatigue: 0

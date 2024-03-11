@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
+  m_Name: Drink_Whiskey_Bottle
+  m_EditorClassIdentifier: 
+  FoodType: 2
+  Location: 2
+  Food_ID: 3
+  FoodState: 0
+  Cooking_time_to_NextStep: 0
+  FoodName: Whiskey Bottle
+  FoodName_Kr: "\uC704\uC2A4\uD0A4"
+  FoodWeight: 0
+  Food_Image:
+  - {fileID: 21300000, guid: b2281f14ff04f5e4491d4a24a5ab5c0a, type: 3}
+  - {fileID: 21300000, guid: 4e62a9d9667ef5545ad874780869b2a6, type: 3}
+  - {fileID: 21300000, guid: 6da4b1fa33e68b84d8231b4057951362, type: 3}
+  - {fileID: 21300000, guid: eb757a1f42d51f34da35a86483b76a6e, type: 3}
+  Is_Perishable: 0
+  Freshness: 0
+  Preservation_period_for_freshness: 0
+  Preservation_period_for_stale: 0
+  Is_freezing: 0
+  Is_Canned: 0
+  Is_Alcoholic: 1
+  Is_Spice: 0
+  Usable_as_bottle: 1
+  F_Calories: 1500
+  F_Thirst: -20
+  F_Satiety:
+  - 20
+  F_Unhappiness: -10
+  F_Boredom: 0
+  F_Fatigue: 0

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Meat_Meat_Patty_Cooked
   m_EditorClassIdentifier: 
   FoodType: 3
+  Location: 0
   Food_ID: 2
   FoodState: 1
-  Cooking_time_to_NextStep: 2
+  Cooking_time_to_NextStep: 4
   FoodName: Meat Patty
   FoodName_Kr: "\uACE0\uAE30 \uD328\uD2F0"
   FoodWeight: 0.3
@@ -29,6 +30,7 @@ MonoBehaviour:
   Is_Canned: 0
   Is_Alcoholic: 0
   Is_Spice: 0
+  Usable_as_bottle: 0
   F_Calories: 380
   F_Thirst: 0
   F_Satiety:

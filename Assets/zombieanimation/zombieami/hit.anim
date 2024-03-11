@@ -53067,10 +53067,17 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 1.5666667
-    functionName: zom_down
+  - time: 0.033333335
+    functionName: zom_speed_zero
     data: 
-    objectReferenceParameter: {fileID: 5584556397466230929, guid: 9d620a8625eb0fd42871d0587902cea6, type: 3}
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.5333333
+    functionName: zom_speed_curret
+    data: 
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
