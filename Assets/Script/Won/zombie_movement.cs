@@ -24,10 +24,10 @@ public class zombie_movement : MonoBehaviour
     GameObject atk_player;//좀비에서 공격한 플레이어
     float atk_distance = 1f; //좀비 공격시도 범위
     zombieHp zomhp;//좀비의 상태 스크립트
-    bool atking = false;//좀비가 공격중인가
+    public bool atking = false;//좀비가 공격중인가
     public bool live = true;//좀비의 생존여부
     float dieday= 0f;//죽은 날짜
-
+    public bool ing = false;
     void Start()
     {
         live = true;
@@ -37,6 +37,7 @@ public class zombie_movement : MonoBehaviour
         lastPosition = transform.position;
         zombieTransform = transform;
         StartCoroutine(RandomMoveCoroutine());
+        Debug.Log(zomhp.curret_speed);
         if (crawl_spawn <= 1)//스크립트 시작시 좀비가 기어서 움직이는가 서서 움직이는가 판단
         {
             Debug.Log(crawl_spawn);
@@ -48,27 +49,27 @@ public class zombie_movement : MonoBehaviour
         zom_anim_speed();
     }
 
-    void FixedUpdate()
+    void Update()
     {
+        //animatorwalk();
         if (live)
         {
             if (player != null)//플레이어 탐지후 행동
             {
                 StopCoroutine(zomidlemove());//좀비 idle중지
 
-                targetTime += Time.deltaTime;
+                /*targetTime += Time.deltaTime;
                 if (targetTime > durationTime)//플레이어가 탐지 범위를 벗어났을때 추적시간을 넘었을시
                 {
                     player = null;
                     targetTime = 0f;
                     StartCoroutine(RandomMoveCoroutine());//좀비 idle시작
-                }
+                }*/
             }
-            else if (player == null)
-            {
+           if (!atking && !ing)
+           {
                 findplayer();//좀비가 플레이어 재탐색
-            }
-            animatorwalk();//좀비가 움직이는 애니메이션으로 이동
+           }
         }
         else
         {/*
@@ -103,7 +104,13 @@ public class zombie_movement : MonoBehaviour
                     StartCoroutine(zommove());
                     break;
                }
-               
+            }
+            if (player)
+            {
+                StopCoroutine(zommove());
+                StopCoroutine(zomidlemove());
+                StartCoroutine(zommove());
+                break;
             }
         }
     }
@@ -111,6 +118,8 @@ public class zombie_movement : MonoBehaviour
     {
         while (transform.position != targetPosition && player == null)
         {
+
+            animator.SetBool("walk", true);
             Vector3 playerDirection = targetPosition - zombieTransform.position;
             Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
             zombieTransform.rotation = Quaternion.Slerp(zombieTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
@@ -121,42 +130,58 @@ public class zombie_movement : MonoBehaviour
             
             if (player != null)
             {
+                animator.SetBool("walk", false);
                 isMoving = false;
-                yield return null;
+                yield break;
             }
             yield return null;
             
         }
         // 목표 위치에 도달하면 이동 상태 종료
+        animator.SetBool("walk", false);
         isMoving = false;
         StartCoroutine(RandomMoveCoroutine());
     }
     IEnumerator zommove()//플레이어on 좀비 이동
     {
-        while (player)
+        while (player && !atking)
         {
+            ing = true;
+            animator.SetBool("run", true);
             Vector3 playerDirection = player.transform.position - zombieTransform.position;
             Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
             zombieTransform.rotation = Quaternion.Slerp(zombieTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            if (zombie_crawl)
-                zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, speed * Time.deltaTime/2);
-            else
-                zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, speed * Time.deltaTime);
             float player_atk = Vector3.Distance(player.transform.position , zombieTransform.position);
             if (player_atk <= atk_distance) 
             {
-                Debug.Log("좀비 공격시도");
                 if (!atking)
                 {
+                    ing = false;
+                    animator.SetBool("run", false);
                     zom_atk_anim();
+                    StopCoroutine(zommove());
                     yield break;
                 }
+            }
+            else if(player_atk >= 20)
+            {
+                ing = false;
+                player = null;
+                StopCoroutine(zommove());
+                yield break;
+            }
+            else
+            {
+                if (zombie_crawl)
+                    zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, (speed * Time.deltaTime) / 2);
+                else
+                    zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, speed * Time.deltaTime);
             }
             yield return null;
         }
         
     }
-    void animatorwalk()//플레이어on/off 추적시 애니메이션
+    /*void animatorwalk()//플레이어on/off 추적시 애니메이션
     {
         Vector3 movementDirection = (transform.position - lastPosition).normalized;
         if (movementDirection.magnitude > 0.1f)//좀비가 좌표변경시 애니메이션 결정및 방향설정
@@ -180,12 +205,13 @@ public class zombie_movement : MonoBehaviour
         }
         // 현재 위치를 마지막 위치로 업데이트
         lastPosition = transform.position;
-    }
+    }*/
     IEnumerator RandomMoveCoroutine()// 대기 시간 후에 랜덤한 목표 위치 설정
     {
         yield return new WaitForSeconds(moveInterval);
         if(player == null)
         {
+            animator.SetBool("run", false);
             SetRandomTargetPosition();
             isMoving = true;
         }
@@ -215,7 +241,7 @@ public class zombie_movement : MonoBehaviour
     public void zom_down(GameObject player)//좀비가 넘어질때
     {
         atk_player = player;
-        int zom_down_percentage = Random.Range(0, 10);
+        /*int zom_down_percentage = Random.Range(0, 10);
         if (zom_down_percentage > 1)
         {
             zombie_crawl = true;
@@ -240,31 +266,37 @@ public class zombie_movement : MonoBehaviour
                 animator.SetBool("backdown", true);
             }
             zom_situation();
-        }
-        else
-            animator.SetBool("hit", true);
+        }*/
+        // else
+        // {
+        Debug.Log("맞음");
+            animator.SetTrigger("hit");
+        //}
+            
     }
     void zom_atk_anim()//좀비가 공격시작 애니메이션
     {
-        Debug.Log("공격");
-        atking = true;
-        animator.SetBool("crawl_walk", false);
+        zom_speed_zero();
         animator.SetBool("run", false);
-        animator.SetBool("walk", false);
-        animator.SetBool("playeratk", true);
+        if (!atking)
+        {
+            atking = true;
+            animator.SetBool("playeratk", true);
+        }
+        StartCoroutine(zommove());
     }
     void zom_atk_try()//좀비의 공격 성공여부(공격 성공여부 판단시 좀비와의 거리가 1이하이면 공격이 성공한다.)
     {
-        animator.SetBool("playeratk", false);
         float player_atk = Vector3.Distance(player.transform.position, zombieTransform.position);
         if(player_atk <= atk_distance)
         {
-            Debug.Log("좀비공격 성공");
             //zomhp.zombie_atk(player);
         }
     }
     void zom_atk_end()//좀비의 다시 공격하기위한 작업
     {
+        zom_speed_curret();
+        animator.SetBool("playeratk", false);
         atking = false;
     }
 
@@ -294,5 +326,20 @@ public class zombie_movement : MonoBehaviour
     {
         speed = zomhp.curret_speed;
         animator.SetBool("up", false);
+    }
+    void zom_speed_zero()
+    {
+        speed = 0;
+    }
+    void zom_speed_curret()
+    {
+        speed = zomhp.curret_speed;
+    }
+    public void zom_Die()
+    {
+        Collider collider = gameObject.GetComponent<Collider>();
+        collider.enabled = false;
+        animator.SetBool("backdown", true);
+        speed = 0;
     }
 }
