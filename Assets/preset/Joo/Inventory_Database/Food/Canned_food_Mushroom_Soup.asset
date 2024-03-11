@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Canned_food_Mushroom_Soup
   m_EditorClassIdentifier: 
   FoodType: 0
+  Location: 1
   Food_ID: 3
   FoodState: 0
-  time_to_NextStep: 0
+  Cooking_time_to_NextStep: 0
   FoodName: Canned Mushroom Soup
   FoodName_Kr: "\uBC84\uC12F\uC2A4\uD504 \uD1B5\uC870\uB9BC"
   FoodWeight: 0.8
@@ -30,22 +31,13 @@ MonoBehaviour:
   Is_Canned: 1
   Is_Alcoholic: 0
   Is_Spice: 0
+  Usable_as_bottle: 0
   F_Calories: 160
   F_Thirst: -4
   F_Satiety:
   - 10
   - 7
   - 4
-  F_Unhappiness:
-  - 0
-  - 10
-  - 20
-  F_Boredom:
-  - 0
-  - 10
-  - 20
-  F_Fatigue:
-  - 0
-  - 0
-  - 0
-  Probability_of_poisoning: 000001
+  F_Unhappiness: 0
+  F_Boredom: 0
+  F_Fatigue: 0

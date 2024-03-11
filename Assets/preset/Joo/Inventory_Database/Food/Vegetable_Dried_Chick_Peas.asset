@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Vegetable_Dried_Chick_Peas
   m_EditorClassIdentifier: 
-  FoodType: 0
-  Food_ID: 0
+  FoodType: 8
+  Location: 1
+  Food_ID: 2
   FoodState: 0
   Cooking_time_to_NextStep: 0
   FoodName: Dried Chick Peas
@@ -29,10 +30,11 @@ MonoBehaviour:
   Is_Canned: 0
   Is_Alcoholic: 0
   Is_Spice: 0
+  Usable_as_bottle: 0
   F_Calories: 2851
   F_Thirst: -60
   F_Satiety:
   - 60
-  F_Unhappiness: 0
+  F_Unhappiness: 40
   F_Boredom: 0
   F_Fatigue: 0
