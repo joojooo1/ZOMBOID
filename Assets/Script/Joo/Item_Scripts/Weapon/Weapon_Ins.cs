@@ -11,7 +11,7 @@ public class Weapon_Ins : MonoBehaviour
 
     private void Start()
     {
-        Equipping_Weapon(Weapons_Ins[27]);   // test
+        //Equipping_Weapon(Weapons_Ins[27]);   // test
     }
 
 
