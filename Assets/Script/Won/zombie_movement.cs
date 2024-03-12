@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class zombie_movement : MonoBehaviour
 {
@@ -28,8 +30,10 @@ public class zombie_movement : MonoBehaviour
     public bool live = true;//좀비의 생존여부
     float dieday= 0f;//죽은 날짜
     public bool ing = false;
+    NavMeshAgent navMeshAgent;
     void Start()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         live = true;
         int crawl_spawn = Random.Range(0, 10);
         zomhp = gameObject.GetComponent<zombieHp>();
@@ -57,7 +61,7 @@ public class zombie_movement : MonoBehaviour
             if (player != null)//플레이어 탐지후 행동
             {
                 StopCoroutine(zomidlemove());//좀비 idle중지
-
+                navMeshAgent.SetDestination(player.transform.position);
                 /*targetTime += Time.deltaTime;
                 if (targetTime > durationTime)//플레이어가 탐지 범위를 벗어났을때 추적시간을 넘었을시
                 {
@@ -85,7 +89,7 @@ public class zombie_movement : MonoBehaviour
         float angleStep = 360f / rayCount;
         for (float angle = 0; angle < 360; angle += angleStep)
         {
-            Vector3 rayDirection = Quaternion.Euler(0, angle, 0) * zombieTransform.forward;
+            Vector3 rayDirection = Quaternion.Euler(0, angle, 0) * zombieTransform.right;
             RaycastHit hit;
             float dis = detectionRadius;
             if(angle < 45 || angle > 315)//탐지범위가 좀비 전면일때 확장
@@ -148,8 +152,9 @@ public class zombie_movement : MonoBehaviour
         {
             ing = true;
             animator.SetBool("run", true);
+            navMeshAgent.SetDestination(player.transform.position);
             Vector3 playerDirection = player.transform.position - zombieTransform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+            Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.right);
             zombieTransform.rotation = Quaternion.Slerp(zombieTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             float player_atk = Vector3.Distance(player.transform.position , zombieTransform.position);
             if (player_atk <= atk_distance) 
@@ -159,23 +164,26 @@ public class zombie_movement : MonoBehaviour
                     ing = false;
                     animator.SetBool("run", false);
                     zom_atk_anim();
-                    StopCoroutine(zommove());
+
+                    //StopCoroutine(zommove());
                     yield break;
                 }
             }
             else if(player_atk >= 20)
             {
                 ing = false;
-                player = null;
+               // player = null;
                 StopCoroutine(zommove());
                 yield break;
             }
             else
             {
-                if (zombie_crawl)
-                    zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, (speed * Time.deltaTime) / 2);
-                else
-                    zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, speed * Time.deltaTime);
+                //if (zombie_crawl)
+
+                //zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, (speed * Time.deltaTime) / 2);
+                //else
+                // zombieTransform.position = Vector3.MoveTowards(zombieTransform.position, player.transform.position, speed * Time.deltaTime);
+                
             }
             yield return null;
         }
@@ -218,9 +226,10 @@ public class zombie_movement : MonoBehaviour
     }
     void SetRandomTargetPosition()// 랜덤한 목표 위치 설정
     {
-        float randomX = Random.Range(-10f, 10f) + transform.position.x;
-        float randomZ = Random.Range(-10f, 10f) + transform.position.z;
-        targetPosition = new Vector3(randomX, transform.position.y, randomZ);
+        float randomX = Random.Range(-3F, 3f) + transform.position.x;
+        float randomY = Random.Range(-3f, 3f) + transform.position.y;
+        targetPosition = new Vector3(randomX, randomY, transform.position.z);
+        navMeshAgent.SetDestination(targetPosition);
         StartCoroutine(zomidlemove());
     }
 
@@ -310,15 +319,19 @@ public class zombie_movement : MonoBehaviour
         {
             case 7:
                 animator.SetFloat("Typespeed", 2f);
+                navMeshAgent.speed = 2f;
                 break;
             case 10:
                 animator.SetFloat("Typespeed", 3f);
+                navMeshAgent.speed = 2f;
                 break;
             case 13:
                 animator.SetFloat("Typespeed", 4f);
+                navMeshAgent.speed = 2f;
                 break;
             default:
                 animator.SetFloat("Typespeed", 1f);
+                navMeshAgent.speed = 2f;
                 break;
         }
     }
