@@ -19,7 +19,7 @@ public class player_movement : MonoBehaviour
     Weapon_type weapon;
     public GameObject zombie;
     bool atking = false;
-
+    Vector3 pos;
     public bool injury = false;
     public LayerMask zombieLayer;
     public float rayLength = 100f;
@@ -27,8 +27,7 @@ public class player_movement : MonoBehaviour
     public int maxTargets = 3;
     public float attackRange = 15F;
     public string curretposture;
-
-
+    
     float weapon_test = 0;
     enum PlayerAnimType
     {
@@ -61,6 +60,7 @@ public class player_movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         navMeshAgent = GetComponent<NavMeshAgent>();
         _main = gameObject.GetComponent<Player_main>();
         animator = GetComponent<Animator>();
@@ -72,8 +72,9 @@ public class player_movement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), 0f, UnityEngine.Input.GetAxisRaw("Vertical"));
-        navMeshAgent.Move(inputpos * navMeshAgent.speed * Time.deltaTime);
+        inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), UnityEngine.Input.GetAxisRaw("Vertical")/2, 0f);
+        inputpos.Normalize();
+        GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(transform.position + (inputpos * Time.deltaTime * 3.5f));
         Vector3 mousePos = UnityEngine.Input.mousePosition;
         mousePos.z = Camera.main.nearClipPlane;
         Vector3 targetPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -85,22 +86,11 @@ public class player_movement : MonoBehaviour
                 curretpostruecange();
             }
             movement = inputpos.normalized * Time.deltaTime * (Playermovement_speed - 2);
-            
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
-            {
-                Vector3 directionToTarget = hit.point - transform.position;
-                directionToTarget.y = 0;
-                if (directionToTarget != Vector3.zero)
-                {
-                    Quaternion toRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
-                    toRotation.eulerAngles = new Vector3(0, toRotation.eulerAngles.y, 0);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, Playerturnspeed);
-                    inputpos= (transform.rotation * inputpos);
-
-                }
-            }
-            animator.SetFloat("x", inputpos.x);
-            animator.SetFloat("z", inputpos.z);
+            Vector3 directionToTarget = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+            directionToTarget.z = 0;
+            Vector3 lookDirection = new Vector3(directionToTarget.x, directionToTarget.y,0) - transform.position;
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle-90));
             if (UnityEngine.Input.GetMouseButton(0) && !atking)
             {
                 Debug.Log("마우스 입력 받음");
@@ -108,6 +98,9 @@ public class player_movement : MonoBehaviour
                 animator.SetTrigger("ATK");
                 
             }
+            inputpos = (transform.rotation * inputpos);
+            animator.SetFloat("x", inputpos.x);
+            animator.SetFloat("z", -inputpos.y);
         }
         else if (UnityEngine.Input.GetMouseButtonUp(1))
         {
@@ -126,9 +119,9 @@ public class player_movement : MonoBehaviour
             }
 
         }
-        Vector3 pos = transform.position;
-        pos += movement;
-        if(transform.position != pos)
+
+        
+        if(UnityEngine.Input.GetAxisRaw("Horizontal") != 0f || UnityEngine.Input.GetAxisRaw("Vertical") != 0f)
         {
             animator.SetBool("walk", true);
         }

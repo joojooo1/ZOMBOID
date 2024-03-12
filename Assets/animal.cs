@@ -52,6 +52,7 @@ public class animal : MonoBehaviour
         }
         if (transform.position == walkpos)
         {
+
             isMove = false;
             animator.SetBool("walk", false);
         }
@@ -93,12 +94,13 @@ public class animal : MonoBehaviour
     }
     void SetRandomwalkpos()// 랜덤한 목표 위치 설정
     {
+
         StopCoroutine("animalidle");
         animator.SetBool("walk", true);
         isMove = true;
         float randomX = Random.Range(-3f, 3f) + transform.position.x;
-        float randomZ = Random.Range(-3f, 3f) + transform.position.z;
-        walkpos = new Vector3(randomX, transform.position.y, randomZ);
+        float randomY = Random.Range(-3f, 3f) + transform.position.y;
+        walkpos = new Vector3(randomX, randomY, transform.position.z);
         navMeshAgent.SetDestination(walkpos);
     }
     IEnumerator playerfind()
@@ -111,7 +113,6 @@ public class animal : MonoBehaviour
 
             // 플레이어 레이어를 가진 모든 오브젝트를 찾기
             Collider[] playerObjects = Physics.OverlapSphere(transform.position, Mathf.Infinity, player);
-            Debug.Log("플레이어 탐색시작");
             for(int i= 0; i>playerObjects.Length; i++)
             {
                 Debug.Log(playerObjects[i].name);
