@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 5687478070240231369}
   - component: {fileID: 7329207714966308048}
   - component: {fileID: 2200857978392207556}
-  - component: {fileID: 7088075438713358225}
   - component: {fileID: 8054301265890528687}
   m_Layer: 0
   m_Name: Wall_L
@@ -188,7 +187,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 00000000518241f0c59490997f79f23f29c4e6deed77ac1bbffe7442cb0818b3
+  m_ApplyToSortingLayers: 00000000518241f0
   m_ShapePath:
   - {x: -0.31287318, y: -0.49592733, z: 0}
   - {x: -0.31889713, y: -0.4204992, z: 0}
@@ -196,59 +195,10 @@ MonoBehaviour:
   - {x: 0.014665425, y: -0.33280516, z: 0}
   m_ShapePathHash: 1767778027
   m_Mesh: {fileID: 0}
-  m_InstanceId: -6936
+  m_InstanceId: -1294
   m_LocalBounds:
     m_Center: {x: -0.14942768, y: -0.37336892, z: 0}
     m_Extent: {x: 0.16946945, y: 0.122558415, z: 0}
---- !u!60 &7088075438713358225
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622965567327447434}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 1.28}
-    newSize: {x: 0.64, y: 1.28}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.015327156, y: 0.6482684}
-      - {x: -0.3125715, y: 0.49022797}
-      - {x: -0.31173155, y: -0.31030634}
-      - {x: 0.021731569, y: -0.14550114}
-  m_UseDelaunayMesh: 0
 --- !u!114 &8054301265890528687
 MonoBehaviour:
   m_ObjectHideFlags: 0

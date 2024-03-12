@@ -126,7 +126,7 @@ public class CustomClass : MonoBehaviour
 
                             if (shadowCaster != null)
                             {
-                                // 그림자가 표시될 레이어를 설정
+                                /*// 그림자가 표시될 레이어를 설정
                                 foreach (int layer in shadowCaster.m_ApplyToSortingLayers)
                                 {
                                     Debug.Log(layer);
@@ -138,6 +138,7 @@ public class CustomClass : MonoBehaviour
                                 {
                                     Debug.Log(layer);
                                 }
+                                */
                             }
                             else
                             {
@@ -197,6 +198,7 @@ public class CustomClass : MonoBehaviour
                         case 2:
                             if (shadowCaster != null)
                             {
+                                /*
                                 // 그림자가 표시될 레이어를 설정
                                 foreach (int layer in shadowCaster.m_ApplyToSortingLayers)
                                 {
@@ -207,6 +209,7 @@ public class CustomClass : MonoBehaviour
                                 {
                                     Debug.Log(layer);
                                 }
+                                */
                             }
                             else
                             {
