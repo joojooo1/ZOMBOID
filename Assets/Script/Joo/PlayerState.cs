@@ -70,7 +70,6 @@ public class Player_body_Location
                         // 타격(피해o & 상처x) : 일시적으로 Damage 발생  // 깨뜨린 창문에도 생김
 
                         Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
-
                         break;
                     case Zombie_Attack_Pattern.Scratches:
                         // 긁힘  
