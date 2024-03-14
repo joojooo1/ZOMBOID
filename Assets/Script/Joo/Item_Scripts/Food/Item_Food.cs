@@ -11,7 +11,10 @@ public class Item_Food : ScriptableObject
     public int Food_ID; // 각 음식에 대한 고유ID
     public Cooking_State FoodState;
     public float Cooking_time_to_NextStep;  // 다음 단계로 넘어가는데 걸리는 시간 ( 기존값 / 5 )
-    
+
+    public int Width_block;
+    public int Height_block;
+    public int Nesting_Depth;
 
     public string FoodName;
     public string FoodName_Kr;

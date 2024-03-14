@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Timer > 1800f)  // 30분마다 바뀜
+        if (Timer > 1800f)  // 10분마다 바뀜
         {
             System.Random rand = new System.Random();
             float Temp = rand.Next(0, 10);
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
 
         Windchill_TImer += Time.deltaTime;
-        if(Windchill_TImer > 3600f)  // 60분(하루)마다 바뀜
+        if(Windchill_TImer > 3600f)  // 20분(하루)마다 바뀜
         {
             System.Random rand = new System.Random();
             float Temp = rand.Next(0, 10);
@@ -80,3 +80,6 @@ public class GameManager : MonoBehaviour
 
     public float Get_Temperature() { return Temperature; }
 }
+
+
+// 총 40일중 7일차에 물, 전기 끊김

@@ -17,9 +17,13 @@ MonoBehaviour:
   WeaponName: AxeHand
   WeaponName_Kr: "\uC190\uB3C4\uB07C"
   ItemImage: {fileID: 21300000, guid: 8ac67348bcf4e2a4ea5070e4792ea30d, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
+  UsingType: 01000000
   WeaponWeight: 2
   W_Minimum_damage: 0.7
   W_Maximum_damage: 1.5

@@ -658,15 +658,15 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학, 재�
         return C_EXP;
     }
 
-    public void Set_C_Books_Point(int Book_level)
+    public void Set_C_Books_Point(Item_Literature Book)  // skillbook 일때 호출
     {
-        if(Book_level > C_Level)
+        if(Book.Literature_Level > C_Level)
         {
             C_Additional_points_through_Books = 1f;
             Debug.Log("어려워서 읽지 못함");
             // 책 못 읽음
         }
-        else if(Book_level < C_Level)
+        else if(Book.Literature_Level < C_Level)
         {
             C_Additional_points_through_Books = 1f;
             Debug.Log("이미 다 아는 내용임");
@@ -674,7 +674,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학, 재�
         }
         else
         {
-            switch (Book_level)
+            switch (Book.Literature_Level)
             {
                 case 0:
                     break;

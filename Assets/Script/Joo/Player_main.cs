@@ -6,17 +6,6 @@ using UnityEngine;
 using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 
-public enum Weapon_type
-{
-    Axe = 0,
-    LongBlunt = 1,
-    ShortBlunt = 2,
-    LongBlade = 3,
-    ShortBlade = 4,
-    Spear = 5,
-    Gun = 6,
-}
-
 public enum Zombie_Attack_Pattern
 {
     punches = 0,
@@ -57,6 +46,7 @@ public class Player_main : MonoBehaviour
     public bool Is_Aiming = false;
     public bool Is_Running = false;
     public bool Is_Sleeping = false;
+    public bool Is_Pill_Sleep = false;
     public bool Is_Resting = false;
     public bool Is_drunk = false;
     public bool Is_Cold = false;
@@ -141,7 +131,10 @@ public class Player_main : MonoBehaviour
         /************************************* Player_Pain (Sleeping) **************************************/
         if(playerMoodles.Moodle_Pain.Get_Moodle_current_step() > 1)  // Moodle_Pain 2단계부터 수면 불가
         {
-            Is_Sleeping = false;
+            if(Is_Pill_Sleep == false)
+                Is_Sleeping = false;
+            else
+                Is_Sleeping = true;
         }
 
         /************************************* Player_Panic **************************************/

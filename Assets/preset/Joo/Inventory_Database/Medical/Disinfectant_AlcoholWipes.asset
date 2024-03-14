@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d878866378bd86a40b8cba2e7b5e75b1, type: 3}
+  m_Name: Disinfectant_AlcoholWipes
+  m_EditorClassIdentifier: 
+  MedicalType: 1
+  Medical_ID: 0
+  MedicalName: Alcohol Wipes
+  MedicalName_Kr: "\uC54C\uCF5C\uC19C"
+  MedicalWeight: 0.2
+  Medical_Image: {fileID: 21300000, guid: 668bd4b3c093dcf47a71cadb2df2b393, type: 3}
+  Is_Disinfection: 1
+  Is_Clean: 1
+  Is_Ins: 1
+  Power: 4

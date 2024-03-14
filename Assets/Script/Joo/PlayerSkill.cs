@@ -15,7 +15,7 @@ public class PlayerSkill : MonoBehaviour
     public PlayerSurvivalSkill_Level Hunting_Level;  // »ç³É
     public PlayerSurvivalSkill_Level Fishing_Level;  // ³¬½Ã
     public PlayerSurvivalSkill_Level Foraging_Level;  // Ã¤Áý
-    public PlayerSurvivalSkill_Level Riding_Level;  // ½Â¸¶ µî
+    public PlayerSurvivalSkill_Level Riding_Level;  // ½Â¸¶
 
     // ¿îµ¿ ´É·Â
     public PlayerGeneralSkill_Level Sprinting_Level;  // ´É¼÷ÇÑ ´Þ¸®±â                                                    /* 24.02.16 test */
