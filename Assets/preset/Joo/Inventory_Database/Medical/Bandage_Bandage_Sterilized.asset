@@ -20,4 +20,5 @@ MonoBehaviour:
   Medical_Image: {fileID: 21300000, guid: 8571e61e879b7844ab076f6e653f7ce7, type: 3}
   Is_Disinfection: 1
   Is_Clean: 1
+  Is_Ins: 1
   Power: 4

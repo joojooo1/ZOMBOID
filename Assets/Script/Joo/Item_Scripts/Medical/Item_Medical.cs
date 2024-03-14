@@ -9,6 +9,9 @@ public class Item_Medical : ScriptableObject
 
     public int Medical_ID;
 
+    public int Width_block;
+    public int Height_block;
+    public int Nesting_Depth;
 
     public string MedicalName;
     public string MedicalName_Kr;
@@ -17,19 +20,22 @@ public class Item_Medical : ScriptableObject
 
     public bool Is_Disinfection;
     public bool Is_Clean;
+    public bool Is_Ins;
 
     public float Power;
     /*
      Bandage_Power: 상처회복속도
      Disinfectant_Power: 소독할수있는 횟수
+     Herb_BlackSage: 통증 완화
+     Herb_Poultice: 상처회복속도
      Pharmaceutical_Power: 
-        - Antibiotics : 상처감염확률 down
-        - Antidepressants : 불행 down
-        - Beta Blockers : 긴장 down
-        - Cigarettes : 스트레스 down
-        - Painkillers : 통증 down
+        - Antibiotics : 상처감염확률 50% down
+        - Antidepressants : 불행 지속적으로 down
+        - Beta Blockers : 긴장감소속도 1.5배 up
+        - Cigarettes : 스트레스 5 down
+        - Painkillers : 통증 10 down
         - Sleeping Tablets : 통증 down ( 잘수있게 )
-        - Vitamins : 피로 down
+        - Vitamins : 피로 20 down
      
      */
 

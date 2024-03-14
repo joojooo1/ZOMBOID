@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
+  m_Name: SkillBook_Cooking_Vol.5
+  m_EditorClassIdentifier: 
+  LiteratureType: 1
+  LiteratureSkillType: 5
+  Location: 5
+  Literature_ID: 9
+  LiteratureName: Cooking Vol. 5
+  LiteratureName_Kr: "\uC694\uB9AC Vol. 5"
+  LiteratureWeight: 0.8
+  Literature_Image: {fileID: 21300000, guid: 1dcbc7233c1e6474eaa055b74b1a38e2, type: 3}
+  Literature_Level: 5
+  Literature_Page: 380
+  Literature_Multiplier: 16
+  L_Unhappiness: 0
+  L_Stress: 0
+  L_Boredom: 0

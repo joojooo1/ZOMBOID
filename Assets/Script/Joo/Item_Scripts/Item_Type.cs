@@ -2,19 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Bandages_Type
-{
-    Adhesive_Bandages = 0,  // Á¢Âø ºØ´ë ( ÃâÇ÷ ¸ØÃã, Ä¡À¯ ¼Óµµ ³ôÀÓ )
-    Bandage = 1,  // ºØ´ë ( ÃâÇ÷ ¸ØÃã, Ä¡À¯ ¼Óµµ ³ôÀÓ )
-    Sterilized_Bandage = 2,  // ¸ê±Õ ºØ´ë ( ÃâÇ÷ ¸ØÃã, Ä¡À¯ ¼Óµµ ³ôÀÓ, °¨¿°È®·ü °¨¼Ò )
-    Dirty_Bandage = 3,  // ´õ·¯¿î ºØ´ë ( ÃâÇ÷ ¸ØÃã, °¨¿°È®·ü »ó½Â )
-    Ripped_Sheets = 4,  // Âõ¾îÁø Ãµ ( ÃâÇ÷ ¸ØÃã, Ä¡À¯ ¼Óµµ ³ôÀÓ )
-    Sterilized_Rag = 5,  // »ì±ÕµÈ Ãµ ( ÃâÇ÷ ¸ØÃã, Ä¡À¯ ¼Óµµ ³ôÀÓ, °¨¿°È®·ü °¨¼Ò )
-    Dirty_Rag = 6,  // ´õ·¯¿î Ãµ ( ÃâÇ÷ ¸ØÃã, °¨¿°È®·ü »ó½Â )
-    Splint = 7,  // ºÎ¸ñ ( ºÎ·¯Áø »À È¸º¹¿¡ µµ¿ò, Ä¡·á ¼Ò¿ä½Ã°£ ´ÜÃà )
-    None = 8
-}
-
 public enum Medical_Type
 {
     Bandage = 0,
@@ -84,5 +71,60 @@ public enum Location_Type
     Container = 1,
     Refrigeration = 2,
     freezer = 3,
-    Fishing = 4
+    Fishing = 4,
+    bookshelf = 5
+}
+
+public enum Book_Type
+{
+    Map = 0,
+    SkillBook = 1,
+    Magazine = 2,
+    Leisure = 3
+}
+
+public enum Skill_Type
+{
+    Hunting = 0,
+    Fishing = 1,
+    Foraging = 2,
+    Riding = 3,
+    Carpentry = 4,
+    Cooking = 5,
+    Farming = 6,
+    FirstAid = 7,
+    Electrical = 8,
+    Tailoring = 9,
+    None = 10
+}
+
+public enum Weapon_Using_Type
+{
+    Attack = 0,
+    Logging = 1,
+    Shovel = 2,
+    Fishing = 3,
+    Cooking = 4,
+    Destroy = 5,
+    Farming = 6,
+    Ingredients = 7
+
+}
+
+public enum Electronic_Type
+{
+    PowerSources = 0,
+
+}
+
+public enum Weapon_type
+{
+    Axe = 0,
+    LongBlunt = 1,
+    ShortBlunt = 2,
+    LongBlade = 3,
+    ShortBlade = 4,
+    Spear = 5,
+    Gun = 6,
+    Tool = 7
 }

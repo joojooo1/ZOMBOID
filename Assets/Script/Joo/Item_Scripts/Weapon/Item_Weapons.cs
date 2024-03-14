@@ -11,11 +11,15 @@ public class Item_Weapons : ScriptableObject
     public string WeaponName;
     public string WeaponName_Kr;
     public Sprite ItemImage;
+    public int Width_block;
+    public int Height_block;
+    public int Nesting_Depth;
 
     public bool Is_Equipping;  // 장비 여부
     public bool Is_TwoHand;
     public body_point[] Equipping_Position;  // 장비 위치
 
+    public Weapon_Using_Type[] UsingType;
     public float WeaponWeight;
     public float W_Minimum_damage;
     public float W_Maximum_damage;

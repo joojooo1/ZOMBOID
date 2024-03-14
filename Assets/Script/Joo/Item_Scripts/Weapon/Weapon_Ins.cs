@@ -23,6 +23,7 @@ public class Weapon_Ins : MonoBehaviour
         {
             Set_AMMO_Capacity(weapon);
         }
+        weapon.Nesting_Depth = 1;
         Player_main.player_main.Is_Equipping_Weapons = true;
     }
 

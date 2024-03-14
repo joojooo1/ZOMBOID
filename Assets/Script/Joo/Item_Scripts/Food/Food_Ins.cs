@@ -35,7 +35,14 @@ public class Food_Ins : MonoBehaviour
             int item = rand_item.Next(0, food_List.Count);
 
             Instan(food_List[item]);
+
+            if (food_List[item].Is_freezing)
+            {
+
+            }
         }
+
+        
 
     }
 
