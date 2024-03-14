@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 3
   Location: 3
-  Food_ID: 1
+  Food_ID: 37
   FoodState: 0
   Cooking_time_to_NextStep: 6
+  WHN_block: 
   FoodName: Chicken
   FoodName_Kr: "\uB2ED\uACE0\uAE30"
   FoodWeight: 0.3

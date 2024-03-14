@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 4
   Location: 3
-  Food_ID: 0
+  Food_ID: 17
   FoodState: 0
   Cooking_time_to_NextStep: 4
+  WHN_block: 
   FoodName: Fish Fillet
   FoodName_Kr: "\uC0DD\uC120\uC0B4"
   FoodWeight: 0.2

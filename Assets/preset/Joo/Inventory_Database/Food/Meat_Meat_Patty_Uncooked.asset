@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 3
   Location: 3
-  Food_ID: 2
+  Food_ID: 40
   FoodState: 0
   Cooking_time_to_NextStep: 10
+  WHN_block: 
   FoodName: Meat Patty
   FoodName_Kr: "\uACE0\uAE30 \uD328\uD2F0"
   FoodWeight: 0.3

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 3
   Location: 3
-  Food_ID: 0
+  Food_ID: 34
   FoodState: 0
   Cooking_time_to_NextStep: 4
+  WHN_block: 
   FoodName: Bacon
   FoodName_Kr: "\uBCA0\uC774\uCEE8"
   FoodWeight: 0.3

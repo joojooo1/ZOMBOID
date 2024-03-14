@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 8
   Location: 2
-  Food_ID: 3
+  Food_ID: 52
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Onion
   FoodName_Kr: "\uC591\uD30C"
   FoodWeight: 0.2

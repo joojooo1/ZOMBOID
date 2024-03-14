@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 6
   Location: 1
-  Food_ID: 2
+  Food_ID: 27
   FoodState: 1
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: GranolaBar
   FoodName_Kr: "\uADF8\uB798\uB180\uB77C \uBC14"
   FoodWeight: 0.2

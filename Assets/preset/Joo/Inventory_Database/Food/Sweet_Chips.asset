@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 7
   Location: 1
-  Food_ID: 0
+  Food_ID: 46
   FoodState: 1
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Chips
   FoodName_Kr: "\uAC10\uC790\uCE69"
   FoodWeight: 0.2

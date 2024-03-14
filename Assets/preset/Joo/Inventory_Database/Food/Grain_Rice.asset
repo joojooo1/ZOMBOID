@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 6
   Location: 1
-  Food_ID: 4
+  Food_ID: 31
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Rice
   FoodName_Kr: "\uC300"
   FoodWeight: 2

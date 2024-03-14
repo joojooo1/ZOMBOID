@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 7
   Location: 1
-  Food_ID: 1
+  Food_ID: 47
   FoodState: 1
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Chocolate
   FoodName_Kr: "\uCD08\uCF5C\uB9BF"
   FoodWeight: 0.2

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 4
   Location: 0
-  Food_ID: 1
+  Food_ID: 13
   FoodState: 1
   Cooking_time_to_NextStep: 8
+  WHN_block: 
   FoodName: Bass
   FoodName_Kr: "\uBC30\uC2A4"
   FoodWeight: 1.1

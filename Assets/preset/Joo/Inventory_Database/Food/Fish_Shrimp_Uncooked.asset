@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 4
   Location: 4
-  Food_ID: 2
+  Food_ID: 20
   FoodState: 0
   Cooking_time_to_NextStep: 2
+  WHN_block: 
   FoodName: Shrimp
   FoodName_Kr: "\uC0C8\uC6B0"
   FoodWeight: 0.1

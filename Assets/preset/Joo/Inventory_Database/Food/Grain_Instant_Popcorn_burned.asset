@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 6
   Location: 0
-  Food_ID: 3
+  Food_ID: 28
   FoodState: 2
   Cooking_time_to_NextStep: 1
+  WHN_block: 
   FoodName: Instant Popcorn
   FoodName_Kr: "\uC778\uC2A4\uD134\uD2B8 \uD31D\uCF58"
   FoodWeight: 0.3

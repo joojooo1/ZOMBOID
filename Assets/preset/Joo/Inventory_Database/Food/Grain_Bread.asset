@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 6
   Location: 2
-  Food_ID: 0
+  Food_ID: 25
   FoodState: 1
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Bread
   FoodName_Kr: "\uBE75"
   FoodWeight: 0.3

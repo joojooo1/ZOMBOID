@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 2
   Location: 2
-  Food_ID: 0
+  Food_ID: 4
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Beer Bottle
   FoodName_Kr: "\uB9E5\uC8FC"
   FoodWeight: 0.4

@@ -122,6 +122,7 @@ public class Player_main : MonoBehaviour
             {
                 Set_Calories(-0.5f);
             }
+            Calories_Timer = 0;
         }
 
         /************************************* Player_Heavy_Load **************************************/
