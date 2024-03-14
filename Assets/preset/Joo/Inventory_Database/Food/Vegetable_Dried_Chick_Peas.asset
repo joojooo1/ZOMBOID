@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 8
   Location: 1
-  Food_ID: 2
+  Food_ID: 51
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Dried Chick Peas
   FoodName_Kr: "\uB9D0\uB9B0 \uBCD1\uC544\uB9AC\uCF69"
   FoodWeight: 2

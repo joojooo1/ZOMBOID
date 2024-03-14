@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 5
   Location: 2
-  Food_ID: 0
+  Food_ID: 21
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Apple
   FoodName_Kr: "\uC0AC\uACFC"
   FoodWeight: 0.2

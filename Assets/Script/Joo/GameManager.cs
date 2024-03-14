@@ -6,27 +6,82 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
 
-    public bool Is_AM = false;
-    public bool Is_PM = false;
+    double Temperature = 36.0f;
+    double Current_Temperature = 0f;
 
-    public float Temperature = 36.0f;
-    float AM_Temperature = 0f;
-    float PM_Temperature = 0f;
+    float Timer = 0f;  // 8초마다 게임시간 10분 경과
+    int Month = 7;
+    int Day = 9;
+    int Hour = 11;
+    int Minute = 0;
+    int Elapsed_time = 0;
+
+    public bool Is_Water = true;
+    public bool Is_Electricity = true;
 
     private void Start()
     {
         gameManager = this;
 
-        Player_main.player_main.playerState.Set_Apparent_Temperature(Temperature);
+        Current_Temperature = Temperature;
+        Player_main.player_main.playerState.Set_Apparent_Temperature((float)Current_Temperature);
+        if (UI_main.ui_main.Clock == enabled)
+        {
+            UI_main.ui_main.Set_Clock(Hour.ToString(), Minute.ToString(), Month, Day, Current_Temperature);
+        }
+
     }
 
-    float Timer = 1800f;
-    float Windchill_TImer = 0f;
     private void Update()
     {
-        Timer += Time.deltaTime;
+        Timer += Time.deltaTime;        
 
-        if (Is_PM == true && Timer > 1650)  // 오후 11시에 칼로리 체크해서 체중 변동
+        if(Timer > 8)
+        {
+            if (Minute >= 50)
+            {
+                if (Hour < 23)
+                    Hour += 1;          
+                else
+                {
+                    Hour = 0;
+                    Elapsed_time++;
+
+                    if (Day < 31)
+                        Day += 1;
+                    else
+                    {
+                        Month += 1;
+                        Day = 1;
+                    }
+
+                    System.Random rand = new System.Random();
+                    float Temp = rand.Next(-50, 50);
+                    Current_Temperature = Temperature + (Temp / 10);
+
+                    Set_Windchill();
+
+                    if(Elapsed_time == 7)  // 총 40일중 7일차에 물, 전기 끊김
+                    {
+                        Is_Water = false;
+                        Is_Electricity = false;
+                    }
+                }
+
+                Minute = 0;
+            }
+            else
+                Minute += 10;
+
+            if(UI_main.ui_main.Clock == enabled)
+            {
+                UI_main.ui_main.Set_Clock(Hour.ToString(), Minute.ToString(), Month, Day, Current_Temperature);
+            }
+
+            Timer = 0;
+        }
+
+        if (Hour == 23)  // 오후 11시에 칼로리 체크해서 체중 변동
         {
             if (Player_main.player_main.Get_Calories() < 0)
             {
@@ -38,48 +93,18 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Timer > 1800f)  // 10분마다 바뀜
-        {
-            System.Random rand = new System.Random();
-            float Temp = rand.Next(0, 10);
-
-            if (Is_AM) // 오전 -> 오후
-            {
-                Is_AM = false;
-                Is_PM = true;
-                PM_Temperature = Temp;
-                Set_Temperature(-(AM_Temperature + PM_Temperature));
-            }
-            else  // 오후 -> 오전
-            {
-                Is_AM = true;
-                Is_PM = false;
-                AM_Temperature = Temp;
-                Set_Temperature(AM_Temperature + PM_Temperature);
-            }
-            Timer = 0f;
-        }
-
-        Windchill_TImer += Time.deltaTime;
-        if(Windchill_TImer > 3600f)  // 20분(하루)마다 바뀜
-        {
-            System.Random rand = new System.Random();
-            float Temp = rand.Next(0, 10);
-            Player_main.player_main.playerMoodles.Moodle_Windchill.Set_Moodles_state(Temp);
-            Windchill_TImer = 0;
-        }
-
     }
 
 
-    public void Set_Temperature(float value)
+    void Set_Windchill()
     {
-        Temperature += value;
-        Player_main.player_main.playerState.Set_Apparent_Temperature(value);
+        System.Random rand = new System.Random();
+        float Temp = rand.Next(0, 10);
+
+        Player_main.player_main.playerMoodles.Moodle_Windchill.Set_Moodles_state(Temp);
     }
 
-    public float Get_Temperature() { return Temperature; }
+    public float Get_Current_Temperature() { return (float)Current_Temperature; }
+
+
 }
-
-
-// 총 40일중 7일차에 물, 전기 끊김

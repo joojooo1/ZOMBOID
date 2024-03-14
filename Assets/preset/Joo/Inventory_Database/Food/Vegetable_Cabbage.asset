@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 8
   Location: 2
-  Food_ID: 1
+  Food_ID: 50
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Cabbage
   FoodName_Kr: "\uC591\uBC30\uCD94"
   FoodWeight: 0.2

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 9
   Location: 1
-  Food_ID: 0
+  Food_ID: 9
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Coffee
   FoodName_Kr: "\uCEE4\uD53C"
   FoodWeight: 1

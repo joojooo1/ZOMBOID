@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodType: 5
   Location: 2
-  Food_ID: 3
+  Food_ID: 24
   FoodState: 0
   Cooking_time_to_NextStep: 0
+  WHN_block: 
   FoodName: Watermelon
   FoodName_Kr: "\uC218\uBC15"
   FoodWeight: 3

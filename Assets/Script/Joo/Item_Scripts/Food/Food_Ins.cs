@@ -8,7 +8,6 @@ public class Food_Ins : MonoBehaviour
     private List<Item_Food> food_Ins;
     [SerializeField]
     private GameObject Food_Prefab;
-
     private void Start()
     {
            // test
@@ -19,7 +18,7 @@ public class Food_Ins : MonoBehaviour
     // bool로 기존에 생성된 적 있는 오브젝트인지 체크
     public void Set_Generating_item(Location_Type location_Type)
     {        
-        List<Item_Food> food_List = new List<Item_Food>();
+        List<Item_Food> food_List = new List<Item_Food>();  // 생성위치에 맞는 아이템 List
         for(int i = 0; i < food_Ins.Count; i++)
         {
             if (food_Ins[i].Location == location_Type)
@@ -35,20 +34,13 @@ public class Food_Ins : MonoBehaviour
             int item = rand_item.Next(0, food_List.Count);
 
             Instan(food_List[item]);
-
-            if (food_List[item].Is_freezing)
-            {
-
-            }
         }
-
-        
 
     }
 
     public Food Instan(Item_Food food)
     {
-        Food newFood = Instantiate(Food_Prefab).GetComponent<Food>();
+        Food newFood = Instantiate(Food_Prefab).GetComponentInChildren<Food>();
         newFood.foodData = food;
         return newFood;
     }
