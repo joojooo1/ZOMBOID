@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Disinfectant_CottonBalls
   m_EditorClassIdentifier: 
   MedicalType: 1
-  Medical_ID: 2
+  Medical_ID: 12
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   MedicalName: Cotton Balls Doused in Alcohol
   MedicalName_Kr: "\uC57D\uC19C"
   MedicalWeight: 0.1

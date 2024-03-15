@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Cigarettes
   m_EditorClassIdentifier: 
   MedicalType: 4
-  Medical_ID: 3
+  Medical_ID: 24
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   MedicalName: Cigarettes
   MedicalName_Kr: "\uB2F4\uBC30"
   MedicalWeight: 0.01

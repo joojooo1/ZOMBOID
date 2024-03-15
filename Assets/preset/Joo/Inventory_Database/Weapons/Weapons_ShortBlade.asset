@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlade
   m_EditorClassIdentifier: 
   WeaponType: 4
-  Weapon_ID: 0
+  Weapon_ID: 18
   WeaponName: HuntingKnife
   WeaponName_Kr: "\uC0AC\uB0E5\uC6A9 \uCE7C"
   ItemImage: {fileID: 21300000, guid: e5257912b0892fd41bf72711814212de, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
+  UsingType: 
   WeaponWeight: 0.5
   W_Minimum_damage: 0.6
   W_Maximum_damage: 1.2

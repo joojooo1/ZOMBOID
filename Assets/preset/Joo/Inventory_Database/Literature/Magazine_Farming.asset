@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 2
   LiteratureSkillType: 6
   Location: 5
-  Literature_ID: 8
+  Literature_ID: 20
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: The Farming Magazine
   LiteratureName_Kr: "\uB18D\uC5C5 \uB9E4\uAC70\uC9C4"
   LiteratureWeight: 0.1

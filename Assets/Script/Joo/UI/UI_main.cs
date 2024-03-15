@@ -12,6 +12,7 @@ public class UI_main : MonoBehaviour
     public bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
     [SerializeField]
     GameObject[] player_gender = new GameObject[2];
+    public bool Is_Female = false;
 
     public GameObject Clock;
     [SerializeField]
@@ -25,7 +26,9 @@ public class UI_main : MonoBehaviour
     {
         ui_main = this;;
         GameObject myInstance = Instantiate(player_gender[0],transform);
+
     }
+
 
     public bool Get_Setting_Language_Type()
     {

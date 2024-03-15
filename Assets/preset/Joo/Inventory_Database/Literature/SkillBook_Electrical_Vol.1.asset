@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 1
   LiteratureSkillType: 8
   Location: 5
-  Literature_ID: 10
+  Literature_ID: 45
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Electrical Vol. 1
   LiteratureName_Kr: "\uC804\uAE30\uACF5\uD559 Vol. 1"
   LiteratureWeight: 0.8

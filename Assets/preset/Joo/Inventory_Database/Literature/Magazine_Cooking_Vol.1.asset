@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 2
   LiteratureSkillType: 5
   Location: 5
-  Literature_ID: 0
+  Literature_ID: 12
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Good Cooking Magazine Vol. 1
   LiteratureName_Kr: "\uC88B\uC740 \uC694\uB9AC \uB9E4\uAC70\uC9C4 Vol. 1"
   LiteratureWeight: 0.1

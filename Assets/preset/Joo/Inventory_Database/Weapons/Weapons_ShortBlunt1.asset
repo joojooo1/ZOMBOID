@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlunt1
   m_EditorClassIdentifier: 
   WeaponType: 2
-  Weapon_ID: 1
+  Weapon_ID: 25
   WeaponName: PipeWrench
   WeaponName_Kr: "\uD30C\uC774\uD504\uB80C\uCE58"
   ItemImage: {fileID: 21300000, guid: ee52ede248e86014a9c3e4a5cd2e1ce1, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
+  UsingType: 
   WeaponWeight: 1.5
   W_Minimum_damage: 0.5
   W_Maximum_damage: 1

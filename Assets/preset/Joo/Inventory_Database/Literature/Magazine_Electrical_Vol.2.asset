@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 2
   LiteratureSkillType: 8
   Location: 5
-  Literature_ID: 3
+  Literature_ID: 15
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Electronics Magazine Vol. 2
   LiteratureName_Kr: "\uC804\uC790\uC7A1\uC9C0 Vol. 2"
   LiteratureWeight: 0.1

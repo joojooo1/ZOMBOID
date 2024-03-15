@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: SkillBook_Hunting_Vol.4
   m_EditorClassIdentifier: 
   LiteratureType: 1
+  LiteratureSkillType: 0
   Location: 5
-  Literature_ID: 38
+  Literature_ID: 73
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Hunting Vol. 4
   LiteratureName_Kr: "\uC0AC\uB0E5 Vol. 4"
   LiteratureWeight: 0.8

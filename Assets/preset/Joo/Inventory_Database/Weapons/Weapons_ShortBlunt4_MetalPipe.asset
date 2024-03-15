@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlunt4_MetalPipe
   m_EditorClassIdentifier: 
   WeaponType: 2
-  Weapon_ID: 4
+  Weapon_ID: 28
   WeaponName: Metal Pipe
   WeaponName_Kr: "\uAE08\uC18D \uD30C\uC774\uD504"
   ItemImage: {fileID: 21300000, guid: 2c332ff47067a844294372c9cb9a804e, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000

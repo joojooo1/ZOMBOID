@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_LongBlunt6_FishingRod
   m_EditorClassIdentifier: 
   WeaponType: 1
-  Weapon_ID: 6
+  Weapon_ID: 16
   WeaponName: Fishing Rod
   WeaponName_Kr: "\uB09A\uC2DC\uB300"
   ItemImage: {fileID: 21300000, guid: cebc6381e7c4b4c42b266acde630c668, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000
+  UsingType: 
   WeaponWeight: 0.4
   W_Minimum_damage: 0.2
   W_Maximum_damage: 0.3

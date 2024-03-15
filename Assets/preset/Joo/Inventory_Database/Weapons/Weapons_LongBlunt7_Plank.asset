@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_LongBlunt7_Plank
   m_EditorClassIdentifier: 
   WeaponType: 1
-  Weapon_ID: 7
+  Weapon_ID: 17
   WeaponName: Plank
   WeaponName_Kr: "\uD310\uC790"
   ItemImage: {fileID: 21300000, guid: ac7296dee9418db42baa07d7411dd569, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000
+  UsingType: 
   WeaponWeight: 3
   W_Minimum_damage: 0.4
   W_Maximum_damage: 0.6

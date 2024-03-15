@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Antidepressants
   m_EditorClassIdentifier: 
   MedicalType: 4
-  Medical_ID: 1
+  Medical_ID: 22
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   MedicalName: Antidepressants
   MedicalName_Kr: "\uD56D\uC6B0\uC6B8\uC81C"
   MedicalWeight: 0.2

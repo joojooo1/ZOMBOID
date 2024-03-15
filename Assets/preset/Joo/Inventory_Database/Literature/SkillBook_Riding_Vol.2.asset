@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 1
   LiteratureSkillType: 3
   Location: 5
-  Literature_ID: 41
+  Literature_ID: 76
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Riding Vol. 2
   LiteratureName_Kr: "\uC2B9\uB9C8 Vol. 2"
   LiteratureWeight: 0.8

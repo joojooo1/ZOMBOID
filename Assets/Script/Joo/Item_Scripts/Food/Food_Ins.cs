@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Food_Ins : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class Food_Ins : MonoBehaviour
     private List<Item_Food> food_Ins;
     [SerializeField]
     private GameObject Food_Prefab;
+    [SerializeField]
+    UnityEngine.UI.Text FoodCount;
     private void Start()
     {
            // test
@@ -28,6 +31,7 @@ public class Food_Ins : MonoBehaviour
         System.Random rand_Count = new System.Random();
         int Count = rand_Count.Next(0, 8);  // 0~8°³ »ý¼º
 
+        GameObject obj = null;
         for (int i = 0; i < Count; i++)
         {
             System.Random rand_item = new System.Random();
@@ -40,8 +44,8 @@ public class Food_Ins : MonoBehaviour
 
     public Food Instan(Item_Food food)
     {
-        Food newFood = Instantiate(Food_Prefab).GetComponentInChildren<Food>();
-        newFood.foodData = food;
+
+        Food newFood = Instantiate(Food_Prefab).GetComponent<Food>();
         return newFood;
     }
 }

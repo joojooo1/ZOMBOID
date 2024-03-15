@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 2
   LiteratureSkillType: 8
   Location: 5
-  Literature_ID: 20
+  Literature_ID: 32
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Guerilla Radio Vol. 1
   LiteratureName_Kr: "\uAC8C\uB9B4\uB77C \uB77C\uB514\uC624 Vol. 1"
   LiteratureWeight: 0.1
