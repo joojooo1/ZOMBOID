@@ -4,9 +4,10 @@ using UnityEngine;
 
 public enum Item_Type
 {
-    Food = 0,
-    Medical = 1,
-    Weapons = 2
+    empty = 0,
+    Food = 1,
+    Medical = 2,
+    Weapons = 3
 }
 
 
@@ -20,24 +21,29 @@ public class Item_invenWindow : MonoBehaviour
     void Start()
     {
         GameObject tempObj = null;
-        for (int i = 0; i < 5; ++i)
+        for (int i = 0; i < 30; ++i)
         {
             tempObj = Instantiate(slotPrefab, SlotWindow);
             Item_Ins slot = tempObj.GetComponent<Item_Ins>();
             slotlist.Add(slot);
+            slotlist[i].SetItem(Item_Type.empty, 0);
         }
 
-        InsertItem((Item_Type)0, 1);
-        InsertItem((Item_Type)1, 2);
-        InsertItem((Item_Type)2, 3);
+
+        InsertItem((Item_Type)1, 1);
+        InsertItem((Item_Type)2, 2);
+        InsertItem((Item_Type)3, 3);
     }
 
     void InsertItem(Item_Type Type, int ItemCode)
     {
         for (int i = 0; i < slotlist.Count; ++i)
         {
-            slotlist[i].SetItem(Type, ItemCode);
-            return;
+            if (slotlist[i].CurrentType == Item_Type.empty)
+            {
+                slotlist[i].SetItem(Type, ItemCode);
+                return;
+            }
         }
     }
 
