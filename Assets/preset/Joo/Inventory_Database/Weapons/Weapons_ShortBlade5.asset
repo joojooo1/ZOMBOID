@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlade5
   m_EditorClassIdentifier: 
   WeaponType: 4
-  Weapon_ID: 4
+  Weapon_ID: 23
   WeaponName: Bread Knife
   WeaponName_Kr: "\uBE75\uCE7C"
   ItemImage: {fileID: 21300000, guid: 44a7b37a7668a6046b931987fd411c4e, type: 3}

@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 1
   LiteratureSkillType: 6
   Location: 5
-  Literature_ID: 16
+  Literature_ID: 51
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Farming Vol. 2
   LiteratureName_Kr: "\uB18D\uC0AC Vol. 2"
   LiteratureWeight: 0.8

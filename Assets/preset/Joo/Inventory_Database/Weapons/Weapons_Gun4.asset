@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_Gun4
   m_EditorClassIdentifier: 
   WeaponType: 6
-  Weapon_ID: 0
+  Weapon_ID: 7
   WeaponName: M36 Revolver
   WeaponName_Kr: "M36 \uB9AC\uBCFC\uBC84"
   ItemImage: {fileID: 21300000, guid: 414e43037e7f5fa4090a55693169c823, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
+  UsingType: 
   WeaponWeight: 1.5
   W_Minimum_damage: 0.7
   W_Maximum_damage: 1.2

@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_Gun1
   m_EditorClassIdentifier: 
   WeaponType: 6
-  Weapon_ID: 1
+  Weapon_ID: 4
   WeaponName: ShotgunDoublebarrel
   WeaponName_Kr: "\uB354\uBE14 \uBC30\uB7F4 \uC0B0\uD0C4\uCD1D"
   ItemImage: {fileID: 21300000, guid: cf113af8803aa904281fdbd7f88f069d, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000
+  UsingType: 
   WeaponWeight: 4
   W_Minimum_damage: 2
   W_Maximum_damage: 2.7

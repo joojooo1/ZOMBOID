@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_LongBlunt
   m_EditorClassIdentifier: 
   WeaponType: 1
-  Weapon_ID: 0
+  Weapon_ID: 10
   WeaponName: BaseballBat
   WeaponName_Kr: "\uC57C\uAD6C\uBC29\uB9DD\uC774"
   ItemImage: {fileID: 21300000, guid: 600896490a14b8f489edf3bd72082233, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000
+  UsingType: 
   WeaponWeight: 2
   W_Minimum_damage: 0.8
   W_Maximum_damage: 1.1

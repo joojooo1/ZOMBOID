@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlade3
   m_EditorClassIdentifier: 
   WeaponType: 4
-  Weapon_ID: 3
+  Weapon_ID: 21
   WeaponName: Screwdriver
   WeaponName_Kr: "\uC2A4\uD06C\uB958\uB4DC\uB77C\uC774\uBC84"
   ItemImage: {fileID: 21300000, guid: 9b24c69003297374d9e4064b164ede36, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
+  UsingType: 
   WeaponWeight: 0.4
   W_Minimum_damage: 0.3
   W_Maximum_damage: 0.7

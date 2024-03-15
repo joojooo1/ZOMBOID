@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 1
   LiteratureSkillType: 4
   Location: 5
-  Literature_ID: 4
+  Literature_ID: 39
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Carpentry Vol. 5
   LiteratureName_Kr: "\uBAA9\uACF5 Vol. 5"
   LiteratureWeight: 0.8

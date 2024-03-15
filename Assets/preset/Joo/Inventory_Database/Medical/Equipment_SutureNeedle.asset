@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Equipment_SutureNeedle
   m_EditorClassIdentifier: 
   MedicalType: 3
-  Medical_ID: 1
+  Medical_ID: 14
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   MedicalName: SutureNeedle
   MedicalName_Kr: "\uBD09\uD569\uC6A9\uBC14\uB298"
   MedicalWeight: 0.1

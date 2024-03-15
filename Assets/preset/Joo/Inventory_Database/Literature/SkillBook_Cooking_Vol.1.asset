@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 1
   LiteratureSkillType: 5
   Location: 5
-  Literature_ID: 5
+  Literature_ID: 40
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: Cooking Vol. 1
   LiteratureName_Kr: "\uC694\uB9AC Vol. 1"
   LiteratureWeight: 0.8

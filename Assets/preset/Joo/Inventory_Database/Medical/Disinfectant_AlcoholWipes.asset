@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Disinfectant_AlcoholWipes
   m_EditorClassIdentifier: 
   MedicalType: 1
-  Medical_ID: 0
+  Medical_ID: 10
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   MedicalName: Alcohol Wipes
   MedicalName_Kr: "\uC54C\uCF5C\uC19C"
   MedicalWeight: 0.2

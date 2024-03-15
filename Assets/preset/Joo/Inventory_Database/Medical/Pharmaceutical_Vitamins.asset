@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Vitamins
   m_EditorClassIdentifier: 
   MedicalType: 4
-  Medical_ID: 6
+  Medical_ID: 27
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   MedicalName: Vitamins
   MedicalName_Kr: "\uBE44\uD0C0\uBBFC"
   MedicalWeight: 0.2

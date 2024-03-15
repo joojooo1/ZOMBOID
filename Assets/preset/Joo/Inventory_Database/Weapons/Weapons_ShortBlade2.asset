@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlade2
   m_EditorClassIdentifier: 
   WeaponType: 4
-  Weapon_ID: 2
+  Weapon_ID: 20
   WeaponName: Cleaver
   WeaponName_Kr: "\uC911\uC2DD\uB3C4"
   ItemImage: {fileID: 21300000, guid: 55fe210d81e2e1745b0f86a858a88704, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
+  UsingType: 
   WeaponWeight: 1
   W_Minimum_damage: 0.4
   W_Maximum_damage: 0.8

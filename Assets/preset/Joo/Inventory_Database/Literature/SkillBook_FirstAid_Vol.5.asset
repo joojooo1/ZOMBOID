@@ -15,7 +15,10 @@ MonoBehaviour:
   LiteratureType: 1
   LiteratureSkillType: 7
   Location: 5
-  Literature_ID: 24
+  Literature_ID: 59
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   LiteratureName: FirstAid Vol. 5
   LiteratureName_Kr: "\uC758\uB8CC Vol. 5"
   LiteratureWeight: 0.8

@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlade4
   m_EditorClassIdentifier: 
   WeaponType: 4
-  Weapon_ID: 4
+  Weapon_ID: 22
   WeaponName: HandShovel
   WeaponName_Kr: "\uBAA8\uC885\uC0BD"
   ItemImage: {fileID: 21300000, guid: cffc150e999b1e045a65d3fcf81c33a1, type: 3}
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
+  UsingType: 
   WeaponWeight: 0.5
   W_Minimum_damage: 0.2
   W_Maximum_damage: 0.4

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Disinfectant_BottleofDisinfectant
   m_EditorClassIdentifier: 
   MedicalType: 1
-  Medical_ID: 1
+  Medical_ID: 11
+  Width_block: 0
+  Height_block: 0
+  Nesting_Depth: 0
   MedicalName: Bottle of Disinfectant
   MedicalName_Kr: "\uC18C\uB3C5\uC57D"
   MedicalWeight: 0.3
