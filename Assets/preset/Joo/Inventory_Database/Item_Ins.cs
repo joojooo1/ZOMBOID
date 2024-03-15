@@ -19,6 +19,7 @@ public class Item_Ins : MonoBehaviour
     {
         CurrentID = ItemCode;
         CurrentType = type;
+        Icon.color = Color.white;
         switch (type)
         {
             case Item_Type.Food:
@@ -32,6 +33,10 @@ public class Item_Ins : MonoBehaviour
             case Item_Type.Weapons:
                 WeaponsData = Item_DataBase.item_database.Get_Weaponslist(ItemCode);
                 Icon.sprite = WeaponsData.ItemImage;
+                break;
+             default:
+                Icon.sprite =null;
+                Icon.color = new Color(0,0,0, 0.6679f);
                 break;
         }
 
