@@ -13,7 +13,8 @@ public class P_simplemove : MonoBehaviour
     Animator animator;
 
 
-    // Start is called before the first frame update
+    // Start is called before the first frame
+    // 
     void Start()
     {
         animator = GetComponent<Animator>();

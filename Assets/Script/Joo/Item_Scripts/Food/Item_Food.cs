@@ -44,6 +44,4 @@ public class Item_Food : ScriptableObject
     // public bool[] Probability_of_poisoning;  
     // 식중독 일으킬 확률   true면 15% 상승 ( 임의 설정 )
     // Uncooked(state) || Burned(state) || Rotten(freshness) 이면 true ( 제외: Instant Popcorn_Uncooked )
-
-
 }

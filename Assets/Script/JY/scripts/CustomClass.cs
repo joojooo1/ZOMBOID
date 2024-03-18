@@ -69,7 +69,7 @@ public class CustomClass : MonoBehaviour
         Debug.Log("yureca");
     }
 
-    private void Update()
+    private void CameraRay()
     {
         //Ä«¸Þ¶ó Ray
 
