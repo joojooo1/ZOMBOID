@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: Leisure_HottieZ
   m_EditorClassIdentifier: 
+  type: 0
   LiteratureType: 3
   LiteratureSkillType: 10
+  areaType: 000000000900000005000000
   Location: 5
   Literature_ID: 5
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   LiteratureName: HottieZ
   LiteratureName_Kr: "\uC131\uC778\uC7A1\uC9C0"
   LiteratureWeight: 0.2

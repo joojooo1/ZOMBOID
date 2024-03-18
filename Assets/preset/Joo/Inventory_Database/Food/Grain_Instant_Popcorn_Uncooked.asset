@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Grain_Instant_Popcorn_Uncooked
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 6
+  areaType: 0000000005000000
   Location: 1
   Food_ID: 30
   FoodState: 0
   Cooking_time_to_NextStep: 1
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Instant Popcorn
   FoodName_Kr: "\uC778\uC2A4\uD134\uD2B8 \uD31D\uCF58"
   FoodWeight: 0.3

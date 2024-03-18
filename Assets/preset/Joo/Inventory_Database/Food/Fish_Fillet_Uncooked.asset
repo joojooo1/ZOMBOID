@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Fish_Fillet_Uncooked
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 4
-  Location: 3
+  areaType: 00000000
+  Location: 4
   Food_ID: 17
   FoodState: 0
   Cooking_time_to_NextStep: 4
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Fish Fillet
   FoodName_Kr: "\uC0DD\uC120\uC0B4"
   FoodWeight: 0.2

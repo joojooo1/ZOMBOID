@@ -11,14 +11,13 @@ public class Weapon_Ins : MonoBehaviour
 
     private void Start()
     {
-        //Equipping_Weapon(Weapons_Ins[27]);   // test
+        
     }
 
 
     public void Equipping_Weapon(Item_Weapons weapon)  // UI에서 장비 착용 시 호출
     {
-        Weapon Current_Weapon = Instan(weapon);
-        Current_Weapon.Weapon_Change(weapon);
+        Item_Weapons Current_Weapon = Instan(weapon);
         if(weapon.WeaponType == Weapon_type.Gun)
         {
             Set_AMMO_Capacity(weapon);
@@ -27,10 +26,10 @@ public class Weapon_Ins : MonoBehaviour
         Player_main.player_main.Is_Equipping_Weapons = true;
     }
 
-    public Weapon Instan(Item_Weapons weapon)
+    public Item_Weapons Instan(Item_Weapons weapon)
     {
-        Weapon newWeapon = Instantiate(Weapons_Prefab).GetComponent<Weapon>();
-        newWeapon.weaponData = weapon;
+        Item_Weapons newWeapon = Instantiate(Weapons_Prefab).GetComponent<Item_Weapons>();
+        newWeapon = weapon;
         return newWeapon;
     }
 

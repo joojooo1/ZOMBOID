@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d878866378bd86a40b8cba2e7b5e75b1, type: 3}
   m_Name: Herb_Poultice
   m_EditorClassIdentifier: 
+  type: 3
   MedicalType: 2
+  Usingtype: 9
+  areaType: 0b00000012000000
+  Location: 1
   Medical_ID: 20
-  Width_block: 0
-  Height_block: 0
-  Nesting_Depth: 0
   MedicalName: Poultice
   MedicalName_Kr: "\uC2B5\uD3EC\uC81C"
   MedicalWeight: 0.2
   Medical_Image: {fileID: 21300000, guid: 27ae79fa7c2d51645bcf6af65e953237, type: 3}
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   Is_Disinfection: 1
   Is_Clean: 1
   Is_Ins: 0

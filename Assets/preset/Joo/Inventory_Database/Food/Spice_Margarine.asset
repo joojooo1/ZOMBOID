@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Spice_Margarine
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 1
+  areaType: 000000000600000007000000
   Location: 1
   Food_ID: 45
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Margarine
   FoodName_Kr: "\uB9C8\uAC00\uB9B0"
   FoodWeight: 0.3

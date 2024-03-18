@@ -5,21 +5,25 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Item_Weapons : ScriptableObject
 {
+    public Type type;
+    public Using_Type Usingtype;
     public Weapon_type WeaponType;
+    public Area_Type[] areaType;   // 스폰되는 건물
+    public Location_Type Location;  // 스폰되는 Container 등
     public int Weapon_ID; // 각 무기에 대한 고유ID
 
     public string WeaponName;
     public string WeaponName_Kr;
     public Sprite ItemImage;
-    public int Width_block;
-    public int Height_block;
-    public int Nesting_Depth;
+
+    public float Height;
+    public float Width;
+    public int Nesting_Depth;  // 최대로 중첩되는 갯수
 
     public bool Is_Equipping;  // 장비 여부
     public bool Is_TwoHand;
     public body_point[] Equipping_Position;  // 장비 위치
 
-    public Weapon_Using_Type[] UsingType;
     public float WeaponWeight;
     public float W_Minimum_damage;
     public float W_Maximum_damage;

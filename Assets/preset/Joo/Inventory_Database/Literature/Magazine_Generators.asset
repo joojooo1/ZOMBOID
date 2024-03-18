@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: Magazine_Generators
   m_EditorClassIdentifier: 
+  type: 0
   LiteratureType: 2
   LiteratureSkillType: 8
+  areaType: 000000000500000009000000
   Location: 5
   Literature_ID: 24
-  Width_block: 0
-  Height_block: 0
+  Height: 0
+  Width: 0
   Nesting_Depth: 0
   LiteratureName: How to Use Generators
   LiteratureName_Kr: "\uC0DD\uC131\uAE30\uB97C \uC0AC\uC6A9\uD558\uB294 \uBC29\uBC95"

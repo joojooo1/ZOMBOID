@@ -37,15 +37,9 @@ public class Food_Ins : MonoBehaviour
             System.Random rand_item = new System.Random();
             int item = rand_item.Next(0, food_List.Count);
 
-            Instan(food_List[item]);
         }
 
     }
 
-    public Food Instan(Item_Food food)
-    {
 
-        Food newFood = Instantiate(Food_Prefab).GetComponent<Food>();
-        return newFood;
-    }
 }

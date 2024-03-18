@@ -5,14 +5,16 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Item_Literature : ScriptableObject
 {
+    public Type type;
     public Book_Type LiteratureType;
     public Skill_Type LiteratureSkillType;
-    public Location_Type Location;
+    public Area_Type[] areaType;   // 스폰되는 건물
+    public Location_Type Location;  // 스폰되는 Container 등
     public int Literature_ID;
 
-    public int Width_block;
-    public int Height_block;
-    public int Nesting_Depth;
+    public float Height;
+    public float Width;
+    public int Nesting_Depth;  // 최대로 중첩되는 갯수
 
     public string LiteratureName;
     public string LiteratureName_Kr;

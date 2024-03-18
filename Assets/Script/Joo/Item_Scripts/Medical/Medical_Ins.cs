@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Medical_Ins : MonoBehaviour
 {
-    [SerializeField]
-    private List<Item_Medical> medical_Ins;
-    [SerializeField]
-    private GameObject Medical_Prefab;
+    //[SerializeField]
+    //private List<Item_Medical> medical_Ins;
+    //[SerializeField]
+    //private GameObject Medical_Prefab;
 
     // 비어있는 오브젝트(약국의 선반 등)와 플레이어가 충돌 시 랜덤으로 생성되도록 호출
     // bool로 기존에 생성된 적 있는 오브젝트인지 체크
-    public void Set_Generating_item(Location_Type location_Type)
+    public void Set_Generating_item(Location_Type location_Type, List<Item_Medical> medical_Ins)
     {
         List<Item_Medical> medical_List = new List<Item_Medical>();
         for (int i = 0; i < medical_Ins.Count; i++)
@@ -28,16 +28,16 @@ public class Medical_Ins : MonoBehaviour
             System.Random rand_item = new System.Random();
             int item = rand_item.Next(0, medical_List.Count);
 
-            Instan(medical_List[item]);
+            //Instan(medical_List[item]);
         }
 
     }
 
-    public Medical Instan(Item_Medical medical)
-    {
-        Medical newMedical = Instantiate(Medical_Prefab).GetComponent<Medical>();
-        newMedical.medicalData = medical;
-        return newMedical;
-    }
+    //public Medical Instan(Item_Medical medical)
+    //{
+    //    Medical newMedical = Instantiate(Medical_Prefab).GetComponent<Medical>();
+    //    newMedical.medicalData = medical;
+    //    return newMedical;
+    //}
 
 }

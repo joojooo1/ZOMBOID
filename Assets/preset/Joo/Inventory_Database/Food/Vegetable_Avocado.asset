@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Vegetable_Avocado
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 8
+  areaType: 0000000006000000
   Location: 2
   Food_ID: 49
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Avocado
   FoodName_Kr: "\uC544\uBCF4\uCE74\uB3C4"
   FoodWeight: 0.3

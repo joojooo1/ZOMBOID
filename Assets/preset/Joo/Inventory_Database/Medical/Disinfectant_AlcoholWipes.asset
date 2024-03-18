@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d878866378bd86a40b8cba2e7b5e75b1, type: 3}
   m_Name: Disinfectant_AlcoholWipes
   m_EditorClassIdentifier: 
+  type: 3
   MedicalType: 1
+  Usingtype: 9
+  areaType: 000000000b000000
+  Location: 1
   Medical_ID: 10
-  Width_block: 0
-  Height_block: 0
-  Nesting_Depth: 0
   MedicalName: Alcohol Wipes
   MedicalName_Kr: "\uC54C\uCF5C\uC19C"
   MedicalWeight: 0.2
   Medical_Image: {fileID: 21300000, guid: 668bd4b3c093dcf47a71cadb2df2b393, type: 3}
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   Is_Disinfection: 1
   Is_Clean: 1
   Is_Ins: 1

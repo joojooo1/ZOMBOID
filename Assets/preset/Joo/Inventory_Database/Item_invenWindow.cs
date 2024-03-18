@@ -35,6 +35,12 @@ public class Item_invenWindow : MonoBehaviour
         InsertItem((Item_Type)3, 3);
     }
 
+    private void Update()
+    {
+        // 물병 등 다 마시고 Container 로 변경되어야 하는 경우 반영해야 됨
+    }
+
+
     void InsertItem(Item_Type Type, int ItemCode)
     {
         for (int i = 0; i < slotlist.Count; ++i)

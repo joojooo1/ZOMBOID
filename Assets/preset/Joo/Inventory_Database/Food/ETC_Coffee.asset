@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: ETC_Coffee
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 9
-  Location: 1
+  areaType: 000000000500000006000000
+  Location: 0
   Food_ID: 9
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Coffee
   FoodName_Kr: "\uCEE4\uD53C"
   FoodWeight: 1

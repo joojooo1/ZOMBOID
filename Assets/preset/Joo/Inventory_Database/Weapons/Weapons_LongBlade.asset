@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1333044d3d8744f893776360c46754, type: 3}
   m_Name: Weapons_LongBlade
   m_EditorClassIdentifier: 
+  type: 0
+  Usingtype: 0
   WeaponType: 3
+  areaType: 000000000100000004000000
+  Location: 1
   Weapon_ID: 8
   WeaponName: Katana
   WeaponName_Kr: "\uCE74\uD0C0\uB098"
   ItemImage: {fileID: 21300000, guid: 278c0c3539adc4349ae3e45862f53d5d, type: 3}
-  Width_block: 0
-  Height_block: 0
+  Height: 0
+  Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000
-  UsingType: 
   WeaponWeight: 2
   W_Minimum_damage: 8
   W_Maximum_damage: 8
@@ -39,8 +42,8 @@ MonoBehaviour:
   W_Max_Condition: 10
   W_Condition_lower_chance: 0.06666667
   W_Multi_Hit: 3
-  Gun_Ammunition: 8
-  Gun_Magazine: 7
+  Gun_Ammunition: 0
+  Gun_Magazine: 0
   Gun_Accuracy: 0
   Gun_Additional_Accuracy_point: 0
   Gun_Additional_Critical_chance: 0

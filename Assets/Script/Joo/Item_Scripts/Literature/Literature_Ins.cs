@@ -27,10 +27,10 @@ public class Literature_Ins : MonoBehaviour
 
     }
 
-    public Literature Instan(Item_Literature literature)
+    public Item_Literature Instan(Item_Literature literature)
     {
-        Literature newliterature = Instantiate(literature_Prefab).GetComponent<Literature>();
-        newliterature.literatureData = literature;
+        Item_Literature newliterature = Instantiate(literature_Prefab).GetComponent<Item_Literature>();
+        newliterature = literature;
         return newliterature;
     }
 

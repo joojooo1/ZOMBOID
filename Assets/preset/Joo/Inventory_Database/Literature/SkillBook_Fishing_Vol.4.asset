@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: SkillBook_Fishing_Vol.4
   m_EditorClassIdentifier: 
+  type: 0
   LiteratureType: 1
   LiteratureSkillType: 1
+  areaType: 0000000009000000
   Location: 5
   Literature_ID: 63
-  Width_block: 0
-  Height_block: 0
+  Height: 0
+  Width: 0
   Nesting_Depth: 0
   LiteratureName: Fishing Vol. 4
   LiteratureName_Kr: "\uB09A\uC2DC Vol. 4"
