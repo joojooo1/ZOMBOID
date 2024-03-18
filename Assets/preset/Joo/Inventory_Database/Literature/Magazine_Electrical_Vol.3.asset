@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: Magazine_Electrical_Vol.3
   m_EditorClassIdentifier: 
+  type: 0
   LiteratureType: 2
   LiteratureSkillType: 8
+  areaType: 000000000500000009000000
   Location: 5
   Literature_ID: 16
-  Width_block: 0
-  Height_block: 0
+  Height: 0
+  Width: 0
   Nesting_Depth: 0
   LiteratureName: Electronics Magazine Vol. 3
   LiteratureName_Kr: "\uC804\uC790\uC7A1\uC9C0 Vol. 3"

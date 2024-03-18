@@ -2,6 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Type
+{
+    weapon = 0,
+    tool = 1,
+    food = 2,
+    Normal = 3,
+    literature = 4,
+    clothing = 6,
+    Container = 7
+}
+
+public enum Using_Type
+{
+    Attack = 0,
+    General = 1,
+    Gardening = 2,
+    Fishing = 3,
+    Cooking = 4,
+    Destroy = 5,
+    Farming = 6,
+    Ingredients = 7,  // 재료
+    Stationery = 8,  // 문구류
+    Medical = 9,
+    Carpentry = 10
+}
+
 public enum Medical_Type
 {
     Bandage = 0,
@@ -98,19 +124,6 @@ public enum Skill_Type
     None = 10
 }
 
-public enum Weapon_Using_Type
-{
-    Attack = 0,
-    Logging = 1,
-    Shovel = 2,
-    Fishing = 3,
-    Cooking = 4,
-    Destroy = 5,
-    Farming = 6,
-    Ingredients = 7
-
-}
-
 public enum Electronic_Type
 {
     PowerSources = 0,
@@ -126,5 +139,44 @@ public enum Weapon_type
     ShortBlade = 4,
     Spear = 5,
     Gun = 6,
-    Tool = 7
+    tool = 7
+}
+
+public enum Container_Type
+{
+    Container = 0,
+    Water_Container = 1,
+    Furniture = 2,
+    Car = 3
+}
+
+public enum CanBeEquipped_Bag
+{
+    None = 0,
+    Back = 1,
+    Front = 2,
+    handle = 3
+}
+
+public enum Area_Type
+{
+    Normal = 0,
+    Police = 1,
+    Fire = 2,
+    Gas = 3,
+    Prison = 4,
+    Store = 5,
+    Restaurant = 6,
+    Bar = 7,
+    Government = 8,
+    School = 9,  // 사무실 포함
+    Warehouse = 10,
+    Hospital = 11,
+    Military = 12,
+    Fishing = 13,
+    Logging = 14,
+    Hunting = 15,
+    Cooking = 16,
+    Crafting = 17,
+    Foraging = 18
 }

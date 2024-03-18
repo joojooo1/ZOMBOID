@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1333044d3d8744f893776360c46754, type: 3}
   m_Name: Weapons_Axe2
   m_EditorClassIdentifier: 
+  type: 0
+  Usingtype: 10
   WeaponType: 0
+  areaType: 00000000020000000a000000
+  Location: 1
   Weapon_ID: 2
   WeaponName: AxeHand
   WeaponName_Kr: "\uC190\uB3C4\uB07C"
   ItemImage: {fileID: 21300000, guid: 8ac67348bcf4e2a4ea5070e4792ea30d, type: 3}
-  Width_block: 0
-  Height_block: 0
+  Height: 0
+  Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 00000000
-  UsingType: 01000000
   WeaponWeight: 2
   W_Minimum_damage: 0.7
   W_Maximum_damage: 1.5
@@ -39,8 +42,8 @@ MonoBehaviour:
   W_Max_Condition: 10
   W_Condition_lower_chance: 0.06666667
   W_Multi_Hit: 2
-  Gun_Ammunition: 8
-  Gun_Magazine: 7
+  Gun_Ammunition: 0
+  Gun_Magazine: 0
   Gun_Accuracy: 0
   Gun_Additional_Accuracy_point: 0
   Gun_Additional_Critical_chance: 0

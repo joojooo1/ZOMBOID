@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: SkillBook_Foraging_Vol.4
   m_EditorClassIdentifier: 
+  type: 0
   LiteratureType: 1
   LiteratureSkillType: 2
+  areaType: 0000000009000000
   Location: 5
   Literature_ID: 68
-  Width_block: 0
-  Height_block: 0
+  Height: 0
+  Width: 0
   Nesting_Depth: 0
   LiteratureName: Foraging Vol. 4
   LiteratureName_Kr: "\uCC44\uC9D1 Vol. 4"

@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Drink_White_WIne
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 2
+  areaType: 0700000005000000
   Location: 2
   Food_ID: 8
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: White Wine
   FoodName_Kr: "\uBC31\uD3EC\uB3C4\uC8FC"
   FoodWeight: 1

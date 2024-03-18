@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Spice_Maple_Syrup
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 1
+  areaType: 000000000600000007000000
   Location: 1
   Food_ID: 44
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Maple Syrup
   FoodName_Kr: "\uBA54\uC774\uD50C \uC2DC\uB7FD"
   FoodWeight: 0.2

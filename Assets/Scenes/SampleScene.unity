@@ -1815,40 +1815,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd04e4e277b539b448ee8eb78719f664, type: 2}
   - {fileID: 11400000, guid: 4b935f5271fc6974d8a7c6db6dbbdfdc, type: 2}
   - {fileID: 11400000, guid: 900323bba8065c448ac4ad419cf50cc7, type: 2}
-  Weapons_Ins:
-  - {fileID: 11400000, guid: 9bb84629f47c7a7418e04cdec9cce870, type: 2}
-  - {fileID: 11400000, guid: 9a370cf021cdcc241abea92918799254, type: 2}
-  - {fileID: 11400000, guid: b38a15e79990abf4bb09ed7318de1fbf, type: 2}
-  - {fileID: 11400000, guid: 30e699fa074aa6c4984a8148b1f73ac6, type: 2}
-  - {fileID: 11400000, guid: d52663c257805334bbf315dc41caffbc, type: 2}
-  - {fileID: 11400000, guid: 4de9d433bb3bd5349aca9eef5d3c1224, type: 2}
-  - {fileID: 11400000, guid: 8c8581a7bb9caa84491535fe17727286, type: 2}
-  - {fileID: 11400000, guid: 0836b295434cc6f41980a01027923858, type: 2}
-  - {fileID: 11400000, guid: d3407d6932913024ea19e2ff0eff0dee, type: 2}
-  - {fileID: 11400000, guid: bea54b14fe5c6334c809bee44b5cd7bc, type: 2}
-  - {fileID: 11400000, guid: 0478119a1411f6343b69d6124be790ab, type: 2}
-  - {fileID: 11400000, guid: f9fa452c2355ee540808b368e686e0f7, type: 2}
-  - {fileID: 11400000, guid: 832f6b4f3125ce04cb58e9b4f056bed3, type: 2}
-  - {fileID: 11400000, guid: f2b8dcf6dd880c240b482da4520a0300, type: 2}
-  - {fileID: 11400000, guid: aa8280b05ec1ba740b44f52a777b2895, type: 2}
-  - {fileID: 11400000, guid: 1f46149c31be56e479ba1f4c7fabdcc1, type: 2}
-  - {fileID: 11400000, guid: 7ab9de5ceda6e97449535a69aad16d45, type: 2}
-  - {fileID: 11400000, guid: 674b5407ae35a7c4788d5c7b509a80a4, type: 2}
-  - {fileID: 11400000, guid: e62a1313593e0144bbeb72521b1884e6, type: 2}
-  - {fileID: 11400000, guid: d85fd71c1f33a3a4487e58d9a13bb904, type: 2}
-  - {fileID: 11400000, guid: f1dfd448ec587b34188adf660827df33, type: 2}
-  - {fileID: 11400000, guid: 9cdb9b65595a7904f8bd57a76cdd032a, type: 2}
-  - {fileID: 11400000, guid: 5b41df919cb2bc34b9d8d52f3c108c6d, type: 2}
-  - {fileID: 11400000, guid: 04f372ca1b37c764b98e9a89ed1b04f7, type: 2}
-  - {fileID: 11400000, guid: 04b4a2d55155ad64a8098fee36c824ec, type: 2}
-  - {fileID: 11400000, guid: cf0f682d7688e144f93f34d366bd0114, type: 2}
-  - {fileID: 11400000, guid: 94dedcbe8a2d89542b729e1e26c4c770, type: 2}
-  - {fileID: 11400000, guid: e53222a72b1126649842f041c42ad1b9, type: 2}
-  - {fileID: 11400000, guid: fd3d86dd9252bfc44a6809586f90d3f5, type: 2}
-  - {fileID: 11400000, guid: ad27c3e01ec0d0f4c820d0e1377eb1ef, type: 2}
-  - {fileID: 11400000, guid: a7e83d070813c8b498a189b940fca67b, type: 2}
-  - {fileID: 11400000, guid: c10f4f5a7c119ec48a804c1c4ef2d557, type: 2}
-  - {fileID: 11400000, guid: b56e2cda0bb1d0b45997c6caee31fff0, type: 2}
+  weapons_Ins: []
+  literature_Ins: []
+  electronics_Ins: []
+  clothing_Ins: []
+  gardening_Ins: []
+  Container_Ins: []
   DetailWindow: {fileID: 1636248568}
 --- !u!1 &1164354524
 GameObject:

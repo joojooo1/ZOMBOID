@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Drink_Orange_Soda
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 2
+  areaType: 000000000600000005000000
   Location: 2
   Food_ID: 6
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Orange Soda
   FoodName_Kr: "\uC624\uB80C\uC9C0 \uC18C\uB2E4"
   FoodWeight: 0.8

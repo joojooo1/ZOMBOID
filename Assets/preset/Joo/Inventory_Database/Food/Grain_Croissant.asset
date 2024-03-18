@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Grain_Croissant
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 6
-  Location: 2
+  areaType: 000000000600000005000000
+  Location: 0
   Food_ID: 26
-  FoodState: 1
+  FoodState: 0
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Croissant
   FoodName_Kr: "\uD06C\uB8E8\uC544\uC0C1"
   FoodWeight: 0.1

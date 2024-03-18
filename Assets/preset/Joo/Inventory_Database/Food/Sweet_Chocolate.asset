@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Sweet_Chocolate
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 7
+  areaType: 000000000500000006000000
   Location: 1
   Food_ID: 47
   FoodState: 1
   Cooking_time_to_NextStep: 0
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Chocolate
   FoodName_Kr: "\uCD08\uCF5C\uB9BF"
   FoodWeight: 0.2

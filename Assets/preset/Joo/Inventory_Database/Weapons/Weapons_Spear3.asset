@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1333044d3d8744f893776360c46754, type: 3}
   m_Name: Weapons_Spear3
   m_EditorClassIdentifier: 
+  type: 0
+  Usingtype: 0
   WeaponType: 5
+  areaType: 11000000
+  Location: 1
   Weapon_ID: 32
   WeaponName: SpearStick
   WeaponName_Kr: "\uC81C\uC791\uB41C \uCC3D"
   ItemImage: {fileID: 21300000, guid: 2bc50f7b30e372e4bab1c0e4963c8d4b, type: 3}
-  Width_block: 0
-  Height_block: 0
+  Height: 0
+  Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000
-  UsingType: 
   WeaponWeight: 1.7
   W_Minimum_damage: 1
   W_Maximum_damage: 1.5

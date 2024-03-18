@@ -5,18 +5,22 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Item_Medical : ScriptableObject
 {
+    public Type type;
     public Medical_Type MedicalType;
+    public Using_Type Usingtype;
+    public Area_Type[] areaType;   // 스폰되는 건물
+    public Location_Type Location;  // 스폰되는 Container 등
 
     public int Medical_ID;
-
-    public int Width_block;
-    public int Height_block;
-    public int Nesting_Depth;
 
     public string MedicalName;
     public string MedicalName_Kr;
     public float MedicalWeight;
     public Sprite Medical_Image;
+
+    public float Height;
+    public float Width;
+    public int Nesting_Depth;  // 최대로 중첩되는 갯수
 
     public bool Is_Disinfection;
     public bool Is_Clean;

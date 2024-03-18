@@ -14,12 +14,15 @@ public class Item_DataBase : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private List<Item_Food> food_Ins;
-    [SerializeField]
-    private List<Item_Medical> medical_Ins;
-    [SerializeField]
-    private List<Item_Weapons> Weapons_Ins;
+    public List<Item_Food> food_Ins;
+    public List<Item_Medical> medical_Ins;
+    public List<Item_Weapons> weapons_Ins;
+    public List<Item_Literature> literature_Ins;
+    public List<Item_Electronics> electronics_Ins;
+    public List<Item_Clothing> clothing_Ins;
+    public List<Item_Gardening> gardening_Ins;
+    public List<Item_Container> Container_Ins;
+
 
     public Item_Food Get_Foodlist(int ID)
     {
@@ -33,7 +36,7 @@ public class Item_DataBase : MonoBehaviour
 
     public Item_Weapons Get_Weaponslist(int ID)
     {
-        return Weapons_Ins[ID];
+        return weapons_Ins[ID];
     }
 
     [SerializeField]

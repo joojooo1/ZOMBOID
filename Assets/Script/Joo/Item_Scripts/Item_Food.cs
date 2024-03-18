@@ -6,13 +6,17 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 [CreateAssetMenu]
 public class Item_Food : ScriptableObject
 {
+    public Type type;
     public Food_Type FoodType;
-    public Location_Type Location;
+    public Area_Type[] areaType;   // 스폰되는 건물
+    public Location_Type Location;  // 스폰되는 Container 등
     public int Food_ID; // 각 음식에 대한 고유ID
     public Cooking_State FoodState;
     public float Cooking_time_to_NextStep;  // 다음 단계로 넘어가는데 걸리는 시간 ( 기존값 / 5 )
 
-    public int[] WHN_block;  // Width, Height, Nesting_Depth
+    public float Height;
+    public float Width;
+    public int Nesting_Depth;  // 최대로 중첩되는 갯수
 
     public string FoodName;
     public string FoodName_Kr;

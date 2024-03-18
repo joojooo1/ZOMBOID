@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
   m_Name: Meat_Chicken_Uncooked
   m_EditorClassIdentifier: 
+  type: 2
   FoodType: 3
+  areaType: 0000000006000000
   Location: 3
   Food_ID: 37
   FoodState: 0
   Cooking_time_to_NextStep: 6
-  WHN_block: 
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   FoodName: Chicken
   FoodName_Kr: "\uB2ED\uACE0\uAE30"
   FoodWeight: 0.3
