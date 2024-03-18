@@ -87,18 +87,18 @@ public class CMainGame : MonoBehaviour
 
             case PROTOCOL.CHAT_MSG:
                 {
-                    string recvName = msg.pop_string();
-                    string recvmsg = msg.pop_string();
-                    int playerIndex = msg.pop_int32();
-                    ChatWindow.current.ChatCreate(recvName + " : " + recvmsg);
+                    //string recvName = msg.pop_string();
+                    //string recvmsg = msg.pop_string();
+                    //int playerIndex = msg.pop_int32();
+                    //ChatWindow.current.ChatCreate(recvName + " : " + recvmsg);
 
-                    NetObject Findobj = ServerObjectManager.current.FindObject(playerIndex);
-                    if(Findobj != null)
-                    {
-                        GameObject obj = ObjectManager.current.CreateObejct(0,
-                            Findobj.transform.position + (Vector3.up * 2f));
-                        obj.GetComponent<DamageText>().OnText(recvmsg);
-                    }
+                    //NetObject Findobj = ServerObjectManager.current.FindObject(playerIndex);
+                    //if(Findobj != null)
+                    //{
+                    //    GameObject obj = ObjectManager.current.CreateObejct(0,
+                    //        Findobj.transform.position + (Vector3.up * 2f));
+                    //    obj.GetComponent<DamageText>().OnText(recvmsg);
+                    //}
 
                 }
             break;

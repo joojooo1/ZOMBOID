@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class ServerObjectManager : MonoBehaviour
@@ -86,12 +86,12 @@ public class ServerObjectManager : MonoBehaviour
     //서버 오브젝트 매니저
     public void PlayerShoot(int playeridex, float angle)
     {
-        NetObject FindNetobj = FindObject(playeridex);
-        FindNetobj.SetTargetRotation(Quaternion.Euler(0, angle, 0));
+        //NetObject FindNetobj = FindObject(playeridex);
+        //FindNetobj.SetTargetRotation(Quaternion.Euler(0, angle, 0));
 
-        PayerShooting shoot = FindNetobj.GetComponentInChildren<PayerShooting>();
-        if (shoot != null)
-            shoot.Shoot();
+        //PayerShooting shoot = FindNetobj.GetComponentInChildren<PayerShooting>();
+        //if (shoot != null)
+        //    shoot.Shoot();
     }
     public void ENEMY_TARGET(int enemyIndex, int TargetIndex)
     {
@@ -105,18 +105,18 @@ public class ServerObjectManager : MonoBehaviour
 
     public void PlayerHealth(int playeridex, float hp)
     {
-        NetObject FindNetobj = FindObject(playeridex);
-        if (FindNetobj == null)
-            return;
+        //NetObject FindNetobj = FindObject(playeridex);
+        //if (FindNetobj == null)
+        //    return;
 
-        EnemyHealth enemyhealth = FindNetobj.GetComponent<EnemyHealth>();
-        if (enemyhealth != null)
-        {
-            enemyhealth.ServerTakedamage(hp);
-        }
+        //EnemyHealth enemyhealth = FindNetobj.GetComponent<EnemyHealth>();
+        //if (enemyhealth != null)
+        //{
+        //    enemyhealth.ServerTakedamage(hp);
+        //}
 
-        PlayerHealth health = FindNetobj.GetComponent<PlayerHealth>();
-        if (health != null)
-            health.ServerTakedamage(hp);
+        //PlayerHealth health = FindNetobj.GetComponent<PlayerHealth>();
+        //if (health != null)
+        //    health.ServerTakedamage(hp);
     }
 }

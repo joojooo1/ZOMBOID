@@ -25,20 +25,20 @@ public class NetObject : MonoBehaviour
     ServerObjectManager.OBJECT_TYPE objecttype;
     public void CreateOjbect(int playerindex, ServerObjectManager.OBJECT_TYPE _objecttype)
     {
-        //UnityEngine.Screen.SetResolution(800, 600, false);
-        objecttype = _objecttype;
-        player_index = playerindex;
-        if (CMainGame.current.playerSN == player_index)
-        {
-            IsPlayer = true;
-            PlayerHealth Health = GetComponent<PlayerHealth>();
-            if(Health != null)
-                Health.SetPlayer();
-        }
-        else //≥ª≤® æ∆¥“∂ß
-        {
-            this.gameObject.layer = LayerMask.NameToLayer("HIT");
-        }
+        ////UnityEngine.Screen.SetResolution(800, 600, false);
+        //objecttype = _objecttype;
+        //player_index = playerindex;
+        //if (CMainGame.current.playerSN == player_index)
+        //{
+        //    IsPlayer = true;
+        //    PlayerHealth Health = GetComponent<PlayerHealth>();
+        //    if(Health != null)
+        //        Health.SetPlayer();
+        //}
+        //else //≥ª≤® æ∆¥“∂ß
+        //{
+        //    this.gameObject.layer = LayerMask.NameToLayer("HIT");
+        //}
     }
 
     Animator anim;
@@ -85,25 +85,25 @@ public class NetObject : MonoBehaviour
                     break;
                 default: //∏ÛΩ∫≈Õ
                     {
-                        EnemyMovement move = GetComponent<EnemyMovement>();
-                        if (move != null)
-                        {
-                            float dist = 0;
-                            if (TargetObject != null)
-                            {
-                                dist  = move.SetDest(TargetObject.transform.position);
-                            }
-                            else
-                            {
-                                dist  = move.SetDest(spawnpos);
-                            }
+                        //EnemyMovement move = GetComponent<EnemyMovement>();
+                        //if (move != null)
+                        //{
+                        //    float dist = 0;
+                        //    if (TargetObject != null)
+                        //    {
+                        //        dist  = move.SetDest(TargetObject.transform.position);
+                        //    }
+                        //    else
+                        //    {
+                        //        dist  = move.SetDest(spawnpos);
+                        //    }
 
-                            if (dist > 1f)
-                                anim.SetBool("IsMove", true);
-                            else
-                                anim.SetBool("IsMove", false);
+                        //    if (dist > 1f)
+                        //        anim.SetBool("IsMove", true);
+                        //    else
+                        //        anim.SetBool("IsMove", false);
 
-                        }
+                        //}
                     }
                     break;
             }
