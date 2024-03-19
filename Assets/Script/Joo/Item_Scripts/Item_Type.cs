@@ -91,15 +91,6 @@ public enum Cooking_State
     burned = 2
 }
 
-public enum Location_Type
-{
-    None = 0,
-    Container = 1,
-    Refrigeration = 2,
-    freezer = 3,
-    Fishing = 4,
-    bookshelf = 5
-}
 
 public enum Book_Type
 {
@@ -158,6 +149,18 @@ public enum CanBeEquipped_Bag
     handle = 3
 }
 
+public enum Location_Type
+{
+    None = 0,
+    Container = 1,  // 서랍 등
+    Refrigeration = 2,
+    Freezer = 3,
+    Bookshelf = 4,
+    Shelf = 5,
+    Closet = 6,
+
+}
+
 public enum Area_Type
 {
     Normal = 0,
@@ -178,5 +181,17 @@ public enum Area_Type
     Hunting = 15,
     Cooking = 16,
     Crafting = 17,
-    Foraging = 18
+    Foraging = 18,
+    wild = 19
+}
+
+public enum Bag_Type
+{
+    None = 0,     // 빈손 2 x 4
+    FannyPack = 1,     // 허리가방 3 x 4
+    GarbageBag = 2,     // 봉투 4 x 4
+    Satchel = 3,     // 책가방 8 x 6
+    DuffelBag = 4,     // 더플백 6 x 10
+    HikingBag = 5,     // 여행용 가방 8 x 10
+    MilitaryBackpack = 6     // 군용 배낭 8 x 12
 }

@@ -8,8 +8,6 @@ public class Item_Medical : ScriptableObject
     public Type type;
     public Medical_Type MedicalType;
     public Using_Type Usingtype;
-    public Area_Type[] areaType;   // 스폰되는 건물
-    public Location_Type Location;  // 스폰되는 Container 등
 
     public int Medical_ID;
 

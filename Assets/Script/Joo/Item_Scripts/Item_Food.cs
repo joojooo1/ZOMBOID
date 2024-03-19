@@ -8,8 +8,6 @@ public class Item_Food : ScriptableObject
 {
     public Type type;
     public Food_Type FoodType;
-    public Area_Type[] areaType;   // 스폰되는 건물
-    public Location_Type Location;  // 스폰되는 Container 등
     public int Food_ID; // 각 음식에 대한 고유ID
     public Cooking_State FoodState;
     public float Cooking_time_to_NextStep;  // 다음 단계로 넘어가는데 걸리는 시간 ( 기존값 / 5 )
@@ -26,8 +24,7 @@ public class Item_Food : ScriptableObject
     public bool Is_Perishable;  // false = 유통기한 없는 식품 ( 통조림 오픈시 true )
     public Freshness_Level Freshness;
     public float Preservation_period_for_freshness;  // 신선한 상태 유지기간(days)
-    public float Preservation_period_for_stale;  // 신선하지 않은 상태 유지기간(days)
-    
+    public float Preservation_period_for_stale;  // 신선하지 않은 상태 유지기간(days)    
 
     public bool Is_freezing;
 

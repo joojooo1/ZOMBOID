@@ -8,9 +8,8 @@ public class Item_Container : ScriptableObject
     public Type type;
     public Container_Type container_Type;
     public Using_Type Usingtype;
-    public Area_Type[] areaType;   // 스폰되는 건물
-    public Location_Type Location;  // 스폰되는 Container 등
     public CanBeEquipped_Bag Bag_EquipType;
+    public Bag_Type bag_Type;
 
     public int Container_ID;
 

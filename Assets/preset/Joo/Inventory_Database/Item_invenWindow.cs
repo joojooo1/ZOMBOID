@@ -67,8 +67,7 @@ public class Item_invenWindow : MonoBehaviour
         List<Item_Food> food_List = new List<Item_Food>();  // 생성위치에 맞는 아이템 List
         for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
         {
-            if (Item_DataBase.item_database.food_Ins[i].Location == location_Type)
-                food_List.Add(Item_DataBase.item_database.food_Ins[i]);
+            food_List.Add(Item_DataBase.item_database.food_Ins[i]);
         }
 
         System.Random rand_Count = new System.Random();

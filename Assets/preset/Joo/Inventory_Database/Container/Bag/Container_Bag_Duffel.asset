@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06158b3b172ac584b9bde2e41347bc36, type: 3}
-  m_Name: Container_Bag_BigHiking
+  m_Name: Container_Bag_Duffel
   m_EditorClassIdentifier: 
   type: 7
   container_Type: 0
   Usingtype: 1
-  areaType: 000000000a000000
+  areaType: 000000000a0000000400000009000000
   Location: 1
   Bag_EquipType: 1
-  bag_Type: 22
+  bag_Type: 18
   Container_ID: 0
-  ContainerName: "\uC5EC\uD589\uC6A9 \uAC00\uBC29"
-  ContainerName_Kr: Big Hiking Bag
-  ContainergWeight: 1.5
-  Container_Image: {fileID: 21300000, guid: feb2c5b5bd7374345a8f05a5904527d7, type: 3}
-  Height: 2
-  Width: 1
+  ContainerName: "\uB354\uD50C\uBC31"
+  ContainerName_Kr: DuffelBag
+  ContainergWeight: 1
+  Container_Image: {fileID: 21300000, guid: d8e38dd2750966d448f4105bb270171f, type: 3}
+  Height: 1
+  Width: 2
   Nesting_Depth: 1
-  WeightReduction: 0.8
+  WeightReduction: 0.65
   RunSpeedModifier: 0.95
   Store_Water: 0
   Store_Oil: 0
