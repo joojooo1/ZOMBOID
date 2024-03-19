@@ -189,7 +189,7 @@ public enum Bag_Type
 {
     None = 0,     // 빈손 2 x 4
     FannyPack = 1,     // 허리가방 3 x 4
-    GarbageBag = 2,     // 봉투 4 x 4
+    Handheld = 2,     // 봉투 4 x 4
     Satchel = 3,     // 책가방 8 x 6
     DuffelBag = 4,     // 더플백 6 x 10
     HikingBag = 5,     // 여행용 가방 8 x 10

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06158b3b172ac584b9bde2e41347bc36, type: 3}
-  m_Name: Container_Bag_MilitaryBag
+  m_Name: Container_Bag_Sandbag
   m_EditorClassIdentifier: 
   type: 7
   container_Type: 0
   Usingtype: 1
-  Bag_EquipType: 1
-  bag_Type: 6
+  Bag_EquipType: 3
+  bag_Type: 2
   Container_ID: 0
-  ContainerName: "\uAD70\uC6A9 \uBC30\uB0AD"
-  ContainerName_Kr: Military Backpack
-  ContainergWeight: 0.2
-  Container_Image: {fileID: 21300000, guid: d9e6cada1da7a52418b437a77e5ef469, type: 3}
-  Height: 3
+  ContainerName: "\uD3EC\uB300 \uC790\uB8E8"
+  ContainerName_Kr: Sandbag
+  ContainergWeight: 0.1
+  Container_Image: {fileID: 21300000, guid: 034417655ada9d44e9770a98e9aa3d88, type: 3}
+  Height: 2
   Width: 2
   Nesting_Depth: 1
   WeightReduction: 0.5
@@ -30,6 +30,5 @@ MonoBehaviour:
   Store_Oil: 0
   On_Fire: 0
   On_Microwave: 0
-  Is_Empty: 0
   Capacity_Water: 0
   Rain_factor: 0

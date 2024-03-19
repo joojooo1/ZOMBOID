@@ -15,17 +15,15 @@ MonoBehaviour:
   type: 7
   container_Type: 0
   Usingtype: 1
-  areaType: 000000000a000000
-  Location: 1
   Bag_EquipType: 1
-  bag_Type: 22
+  bag_Type: 5
   Container_ID: 0
   ContainerName: "\uC5EC\uD589\uC6A9 \uAC00\uBC29"
   ContainerName_Kr: Big Hiking Bag
   ContainergWeight: 1.5
   Container_Image: {fileID: 21300000, guid: feb2c5b5bd7374345a8f05a5904527d7, type: 3}
-  Height: 2
-  Width: 1
+  Height: 3
+  Width: 2
   Nesting_Depth: 1
   WeightReduction: 0.8
   RunSpeedModifier: 0.95
