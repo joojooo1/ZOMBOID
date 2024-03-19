@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Grain_GranolaBar
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 6
+  FoodType: 0
   areaType: 0000000005000000
   Location: 0
   Food_ID: 27
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: GranolaBar
   FoodName_Kr: "\uADF8\uB798\uB180\uB77C \uBC14"
   FoodWeight: 0.2

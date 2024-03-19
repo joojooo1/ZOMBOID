@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: SkillBook_FirstAid_Vol.1
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
   LiteratureType: 1
   LiteratureSkillType: 7
   areaType: 00000000090000000b000000
   Location: 5
   Literature_ID: 55
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   LiteratureName: FirstAid Vol. 1
   LiteratureName_Kr: "\uC758\uB8CC Vol. 1"
   LiteratureWeight: 0.8
@@ -31,3 +31,4 @@ MonoBehaviour:
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0
+  Annotated: 

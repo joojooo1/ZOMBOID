@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: Magazine_Fishing_Vol.1
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
   LiteratureType: 2
   LiteratureSkillType: 1
   areaType: 000000000500000009000000
   Location: 5
   Literature_ID: 21
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   LiteratureName: Angler USA Magazine Vol. 1
   LiteratureName_Kr: "\uB09A\uC2DC\uAFBC USA \uB9E4\uAC70\uC9C4 Vol. 1"
   LiteratureWeight: 0.1
@@ -31,3 +31,4 @@ MonoBehaviour:
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0
+  Annotated: 

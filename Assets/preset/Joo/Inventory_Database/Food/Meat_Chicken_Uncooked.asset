@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Meat_Chicken_Uncooked
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 3
+  FoodType: 0
   areaType: 0000000006000000
-  Location: 3
+  Location: 0
   Food_ID: 37
   FoodState: 0
   Cooking_time_to_NextStep: 6
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Chicken
   FoodName_Kr: "\uB2ED\uACE0\uAE30"
   FoodWeight: 0.3

@@ -22,9 +22,9 @@ MonoBehaviour:
   MedicalName_Kr: "\uBD09\uD569\uC6A9 \uBC14\uB298 \uC9D1\uAC8C"
   MedicalWeight: 0.1
   Medical_Image: {fileID: 21300000, guid: a577d90c187289942a3306b8e7dc131a, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 1

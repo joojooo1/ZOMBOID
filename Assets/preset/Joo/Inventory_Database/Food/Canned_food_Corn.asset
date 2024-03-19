@@ -15,13 +15,13 @@ MonoBehaviour:
   type: 2
   FoodType: 0
   areaType: 000000000600000005000000
-  Location: 1
+  Location: 0
   Food_ID: 1
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Canned Corn
   FoodName_Kr: "\uC625\uC218\uC218 \uD1B5\uC870\uB9BC"
   FoodWeight: 0.8

@@ -23,22 +23,6 @@ public class Item_DataBase : MonoBehaviour
     public List<Item_Gardening> gardening_Ins;
     public List<Item_Container> Container_Ins;
 
-
-    public Item_Food Get_Foodlist(int ID)
-    {
-        return food_Ins[ID];
-    }
-
-    public Item_Medical Get_Medicallist(int ID)
-    {
-        return medical_Ins[ID];
-    }
-
-    public Item_Weapons Get_Weaponslist(int ID)
-    {
-        return weapons_Ins[ID];
-    }
-
     [SerializeField]
     Item_Ins DetailWindow;
 

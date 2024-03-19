@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Spice_Maple_Syrup
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 1
+  FoodType: 0
   areaType: 000000000600000007000000
-  Location: 1
+  Location: 0
   Food_ID: 44
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Maple Syrup
   FoodName_Kr: "\uBA54\uC774\uD50C \uC2DC\uB7FD"
   FoodWeight: 0.2

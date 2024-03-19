@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Vegetable_Dried_Chick_Peas
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 8
+  FoodType: 0
   areaType: 0000000006000000
-  Location: 1
+  Location: 0
   Food_ID: 51
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Dried Chick Peas
   FoodName_Kr: "\uB9D0\uB9B0 \uBCD1\uC544\uB9AC\uCF69"
   FoodWeight: 2

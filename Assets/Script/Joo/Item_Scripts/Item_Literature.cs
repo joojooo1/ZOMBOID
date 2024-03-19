@@ -37,6 +37,7 @@ public class Item_Literature : ScriptableObject
     public float L_Stress;
     public float L_Boredom;
 
+    public string Annotated;  // 주석이 달린 지도 생성시 사용
 
 }
 

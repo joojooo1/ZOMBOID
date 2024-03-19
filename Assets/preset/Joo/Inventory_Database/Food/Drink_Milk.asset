@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Drink_Milk
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 2
+  FoodType: 0
   areaType: 000000000600000005000000
-  Location: 2
+  Location: 0
   Food_ID: 5
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Milk
   FoodName_Kr: "\uC6B0\uC720"
   FoodWeight: 1

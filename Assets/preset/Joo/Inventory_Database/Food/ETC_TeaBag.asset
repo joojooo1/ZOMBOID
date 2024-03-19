@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: ETC_TeaBag
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 9
+  FoodType: 0
   areaType: 000000000500000006000000
   Location: 0
   Food_ID: 11
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Tea Bag
   FoodName_Kr: "\uD2F0\uBC31"
   FoodWeight: 0.1

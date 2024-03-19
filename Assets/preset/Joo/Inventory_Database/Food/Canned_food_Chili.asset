@@ -19,9 +19,9 @@ MonoBehaviour:
   Food_ID: 0
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Canned Chili
   FoodName_Kr: "\uCE60\uB9AC\uC18C\uC2A4 \uD1B5\uC870\uB9BC"
   FoodWeight: 0.8

@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Drink_BeerBottle
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 2
+  FoodType: 0
   areaType: 0700000005000000
-  Location: 2
+  Location: 0
   Food_ID: 4
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Beer Bottle
   FoodName_Kr: "\uB9E5\uC8FC"
   FoodWeight: 0.4

@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Drink_White_WIne
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 2
+  FoodType: 0
   areaType: 0700000005000000
-  Location: 2
+  Location: 0
   Food_ID: 8
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: White Wine
   FoodName_Kr: "\uBC31\uD3EC\uB3C4\uC8FC"
   FoodWeight: 1

@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Meat_Bacon_Cooked
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 3
+  FoodType: 0
   areaType: 10000000
   Location: 0
   Food_ID: 33
   FoodState: 0
   Cooking_time_to_NextStep: 6
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Bacon
   FoodName_Kr: "\uBCA0\uC774\uCEE8"
   FoodWeight: 0.3

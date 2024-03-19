@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Grain_Rice
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 6
+  FoodType: 0
   areaType: 00000000
-  Location: 1
+  Location: 0
   Food_ID: 31
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Rice
   FoodName_Kr: "\uC300"
   FoodWeight: 2
