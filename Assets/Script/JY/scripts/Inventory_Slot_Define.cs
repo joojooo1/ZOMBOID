@@ -2,35 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
     bool IsPointerIn = false;
-    public int Storage_Num;
-    public int Slot_X;
-    public int Slot_Y;
+    public short Storage_Order_IfPlayer;
+    public short Slot_X;
+    public short Slot_Y;
 
+    public short Item_Type;
+    public short Item_ID;
+    public short Item_Amount;
+    public short Item_Weight;
+    public bool Is_Virtical;
+    public bool Is_Virtical_While_Moving;
+
+    Text Count;
+    Image Image;
+
+    public void Start()
+    {
+        //count, image 연동
+    }
+
+    public void Refresh_This_Slot()
+    {
+        //ID로 이미지 가져옴
+        Count.text = Item_Amount.ToString();
+        //Image.sprie =
+
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         //Debug.Log("DragStart");
         //InventoryOvermind.InventoryOM.FSN = InventorySlotNum;
 
+        Inventory_Player_Shown.InvPS.FS_Slot_X = Slot_X;
+        Inventory_Player_Shown.InvPS.FS_Slot_Y = Slot_Y;
+        Is_Virtical_While_Moving = Is_Virtical;
+    }
+    public void OnDrop(PointerEventData eventDate)
+    {
+        
+        //Debug.Log("Drop");
+        Inventory_Player_Shown.InvPS.LS_Slot_X = Slot_X;
+        Inventory_Player_Shown.InvPS.LS_Slot_Y = Slot_Y;
+        if (Inventory_Player_Shown.InvPS.FS_Slot_Y != Inventory_Player_Shown.InvPS.LS_Slot_Y &&
+            Inventory_Player_Shown.InvPS.FS_Slot_X != Inventory_Player_Shown.InvPS.LS_Slot_X)
+        {
+            //InventoryOvermind.InventoryOM.ItemAdd(0, InventoryOvermind.InventoryOM.ItemCountArray[InventorySlotNum]);
+            //드롭이 정상진행 되어야 교환 함수 실행
+        }
+        
 
     }
     public void OnDrag(PointerEventData eventData)
     {
         //InventoryOvermind.InventoryOM.DraggingImage(eventData, InventorySlotNum);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (Is_Virtical_While_Moving)
+            {
+                Is_Virtical_While_Moving = false;
+            }
+            else
+            {
+                Is_Virtical_While_Moving = true;
+            }
+            Inventory_Player_Shown.InvPS.FS_Is_Virtical = Is_Virtical_While_Moving;
+            //UPDATE
+        }
     }
-    public void OnDrop(PointerEventData eventDate)
-    {
-        //Debug.Log("Drop");
-        //InventoryOvermind.InventoryOM.LSN = InventorySlotNum;
-        //if (InventoryOvermind.InventoryOM.FSN != InventoryOvermind.InventoryOM.LSN)
-        //{
-        //    InventoryOvermind.InventoryOM.ItemAdd(0, InventoryOvermind.InventoryOM.ItemCountArray[InventorySlotNum]);
-        //}
-
-    }
+    
     public void OnEndDrag(PointerEventData eventData)
     {
         //Debug.Log("DragFailed");
@@ -38,10 +82,11 @@ public class InventorySlot : MonoBehaviour
         //UserStatusTextController.USTC.StatusRefresh();
 
         //InventoryOvermind.InventoryOM.DragFailed();
+        //드래그 타겟 이미지 비활성화
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //IsPointerIn = true;
+        IsPointerIn = true;
         //if (InventoryOvermind.InventoryOM.ItemCodeArray[InventorySlotNum] != 0)
         //{
         //    string name = InventoryOvermind.InventoryOM.ItemDataBase[InventoryOvermind.InventoryOM.ItemCodeArray[InventorySlotNum]].ItemName;
@@ -54,7 +99,7 @@ public class InventorySlot : MonoBehaviour
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //IsPointerIn = false;
+        IsPointerIn = false;
         //ItemInfoTextBox.InfoTextBox.TextSet(null, 0, 0, 0, IsPointerIn, null);
     }
 }
