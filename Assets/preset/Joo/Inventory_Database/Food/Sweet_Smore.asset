@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Sweet_Smore
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 0
-  areaType: 000000000500000006000000
-  Location: 0
+  FoodType: 7
   Food_ID: 48
   FoodState: 1
   Cooking_time_to_NextStep: 0
@@ -36,12 +34,21 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 0
   F_Calories: 200
   F_Thirst: 0
   F_Satiety:
   - 10
   - 7
   - 4
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 0
+  - 10
+  - 20
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

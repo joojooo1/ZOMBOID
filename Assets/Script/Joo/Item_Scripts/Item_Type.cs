@@ -73,8 +73,8 @@ public enum Food_Type
     Grain = 6,
     Sweet = 7,
     Vegetable = 8,
-    etc = 9,
-    Cooking = 10
+    Cooking = 9,
+    Water = 10
 }
 
 public enum Freshness_Level

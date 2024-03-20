@@ -24,6 +24,7 @@ public class Item_Medical : ScriptableObject
     public bool Is_Clean;
     public bool Is_Ins;
 
+    public int Capacity;
     public float Power;
     /*
      Bandage_Power: 상처회복속도

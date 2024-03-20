@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: Grain_GranolaBar
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 0
-  areaType: 0000000005000000
-  Location: 0
+  FoodType: 6
   Food_ID: 27
-  FoodState: 0
+  FoodState: 1
   Cooking_time_to_NextStep: 0
   Height: 1
   Width: 1
@@ -36,10 +34,13 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 0
   F_Calories: 270
   F_Thirst: 0
   F_Satiety:
   - 15
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness: []
+  F_Boredom: []
+  F_Fatigue: []
+  Probability_of_poisoning: 0
+  Sterilize_Power: 0

@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Drink_Whiskey_Bottle
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 0
-  areaType: 0700000005000000
-  Location: 0
+  FoodType: 2
   Food_ID: 7
   FoodState: 0
   Cooking_time_to_NextStep: 0
@@ -39,10 +37,14 @@ MonoBehaviour:
   Is_Alcoholic: 1
   Is_Spice: 0
   Usable_as_bottle: 1
+  Ingredients_Cooked: 0
   F_Calories: 1500
   F_Thirst: -20
   F_Satiety:
   - 20
-  F_Unhappiness: -10
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - -10
+  F_Boredom: []
+  F_Fatigue: []
+  Probability_of_poisoning: 0
+  Sterilize_Power: 2

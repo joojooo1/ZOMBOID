@@ -15,8 +15,6 @@ MonoBehaviour:
   type: 3
   MedicalType: 4
   Usingtype: 9
-  areaType: 000000000b000000
-  Location: 1
   Medical_ID: 24
   MedicalName: Cigarettes
   MedicalName_Kr: "\uB2F4\uBC30"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 20
   Power: 5

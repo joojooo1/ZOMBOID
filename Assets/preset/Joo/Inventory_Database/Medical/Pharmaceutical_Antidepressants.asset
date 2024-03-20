@@ -15,8 +15,6 @@ MonoBehaviour:
   type: 3
   MedicalType: 4
   Usingtype: 9
-  areaType: 000000000b000000
-  Location: 1
   Medical_ID: 22
   MedicalName: Antidepressants
   MedicalName_Kr: "\uD56D\uC6B0\uC6B8\uC81C"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 10
   Power: 3

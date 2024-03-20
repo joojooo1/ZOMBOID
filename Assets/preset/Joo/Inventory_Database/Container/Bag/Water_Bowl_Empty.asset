@@ -20,16 +20,16 @@ MonoBehaviour:
   Container_ID: 0
   ContainerName: Bowl
   ContainerName_Kr: "\uADF8\uB987"
-  ContainergWeight: 0
+  ContainergWeight: 0.5
   Container_Image: {fileID: 21300000, guid: b4c72231134b5884aaf9ac66206cf05c, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 2
+  Nesting_Depth: 1
   WeightReduction: 0
   Store_Water: 1
   Store_Oil: 0
   On_Fire: 0
   On_Microwave: 0
-  Is_Empty: 0
-  Capacity_Water: 0
-  Rain_factor: 0
+  Is_Empty: 1
+  Capacity_Water: 2
+  Rain_factor: 0.5

@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: Fish_Fillet_Cooked
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 0
-  areaType: 10000000
-  Location: 0
+  FoodType: 4
   Food_ID: 16
-  FoodState: 0
+  FoodState: 1
   Cooking_time_to_NextStep: 6
   Height: 1
   Width: 1
@@ -36,12 +34,21 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 1
   F_Calories: 205
   F_Thirst: 0
   F_Satiety:
   - 33
   - 19
   - 11
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 0
+  - 10
+  - 20
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

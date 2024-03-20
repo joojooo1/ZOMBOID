@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Drink_Milk
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 0
-  areaType: 000000000600000005000000
-  Location: 0
+  FoodType: 2
   Food_ID: 5
   FoodState: 0
   Cooking_time_to_NextStep: 0
@@ -37,10 +35,19 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 1
   F_Calories: 110
   F_Thirst: -100
   F_Satiety:
   - 10
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 0
+  - 10
+  - 20
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0
