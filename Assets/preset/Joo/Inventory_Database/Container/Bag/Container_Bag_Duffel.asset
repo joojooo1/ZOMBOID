@@ -17,7 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 1
   bag_Type: 4
-  Container_ID: 0
+  Container_ID: 2
   ContainerName: "\uB354\uD50C\uBC31"
   ContainerName_Kr: DuffelBag
   ContainergWeight: 1
@@ -26,10 +26,10 @@ MonoBehaviour:
   Width: 3
   Nesting_Depth: 1
   WeightReduction: 0.65
-  RunSpeedModifier: 0.95
   Store_Water: 0
   Store_Oil: 0
   On_Fire: 0
-  On_microwave: 0
+  On_Microwave: 0
+  Is_Empty: 0
   Capacity_Water: 0
   Rain_factor: 0

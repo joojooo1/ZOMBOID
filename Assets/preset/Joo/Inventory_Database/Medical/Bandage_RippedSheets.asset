@@ -15,8 +15,6 @@ MonoBehaviour:
   type: 3
   MedicalType: 0
   Usingtype: 9
-  areaType: 000000000f000000
-  Location: 1
   Medical_ID: 6
   MedicalName: Ripped Sheets
   MedicalName_Kr: "\uCC22\uC5B4\uC9C4 \uCC9C"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 0
+  Capacity: 0
   Power: 2

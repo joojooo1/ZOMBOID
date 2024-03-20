@@ -15,8 +15,6 @@ MonoBehaviour:
   type: 3
   MedicalType: 0
   Usingtype: 9
-  areaType: 0b000000
-  Location: 1
   Medical_ID: 0
   MedicalName: Adhesive Bandages
   MedicalName_Kr: "\uBC18\uCC3D\uACE0"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 0
   Power: 1.5

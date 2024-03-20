@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 4
-  Food_ID: 17
+  Food_ID: 21
   FoodState: 0
   Cooking_time_to_NextStep: 4
   Height: 1
@@ -35,7 +35,7 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
-  Ingredients_Cooked: 1
+  Ingredients_Cooked: 0
   F_Calories: 205
   F_Thirst: 0
   F_Satiety:

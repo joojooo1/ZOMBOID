@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Equipment_Tweezers
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 3
+  MedicalType: 0
   Usingtype: 9
-  areaType: 0b000000
-  Location: 1
   Medical_ID: 17
   MedicalName: Tweezers
   MedicalName_Kr: "\uD540\uC14B"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 0
   Power: 0

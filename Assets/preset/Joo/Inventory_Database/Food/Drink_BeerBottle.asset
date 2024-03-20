@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 2
-  Food_ID: 4
+  Food_ID: 9
   FoodState: 0
   Cooking_time_to_NextStep: 0
   Height: 1

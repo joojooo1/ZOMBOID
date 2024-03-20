@@ -17,7 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 1
   bag_Type: 6
-  Container_ID: 0
+  Container_ID: 5
   ContainerName: "\uAD70\uC6A9 \uBC30\uB0AD"
   ContainerName_Kr: Military Backpack
   ContainergWeight: 0.2

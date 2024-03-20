@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Beta Blockers
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 4
+  MedicalType: 0
   Usingtype: 9
   Medical_ID: 23
   MedicalName: Beta Blockers

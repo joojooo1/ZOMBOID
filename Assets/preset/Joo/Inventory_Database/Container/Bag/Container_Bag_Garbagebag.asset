@@ -17,7 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 3
   bag_Type: 2
-  Container_ID: 0
+  Container_ID: 4
   ContainerName: "\uC4F0\uB808\uAE30 \uBD09\uD22C"
   ContainerName_Kr: Garbagebag
   ContainergWeight: 0.1
@@ -30,5 +30,6 @@ MonoBehaviour:
   Store_Oil: 0
   On_Fire: 0
   On_Microwave: 0
+  Is_Empty: 0
   Capacity_Water: 0
   Rain_factor: 0

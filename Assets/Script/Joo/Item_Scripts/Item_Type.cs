@@ -118,7 +118,9 @@ public enum Skill_Type
 public enum Electronic_Type
 {
     PowerSources = 0,
-
+    Wearable = 1,
+    Gas = 2,
+    Light = 3
 }
 
 public enum Weapon_type

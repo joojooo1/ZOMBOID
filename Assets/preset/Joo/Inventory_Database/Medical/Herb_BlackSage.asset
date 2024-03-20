@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Herb_BlackSage
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 2
+  MedicalType: 0
   Usingtype: 9
-  areaType: 0b00000012000000
-  Location: 1
   Medical_ID: 18
   MedicalName: BlackSage
   MedicalName_Kr: "\uBE14\uB799\uC138\uC774\uC9C0"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 0
+  Capacity: 0
   Power: 7

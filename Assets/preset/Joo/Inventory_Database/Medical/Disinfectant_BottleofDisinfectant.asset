@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Disinfectant_BottleofDisinfectant
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 1
+  MedicalType: 0
   Usingtype: 9
-  areaType: 000000000b000000
-  Location: 1
   Medical_ID: 11
   MedicalName: Bottle of Disinfectant
   MedicalName_Kr: "\uC18C\uB3C5\uC57D"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 1
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 0
   Power: 3

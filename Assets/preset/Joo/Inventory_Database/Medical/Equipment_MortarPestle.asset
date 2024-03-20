@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Equipment_MortarPestle
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 3
+  MedicalType: 0
   Usingtype: 9
-  areaType: 0b000000
-  Location: 1
   Medical_ID: 13
   MedicalName: MortarPestle
   MedicalName_Kr: "\uC57D\uC0AC\uBC1C"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 0
+  Capacity: 0
   Power: 0

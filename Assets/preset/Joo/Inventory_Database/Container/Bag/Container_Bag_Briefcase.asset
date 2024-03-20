@@ -17,7 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 3
   bag_Type: 2
-  Container_ID: 0
+  Container_ID: 1
   ContainerName: "\uC11C\uB958 \uAC00\uBC29"
   ContainerName_Kr: Briefcase
   ContainergWeight: 1.5

@@ -17,7 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 2
   bag_Type: 1
-  Container_ID: 0
+  Container_ID: 3
   ContainerName: "\uD5C8\uB9AC\uAC00\uBC29"
   ContainerName_Kr: FannyPack
   ContainergWeight: 0.2
@@ -26,10 +26,10 @@ MonoBehaviour:
   Width: 2
   Nesting_Depth: 1
   WeightReduction: 0.5
-  RunSpeedModifier: 0.98
   Store_Water: 0
   Store_Oil: 0
   On_Fire: 0
-  On_microwave: 0
+  On_Microwave: 0
+  Is_Empty: 0
   Capacity_Water: 0
   Rain_factor: 0

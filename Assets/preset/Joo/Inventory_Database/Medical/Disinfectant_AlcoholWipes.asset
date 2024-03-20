@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Disinfectant_AlcoholWipes
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 1
+  MedicalType: 0
   Usingtype: 9
-  areaType: 000000000b000000
-  Location: 1
   Medical_ID: 10
   MedicalName: Alcohol Wipes
   MedicalName_Kr: "\uC54C\uCF5C\uC19C"
@@ -28,4 +26,5 @@ MonoBehaviour:
   Is_Disinfection: 1
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 0
   Power: 4
