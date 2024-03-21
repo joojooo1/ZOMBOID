@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   Usingtype: 7
+  Power_type: 5
   WeaponType: 7
-  areaType: 0e00000011000000
-  Location: 1
   Weapon_ID: 17
   WeaponName: Plank
   WeaponName_Kr: "\uD310\uC790"

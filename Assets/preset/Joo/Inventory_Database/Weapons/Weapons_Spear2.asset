@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   Usingtype: 0
+  Power_type: 0
   WeaponType: 5
-  areaType: 00000000
-  Location: 1
+  created: 0
   Weapon_ID: 31
   WeaponName: StickSharpened
   WeaponName_Kr: "\uB098\uBB34\uCC3D"

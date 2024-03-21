@@ -580,19 +580,14 @@ GameObject:
   - component: {fileID: 8714550619148379154}
   - component: {fileID: 5598427090778339627}
   - component: {fileID: 333864280003523641}
-  - component: {fileID: 8494904685334991931}
-  - component: {fileID: 4501799666224471547}
-  - component: {fileID: 682236801796081560}
-  - component: {fileID: 6709710899631478558}
-  - component: {fileID: 367789335178478904}
-  - component: {fileID: 4015221462191616058}
+  - component: {fileID: 7759345441010144333}
   m_Layer: 0
   m_Name: Player_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1193642870956418575
 Transform:
   m_ObjectHideFlags: 0
@@ -647,6 +642,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Playermovement_speed: 7
   Playerturnspeed: 10000
+  zombie: {fileID: 0}
+  injury: 0
+  zombieLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rayLength: 100
+  maxDetectionDistance: 15
+  maxTargets: 3
+  attackRange: 15
+  curretposture: 
 --- !u!54 &5598427090778339627
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -691,120 +696,34 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.22456455
   m_Height: 1.9792475
   m_Direction: 1
   m_Center: {x: -0.015906334, y: 0.89346415, z: -0.051589966}
---- !u!114 &8494904685334991931
-MonoBehaviour:
+--- !u!195 &7759345441010144333
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4876846059261434598}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5970513084ceeb94b9ea7b1b374a8c01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Inven_main: {fileID: 4015221462191616058}
-  Skill: {fileID: 367789335178478904}
-  playerState: {fileID: 4501799666224471547}
-  player_HP: {fileID: 682236801796081560}
-  playerMoodles: {fileID: 6709710899631478558}
-  Weight: 83
-  Calories: 300
-  Temperature: 36
-  Satiety: 50
-  Attack_Power: 8
-  Evasion: 0.15
-  Moving_Speed: 3
-  Accuracy: 0.7
-  Is_Equipping_Weapons: 0
-  Is_Aiming: 0
-  Is_Running: 0
-  Is_Sleeping: 0
-  textText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &4501799666224471547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4876846059261434598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54e776be6ec65e40902cb60002c3fd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Infection: 0
-  _Endurance: 100
-  _P_Has_a_Cold: 0
-  _Thirsty: 0
-  _Tired: 0
---- !u!114 &682236801796081560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4876846059261434598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 806fc61ad176e664a9f4bdd54388f68a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player_Max_Health: 100
-  Player_current_Health: 0
-  HP_Recovery_Speed: 1
---- !u!114 &6709710899631478558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4876846059261434598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f566c0bfb1cb914391702f41a122ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &367789335178478904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4876846059261434598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c254e4c140fab74d88bcd487b79fea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4015221462191616058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4876846059261434598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5019b9eaf3c71ab468ed36993c757f94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Inventory: []
-  weapon_ID: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.15
+  m_Speed: 3.5
+  m_Acceleration: Infinity
+  avoidancePriority: 50
+  m_AngularSpeed: Infinity
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.15
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5264492318086727840
 GameObject:
   m_ObjectHideFlags: 0

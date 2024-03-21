@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   Usingtype: 0
+  Power_type: 0
   WeaponType: 6
-  areaType: 01000000
-  Location: 1
+  created: 0
   Weapon_ID: 7
   WeaponName: M36 Revolver
   WeaponName_Kr: "M36 \uB9AC\uBCFC\uBC84"
@@ -26,7 +26,7 @@ MonoBehaviour:
   Nesting_Depth: 0
   Is_Equipping: 0
   Is_TwoHand: 0
-  Equipping_Position: 00000000
+  Equipping_Position: 01000000
   WeaponWeight: 1.5
   W_Minimum_damage: 0.7
   W_Maximum_damage: 1.2

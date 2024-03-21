@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1333044d3d8744f893776360c46754, type: 3}
+  m_Name: Weapons_Axe0_Axe
+  m_EditorClassIdentifier: 
+  type: 0
+  Usingtype: 10
+  Power_type: 0
+  WeaponType: 0
+  Weapon_ID: 0
+  WeaponName: Axe
+  WeaponName_Kr: "\uB3C4\uB07C"
+  ItemImage: {fileID: 21300000, guid: 1e2a0b9654c8fa54ca7d417db9de91ae, type: 3}
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
+  Is_Equipping: 0
+  Is_TwoHand: 1
+  Equipping_Position: 0000000001000000
+  WeaponWeight: 3
+  W_Minimum_damage: 0.8
+  W_Maximum_damage: 2
+  W_Damage_done_to_doors: 35
+  W_Damage_done_to_trees: 35
+  W_Minimum_Range: 0.61
+  W_Maximum_Range: 1.2
+  W_Attack_speed: 1
+  W_Critical_chance: 0.5
+  W_Critical_multiplier: 5
+  W_Knockback: 0.3
+  W_Knockdown: 2
+  W_Max_Condition: 13
+  W_Condition_lower_chance: 0.02857143
+  W_Multi_Hit: 2
+  Gun_Ammunition: 0
+  Gun_Magazine: 0
+  Gun_Accuracy: 0
+  Gun_Additional_Accuracy_point: 0
+  Gun_Additional_Critical_chance: 0
+  Gun_Noise_radius: 0
+  Gun_Max_Capacity: 0
+  Gun_Aiming_time: 0
+  Gun_Reload_time: 0

@@ -8,6 +8,8 @@ public class Item_Medical : ScriptableObject
     public Type type;
     public Medical_Type MedicalType;
     public Using_Type Usingtype;
+    public PowerSources_Type Power_type;
+    public bool created;
 
     public int Medical_ID;
 

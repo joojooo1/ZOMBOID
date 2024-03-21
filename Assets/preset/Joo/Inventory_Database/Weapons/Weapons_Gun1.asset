@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   Usingtype: 0
+  Power_type: 0
   WeaponType: 6
-  areaType: 01000000
-  Location: 1
+  created: 0
   Weapon_ID: 4
   WeaponName: ShotgunDoublebarrel
   WeaponName_Kr: "\uB354\uBE14 \uBC30\uB7F4 \uC0B0\uD0C4\uCD1D"

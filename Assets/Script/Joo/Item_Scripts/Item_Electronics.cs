@@ -5,7 +5,11 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Item_Electronics : ScriptableObject
 {
-    public Electronic_Type type;
+    public Type type;
+    public Using_Type usingtype;
+    public Electronic_Type electronic_Type;
+    public PowerSources_Type Power_type;  // 만들어내는 or 담는 연료의 타입
+    public PowerSources_Type UsingPower_type;  // 사용하는 연료의 타입
     public body_point[] Equipping_Position;
     public int Electronics_ID;
 
@@ -26,8 +30,7 @@ public class Item_Electronics : ScriptableObject
 
     public float Range;  // 발전기의 전력 범위 20
 
-    public float Condition;  // 수리해도 내구도는 10%씩 down
-
+    public float Condition;  // 수리시 4% + (0.5 * 전기level)%를 복원
 
 
 }
