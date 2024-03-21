@@ -8,6 +8,8 @@ public class Item_Literature : ScriptableObject
     public Type type;
     public Book_Type LiteratureType;
     public Skill_Type LiteratureSkillType;
+    public PowerSources_Type PowerSources_Type;
+    public bool created;
     public int Literature_ID;
 
     public float Height;

@@ -15,9 +15,9 @@ MonoBehaviour:
   type: 4
   LiteratureType: 1
   LiteratureSkillType: 6
-  areaType: 0000000009000000
-  Location: 5
-  Literature_ID: 53
+  PowerSources_Type: 5
+  created: 0
+  Literature_ID: 57
   Height: 1
   Width: 1
   Nesting_Depth: 1
@@ -31,4 +31,3 @@ MonoBehaviour:
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0
-  Annotated: 

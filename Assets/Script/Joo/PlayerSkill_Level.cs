@@ -542,7 +542,7 @@ public class PlayerGunSkill_Level  // Á¶ÁØ(ÃÑ), ÀçÀåÀü(ÃÑ)
         }
     }
 }
-public class PlayerCraftingSkill_Level  // ¸ñ°ø, ¿ä¸®, ³ó»ç, ÀÇ·á, Àü±â°øÇÐ, Àç´Ü¼ú
+public class PlayerCraftingSkill_Level  // ¸ñ°ø, ¿ä¸®, ³ó»ç, ÀÇ·á, Àü±â°øÇÐ
 {
     string C_SkillName = "";
     float C_Level = 0f;
@@ -584,10 +584,7 @@ public class PlayerCraftingSkill_Level  // ¸ñ°ø, ¿ä¸®, ³ó»ç, ÀÇ·á, Àü±â°øÇÐ, Àç´
             {
 
             }
-            else if (C_SkillName == "Tailoring")
-            {
 
-            }
         }
     }
 
@@ -640,10 +637,7 @@ public class PlayerCraftingSkill_Level  // ¸ñ°ø, ¿ä¸®, ³ó»ç, ÀÇ·á, Àü±â°øÇÐ, Àç´
             {
 
             }
-            else if (C_SkillName == "Tailoring")
-            {
 
-            }
 
         }
     }
@@ -660,44 +654,89 @@ public class PlayerCraftingSkill_Level  // ¸ñ°ø, ¿ä¸®, ³ó»ç, ÀÇ·á, Àü±â°øÇÐ, Àç´
 
     public void Set_C_Books_Point(Item_Literature Book)  // skillbook ÀÏ¶§ È£Ãâ
     {
-        if(Book.Literature_Level > C_Level)
+        switch (Book.Literature_Level)
         {
-            C_Additional_points_through_Books = 1f;
-            Debug.Log("¾î·Á¿ö¼­ ÀÐÁö ¸øÇÔ");
-            // Ã¥ ¸ø ÀÐÀ½
-        }
-        else if(Book.Literature_Level < C_Level)
-        {
-            C_Additional_points_through_Books = 1f;
-            Debug.Log("ÀÌ¹Ì ´Ù ¾Æ´Â ³»¿ëÀÓ");
-            // Ã¥À» ÀÐ±äÇÏÁö¸¸ ¾Æ¹« º¯È­ ¾øÀ½
-        }
-        else
-        {
-            switch (Book.Literature_Level)
-            {
-                case 0:
-                    break;
-                case 1:
+            case 0:
+                break;
+            case 1:
+                if (C_Level == 1 || C_Level == 2)
                     C_Additional_points_through_Books = 3f;
-                    break;
-                case 2:
+                else
+                    AboutBooks(true);
+                break;
+            case 2:
+                if (C_Level == 3 || C_Level == 4)
                     C_Additional_points_through_Books = 5f;
-                    break;
-                case 3:
+                else if (C_Level < 3)
+                    AboutBooks(false);
+                else
+                    AboutBooks(true);
+                break;
+            case 3:
+                if (C_Level == 5 || C_Level == 6)
                     C_Additional_points_through_Books = 8f;
-                    break;
-                case 4:
+                else if (C_Level < 5)
+                    AboutBooks(false);
+                else
+                    AboutBooks(true);
+                break;
+            case 4:
+                if (C_Level == 7 || C_Level == 8)
                     C_Additional_points_through_Books = 12f;
-                    break;
-                case 5:
+                else if (C_Level < 7)
+                    AboutBooks(false);
+                else
+                    AboutBooks(true);
+                break;
+            case 5:
+                if (C_Level == 9 || C_Level == 10)
                     C_Additional_points_through_Books = 16f;
-                    break;
-                default: break;
-            }
+                else
+                    AboutBooks(false);
+                break;
+            default: break;
         }
 
     }
+
+    public void AboutBooks(bool over)
+    {
+        if(over)
+            Debug.Log("¾î·Á¿ö¼­ ÀÐÁö ¸øÇÔ");  // Ã¥ ¸ø ÀÐÀ½
+        else
+            Debug.Log("ÀÌ¹Ì ´Ù ¾Æ´Â ³»¿ëÀÓ");  // Ã¥À» ÀÐ±äÇÏÁö¸¸ ¾Æ¹« º¯È­ ¾øÀ½
+    }
+
+    /*  Magazine  
+    12. Good Cooking Magazine Vol. 1 : ÄÉÀÌÅ© ¹ÝÁ×, ÆÄÀÌ ¹ÝÁ×, ÃÊÄÝ¸´Ä¨ÄíÅ° ¹ÝÁ×, ÃÊÄÝ¸´ÄíÅ° ¹ÝÁ×, ¿ÀÆ®¹ÐÄíÅ° ¹ÝÁ×, ¼îÆ®ºê·¹µåÄíÅ° ¹ÝÁ×, ¼³ÅÁÄíÅ° ¹ÝÁ× ¸¸µé±â
+    13. Good Cooking Magazine Vol. 2 :  »§, ÇÇÀÚ, ¹Ù°ÔÆ®, ºñ½ºÅ¶ ¸¸µé±â
+    14. Electronics Magazine Vol. 1 :  ¸®¸ðÄÜ v1, v2, v3 ¸¸µé±â
+    15. Electronics Magazine Vol. 2 :  Å¸ÀÌ¸Ó ¸¸µé±â, ´Ù¸¥ ¹°°Ç¿¡ Å¸ÀÌ¸Ó ´Þ±â
+    16. Electronics Magazine Vol. 3 :  ¸ð¼Ç¼¾¼­ v1, v2, v3 ¸¸µé±â
+    17. Electronics Magazine Vol. 4 :  ¿ø°Ý Æ®¸®°Å ¸¸µé±â, ´Ù¸¥ ¹°°Ç¿¡ ¿ø°Ý Æ®¸®°Å ´Þ±â
+    18. Engineer Magazine Vol. 1 :  ¼ÒÀ½ ¹ß»ý±â ¸¸µé±â
+    19. Engineer Magazine Vol. 2 :  ¿¬¸·Åº ¸¸µé±â
+    20. The Farming Magazine :  »ìÃæÁ¦ ½ºÇÁ·¹ÀÌ, °õÆÎÀÌ ½ºÇÁ·¹ÀÌ ¸¸µé±â
+    21. Angler USA Magazine Vol. 1 :  ³¬½Ã´ë ¸¸µé±â, ³¬½Ã´ë °íÄ¡±â
+    22. Angler USA Magazine Vol. 2 :  ³¬½Ã ±×¹° ¸¸µé±â, °íÀå³­ ³¬½Ã ±×¹°¿¡¼­ ¿ÍÀÌ¾î ¶¼³»±â
+    23. The Herbalist :  µ¶ÀÌ ÀÖ´Â ¿­¸Å, ¹ö¼¸ ½Äº° °¡´É
+    24. How to Use Generators :  ¹ßÀü±â »ç¿ë¹ý
+    25. The Hunter Magazine Vol. 1 :  ½º³×¾î Æ®·¦ ¸¸µé±â
+    26. The Hunter Magazine Vol. 2 :  ÇÔÁ¤»óÀÚ1 ¸¸µé±â, ½ºÆ½ Æ®·¦ ¸¸µé±â
+    27. The Hunter Magazine Vol. 3 :  ÇÔ¼º»óÀÚ2 ¸¸µé±â,  ÄÉÀÌÁöÆ®·¦ ¸¸µé±â
+    28. Laines Auto Manual - Commercial Models :  Ç¥ÁØ Â÷·® À¯Çü À¯Áö°ü¸® °¡´É
+    29. Laines Auto Manual - Performance Models :  ´ëÇü Â÷·® À¯Çü À¯Áö°ü¸® °¡´É
+    30. Laines Auto Manual - Standard Models :  ½ºÆ÷Ã÷ Â÷·® À¯Çü À¯Áö°ü¸® °¡´É
+    31. The Metalwork Magazine Vol. 1 :  ±Ý¼Óº® ¸¸µé±â, ±Ý¼ÓÁöºØ ¸¸µé±â
+    32. The Metalwork Magazine Vol. 2 :  ±Ý¼ÓÄÁÅ×ÀÌ³Ê ¸¸µé±â
+    33. The Metalwork Magazine Vol. 3 :  ±Ý¼Ó¿ïÅ¸¸® ¸¸µé±â
+    34. The Metalwork Magazine Vol. 4 :  ±Ý¼ÓÆÇ ¸¸µé±â, ¼ÒÇü±Ý¼ÓÆÇ ¸¸µé±â
+    35. Guerilla Radio Vol. 1 :  ÀÓ½Ã ¶óµð¿À Á¦ÀÛ
+    36. Guerilla Radio Vol. 2 :  ÀÓ½Ã ¹«Àü±â Á¦ÀÛ
+    37. Guerilla Radio Vol. 3 :  ÀÓ½Ã ÇÜ ¶óµð¿À Á¦ÀÛ
+     */
+
+
 
 }
 

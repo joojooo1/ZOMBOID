@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   Usingtype: 3
+  Power_type: 0
   WeaponType: 7
-  areaType: 000000000500000011000000
-  Location: 1
+  created: 0
   Weapon_ID: 16
   WeaponName: Fishing Rod
   WeaponName_Kr: "\uB09A\uC2DC\uB300"

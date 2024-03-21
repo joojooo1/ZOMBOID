@@ -3741,10 +3741,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 333864280003523641, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1193642870956418575, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20.7
@@ -3789,27 +3785,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 4876846059261434598, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8494904685334991931, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-      propertyPath: player_Characteristic
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8494904685334991931, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-    - {fileID: 4501799666224471547, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-    - {fileID: 682236801796081560, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-    - {fileID: 6709710899631478558, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-    - {fileID: 367789335178478904, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-    - {fileID: 4015221462191616058, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4876846059261434598, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1035265174}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
 --- !u!1 &692986644
 GameObject:
@@ -4313,33 +4292,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1 &1035265150 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4876846059261434598, guid: 9d01a49ca032a384bb77cef20c8b3e9e, type: 3}
-  m_PrefabInstance: {fileID: 682063022}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &1035265174
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1035265150}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.15
-  m_Speed: 3.5
-  m_Acceleration: Infinity
-  avoidancePriority: 50
-  m_AngularSpeed: Infinity
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.15
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &1128601082
 GameObject:
   m_ObjectHideFlags: 0
@@ -4570,6 +4522,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f02e236f8a61594b8f5f15685ff2739, type: 2}
   - {fileID: 11400000, guid: 37aec868048f3f248bba428b2ffddaf8, type: 2}
   - {fileID: 11400000, guid: 5e85f61823d491a49a1654e704e9e0ea, type: 2}
+  - {fileID: 11400000, guid: 01c7564f7327150428b066ef2ce21f00, type: 2}
+  - {fileID: 11400000, guid: ec7a5810bb735a649a0ccf83c832bc54, type: 2}
+  - {fileID: 11400000, guid: 90de7feb64e3f614caf4ee1104327a44, type: 2}
   - {fileID: 11400000, guid: 55427343f2143cd4fa0647b297dc0f78, type: 2}
   - {fileID: 11400000, guid: 34ebb455fb1efd044801bfa781106cf6, type: 2}
   - {fileID: 11400000, guid: e8ebfd8d86de2f941b8540389166f223, type: 2}
@@ -4580,6 +4535,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf98b28cc9e49df459f13c5cb9657bfb, type: 2}
   - {fileID: 11400000, guid: fbb3895595a23f14baad1cd229a0452c, type: 2}
   - {fileID: 11400000, guid: da7acd949209372428247f059e8709dc, type: 2}
+  - {fileID: 11400000, guid: dd9f57959ce35ff47b4729590daaa099, type: 2}
   - {fileID: 11400000, guid: 957d641f807e8e24b93baf23370b16b4, type: 2}
   - {fileID: 11400000, guid: 8b7e706cd82a2da44aa3b5d8d24fbd51, type: 2}
   - {fileID: 11400000, guid: be43f926cf219ea41b58b218f859214f, type: 2}
@@ -4625,12 +4581,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7eb15e022521e4244b582f5997d6a282, type: 2}
   - {fileID: 11400000, guid: 5e69cf4d44af33349b7c13f29a59145e, type: 2}
   - {fileID: 11400000, guid: 8a6cc014a6de11d49bae3807bbb7f538, type: 2}
-  - {fileID: 11400000, guid: b64cca7f9fe8ff54790e9848f0b5e6fe, type: 2}
-  - {fileID: 11400000, guid: f963121b45d7151409a6b4eff6458c22, type: 2}
-  - {fileID: 11400000, guid: 359ae85400a823b469c230b9b43e4ad6, type: 2}
-  - {fileID: 11400000, guid: 7bdc180ff3c7cd545bb3b309fffea86b, type: 2}
-  - {fileID: 11400000, guid: ffe1a7c97072f8e4c804860e865d1c63, type: 2}
-  - {fileID: 11400000, guid: dd9f57959ce35ff47b4729590daaa099, type: 2}
   electronics_Ins: []
   clothing_Ins: []
   gardening_Ins: []

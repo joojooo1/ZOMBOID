@@ -15,6 +15,8 @@ MonoBehaviour:
   type: 3
   MedicalType: 0
   Usingtype: 9
+  Power_type: 0
+  created: 0
   Medical_ID: 22
   MedicalName: Antidepressants
   MedicalName_Kr: "\uD56D\uC6B0\uC6B8\uC81C"

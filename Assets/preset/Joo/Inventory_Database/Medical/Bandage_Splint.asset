@@ -15,6 +15,8 @@ MonoBehaviour:
   type: 3
   MedicalType: 0
   Usingtype: 9
+  Power_type: 0
+  created: 1
   Medical_ID: 9
   MedicalName: Splint
   MedicalName_Kr: "\uBD80\uBAA9"
