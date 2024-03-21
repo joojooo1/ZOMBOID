@@ -8,8 +8,6 @@ public class Item_Literature : ScriptableObject
     public Type type;
     public Book_Type LiteratureType;
     public Skill_Type LiteratureSkillType;
-    public Area_Type[] areaType;   // 스폰되는 건물
-    public Location_Type Location;  // 스폰되는 Container 등
     public int Literature_ID;
 
     public float Height;
@@ -36,7 +34,6 @@ public class Item_Literature : ScriptableObject
     public float L_Unhappiness;
     public float L_Stress;
     public float L_Boredom;
-
 
 }
 

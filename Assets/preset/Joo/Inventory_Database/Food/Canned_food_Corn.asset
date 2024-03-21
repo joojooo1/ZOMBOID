@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 0
-  areaType: 000000000600000005000000
-  Location: 1
-  Food_ID: 1
+  Food_ID: 2
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Canned Corn
   FoodName_Kr: "\uC625\uC218\uC218 \uD1B5\uC870\uB9BC"
   FoodWeight: 0.8
@@ -37,12 +35,21 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 1
   F_Calories: 315
   F_Thirst: -4
   F_Satiety:
   - 16
   - 12
   - 7
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 0
+  - 10
+  - 20
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

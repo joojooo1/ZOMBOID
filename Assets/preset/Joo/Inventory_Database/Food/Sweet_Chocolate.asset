@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 7
-  areaType: 000000000500000006000000
-  Location: 1
-  Food_ID: 47
+  Food_ID: 63
   FoodState: 1
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Chocolate
   FoodName_Kr: "\uCD08\uCF5C\uB9BF"
   FoodWeight: 0.2
@@ -36,10 +34,14 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 1
   F_Calories: 850
   F_Thirst: 0
   F_Satiety:
   - 20
-  F_Unhappiness: -10
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - -10
+  F_Boredom: []
+  F_Fatigue: []
+  Probability_of_poisoning: 0
+  Sterilize_Power: 0

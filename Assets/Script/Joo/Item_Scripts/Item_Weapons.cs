@@ -8,8 +8,6 @@ public class Item_Weapons : ScriptableObject
     public Type type;
     public Using_Type Usingtype;
     public Weapon_type WeaponType;
-    public Area_Type[] areaType;   // 스폰되는 건물
-    public Location_Type Location;  // 스폰되는 Container 등
     public int Weapon_ID; // 각 무기에 대한 고유ID
 
     public string WeaponName;

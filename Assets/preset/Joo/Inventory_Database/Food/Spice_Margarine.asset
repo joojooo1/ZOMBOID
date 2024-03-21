@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 1
-  areaType: 000000000600000007000000
-  Location: 1
-  Food_ID: 45
+  Food_ID: 59
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Margarine
   FoodName_Kr: "\uB9C8\uAC00\uB9B0"
   FoodWeight: 0.3
@@ -36,10 +34,14 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 1
   Usable_as_bottle: 0
+  Ingredients_Cooked: 1
   F_Calories: 3255
   F_Thirst: 0
   F_Satiety:
   - 24
-  F_Unhappiness: 20
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 20
+  F_Boredom: []
+  F_Fatigue: []
+  Probability_of_poisoning: 0
+  Sterilize_Power: 0

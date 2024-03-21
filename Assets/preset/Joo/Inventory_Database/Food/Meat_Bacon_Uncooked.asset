@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 3
-  areaType: 0000000006000000
-  Location: 3
-  Food_ID: 34
+  Food_ID: 48
   FoodState: 0
   Cooking_time_to_NextStep: 4
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Bacon
   FoodName_Kr: "\uBCA0\uC774\uCEE8"
   FoodWeight: 0.3
@@ -37,12 +35,21 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 0
   F_Calories: 160
   F_Thirst: 0
   F_Satiety:
   - 12
   - 9
   - 5
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 0
+  - 10
+  - 20
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

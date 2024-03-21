@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: Magazine_Metalwork_Vol.3
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
   LiteratureType: 2
   LiteratureSkillType: 8
   areaType: 000000000500000009000000
   Location: 5
   Literature_ID: 30
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   LiteratureName: The Metalwork Magazine Vol. 3
   LiteratureName_Kr: "\uAE08\uC18D \uAC00\uACF5 \uB9E4\uAC70\uC9C4 Vol. 3"
   LiteratureWeight: 0.1
@@ -31,3 +31,4 @@ MonoBehaviour:
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0
+  Annotated: 

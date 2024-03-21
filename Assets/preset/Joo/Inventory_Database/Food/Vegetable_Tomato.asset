@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 8
-  areaType: 0000000006000000
-  Location: 2
-  Food_ID: 54
+  Food_ID: 78
   FoodState: 0
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Tomato
   FoodName_Kr: "\uD1A0\uB9C8\uD1A0"
   FoodWeight: 0.2
@@ -37,12 +35,21 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 1
   F_Calories: 14
   F_Thirst: -15
   F_Satiety:
   - 12
   - 9
   - 5
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 0
+  - 10
+  - 20
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

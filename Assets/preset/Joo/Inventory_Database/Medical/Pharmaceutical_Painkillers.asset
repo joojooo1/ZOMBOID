@@ -13,19 +13,18 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Painkillers
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 4
+  MedicalType: 0
   Usingtype: 9
-  areaType: 000000000b000000
-  Location: 1
   Medical_ID: 25
   MedicalName: Painkillers
   MedicalName_Kr: "\uC9C4\uD1B5\uC81C"
   MedicalWeight: 0.2
   Medical_Image: {fileID: 21300000, guid: 1b9be4c7eb4d00649befa6b8af1132c1, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 3
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 10
   Power: 10
