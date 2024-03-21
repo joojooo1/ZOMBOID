@@ -19,10 +19,14 @@ public class Item_Electronics : ScriptableObject
     public Sprite Electronics_Image;
 
     public bool On;
+    public GameObject PowerSources_Item;
 
-    public int Capacity;
-    public float Range;
-    public float Condition;
+    public int Capacity;  // PowerSources 타입에만 적용
+                          // 전력 사용시 연결된 PowerSources의 용량이 줄어듦
+
+    public float Range;  // 발전기의 전력 범위 20
+
+    public float Condition;  // 수리해도 내구도는 10%씩 down
 
 
 
