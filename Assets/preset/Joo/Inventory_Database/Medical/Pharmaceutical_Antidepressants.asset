@@ -13,19 +13,18 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Antidepressants
   m_EditorClassIdentifier: 
   type: 3
-  MedicalType: 4
+  MedicalType: 0
   Usingtype: 9
-  areaType: 000000000b000000
-  Location: 1
   Medical_ID: 22
   MedicalName: Antidepressants
   MedicalName_Kr: "\uD56D\uC6B0\uC6B8\uC81C"
   MedicalWeight: 0.2
   Medical_Image: {fileID: 21300000, guid: dc8495a302227694cb751986c6fd96ec, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 3
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 1
+  Capacity: 10
   Power: 3

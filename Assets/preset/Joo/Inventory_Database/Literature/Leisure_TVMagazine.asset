@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: Leisure_TVMagazine
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
   LiteratureType: 3
   LiteratureSkillType: 10
   areaType: 000000000900000005000000
   Location: 5
   Literature_ID: 8
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   LiteratureName: TV Magazine
   LiteratureName_Kr: "TV \uC7A1\uC9C0"
   LiteratureWeight: 0.2
@@ -31,3 +31,4 @@ MonoBehaviour:
   L_Unhappiness: 0
   L_Stress: -15
   L_Boredom: -20
+  Annotated: 

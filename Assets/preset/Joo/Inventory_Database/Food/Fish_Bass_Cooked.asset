@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 4
-  areaType: 10000000
-  Location: 0
-  Food_ID: 13
-  FoodState: 0
+  Food_ID: 17
+  FoodState: 1
   Cooking_time_to_NextStep: 8
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Bass
   FoodName_Kr: "\uBC30\uC2A4"
   FoodWeight: 1.1
@@ -36,12 +34,21 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 1
   F_Calories: 184
   F_Thirst: 0
   F_Satiety:
   - 10
   - 6
   - 3
-  F_Unhappiness: 2
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - 0
+  - 12
+  - 22
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

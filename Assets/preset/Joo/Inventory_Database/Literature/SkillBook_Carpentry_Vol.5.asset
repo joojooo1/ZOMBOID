@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
   m_Name: SkillBook_Carpentry_Vol.5
   m_EditorClassIdentifier: 
-  type: 0
+  type: 4
   LiteratureType: 1
   LiteratureSkillType: 4
   areaType: 0000000009000000
   Location: 5
   Literature_ID: 39
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   LiteratureName: Carpentry Vol. 5
   LiteratureName_Kr: "\uBAA9\uACF5 Vol. 5"
   LiteratureWeight: 0.8
@@ -31,3 +31,4 @@ MonoBehaviour:
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0
+  Annotated: 

@@ -15,17 +15,16 @@ MonoBehaviour:
   type: 3
   MedicalType: 0
   Usingtype: 9
-  areaType: 11000000
-  Location: 1
   Medical_ID: 9
   MedicalName: Splint
   MedicalName_Kr: "\uBD80\uBAA9"
   MedicalWeight: 1
   Medical_Image: {fileID: 21300000, guid: 95085b0a1d08aa44a814a5c6cf7fa9d1, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 10
   Is_Disinfection: 0
   Is_Clean: 1
   Is_Ins: 0
+  Capacity: 0
   Power: 0

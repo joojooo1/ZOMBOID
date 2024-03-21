@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 6
-  areaType: 000000000600000005000000
-  Location: 0
-  Food_ID: 26
-  FoodState: 0
+  Food_ID: 39
+  FoodState: 1
   Cooking_time_to_NextStep: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Croissant
   FoodName_Kr: "\uD06C\uB8E8\uC544\uC0C1"
   FoodWeight: 0.1
@@ -36,12 +34,21 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 0
   F_Calories: 180
   F_Thirst: 0
   F_Satiety:
   - 8
   - 6
   - 3
-  F_Unhappiness: -15
-  F_Boredom: 0
-  F_Fatigue: 0
+  F_Unhappiness:
+  - -15
+  - -5
+  - 5
+  F_Boredom:
+  - 0
+  - 10
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe15dff874f2dca40a9a56ac0b445191, type: 3}
+  m_Name: Map
+  m_EditorClassIdentifier: 
+  type: 4
+  LiteratureType: 0
+  LiteratureSkillType: 10
+  areaType: 08000000
+  Location: 1
+  Literature_ID: 85
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
+  LiteratureName: Map
+  LiteratureName_Kr: "\uC9C0\uB3C4"
+  LiteratureWeight: 0.1
+  Literature_Image: {fileID: 21300000, guid: a030616a635b2b046b1c78916d409eda, type: 3}
+  Literature_Level: 0
+  Literature_Page: 0
+  Literature_Multiplier: 0
+  L_Unhappiness: 0
+  L_Stress: 0
+  L_Boredom: 0
+  Annotated: 

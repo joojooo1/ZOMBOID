@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06158b3b172ac584b9bde2e41347bc36, type: 3}
+  m_Name: Container_Bag_Garbagebag
+  m_EditorClassIdentifier: 
+  type: 7
+  container_Type: 0
+  Usingtype: 1
+  Bag_EquipType: 3
+  bag_Type: 2
+  Container_ID: 4
+  ContainerName: "\uC4F0\uB808\uAE30 \uBD09\uD22C"
+  ContainerName_Kr: Garbagebag
+  ContainergWeight: 0.1
+  Container_Image: {fileID: 21300000, guid: d51e305d9194d1e4bb91c59cc27198be, type: 3}
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
+  WeightReduction: 0.1
+  Store_Water: 0
+  Store_Oil: 0
+  On_Fire: 0
+  On_Microwave: 0
+  Is_Empty: 0
+  Capacity_Water: 0
+  Rain_factor: 0

@@ -14,21 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 6
-  areaType: 10000000
-  Location: 0
-  Food_ID: 28
-  FoodState: 0
+  Food_ID: 42
+  FoodState: 2
   Cooking_time_to_NextStep: 1
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 1
+  Nesting_Depth: 1
   FoodName: Instant Popcorn
   FoodName_Kr: "\uC778\uC2A4\uD134\uD2B8 \uD31D\uCF58"
   FoodWeight: 0.3
   Food_Image:
   - {fileID: 21300000, guid: 71055ae24b399b043ba4e5b3af1616af, type: 3}
   Is_Perishable: 0
-  Freshness: 0
+  Freshness: 2
   Preservation_period_for_freshness: 0
   Preservation_period_for_stale: 0
   Is_freezing: 0
@@ -36,10 +34,15 @@ MonoBehaviour:
   Is_Alcoholic: 0
   Is_Spice: 0
   Usable_as_bottle: 0
+  Ingredients_Cooked: 0
   F_Calories: 120
   F_Thirst: 10
   F_Satiety:
-  - 13
-  F_Unhappiness: 0
-  F_Boredom: 0
-  F_Fatigue: 0
+  - 3
+  F_Unhappiness:
+  - 20
+  F_Boredom:
+  - 20
+  F_Fatigue: []
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0
