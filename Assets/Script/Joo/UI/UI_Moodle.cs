@@ -14,18 +14,26 @@ public class UI_Moodle : MonoBehaviour
 
     public void Moodle_Ins(Moodles_private_code Moodlecode, int Moodlestep)
     {
+        int Moodle_num;
         GameObject tempObj = null;
-        for (int i = 0; i<currentMoodle.Count; i++)
+        for (int i = 0; i < currentMoodle.Count; i++)
         {
             if (currentMoodle[i].type == Moodlecode)
             {
                 Destroy(tempObj);
+                Moodle_num = i;
+                if(Moodlestep == 0)
+                {
+                    Destroy(currentMoodle[i]);
+                }
+
                 break;
             }
             
             if ( i == (currentMoodle.Count-1) && currentMoodle[i].type != Moodlecode)
             {
                 tempObj = Instantiate(MoodlePrefab, MoodleWindow);
+                Moodle_num = currentMoodle.Count + 1;
             }
         }
 
@@ -79,6 +87,11 @@ public class UI_Moodle : MonoBehaviour
                 break;
             case Moodles_private_code.Restricted_Movement:
                 break;
+        }
+
+        for(int i = 0; i < currentMoodle.Count; i++)
+        {
+            currentMoodle[i].index = i;
         }
 
     }
