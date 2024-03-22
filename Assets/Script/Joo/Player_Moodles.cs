@@ -1944,21 +1944,6 @@ public class Moodles_state
                     /* 좀비화되는 animation 필요함 */
                 }
                 break;     /* 24.03.08 */
-            //case Moodles_private_code.Restricted_Movement:  // 이동속도를 감소시키는 옷을 너무 많이 껴입었을 때 발생. 
-            //    if (current_value < _First_state)
-            //    {
-            //        if (Player_Moodles.playerMoodles.Get_Player_Language_Is_Korean())
-            //        {
-            //            _current_state_to_string = "전력질주 불가";
-            //            _current_detail_state_to_string = "무거운 옷을 벗는 것을 고려해보세요.";
-            //        }
-            //        else
-            //        {
-            //            _current_state_to_string = "Restricted Movement";
-            //            _current_detail_state_to_string = "Heavy clothing, bulky bags or large items slowing you down!";
-            //        }
-            //    }
-            //    break;
             default:
                 break;
 
