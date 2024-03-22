@@ -14,22 +14,26 @@ public class UI_Moodle : MonoBehaviour
 
     public void Moodle_Ins(Moodles_private_code Moodlecode, int Moodlestep)
     {
-        for(int i = 0; i<currentMoodle.Count; i++)
+        GameObject tempObj = null;
+        for (int i = 0; i<currentMoodle.Count; i++)
         {
-            //if (currentMoodle[i].type == Moodlecode)
+            if (currentMoodle[i].type == Moodlecode)
             {
-
+                Destroy(tempObj);
+                break;
+            }
+            
+            if ( i == (currentMoodle.Count-1) && currentMoodle[i].type != Moodlecode)
+            {
+                tempObj = Instantiate(MoodlePrefab, MoodleWindow);
             }
         }
 
-        GameObject tempObj = null;
-        tempObj = Instantiate(MoodlePrefab, MoodleWindow);
         switch (Moodlecode)
         {
             case Moodles_private_code.Hungry:
-                tempObj = Instantiate(MoodlePrefab, MoodleWindow);
                 Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
-
+                currentMoodle.Add(slot);
                 break;
             case Moodles_private_code.Stuffed:
                 break;

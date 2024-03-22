@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Moodle_Prefab : MonoBehaviour
 {
-    Moodles_private_code type;
+    public Moodles_private_code type;
+    public int index;
     UnityEngine.UI.Image Back;
     UnityEngine.UI.Image Icon;
 
