@@ -20,7 +20,7 @@ MonoBehaviour:
   Equipping_Position: 00000000
   Electronics_ID: 0
   Height: 1
-  Width: 1
+  Width: 2
   Nesting_Depth: 1
   ElectronicsName: Flashlight
   ElectronicsName_Kr: "\uC190\uC804\uB4F1"

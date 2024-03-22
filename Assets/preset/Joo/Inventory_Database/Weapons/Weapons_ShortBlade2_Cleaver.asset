@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 4
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 20
   WeaponName: Cleaver
   WeaponName_Kr: "\uC911\uC2DD\uB3C4"
   ItemImage: {fileID: 21300000, guid: 55fe210d81e2e1745b0f86a858a88704, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

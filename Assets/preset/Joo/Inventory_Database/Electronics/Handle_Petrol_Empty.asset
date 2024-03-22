@@ -19,8 +19,8 @@ MonoBehaviour:
   UsingPower_type: 0
   Equipping_Position: 00000000
   Electronics_ID: 0
-  Height: 2
-  Width: 2
+  Height: 3
+  Width: 3
   Nesting_Depth: 1
   ElectronicsName: Gas Can
   ElectronicsName_Kr: "\uD718\uBC1C\uC720 \uD1B5"

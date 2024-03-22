@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 0
   Power_type: 0
   WeaponType: 6
+  created: 0
   Weapon_ID: 3
   WeaponName: M14 Rifle
   WeaponName_Kr: "M14 \uB2E8\uBC1C \uC790\uB3D9\uC18C\uCD1D"
   ItemImage: {fileID: 21300000, guid: cb1b787576e823d4c91adc8ada764264, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 2
+  Width: 6
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

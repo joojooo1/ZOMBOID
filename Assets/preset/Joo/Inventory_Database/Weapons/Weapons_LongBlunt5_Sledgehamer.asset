@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 10
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 15
   WeaponName: Sledgehamer
   WeaponName_Kr: "\uB300\uD615\uB9DD\uCE58"
   ItemImage: {fileID: 21300000, guid: dce01e6c7ccd807409b78a175b3fbc5d, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 6
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

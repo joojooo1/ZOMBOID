@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: StickSharpened
   WeaponName_Kr: "\uB098\uBB34\uCC3D"
   ItemImage: {fileID: 21300000, guid: 5880a8dda9261bf4e98c043f0643ea1c, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 5
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 1
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 25
   WeaponName: PipeWrench
   WeaponName_Kr: "\uD30C\uC774\uD504\uB80C\uCE58"
   ItemImage: {fileID: 21300000, guid: ee52ede248e86014a9c3e4a5cd2e1ce1, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

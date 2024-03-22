@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 1
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 12
   WeaponName: Crowbar
   WeaponName_Kr: "\uC1E0\uC9C0\uB81B\uB300"
   ItemImage: {fileID: 21300000, guid: 071a8de8e737def489ebcdeae257c376, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 4
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

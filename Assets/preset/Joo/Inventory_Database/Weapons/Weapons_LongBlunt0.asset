@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 0
   Power_type: 0
   WeaponType: 1
+  created: 0
   Weapon_ID: 10
   WeaponName: BaseballBat
   WeaponName_Kr: "\uC57C\uAD6C\uBC29\uB9DD\uC774"
   ItemImage: {fileID: 21300000, guid: 600896490a14b8f489edf3bd72082233, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 5
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

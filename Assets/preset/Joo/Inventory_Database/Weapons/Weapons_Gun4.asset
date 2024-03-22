@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: M36 Revolver
   WeaponName_Kr: "M36 \uB9AC\uBCFC\uBC84"
   ItemImage: {fileID: 21300000, guid: 414e43037e7f5fa4090a55693169c823, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

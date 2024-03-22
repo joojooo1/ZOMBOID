@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 7
   Power_type: 5
   WeaponType: 7
+  created: 0
   Weapon_ID: 17
   WeaponName: Plank
   WeaponName_Kr: "\uD310\uC790"
   ItemImage: {fileID: 21300000, guid: ac7296dee9418db42baa07d7411dd569, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 3
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

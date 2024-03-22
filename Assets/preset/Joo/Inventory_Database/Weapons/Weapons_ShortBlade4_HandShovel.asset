@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: HandShovel
   WeaponName_Kr: "\uBAA8\uC885\uC0BD"
   ItemImage: {fileID: 21300000, guid: cffc150e999b1e045a65d3fcf81c33a1, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

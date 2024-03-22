@@ -22,14 +22,14 @@ MonoBehaviour:
   ContainerName_Kr: Big Hiking Bag
   ContainergWeight: 1.5
   Container_Image: {fileID: 21300000, guid: feb2c5b5bd7374345a8f05a5904527d7, type: 3}
-  Height: 3
-  Width: 2
+  Height: 5
+  Width: 5
   Nesting_Depth: 1
   WeightReduction: 0.8
-  RunSpeedModifier: 0.95
   Store_Water: 0
   Store_Oil: 0
   On_Fire: 0
-  On_microwave: 0
+  On_Microwave: 0
+  Is_Empty: 0
   Capacity_Water: 0
   Rain_factor: 0
