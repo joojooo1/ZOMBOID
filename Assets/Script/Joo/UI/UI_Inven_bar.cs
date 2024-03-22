@@ -13,19 +13,19 @@ public class UI_Inven_bar : MonoBehaviour
 
     private void Start()
     {
-        inven.SetActive(true);
+        //inven.SetActive(true);
     }
     private void Update()
     {
-        //if (EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    inven.SetActive(true);
-        //}
-        //else
-        //{
-        //    inven.SetActive(false);
-        //}
-    } 
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            inven.SetActive(true);
+        }
+        else
+        {
+            inven.SetActive(false);
+        }
+    }
 
-   
+
 }
