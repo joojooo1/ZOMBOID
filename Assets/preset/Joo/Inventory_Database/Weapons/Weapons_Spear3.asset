@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   Usingtype: 0
+  Power_type: 0
   WeaponType: 5
-  areaType: 11000000
-  Location: 1
+  created: 1
   Weapon_ID: 32
   WeaponName: SpearStick
   WeaponName_Kr: "\uC81C\uC791\uB41C \uCC3D"

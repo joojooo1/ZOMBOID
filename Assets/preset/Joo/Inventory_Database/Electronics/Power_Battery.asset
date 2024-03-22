@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f6ebc2d2f48584fb7958ee49997844, type: 3}
   m_Name: Power_Battery
   m_EditorClassIdentifier: 
-  type: 0
+  type: 3
+  usingtype: 1
+  electronic_Type: 0
+  Power_type: 1
   Equipping_Position: 
   Electronics_ID: 0
   Height: 1
@@ -23,6 +26,7 @@ MonoBehaviour:
   ElectronicsWeight: 0.6
   Electronics_Image: {fileID: 21300000, guid: cb33538470f23854783dddc636450df4, type: 3}
   On: 0
+  PowerSources_Item: {fileID: 0}
   Capacity: 100000
   Range: 0
   Condition: 100

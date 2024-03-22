@@ -15,8 +15,8 @@ MonoBehaviour:
   type: 4
   LiteratureType: 2
   LiteratureSkillType: 1
-  areaType: 000000000500000009000000
-  Location: 5
+  PowerSources_Type: 5
+  created: 0
   Literature_ID: 21
   Height: 1
   Width: 1
@@ -25,10 +25,9 @@ MonoBehaviour:
   LiteratureName_Kr: "\uB09A\uC2DC\uAFBC USA \uB9E4\uAC70\uC9C4 Vol. 1"
   LiteratureWeight: 0.1
   Literature_Image: {fileID: 21300000, guid: 699e2a9ead638ac44b79ec7de033174f, type: 3}
-  Literature_Level: 0
+  Literature_Level: 1
   Literature_Page: 1
   Literature_Multiplier: 1
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0
-  Annotated: 

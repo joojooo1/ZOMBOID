@@ -111,16 +111,26 @@ public enum Skill_Type
     Farming = 6,
     FirstAid = 7,
     Electrical = 8,
-    Tailoring = 9,
-    None = 10
+    None = 9
 }
 
 public enum Electronic_Type
 {
     PowerSources = 0,
-    Wearable = 1,
+    Handle = 1,
     Gas = 2,
-    Light = 3
+    Light = 3,
+    Charger = 4
+}
+
+public enum PowerSources_Type  // 만들어내는 or 담는 연료의 타입
+{
+    None = 0,
+    Electricity = 1,
+    Gasoline = 2,
+    Battery = 3,  // Battery로만 사용
+    PropaneGas = 4,
+    Fuel = 5  // Paper, wood, cotton
 }
 
 public enum Weapon_type
@@ -196,4 +206,9 @@ public enum Bag_Type
     DuffelBag = 4,     // 더플백 6 x 10
     HikingBag = 5,     // 여행용 가방 8 x 10
     MilitaryBackpack = 6     // 군용 배낭 8 x 12
+}
+
+public enum Appliances
+{
+    
 }

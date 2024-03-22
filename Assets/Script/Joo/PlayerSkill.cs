@@ -12,7 +12,7 @@ public class PlayerSkill : MonoBehaviour
     public PlayerPassiveSkill_Level Strength_Level;  // 근력       /* 24.02.16 test */
 
     // 생존 능력
-    public PlayerSurvivalSkill_Level Hunting_Level;  // 사냥
+    public PlayerSurvivalSkill_Level Hunting_Level;  // 사냥  // 함정포함
     public PlayerSurvivalSkill_Level Fishing_Level;  // 낚시
     public PlayerSurvivalSkill_Level Foraging_Level;  // 채집
     public PlayerSurvivalSkill_Level Riding_Level;  // 승마
@@ -43,7 +43,7 @@ public class PlayerSkill : MonoBehaviour
     public PlayerCraftingSkill_Level Farming_Level;  // 농사
     public PlayerCraftingSkill_Level FirstAid_Level;  // 의료
     public PlayerCraftingSkill_Level Electrical_Level;  // 전기공학
-    public PlayerCraftingSkill_Level Tailoring_Level;  // 재단술
+    // public PlayerCraftingSkill_Level Tailoring_Level;  // 재단술
     // float Metalworking = 0f;  // 금속용접
     // float Mechanics = 0f;  // 차량정비
 
@@ -81,7 +81,7 @@ public class PlayerSkill : MonoBehaviour
         Farming_Level = new PlayerCraftingSkill_Level(0f, "Farming");
         FirstAid_Level = new PlayerCraftingSkill_Level(0f, "FirstAid");
         Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical");
-        Tailoring_Level = new PlayerCraftingSkill_Level(0f, "Tailoring");
+       
 
     }
 

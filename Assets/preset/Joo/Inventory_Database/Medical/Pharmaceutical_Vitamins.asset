@@ -15,6 +15,8 @@ MonoBehaviour:
   type: 3
   MedicalType: 0
   Usingtype: 9
+  Power_type: 0
+  created: 0
   Medical_ID: 27
   MedicalName: Vitamins
   MedicalName_Kr: "\uBE44\uD0C0\uBBFC"

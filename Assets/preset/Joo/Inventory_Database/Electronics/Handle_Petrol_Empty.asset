@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f6ebc2d2f48584fb7958ee49997844, type: 3}
+  m_Name: Handle_Petrol_Empty
+  m_EditorClassIdentifier: 
+  type: 3
+  usingtype: 1
+  electronic_Type: 1
+  Power_type: 2
+  UsingPower_type: 0
+  Equipping_Position: 00000000
+  Electronics_ID: 0
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
+  ElectronicsName: Gas Can
+  ElectronicsName_Kr: "\uD718\uBC1C\uC720 \uD1B5"
+  ElectronicsWeight: 1.6
+  Electronics_Image: {fileID: 21300000, guid: dc44a4713270be440b83182eeb7dc4cf, type: 3}
+  On: 0
+  PowerSources_Item: {fileID: 0}
+  Capacity: 400
+  Range: 0
+  Condition: 0

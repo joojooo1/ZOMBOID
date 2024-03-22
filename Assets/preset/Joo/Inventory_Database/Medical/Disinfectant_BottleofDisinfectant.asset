@@ -15,6 +15,8 @@ MonoBehaviour:
   type: 3
   MedicalType: 0
   Usingtype: 9
+  Power_type: 0
+  created: 0
   Medical_ID: 11
   MedicalName: Bottle of Disinfectant
   MedicalName_Kr: "\uC18C\uB3C5\uC57D"

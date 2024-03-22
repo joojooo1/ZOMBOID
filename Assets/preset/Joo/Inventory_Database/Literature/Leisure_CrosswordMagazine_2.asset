@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   LiteratureType: 3
-  LiteratureSkillType: 10
-  areaType: 000000000900000005000000
-  Location: 5
+  LiteratureSkillType: 9
+  PowerSources_Type: 5
+  created: 0
   Literature_ID: 3
   Height: 1
   Width: 1
@@ -31,4 +31,3 @@ MonoBehaviour:
   L_Unhappiness: 0
   L_Stress: -15
   L_Boredom: -20
-  Annotated: 
