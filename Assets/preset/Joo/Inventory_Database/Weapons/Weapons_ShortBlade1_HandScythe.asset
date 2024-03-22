@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 6
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 19
   WeaponName: HandScythe
   WeaponName_Kr: "\uC190\uB0AB"
   ItemImage: {fileID: 21300000, guid: 98c10db5169edc942bfc5ee4fa5f4365, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

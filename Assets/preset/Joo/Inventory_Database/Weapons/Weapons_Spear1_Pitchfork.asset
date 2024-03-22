@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 6
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 30
   WeaponName: Pitchfork
   WeaponName_Kr: "\uC1E0\uC2A4\uB791"
   ItemImage: {fileID: 21300000, guid: 31720ff41e6a6e44a87484ac59d6e8d1, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 5
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

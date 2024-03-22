@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: AxeHand
   WeaponName_Kr: "\uC190\uB3C4\uB07C"
   ItemImage: {fileID: 21300000, guid: 8ac67348bcf4e2a4ea5070e4792ea30d, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

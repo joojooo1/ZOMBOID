@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 0
   Power_type: 0
   WeaponType: 3
+  created: 0
   Weapon_ID: 8
   WeaponName: Katana
   WeaponName_Kr: "\uCE74\uD0C0\uB098"
   ItemImage: {fileID: 21300000, guid: 278c0c3539adc4349ae3e45862f53d5d, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 5
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

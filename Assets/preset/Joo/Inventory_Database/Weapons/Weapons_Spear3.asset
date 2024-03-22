@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: SpearStick
   WeaponName_Kr: "\uC81C\uC791\uB41C \uCC3D"
   ItemImage: {fileID: 21300000, guid: 2bc50f7b30e372e4bab1c0e4963c8d4b, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 5
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

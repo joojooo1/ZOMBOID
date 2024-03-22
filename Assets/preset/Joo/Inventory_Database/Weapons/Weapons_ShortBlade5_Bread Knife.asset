@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 4
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 23
   WeaponName: Bread Knife
   WeaponName_Kr: "\uBE75\uCE7C"
   ItemImage: {fileID: 21300000, guid: 44a7b37a7668a6046b931987fd411c4e, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 2
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

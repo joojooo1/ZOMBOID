@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: Shotgun
   WeaponName_Kr: "JS-2000 \uC0B0\uD0C4\uCD1D"
   ItemImage: {fileID: 21300000, guid: 738c7590176bd39479d4a89dc462ac58, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 6
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

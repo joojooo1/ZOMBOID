@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 10
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 26
   WeaponName: Hammer
   WeaponName_Kr: "\uB9DD\uCE58"
   ItemImage: {fileID: 21300000, guid: 32568afb161903649a72f67ee64a2416, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: Machete
   WeaponName_Kr: "\uB9C8\uCCB4\uD14C"
   ItemImage: {fileID: 21300000, guid: b405d2007a50b8645923f8cd10ed24f3, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 5
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000
