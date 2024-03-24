@@ -5,20 +5,29 @@ using UnityEngine;
 
 public class Moodle_Prefab : MonoBehaviour
 {
-    public Moodles_private_code type;
-    public int index;
-    UnityEngine.UI.Image Back;
-    UnityEngine.UI.Image Icon;
+    Moodles_private_code type;
+    int step;
+    int index;
+    [SerializeField] UnityEngine.UI.Image Back;
+    [SerializeField] UnityEngine.UI.Image Icon;
 
-    public void SetMoodle(Moodles_private_code Moodletype, int MoodleNum, Sprite Back_Image, Sprite Moodle_Image)
+   
+    public void SetMoodle(Moodles_private_code Moodletype, int Moodlestep, Sprite Back_Image, Sprite Moodle_Image)
     {
         type = Moodletype;
-        index = MoodleNum;
+        step = Moodlestep;
         Back.sprite = Back_Image;
         Icon.sprite = Moodle_Image;
     }
 
+    public void SetIndex(int MoodleNum)
+    {
+        index = MoodleNum;
+    }
 
+    public int GetIndex() { return  index; }
 
+    public Moodles_private_code GetMoodleType() { return  type; }
 
+    public int GetStep() { return step; }
 }

@@ -73,10 +73,6 @@ public class Player_main : MonoBehaviour
         {
             player_HP.Set_Player_HP_for_Damage(20f);
         }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            player_HP.Set_Player_HP_for_Heal(20f);
-        }
 
         // ------------------------------------------------------------- test ÇÔ¼ö 
 
