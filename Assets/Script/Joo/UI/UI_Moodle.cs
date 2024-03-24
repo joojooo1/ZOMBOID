@@ -4,44 +4,85 @@ using UnityEngine;
 
 public class UI_Moodle : MonoBehaviour
 {
-    [SerializeField] Sprite[] Background;
-    [SerializeField] Sprite[] Moodletype;
+    public Sprite[] Background_Good;
+    public Sprite[] Background_Bad;
+    public Sprite[] Moodletype;
 
     [SerializeField] GameObject MoodlePrefab;
     [SerializeField] Transform MoodleWindow;
 
     List<Moodle_Prefab> currentMoodle = new List<Moodle_Prefab>();
 
+    Animator anim;
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+    }
+
+    int a = 0;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            a++;
+            Moodle_Ins(Moodles_private_code.Hungry, a);
+        }
+    }
+
+
     public void Moodle_Ins(Moodles_private_code Moodlecode, int Moodlestep)
     {
-        int Moodle_num;
+        int Moodle_indexnumber;
         GameObject tempObj = null;
-        for (int i = 0; i < currentMoodle.Count; i++)
-        {
-            if (currentMoodle[i].type == Moodlecode)
-            {
-                Destroy(tempObj);
-                Moodle_num = i;
-                if(Moodlestep == 0)
-                {
-                    Destroy(currentMoodle[i]);
-                }
 
-                break;
-            }
-            
-            if ( i == (currentMoodle.Count-1) && currentMoodle[i].type != Moodlecode)
+        if(currentMoodle != null)
+        {
+            for (int i = 0; i < currentMoodle.Count; i++)
             {
-                tempObj = Instantiate(MoodlePrefab, MoodleWindow);
-                Moodle_num = currentMoodle.Count + 1;
+                if (currentMoodle[i].GetMoodleType() == Moodlecode)  // 이미 해당 무들 활성화 되어있는 경우
+                {
+                    Moodle_indexnumber = i;
+                    if (currentMoodle[i].GetStep() == 1)
+                    {
+                        if (Moodlestep == 0)
+                            Destroy(currentMoodle[i]);
+                    }
+
+                    break;
+                }
+                else if (i == (currentMoodle.Count - 1) && currentMoodle[i].GetMoodleType() != Moodlecode)  // 해당 무들이 활성화되지 않은 경우
+                {
+                    tempObj = Instantiate(MoodlePrefab, MoodleWindow);
+                    Moodle_indexnumber = currentMoodle.Count;
+                    SetMoodleicon(Moodlecode, Moodlestep, tempObj, Moodle_indexnumber);
+                }
             }
         }
+        else
+        {
+            tempObj = Instantiate(MoodlePrefab, MoodleWindow);
+            Moodle_indexnumber = currentMoodle.Count;
+            SetMoodleicon(Moodlecode, Moodlestep, tempObj, Moodle_indexnumber);
+        }
 
+
+
+        for(int i = 0; i < currentMoodle.Count; i++)
+        {
+            currentMoodle[i].SetIndex(i);
+        }
+
+    }
+
+    public void SetMoodleicon(Moodles_private_code Moodlecode, int Moodlestep, GameObject tempObj, int index)
+    {
         switch (Moodlecode)
         {
             case Moodles_private_code.Hungry:
                 Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
+                slot.SetMoodle(Moodles_private_code.Hungry, Moodlestep, Background_Bad[Moodlestep], Moodletype[(int)Moodles_private_code.Hungry]);
                 currentMoodle.Add(slot);
+                anim.SetTrigger("Change");
                 break;
             case Moodles_private_code.Stuffed:
                 break;
@@ -87,15 +128,11 @@ public class UI_Moodle : MonoBehaviour
                 break;
             case Moodles_private_code.Restricted_Movement:
                 break;
+            default:
+                Debug.Log("Error");
+                break;
         }
-
-        for(int i = 0; i < currentMoodle.Count; i++)
-        {
-            currentMoodle[i].index = i;
-        }
-
     }
-
 
 
 
