@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
         float Temp = rand.Next(0, 10);
 
         Player_main.player_main.playerMoodles.Moodle_Windchill.Set_Moodles_state(Temp);
+        Player_main.player_main.playerState.Set_Apparent_Temperature(Player_main.player_main.playerState.Get_Apparent_Temperature());
     }
 
     public float Get_Current_Temperature() { return (float)Current_Temperature; }

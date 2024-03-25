@@ -31,7 +31,7 @@ public class Player_main : MonoBehaviour
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
     [SerializeField] float Weight = 83.0f; // 체중 0 ~ 150
     [SerializeField] float Calories = 800.0f; // 칼로리 -2200 ~ 3700   // Stuffed 3단계부터는 칼로리 1000 이상이면 음식섭취 불가능
-    [SerializeField] float Satiety = 20.0f;  // 포만감 -300 ~ 300
+    [SerializeField] float Satiety = 0.0f;  // 포만감 -300 ~ 300
     [SerializeField] float Rate_of_Hunger_increase = 1f;  // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
 
     [SerializeField] float Min_Attack_Power = 8.0f; // 공격력
@@ -40,6 +40,8 @@ public class Player_main : MonoBehaviour
     [SerializeField] float Moving_Speed = 3f;  // 이동속도
     [SerializeField] float Coughing_Noise_radius = 15f;  // 기침 어그로 범위
     [SerializeField] float Driving_control = 1f;  // 운전 제어력
+
+    [SerializeField] float Thirsty = 0;
 
     public bool Is_Equipping_Weapons = false;
     public Item_Weapons Current_equipping_Weapon = null;  // 무기 착용시, 착용한 무기로 변경
@@ -67,12 +69,12 @@ public class Player_main : MonoBehaviour
     float Cold_Timer = 0.0f;
     void Update()
     {
-
+        Thirsty = playerMoodles.Moodle_Thirsty.Get_Moodle_current_value();
         // test 함수 -------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Z)) 
-        {
-            playerMoodles.Moodle_Thirsty.Set_Moodles_state(-5f);
-        }
+        //if (Input.GetKeyDown(KeyCode.Z)) 
+        //{
+        //    playerMoodles.Moodle_Thirsty.Set_Moodles_state(-0.2f);
+        //}
 
         // ------------------------------------------------------------- test 함수 
 
@@ -86,7 +88,7 @@ public class Player_main : MonoBehaviour
 
         /************************************* Player_Satiety **************************************/
         Satiety_Timer += Time.deltaTime; 
-        if (Satiety_Timer > 1.0f)  // 포만감 2초에 1.5씩 감소
+        if (Satiety_Timer > 0.1f)  // 포만감 2초에 1.5씩 감소
         {
             Satiety -= 0.06f;  // 포만감 -300 ~ 300
             if (Satiety < -300) { Satiety = -300.0f; }
@@ -98,7 +100,7 @@ public class Player_main : MonoBehaviour
             }
             else
             {
-                playerMoodles.Moodle_Hungry.Set_Moodles_state(Satiety);
+                playerMoodles.Moodle_Hungry.Set_Moodles_state(-Satiety);
             }
             Satiety_Timer = 0.0f;
         }

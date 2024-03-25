@@ -938,8 +938,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 384.3, y: -39.3}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 386.5, y: -39.595993}
+  m_SizeDelta: {x: -783.52, y: -440.165}
   m_Pivot: {x: 0.50000596, y: 0.9999999}
 --- !u!114 &407377390
 MonoBehaviour:
@@ -986,7 +986,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2c4c76f4d03c8f64a9c1c9e0ad9f5eaa, type: 3}
   - {fileID: 21300000, guid: 81cb1269087031a41a625e79ac5d4a38, type: 3}
   - {fileID: 21300000, guid: 0df310be8b4c9ca47841845dfa367dc9, type: 3}
-  MoodlePrefab: {fileID: 5855829239811804790, guid: 14675322bddc6ed4ea16b11c92e8e057, type: 3}
+  MoodlePrefab: {fileID: 5169713464026937011, guid: e60a689ef8a44b34a818c2e74c19c399, type: 3}
   MoodleWindow: {fileID: 407377389}
 --- !u!114 &407377391
 MonoBehaviour:
@@ -1045,8 +1045,8 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 4.5
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -1059,7 +1059,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407377388}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
@@ -6915,6 +6915,14 @@ PrefabInstance:
       propertyPath: zombie
       value: 
       objectReference: {fileID: 317573556}
+    - target: {fileID: 5166067895751795360, guid: cf1872583ac0bcc43b8dce0f449b9697, type: 3}
+      propertyPath: Satiety
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5166067895751795360, guid: cf1872583ac0bcc43b8dce0f449b9697, type: 3}
+      propertyPath: Thirsty
+      value: 0.14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
