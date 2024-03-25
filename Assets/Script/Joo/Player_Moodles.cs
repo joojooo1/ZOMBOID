@@ -1948,6 +1948,10 @@ public class Moodles_state
                 break;
 
         }
+
+
+        UI_main.ui_main.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+
     }
 
     public string Get_current_state_to_string()

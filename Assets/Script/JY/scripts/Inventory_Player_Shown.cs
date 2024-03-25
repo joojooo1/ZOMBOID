@@ -177,7 +177,7 @@ public class Inventory_Player_Shown : MonoBehaviour
 
 
         Backpacks_List.Add(Backpack_ID);
-        Packages.Add(Exiest_Packages);
+        //Packages.Add(Exiest_Packages);
         
     }
     private void Changed_Backpacks_Output(short Backpack_ID, short[,,] Exiest_Packages, short Order)

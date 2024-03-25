@@ -71,7 +71,7 @@ public class Player_main : MonoBehaviour
         // test 함수 -------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.Z)) 
         {
-            player_HP.Set_Player_HP_for_Damage(20f);
+            playerMoodles.Moodle_Thirsty.Set_Moodles_state(-5f);
         }
 
         // ------------------------------------------------------------- test 함수 
