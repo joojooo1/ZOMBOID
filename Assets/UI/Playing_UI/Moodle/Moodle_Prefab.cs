@@ -11,7 +11,13 @@ public class Moodle_Prefab : MonoBehaviour
     [SerializeField] UnityEngine.UI.Image Back;
     [SerializeField] UnityEngine.UI.Image Icon;
 
-   
+    Animator anim;
+
+    private void OnEnable()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     public void SetMoodle(Moodles_private_code Moodletype, int Moodlestep, Sprite Back_Image, Sprite Moodle_Image)
     {
         type = Moodletype;
@@ -30,4 +36,9 @@ public class Moodle_Prefab : MonoBehaviour
     public Moodles_private_code GetMoodleType() { return  type; }
 
     public int GetStep() { return step; }
+
+    public void SetAnim()
+    {
+        anim.SetTrigger("Change");
+    }
 }

@@ -13,56 +13,59 @@ public class UI_Moodle : MonoBehaviour
 
     List<Moodle_Prefab> currentMoodle = new List<Moodle_Prefab>();
 
-    Animator anim;
-    private void Start()
-    {
-        anim = GetComponentInChildren<Animator>();
-    }
-
-    int a = 0;
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            a++;
-            Moodle_Ins(Moodles_private_code.Hungry, a);
-        }
-    }
-
-
     public void Moodle_Ins(Moodles_private_code Moodlecode, int Moodlestep)
     {
-        int Moodle_indexnumber;
-        GameObject tempObj = null;
+        int current_indexnumber;
 
-        if(currentMoodle != null)
+        if (currentMoodle.Count > 0)
         {
             for (int i = 0; i < currentMoodle.Count; i++)
             {
                 if (currentMoodle[i].GetMoodleType() == Moodlecode)  // 이미 해당 무들 활성화 되어있는 경우
                 {
-                    Moodle_indexnumber = i;
-                    if (currentMoodle[i].GetStep() == 1)
+                    current_indexnumber = i;
+
+                    if (currentMoodle[i].GetStep() != Moodlestep)
                     {
                         if (Moodlestep == 0)
+                        {
                             Destroy(currentMoodle[i]);
+                        }
+                        else
+                        {
+                            SetMoodleicon(Moodlecode, Moodlestep, currentMoodle[i], current_indexnumber);
+                            currentMoodle[i].SetAnim();
+                        }
                     }
 
                     break;
                 }
                 else if (i == (currentMoodle.Count - 1))  // 해당 무들이 활성화되지 않은 경우
                 {
-                    tempObj = Instantiate(MoodlePrefab, MoodleWindow);
-                    Moodle_indexnumber = currentMoodle.Count;
-                    SetMoodleicon(Moodlecode, Moodlestep, tempObj, Moodle_indexnumber);
+                    if (Moodlestep != 0)
+                    {
+                        GameObject tempObj = null;
+                        tempObj = Instantiate(MoodlePrefab, MoodleWindow);
+                        Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
+                        current_indexnumber = currentMoodle.Count;
+                        SetMoodleicon(Moodlecode, Moodlestep, slot, current_indexnumber);
+                        currentMoodle.Add(slot);
+                    }
                 }
             }
         }
         else
         {
-            tempObj = Instantiate(MoodlePrefab, MoodleWindow);
-            Moodle_indexnumber = currentMoodle.Count;
-            SetMoodleicon(Moodlecode, Moodlestep, tempObj, Moodle_indexnumber);
+            if(Moodlestep != 0)
+            {
+                GameObject tempObj = null;
+                tempObj = Instantiate(MoodlePrefab, MoodleWindow);
+                Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
+                current_indexnumber = currentMoodle.Count;
+                SetMoodleicon(Moodlecode, Moodlestep, slot, current_indexnumber);
+                currentMoodle.Add(slot);
+            }
+            
         }
 
 
@@ -74,59 +77,35 @@ public class UI_Moodle : MonoBehaviour
 
     }
 
-    public void SetMoodleicon(Moodles_private_code Moodlecode, int Moodlestep, GameObject tempObj, int index)
+    public void SetMoodleicon(Moodles_private_code Moodlecode, int Moodlestep, Moodle_Prefab slot, int index)
     {
         switch (Moodlecode)
         {
             case Moodles_private_code.Hungry:
-                Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
-                slot.SetMoodle(Moodles_private_code.Hungry, Moodlestep, Background_Bad[Moodlestep], Moodletype[(int)Moodles_private_code.Hungry]);
-                currentMoodle.Add(slot);
-                anim.SetTrigger("Change");
+            case Moodles_private_code.Thirsty:
+            case Moodles_private_code.Panic:
+            case Moodles_private_code.Bored:
+            case Moodles_private_code.Stressed:
+            case Moodles_private_code.Unhappy:
+            case Moodles_private_code.Drunk:
+            case Moodles_private_code.Heavy_Load:
+            case Moodles_private_code.Endurance:
+            case Moodles_private_code.Tired:
+            case Moodles_private_code.Hyperthermia_Hot:
+            case Moodles_private_code.Hyperthermia_Cold:
+            case Moodles_private_code.Windchill:
+            case Moodles_private_code.Wet:
+            case Moodles_private_code.Injured:
+            case Moodles_private_code.Pain:
+            case Moodles_private_code.Bleeding:
+            case Moodles_private_code.Has_a_Cold:
+            case Moodles_private_code.Sick:
+            case Moodles_private_code.Dead:
+            case Moodles_private_code.Zombie:
+                slot.SetMoodle(Moodlecode, Moodlestep, Background_Bad[Moodlestep], Moodletype[(int)Moodlecode]);
                 break;
             case Moodles_private_code.Stuffed:
-                break;
-            case Moodles_private_code.Thirsty:
-                break;
-            case Moodles_private_code.Panic:
-                break;
-            case Moodles_private_code.Bored:
-                break;
-            case Moodles_private_code.Stressed:
-                break;
-            case Moodles_private_code.Unhappy:
-                break;
-            case Moodles_private_code.Drunk:
-                break;
-            case Moodles_private_code.Heavy_Load:
-                break;
-            case Moodles_private_code.Endurance:
-                break;
-            case Moodles_private_code.Tired:
-                break;
-            case Moodles_private_code.Hyperthermia_Hot:
-                break;
-            case Moodles_private_code.Hyperthermia_Cold:
-                break;
-            case Moodles_private_code.Windchill:
-                break;
-            case Moodles_private_code.Wet:
-                break;
-            case Moodles_private_code.Injured:
-                break;
-            case Moodles_private_code.Pain:
-                break;
-            case Moodles_private_code.Bleeding:
-                break;
-            case Moodles_private_code.Has_a_Cold:
-                break;
-            case Moodles_private_code.Sick:
-                break;
-            case Moodles_private_code.Dead:
-                break;
-            case Moodles_private_code.Zombie:
-                break;
-            case Moodles_private_code.Restricted_Movement:
+                slot.SetMoodle(Moodlecode, Moodlestep, Background_Good[Moodlestep], Moodletype[(int)Moodlecode]);
                 break;
             default:
                 Debug.Log("Error");
