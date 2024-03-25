@@ -22,7 +22,7 @@ public class UI_Moodle : MonoBehaviour
     int a = 0;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             a++;
             Moodle_Ins(Moodles_private_code.Hungry, a);
@@ -50,7 +50,7 @@ public class UI_Moodle : MonoBehaviour
 
                     break;
                 }
-                else if (i == (currentMoodle.Count - 1) && currentMoodle[i].GetMoodleType() != Moodlecode)  // 해당 무들이 활성화되지 않은 경우
+                else if (i == (currentMoodle.Count - 1))  // 해당 무들이 활성화되지 않은 경우
                 {
                     tempObj = Instantiate(MoodlePrefab, MoodleWindow);
                     Moodle_indexnumber = currentMoodle.Count;
