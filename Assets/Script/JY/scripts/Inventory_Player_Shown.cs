@@ -19,7 +19,8 @@ public class Inventory_Player_Shown : MonoBehaviour
     public List<short> Storage_List; // 접근중인 저장소 리스트
 
     public List<short> Storage_Presets_List; // 초기 생성 
-    public List<short[,,]> Packages; // 장비, 가방에 대응하는 아이템 배열( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
+    public List<short[,,]> Packages_Player;
+    public List<short[,,]> Packages_Storage;// 장비, 가방에 대응하는 아이템 배열( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
     //2칸이상의 대부분의 장비 형태들은 방향을 기준으로 옆 블럭에 추가정보를 저장
     //가방의 경우 패키지 인덱스를 저장
 
@@ -46,16 +47,16 @@ public class Inventory_Player_Shown : MonoBehaviour
     //장비 해제시 바닥에 드랍함
 
     [SerializeField]
-    GameObject User_Inventory;
+    GameObject User_Inventory; //좌상단 바
     [SerializeField]
-    GameObject Storage_Inventory;
+    GameObject Storage_Inventory; // 우상단 바
 
     [SerializeField]
-    GameObject Info_Box;
+    GameObject Info_Box; // 세부정보 표시 창 UI
     [SerializeField]
-    GameObject Drag_Target_Image;
+    GameObject Drag_Target_Image; // 드래그중인 이미지
 
-    public float Total_Weight;
+    public float Total_Weight; // ? / ?
     short BackPack_Depth_Define = 5;
 
     public short FS_Slot_X;
@@ -75,13 +76,17 @@ public class Inventory_Player_Shown : MonoBehaviour
     }
     private void Start()
     {
-        //플레이어의 장비목록을 가져옴
+        //플레이어의 장비목록을 가져옴 backpacks list에 정렬후 넣음
         for(short i = 0; i < Backpacks_List.Count; i++)
         {
             //Generating_Acting_Inventory(Backpacks_List[i].ID,)
+            short[,,] recieve = new short[1, 1, 1];
+            recieve = Inventory_Library.IL.Getting_Package(0); // 0 은 라이브러리에서의 패키지 order
+            Packages_Player.Add(recieve);
+            
         }
-
-        //Generagting_Visual_Area();
+        
+        
     }
 
     //플레이어 장비
