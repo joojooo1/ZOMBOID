@@ -29,12 +29,12 @@ public class UI_Moodle : MonoBehaviour
                     {
                         if (Moodlestep == 0)
                         {
-                            Destroy(currentMoodle[i]);
+                            Destroy(currentMoodle[i].gameObject);
+                            currentMoodle.Remove(currentMoodle[i]);
                         }
                         else
                         {
-                            SetMoodleicon(Moodlecode, Moodlestep, currentMoodle[i], current_indexnumber);
-                            currentMoodle[i].SetAnim();
+                            SetMoodleicon(Moodlecode, Moodlestep, currentMoodle[i], current_indexnumber);                            
                         }
                     }
 
@@ -46,7 +46,8 @@ public class UI_Moodle : MonoBehaviour
                     {
                         GameObject tempObj = null;
                         tempObj = Instantiate(MoodlePrefab, MoodleWindow);
-                        Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
+                        Moodle_Prefab slot = tempObj.GetComponentInChildren<Moodle_Prefab>();
+                        //Moodle_Prefab slot = tempObj.<Moodle_Prefab>();
                         current_indexnumber = currentMoodle.Count;
                         SetMoodleicon(Moodlecode, Moodlestep, slot, current_indexnumber);
                         currentMoodle.Add(slot);
@@ -60,8 +61,9 @@ public class UI_Moodle : MonoBehaviour
             {
                 GameObject tempObj = null;
                 tempObj = Instantiate(MoodlePrefab, MoodleWindow);
-                Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
-                current_indexnumber = currentMoodle.Count;
+                Moodle_Prefab slot = tempObj.GetComponentInChildren<Moodle_Prefab>();
+                //Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
+                current_indexnumber = 0;
                 SetMoodleicon(Moodlecode, Moodlestep, slot, current_indexnumber);
                 currentMoodle.Add(slot);
             }
@@ -102,10 +104,10 @@ public class UI_Moodle : MonoBehaviour
             case Moodles_private_code.Sick:
             case Moodles_private_code.Dead:
             case Moodles_private_code.Zombie:
-                slot.SetMoodle(Moodlecode, Moodlestep, Background_Bad[Moodlestep], Moodletype[(int)Moodlecode]);
+                slot.SetMoodle(Moodlecode, Moodlestep, Background_Bad[Moodlestep-1], Moodletype[(int)Moodlecode]);
                 break;
             case Moodles_private_code.Stuffed:
-                slot.SetMoodle(Moodlecode, Moodlestep, Background_Good[Moodlestep], Moodletype[(int)Moodlecode]);
+                slot.SetMoodle(Moodlecode, Moodlestep, Background_Good[Moodlestep-1], Moodletype[(int)Moodlecode]);
                 break;
             default:
                 Debug.Log("Error");
