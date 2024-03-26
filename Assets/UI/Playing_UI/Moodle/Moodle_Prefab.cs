@@ -20,16 +20,17 @@ public class Moodle_Prefab : MonoBehaviour
 
     public void SetMoodle(Moodles_private_code Moodletype, int Moodlestep, Sprite Back_Image, Sprite Moodle_Image)
     {
-        if (step != 0)
-            anim.SetTrigger("Change");
-
+        if(step != 0)
+        {
+            Debug.Log("ddd");
+            anim.SetTrigger("move");
+        }
+            
 
         type = Moodletype;
         step = Moodlestep;
         Back.sprite = Back_Image;
-        Icon.sprite = Moodle_Image;
-
-        
+        Icon.sprite = Moodle_Image;        
     }
 
     public void SetIndex(int MoodleNum)

@@ -41,7 +41,6 @@ public class zombie_movement : MonoBehaviour
         lastPosition = transform.position;
         zombieTransform = transform;
         StartCoroutine(RandomMoveCoroutine());
-        Debug.Log(zomhp.curret_speed);
         if (crawl_spawn <= 1)//스크립트 시작시 좀비가 기어서 움직이는가 서서 움직이는가 판단
         {
             Debug.Log(crawl_spawn);
