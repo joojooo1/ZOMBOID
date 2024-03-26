@@ -110,6 +110,7 @@ namespace FreeNetUnity
 			try
 			{
 				this.gameserver.send(msg);
+				Debug.Log("CNUS trysend");
 				CPacket.destroy(msg);
 			}
 			catch (Exception e)

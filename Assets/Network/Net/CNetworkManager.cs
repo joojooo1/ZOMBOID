@@ -17,8 +17,12 @@ public class CNetworkManager : MonoBehaviour
     }
     public void Connect()
     {
-        if(netstatus == NETWORK_EVENT.disconnected)
-            this.gameserver.connect("192.168.20.73", 7979);
+        if (netstatus == NETWORK_EVENT.disconnected)
+        {
+            this.gameserver.connect("127.0.0.1", 7979);
+            Debug.Log("Connection Tryed");
+        }
+
     }
 
     void on_message(CPacket msg)

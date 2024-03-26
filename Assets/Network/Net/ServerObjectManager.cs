@@ -9,7 +9,10 @@ public class ServerObjectManager : MonoBehaviour
     private void Awake()
     {
         if (current == null)
+        {
             current = this;
+            Debug.Log("ServerObjectManagerON");
+        }
         else
             Debug.LogError("Not single ServerObjectManager");
     }
@@ -38,7 +41,7 @@ public class ServerObjectManager : MonoBehaviour
     public NetObject FindObject(int playerindex)
     {
         ClearNull();
-        for (int i=0; i < ObjectArray.Count; ++i)
+        for (int i = 0; i < ObjectArray.Count; ++i)
         {
             if (ObjectArray[i].player_index == playerindex)
             {
@@ -61,28 +64,28 @@ public class ServerObjectManager : MonoBehaviour
         }
         ClearNull();
     }
-    public void MoveObject(int playeridex, Vector3 pos, float angle, OBJECT_TYPE Objecttype)
-    {
-        NetObject FindNetobj = FindObject(playeridex);
-        if(FindNetobj == null)
-        {
-            GameObject obj = Instantiate(objectPrefab[(byte)Objecttype]);
-            FindNetobj = obj.GetComponent<NetObject>();
-            FindNetobj.CreateOjbect(playeridex, Objecttype);
-            ObjectArray.Add(FindNetobj);
-            obj.name = "Net_" + playeridex;
+    //public void MoveObject(int playeridex, Vector3 pos, float angle, OBJECT_TYPE Objecttype)
+    //{
+    //    NetObject FindNetobj = FindObject(playeridex);
+    //    if (FindNetobj == null)
+    //    {
+    //        GameObject obj = Instantiate(objectPrefab[(byte)Objecttype]);
+    //        FindNetobj = obj.GetComponent<NetObject>();
+    //        FindNetobj.CreateOjbect(playeridex, Objecttype);
+    //        ObjectArray.Add(FindNetobj);
+    //        obj.name = "Net_" + playeridex;
 
-            obj.transform.position = pos;
+    //        obj.transform.position = pos;
 
-            if (Objecttype == OBJECT_TYPE.PLAYER)
-                CMainGame.current.PlayerName_REQ(playeridex);
+    //        if (Objecttype == OBJECT_TYPE.PLAYER)
+    //            CMainGame.current.PlayerName_REQ(playeridex);
 
 
-        }
-        FindNetobj.SetTarget(pos, Quaternion.Euler(0, angle, 0));
-        //FindNetobj.transform.position = pos;
-        //FindNetobj.transform.rotation = Quaternion.Euler(0, angle, 0);
-    }
+    //    }
+    //    FindNetobj.SetTarget(pos, Quaternion.Euler(0, angle, 0));
+    //    FindNetobj.transform.position = pos;
+    //    FindNetobj.transform.rotation = Quaternion.Euler(0, angle, 0);
+    //}
     //서버 오브젝트 매니저
     public void PlayerShoot(int playeridex, float angle)
     {
@@ -93,15 +96,15 @@ public class ServerObjectManager : MonoBehaviour
         //if (shoot != null)
         //    shoot.Shoot();
     }
-    public void ENEMY_TARGET(int enemyIndex, int TargetIndex)
-    {
-        NetObject enemy = FindObject(enemyIndex);
-        if (enemy != null)
-        {
-            NetObject FindNetobj = FindObject(TargetIndex);
-            enemy.SetTarget(FindNetobj);
-        }
-    }
+    //public void ENEMY_TARGET(int enemyIndex, int TargetIndex)
+    //{
+    //    NetObject enemy = FindObject(enemyIndex);
+    //    if (enemy != null)
+    //    {
+    //        NetObject FindNetobj = FindObject(TargetIndex);
+    //        enemy.SetTarget(FindNetobj);
+    //    }
+    //}
 
     public void PlayerHealth(int playeridex, float hp)
     {
@@ -120,3 +123,4 @@ public class ServerObjectManager : MonoBehaviour
         //    health.ServerTakedamage(hp);
     }
 }
+
