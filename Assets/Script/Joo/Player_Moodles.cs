@@ -195,7 +195,7 @@ public class Player_Moodles : MonoBehaviour
          체력 40% 미만: 운반능력 -2
          체력 25% 미만: 운반능력 -3
         */
-        Moodle_Pain = new Moodles_state(Moodles_private_code.Pain, 0.8f, 0.6f, 0.4f, 0.25f);  // 임의로 설정 (부상과 동일)
+        Moodle_Pain = new Moodles_state(Moodles_private_code.Pain, 0.8f, 0.5f, 0.3f, 0.1f);  // 임의로 설정
         /*
          체력 80% 미만: 낮은 울타리를 넘을때/달리기/파워워크 때 넘어질 확률 +5%
          체력 60% 미만: 낮은 울타리를 넘을때/달리기/파워워크 때 넘어질 확률 +10%,
@@ -787,7 +787,7 @@ public class Moodles_state
                     // 근접무기 데미지 0.3 감소
                 }
                 break;     /* 24.03.07 */  // 좀비에게 둘러싸임, 좀비 상처 치료 안함, 자다가 타의로 강제 기상, 좀비 감염  일때 호출   // 근접무기 착용시 데미지 반영
-            case Moodles_private_code.Unhappy:  //  0.2f, 0.45f, 0.6f, 0.8f  // 
+            case Moodles_private_code.Unhappy:  //  0.2f, 0.45f, 0.6f, 0.8f  // Player_main
                 _Moodle_current_value += current_value;
                 if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }
                 else if (_Moodle_current_value < 0) { _Moodle_current_value = 0; }
@@ -798,7 +798,8 @@ public class Moodles_state
                     _current_detail_state_to_string = "";
                     _Moodle_current_step = 0;
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                    // 행동속도 0.0% 감소
+                    Player_main.player_main.Set_Action_Speed_forMoodle(0f);  // 행동속도 0.0% 감소
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 0f);  // 이동속도 0.0% 감소
                 }
                 else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
@@ -815,7 +816,8 @@ public class Moodles_state
 
                     _Moodle_current_step = 1;
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                    // 행동속도 7.4% 감소
+                    Player_main.player_main.Set_Action_Speed_forMoodle(7.4f);  // 행동속도 7.4% 감소
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 7.4f);  // 이동속도 7.4% 감소
                 }
                 else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
@@ -832,7 +834,8 @@ public class Moodles_state
 
                     _Moodle_current_step = 2;
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                    // 행동속도 13.7% 감소
+                    Player_main.player_main.Set_Action_Speed_forMoodle(13.7f);  // 행동속도 13.7% 감소
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 13.7f);  // 이동속도 13.7% 감소
                 }
                 else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
@@ -849,7 +852,8 @@ public class Moodles_state
 
                     _Moodle_current_step = 3;
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                    // 행동속도 19.6% 감소
+                    Player_main.player_main.Set_Action_Speed_forMoodle(19.6f);  // 행동속도 19.6% 감소
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 19.6f);  // 이동속도 19.6% 감소
                 }
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
@@ -866,9 +870,10 @@ public class Moodles_state
 
                     _Moodle_current_step = 4;
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                    // 행동속도 26.5% 감소
+                    Player_main.player_main.Set_Action_Speed_forMoodle(26.5f);  // 행동속도 26.5% 감소
+                    Player_main.player_main.Set_Moving_Speed_forMoodle(_Moodle_Code, 26.5f);  // 이동속도 26.5% 감소
                 }
-                break;           // 전체 행동속도 감소하도록 구현 예정
+                break;
             case Moodles_private_code.Drunk:  //  0.1f, 0.3f, 0.5f, 0.7f  // PlayerState_Update
                 _Moodle_current_value += current_value;
                 if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }
@@ -1057,10 +1062,7 @@ public class Moodles_state
                 }
                 break;     /* 24.02.26 */
             case Moodles_private_code.Endurance:  //  25f, 50f, 75f, 91f  // PlayerState_Update
-                _Moodle_current_value += current_value;
-                if (_Moodle_current_value > 100) { _Moodle_current_value = 100; }
-                else if (_Moodle_current_value < 0) { _Moodle_current_value = 0; }
-
+                _Moodle_current_value = 100 - current_value;
                 if (_Moodle_current_value < _First_state)
                 {
                     _current_state_to_string = "";
@@ -1666,7 +1668,7 @@ public class Moodles_state
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 break;     /* 24.02.22 */
-            case Moodles_private_code.Pain:  //  0.8f, 0.6f, 0.4f, 0.25f  // Player_HP_Update
+            case Moodles_private_code.Pain:  //  0.8f, 0.5f, 0.3f, 0.1f  // Player_HP_Update
                 _Moodle_current_value = current_value;
                 if (_Moodle_current_value > _First_state)
                 {

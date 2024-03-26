@@ -257,7 +257,6 @@ public class PlayerState : MonoBehaviour
         Player_body_point.Add(Right_foot);
     }
 
-    // int a = 0;
     float Endurance_Timer = 0.0f;
     float Thirsty_Timer = 0.0f;
     float Unhappy_Timer = 0.0f;
@@ -292,7 +291,8 @@ public class PlayerState : MonoBehaviour
             Endurance_Timer += Time.deltaTime;
             if(Endurance_Timer > 0.3f)
             {
-                Set_Endurance(-2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate());
+                float Temp = 2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate();
+                Player_main.player_main.Set_Endurance(-Temp);
                 Endurance_Timer = 0.0f;
             }
         }
@@ -304,7 +304,8 @@ public class PlayerState : MonoBehaviour
                 Endurance_Timer += Time.deltaTime;
                 if (Endurance_Timer > 0.5f)
                 {
-                    Set_Endurance(3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate());
+                    float Temp = 3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate();
+                    Player_main.player_main.Set_Endurance(Temp);
                     Endurance_Timer = 0.0f;
                 }
             }
@@ -425,7 +426,6 @@ public class PlayerState : MonoBehaviour
         /****************** Player_Has_a_Cold ******************/
         if(Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() > 0)
         {
-            Player_main.player_main.Is_Cold = true;
             if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() <= 1)
             {
                 Has_a_Cold_Timer += Time.deltaTime;
@@ -438,7 +438,6 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            Player_main.player_main.Is_Cold = false;
             Has_a_Cold_Timer = 0;
         }
 
@@ -457,9 +456,10 @@ public class PlayerState : MonoBehaviour
             Drunk_Timer = 0;
         }
 
+        
     }
 
-    int Bleeding_total_count = 0;
+    public int Bleeding_total_count = 0;
     public void Bleeding_Count_change()  // 출혈 갯수 변경시 호출
     {
         for (int i = 0; i < 17; i++)
@@ -468,7 +468,7 @@ public class PlayerState : MonoBehaviour
                 Bleeding_total_count++;
         }
         Player_main.player_main.playerMoodles.Moodle_Bleeding.Set_Moodles_state(Bleeding_total_count);  // 출혈
-        Bleeding_total_count = 0;
+        
     }
 
     [SerializeField] bool _Infection = false;  // 감염 여부 확인
@@ -486,19 +486,6 @@ public class PlayerState : MonoBehaviour
 
         return _Infection;
     }
-
-    [SerializeField] float _Endurance = 100f;  // 지구력
-
-    public void Set_Endurance(float value)
-    {
-        _Endurance += value;
-        if(_Endurance > 100) { _Endurance = 100; }
-        else if(_Endurance < 0) { _Endurance = 0; }
-
-        Player_main.player_main.playerMoodles.Moodle_Endurance.Set_Moodles_state(value);
-    }
-
-    public float Get_Endurance() {  return _Endurance; }
 
     // 감기에 걸릴 확률 ( 기본 3% )
     [SerializeField] float _Probability_of_Catching_a_cold = 0.03f;

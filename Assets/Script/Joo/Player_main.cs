@@ -39,34 +39,20 @@ public class Player_main : MonoBehaviour
     [SerializeField] float Max_Attack_Power = 8.0f;
     [SerializeField] float Evasion = 0.15f;  // 회피율
     [SerializeField] float Moving_Speed = 3f;  // 이동속도
+    [SerializeField] float Action_Speed = 1f;  // 행동속도
     [SerializeField] float Coughing_Noise_radius = 15f;  // 기침 어그로 범위
     [SerializeField] float Driving_control = 1f;  // 운전 제어력
-
-    [SerializeField] float Thirsty = 0;
-    [SerializeField] float Panic = 0;
-    [SerializeField] float Bored = 0;
-    [SerializeField] float Stressed = 0;
-    [SerializeField] float Unhappy = 0;
-    [SerializeField] float Drunk = 0;
-    [SerializeField] float Heavy_Load = 0;
-    [SerializeField] float Tired = 0;
-    [SerializeField] float Hyperthermia_Hot = 0;
-    [SerializeField] float Hyperthermia_Cold = 0;
-    [SerializeField] float Windchill = 0;
-    [SerializeField] float Wet = 0;
-    [SerializeField] float Injured = 0;
-    [SerializeField] float Pain = 0;
-    [SerializeField] float Bleeding = 0;
-    [SerializeField] float Has_a_Cold = 0;
-    [SerializeField] float Sick = 0;
+    [SerializeField] float Endurance = 100f;  // 지구력
 
     public bool ability_Sleeping = true;
     public bool ability_Eat = true;
 
     public bool Is_Equipping_Weapons = false;
     public Item_Weapons Current_equipping_Weapon = null;  // 무기 착용시, 착용한 무기로 변경
-    public bool Is_Aiming = false;
-    public bool Is_Running = false;
+    public bool Is_Aiming = false;  // 조준
+    public bool Is_Running = false;  // 달릴때
+    public bool Is_Crouch = false;  // 쪼그려앉을때
+    public bool Is_Crawl = false;  // 기어갈때
     public bool Is_Resting = false;
     public bool Is_drunk = false;
     public bool Is_Cold = false;
@@ -78,7 +64,7 @@ public class Player_main : MonoBehaviour
         player_main = this;
 
         Skill = GetComponent<PlayerSkill>();
-        
+
     }
 
     float Calories_Timer = 0.0f;
@@ -88,23 +74,8 @@ public class Player_main : MonoBehaviour
     void Update()
     {
         // test -------------------------------------------------------------
-        Thirsty = playerMoodles.Moodle_Thirsty.Get_Moodle_current_value();
-        Panic = playerMoodles.Moodle_Panic.Get_Moodle_current_value();
-        Bored = playerMoodles.Moodle_Bored.Get_Moodle_current_value();
-        Stressed = playerMoodles.Moodle_Bored.Get_Moodle_current_value();
-        Unhappy = playerMoodles.Moodle_Unhappy.Get_Moodle_current_value();
-        Drunk = playerMoodles.Moodle_Drunk.Get_Moodle_current_value();
-        Heavy_Load = playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_value();
-        Tired = playerMoodles.Moodle_Tired.Get_Moodle_current_value();
-        Hyperthermia_Hot = playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_value();
-        Hyperthermia_Cold = playerMoodles.Moodle_Hyperthermia_Cold.Get_Moodle_current_value();
-        Windchill = playerMoodles.Moodle_Windchill.Get_Moodle_current_value();
-        Wet = playerMoodles.Moodle_Wet.Get_Moodle_current_value();
-        Injured = playerMoodles.Moodle_Injured.Get_Moodle_current_value();
-        Pain = playerMoodles.Moodle_Pain.Get_Moodle_current_value();
-        Bleeding = playerMoodles.Moodle_Bleeding.Get_Moodle_current_value();
-        Has_a_Cold = playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value();
-        Sick = playerMoodles.Moodle_Sick.Get_Moodle_current_value();
+
+
 
         // ------------------------------------------------------------- test 함수 
 
@@ -188,27 +159,46 @@ public class Player_main : MonoBehaviour
 
     }
 
-    public float Get_Moving_Speed()
+    public void Set_Endurance(float value)
     {
+        Endurance += value;
+        if (Endurance > 100) { Endurance = 100; }
+        else if (Endurance < 0) { Endurance = 0; }
+
+        playerMoodles.Moodle_Endurance.Set_Moodles_state(Endurance);
+    }
+
+    public float Get_Endurance() { return Endurance; }
+
+    // Player 이동속도
+    public float Get_Moving_Speed()  
+    {
+        float Speed = Moving_Speed;
+
         float speed_forMoodle = Moving_Speed_forMoodle;
         if (playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
         {
             speed_forMoodle = Moving_Speed_forMoodle / Speed_rate_for_Pain;
         }
 
-        if (Is_Aiming)
-            return Moving_Speed * speed_forMoodle * playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
-        else
+        if(Is_Running)
         {
-            if (Is_Running)  // 달리면 1.2배로 빨라짐.
-            {
-                return Moving_Speed * 1.2f * speed_forMoodle;
-            }
-            else
-            {
-                return Moving_Speed * speed_forMoodle;
-            }
+            Speed *= 1.2f;
         }
+        if (Is_Crouch)
+        {
+            Speed *= 0.8f;
+        }
+        if (Is_Crawl)
+        {
+            Speed *= 0.3f;
+        }
+        if (Is_Aiming)
+        {
+            Speed *= playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+        }
+
+         return Speed * speed_forMoodle;
     }
 
     float Moving_Speed_forMoodle = 1f;
@@ -218,6 +208,7 @@ public class Player_main : MonoBehaviour
     float Speed_rate_for_Pain = 1f;
     float Speed_rate_for_Hyperthermia_Hot = 1f;
     float Speed_rate_for_Hyperthermia_Cold = 1f;
+    float Speed_rate_for_Unhappy = 1f;
     public void Set_Moving_Speed_forMoodle(Moodles_private_code _Moodle_Code, float Speed_rate) 
     {
         switch (_Moodle_Code)
@@ -240,8 +231,23 @@ public class Player_main : MonoBehaviour
             case Moodles_private_code.Hyperthermia_Cold:
                 Speed_rate_for_Hyperthermia_Cold = (1 - Speed_rate);
                 break;
+            case Moodles_private_code.Unhappy:
+                Speed_rate_for_Unhappy = (1 - Speed_rate/100);
+                break;
         }
-        Moving_Speed_forMoodle = Speed_rate_for_Endurance * Speed_rate_for_Has_a_Cold * Speed_rate_for_Heavy_Load * Speed_rate_for_Pain * Speed_rate_for_Hyperthermia_Hot * Speed_rate_for_Hyperthermia_Cold;
+        Moving_Speed_forMoodle = Speed_rate_for_Endurance * Speed_rate_for_Has_a_Cold * Speed_rate_for_Heavy_Load * Speed_rate_for_Pain * Speed_rate_for_Hyperthermia_Hot * Speed_rate_for_Hyperthermia_Cold * Speed_rate_for_Unhappy;
+    }
+
+    // Player 행동속도
+    public float Get_Action_Speed()
+    {
+        return Action_Speed * Action_Speed_forMoodle;
+    }
+
+    float Action_Speed_forMoodle = 1f;
+    public void Set_Action_Speed_forMoodle(float value)  // Unhappy
+    {
+        Action_Speed_forMoodle = (1 - (value/100));
     }
 
     public float Get_Accuracy_forMoodle()

@@ -6,7 +6,7 @@ public class Player_HP : MonoBehaviour
 {
     [SerializeField] float Player_Max_Health = 100.0f;  // 체력 ( Fitness_Level: 5 / Strength_Level: 5 )
     float Player_Min_Health = 0f;
-    [SerializeField] float Player_current_Health = 0f;
+    [SerializeField] float Player_current_Health = 100.0f;
     [SerializeField] float HP_Recovery_Speed = 1f;  // 체력 회복속도
     float HP_Recovery_Speed_forMoodle = 1.0f;
 
