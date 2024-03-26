@@ -8,6 +8,7 @@ public class UI_main : MonoBehaviour
 {
     public static UI_main ui_main;
     public UI_Player_State ui_player_state = new UI_Player_State();
+    // public UI_Moodle ui_moodle;  
 
     public bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
     [SerializeField]
@@ -24,7 +25,7 @@ public class UI_main : MonoBehaviour
 
     void Awake()
     {
-        ui_main = this;;
+        ui_main = this;
         GameObject myInstance = Instantiate(player_gender[0],transform);
 
     }

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Player_Crafting : MonoBehaviour
 {
+    // General
+    public bool Flashlight = true;   // Flashlight + Battery
+
+
+
+
     // Hunting
 
 
@@ -30,5 +36,9 @@ public class Player_Crafting : MonoBehaviour
 
     // Electrical
 
-    //bool
+
+
+
+
+
 }

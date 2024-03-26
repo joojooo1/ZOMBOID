@@ -19,8 +19,8 @@ MonoBehaviour:
   UsingPower_type: 0
   Equipping_Position: 
   Electronics_ID: 0
-  Height: 2
-  Width: 2
+  Height: 4
+  Width: 4
   Nesting_Depth: 1
   ElectronicsName: Propane Tank
   ElectronicsName_Kr: "\uD504\uB85C\uD310 \uD0F1\uD06C"

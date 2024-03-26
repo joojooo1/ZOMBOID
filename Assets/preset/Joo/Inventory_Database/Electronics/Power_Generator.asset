@@ -19,8 +19,8 @@ MonoBehaviour:
   UsingPower_type: 2
   Equipping_Position: 0000000001000000
   Electronics_ID: 0
-  Height: 2
-  Width: 4
+  Height: 5
+  Width: 5
   Nesting_Depth: 1
   ElectronicsName: Generator
   ElectronicsName_Kr: "\uBC1C\uC804\uAE30"

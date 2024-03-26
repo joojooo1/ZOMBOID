@@ -257,6 +257,7 @@ public class PlayerState : MonoBehaviour
         Player_body_point.Add(Right_foot);
     }
 
+    // int a = 0;
     float Endurance_Timer = 0.0f;
     float Thirsty_Timer = 0.0f;
     float Unhappy_Timer = 0.0f;
@@ -264,8 +265,10 @@ public class PlayerState : MonoBehaviour
     float Is_Cold_Timer = 0.0f;
     float Has_a_Cold_Timer = 0.0f;
     float Drunk_Timer = 0.0f;
+
     private void Update()
     {
+
         /****************** Player_Has_a_Cold ******************/
         if (Player_main.player_main.Is_Cold == false)
         {
@@ -525,7 +528,7 @@ public class PlayerState : MonoBehaviour
     }
 
 
-    [SerializeField] float Apparent_Temperature = 36.0f;  // 체감 온도
+    [SerializeField] float Apparent_Temperature = 0.0f;  // 체감 온도
     // 옷으로 오르는 최고온도, 찬바람으로 내려가는 최저온도 조절  ( 20 ~ 50 )
     // Hot = 옷, Cold = 찬바람
     float Apparent_Temperature_forMoodle = 0f;
@@ -537,8 +540,8 @@ public class PlayerState : MonoBehaviour
 
     public void Set_Apparent_Temperature(float value)
     {
-        Apparent_Temperature += value;
-        if(Apparent_Temperature >= 36f)
+        Apparent_Temperature = value;
+        if((Get_Apparent_Temperature() + value) >= 36f)
         {
             Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(Apparent_Temperature);
         }

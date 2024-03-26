@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 6
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 13
   WeaponName: Hoe
   WeaponName_Kr: "\uAD2D\uC774"
   ItemImage: {fileID: 21300000, guid: befa0c58d9cd9d44ba2af1108f75d20b, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 6
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR;
 using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 
@@ -31,7 +32,7 @@ public class Player_main : MonoBehaviour
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
     [SerializeField] float Weight = 83.0f; // 체중 0 ~ 150
     [SerializeField] float Calories = 800.0f; // 칼로리 -2200 ~ 3700   // Stuffed 3단계부터는 칼로리 1000 이상이면 음식섭취 불가능
-    [SerializeField] float Satiety = 20.0f;  // 포만감 -300 ~ 300
+    [SerializeField] float Satiety = 0.0f;  // 포만감 -300 ~ 300
     [SerializeField] float Rate_of_Hunger_increase = 1f;  // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
 
     [SerializeField] float Min_Attack_Power = 8.0f; // 공격력
@@ -41,16 +42,35 @@ public class Player_main : MonoBehaviour
     [SerializeField] float Coughing_Noise_radius = 15f;  // 기침 어그로 범위
     [SerializeField] float Driving_control = 1f;  // 운전 제어력
 
+    [SerializeField] float Thirsty = 0;
+    [SerializeField] float Panic = 0;
+    [SerializeField] float Bored = 0;
+    [SerializeField] float Stressed = 0;
+    [SerializeField] float Unhappy = 0;
+    [SerializeField] float Drunk = 0;
+    [SerializeField] float Heavy_Load = 0;
+    [SerializeField] float Tired = 0;
+    [SerializeField] float Hyperthermia_Hot = 0;
+    [SerializeField] float Hyperthermia_Cold = 0;
+    [SerializeField] float Windchill = 0;
+    [SerializeField] float Wet = 0;
+    [SerializeField] float Injured = 0;
+    [SerializeField] float Pain = 0;
+    [SerializeField] float Bleeding = 0;
+    [SerializeField] float Has_a_Cold = 0;
+    [SerializeField] float Sick = 0;
+
+    public bool ability_Sleeping = true;
+    public bool ability_Eat = true;
+
     public bool Is_Equipping_Weapons = false;
     public Item_Weapons Current_equipping_Weapon = null;  // 무기 착용시, 착용한 무기로 변경
     public bool Is_Aiming = false;
     public bool Is_Running = false;
-    public bool Is_Sleeping = false;
-    public bool Is_Pill_Sleep = false;
     public bool Is_Resting = false;
     public bool Is_drunk = false;
     public bool Is_Cold = false;
-    public bool Is_Eat = true;
+    public bool Is_Sleeping = false;
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -67,16 +87,24 @@ public class Player_main : MonoBehaviour
     float Cold_Timer = 0.0f;
     void Update()
     {
-
-        // test 함수 -------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Z)) 
-        {
-            player_HP.Set_Player_HP_for_Damage(20f);
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            player_HP.Set_Player_HP_for_Heal(20f);
-        }
+        // test -------------------------------------------------------------
+        Thirsty = playerMoodles.Moodle_Thirsty.Get_Moodle_current_value();
+        Panic = playerMoodles.Moodle_Panic.Get_Moodle_current_value();
+        Bored = playerMoodles.Moodle_Bored.Get_Moodle_current_value();
+        Stressed = playerMoodles.Moodle_Bored.Get_Moodle_current_value();
+        Unhappy = playerMoodles.Moodle_Unhappy.Get_Moodle_current_value();
+        Drunk = playerMoodles.Moodle_Drunk.Get_Moodle_current_value();
+        Heavy_Load = playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_value();
+        Tired = playerMoodles.Moodle_Tired.Get_Moodle_current_value();
+        Hyperthermia_Hot = playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_value();
+        Hyperthermia_Cold = playerMoodles.Moodle_Hyperthermia_Cold.Get_Moodle_current_value();
+        Windchill = playerMoodles.Moodle_Windchill.Get_Moodle_current_value();
+        Wet = playerMoodles.Moodle_Wet.Get_Moodle_current_value();
+        Injured = playerMoodles.Moodle_Injured.Get_Moodle_current_value();
+        Pain = playerMoodles.Moodle_Pain.Get_Moodle_current_value();
+        Bleeding = playerMoodles.Moodle_Bleeding.Get_Moodle_current_value();
+        Has_a_Cold = playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value();
+        Sick = playerMoodles.Moodle_Sick.Get_Moodle_current_value();
 
         // ------------------------------------------------------------- test 함수 
 
@@ -102,7 +130,7 @@ public class Player_main : MonoBehaviour
             }
             else
             {
-                playerMoodles.Moodle_Hungry.Set_Moodles_state(Satiety);
+                playerMoodles.Moodle_Hungry.Set_Moodles_state(-Satiety);
             }
             Satiety_Timer = 0.0f;
         }
@@ -128,15 +156,6 @@ public class Player_main : MonoBehaviour
         /************************************* Player_Heavy_Load **************************************/
         if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
             Is_Running = false;
-
-        /************************************* Player_Pain (Sleeping) **************************************/
-        if(playerMoodles.Moodle_Pain.Get_Moodle_current_step() > 1)  // Moodle_Pain 2단계부터 수면 불가
-        {
-            if(Is_Pill_Sleep == false)
-                Is_Sleeping = false;
-            else
-                Is_Sleeping = true;
-        }
 
         /************************************* Player_Panic **************************************/
         if (Is_Resting)

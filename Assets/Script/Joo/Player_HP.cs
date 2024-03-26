@@ -74,7 +74,26 @@ public class Player_HP : MonoBehaviour
                 Bleeding_Timer += Time.deltaTime;
                 if (Bleeding_Timer > 2.0f)
                 {
-                    Player_current_Health -= Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_value();
+                    switch (Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_step())
+                    {
+                        case 0:
+                            Player_current_Health -= 0;
+                            break;
+                        case 1:
+                            Player_current_Health -= 2;
+                            break;
+                        case 2:
+                            Player_current_Health -= 3;
+                            break;
+                        case 3:
+                            Player_current_Health -= 5;
+                            break;
+                        case 4:
+                            Player_current_Health -= 7;
+                            break;
+                        default: break;
+                    }
+
                     if(Player_main.player_main.playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 3 && Player_current_Health / Player_Max_Health > 0.25)
                     {
                         Player_current_Health -= 2;
@@ -137,7 +156,7 @@ public class Player_HP : MonoBehaviour
         else
         {
             /************************* Player_Zombie, Dead *************************/
-            Player_current_Health = 0;
+            Player_current_Health = Player_Min_Health;
             if (Player_main.player_main.playerState.Get_Is_Infection())
             {
                 Player_main.player_main.playerMoodles.Moodle_Zombie.Set_Moodles_state(0);

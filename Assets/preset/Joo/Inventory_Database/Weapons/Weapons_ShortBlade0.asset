@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: HuntingKnife
   WeaponName_Kr: "\uC0AC\uB0E5\uC6A9 \uCE7C"
   ItemImage: {fileID: 21300000, guid: e5257912b0892fd41bf72711814212de, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

@@ -22,8 +22,8 @@ MonoBehaviour:
   ContainerName_Kr: "\uB0C4\uBE44"
   ContainergWeight: 3
   Container_Image: {fileID: 21300000, guid: 40f328b8361c05c41b8135cb718f0c01, type: 3}
-  Height: 2
-  Width: 2
+  Height: 3
+  Width: 3
   Nesting_Depth: 1
   WeightReduction: 0
   Store_Water: 1

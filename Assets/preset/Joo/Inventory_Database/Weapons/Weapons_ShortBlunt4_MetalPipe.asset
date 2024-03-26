@@ -21,9 +21,9 @@ MonoBehaviour:
   WeaponName: Metal Pipe
   WeaponName_Kr: "\uAE08\uC18D \uD30C\uC774\uD504"
   ItemImage: {fileID: 21300000, guid: 2c332ff47067a844294372c9cb9a804e, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 01000000

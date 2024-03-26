@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 6
   Power_type: 0
   WeaponType: 7
+  created: 0
   Weapon_ID: 14
   WeaponName: Shovel
   WeaponName_Kr: "\uC0BD"
   ItemImage: {fileID: 21300000, guid: 4dc08c0bba92b0d4c9edd6c52746e190, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 6
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

@@ -31,7 +31,6 @@ public class zombieHp : MonoBehaviour
         else
             zomType = "easy";
         zom_stet();
-        Debug.Log(zomType);
         _Movement = gameObject.GetComponent<zombie_movement>();
     }
     

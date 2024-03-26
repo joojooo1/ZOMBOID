@@ -16,13 +16,14 @@ MonoBehaviour:
   Usingtype: 10
   Power_type: 0
   WeaponType: 0
+  created: 0
   Weapon_ID: 1
   WeaponName: WoodAxe
   WeaponName_Kr: "\uBC8C\uBAA9\uB3C4\uB07C"
   ItemImage: {fileID: 21300000, guid: ae32a37452a2a354db132b107ab4e195, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 4
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 1
   Equipping_Position: 0000000001000000

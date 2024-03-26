@@ -6,7 +6,7 @@ using static ServerObjectManager;
 
 public class NetObject : MonoBehaviour
 {
-    
+
 
     [SerializeField]
     UnityEngine.UI.Text PlayerName;
@@ -48,95 +48,96 @@ public class NetObject : MonoBehaviour
     {
         spawnpos = transform.position;
         anim = GetComponent<Animator>();
-        if(anim == null)
+        if (anim == null)
             anim = GetComponentInChildren<Animator>();
     }
 
     float timer = 0f; Vector3 prePos; Quaternion preAngle;
     private void Update()
     {
-        if (IsPlayer)
-        {
-            timer += Time.deltaTime;
-            if (transform.position != prePos ||
-               transform.rotation != preAngle)
-            {
-                if (timer >= 0.2f)
-                {
-                    PosSend();
-                    timer = 0f;
-                }
-            }
-        }
-        else //플레이어 다른애들
-        {
-            switch(objecttype)
-            {
-                case OBJECT_TYPE.PLAYER:
-                    {
-                        transform.position = Vector3.Slerp(transform.position, netpos, Time.deltaTime * 4f);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, netrot, Time.deltaTime * 10f);
+        //if (IsPlayer)
+        //{
+        //    timer += Time.deltaTime;
+        //    if (transform.position != prePos ||
+        //       transform.rotation != preAngle)
+        //    {
+        //        if (timer >= 0.2f)
+        //        {
+        //            PosSend();
+        //            timer = 0f;
+        //        }
+        //    }
+        //}
+        //    else //플레이어 다른애들
+        //    {
+        //        switch(objecttype)
+        //        {
+        //            case OBJECT_TYPE.PLAYER:
+        //                {
+        //                    transform.position = Vector3.Slerp(transform.position, netpos, Time.deltaTime * 4f);
+        //                    transform.rotation = Quaternion.Slerp(transform.rotation, netrot, Time.deltaTime * 10f);
 
-                        if (Vector3.Distance(transform.position, netpos) > 1f)
-                            anim.SetBool("IsMove", true);
-                        else
-                            anim.SetBool("IsMove", false);
-                    }
-                    break;
-                default: //몬스터
-                    {
-                        //EnemyMovement move = GetComponent<EnemyMovement>();
-                        //if (move != null)
-                        //{
-                        //    float dist = 0;
-                        //    if (TargetObject != null)
-                        //    {
-                        //        dist  = move.SetDest(TargetObject.transform.position);
-                        //    }
-                        //    else
-                        //    {
-                        //        dist  = move.SetDest(spawnpos);
-                        //    }
+        //                    if (Vector3.Distance(transform.position, netpos) > 1f)
+        //                        anim.SetBool("IsMove", true);
+        //                    else
+        //                        anim.SetBool("IsMove", false);
+        //                }
+        //                break;
+        //            default: //몬스터
+        //                {
+        //                    //EnemyMovement move = GetComponent<EnemyMovement>();
+        //                    //if (move != null)
+        //                    //{
+        //                    //    float dist = 0;
+        //                    //    if (TargetObject != null)
+        //                    //    {
+        //                    //        dist  = move.SetDest(TargetObject.transform.position);
+        //                    //    }
+        //                    //    else
+        //                    //    {
+        //                    //        dist  = move.SetDest(spawnpos);
+        //                    //    }
 
-                        //    if (dist > 1f)
-                        //        anim.SetBool("IsMove", true);
-                        //    else
-                        //        anim.SetBool("IsMove", false);
+        //                    //    if (dist > 1f)
+        //                    //        anim.SetBool("IsMove", true);
+        //                    //    else
+        //                    //        anim.SetBool("IsMove", false);
 
-                        //}
-                    }
-                    break;
-            }
-        }
-        prePos = transform.position;
-        preAngle = transform.rotation;
+        //                    //}
+        //                }
+        //                break;
+        //        }
+        //    }
+        //    prePos = transform.position;
+        //    preAngle = transform.rotation;
+        //}
+
+
+        //public NetObject TargetObject { get; private set; }
+        //public void SetTarget(NetObject _TargetObject)
+        //{
+        //    TargetObject = _TargetObject;
+        //}
+
+        //Vector3 netpos;
+        //Quaternion netrot;
+        //public void SetTarget(Vector3 pos, Quaternion rot)
+        //{
+        //    netpos = pos;
+        //    netrot = rot;
+        //}
+        //public void SetTargetRotation(Quaternion rot)
+        //{
+        //    netrot = rot;
+        //  //  transform.rotation = rot;
+        //}
+
+
+        //void PosSend()
+        //{
+        //    CMainGame.current.PLAYER_MOVING_REQ(
+        //        transform.position, transform.rotation.eulerAngles.y);
+        //}
+
     }
-
-
-    public NetObject TargetObject { get; private set; }
-    public void SetTarget(NetObject _TargetObject)
-    {
-        TargetObject = _TargetObject;
-    }
-
-    Vector3 netpos;
-    Quaternion netrot;
-    public void SetTarget(Vector3 pos, Quaternion rot)
-    {
-        netpos = pos;
-        netrot = rot;
-    }
-    public void SetTargetRotation(Quaternion rot)
-    {
-        netrot = rot;
-      //  transform.rotation = rot;
-    }
-
-
-    void PosSend()
-    {
-        CMainGame.current.PLAYER_MOVING_REQ(
-            transform.position, transform.rotation.eulerAngles.y);
-    }
-
 }
