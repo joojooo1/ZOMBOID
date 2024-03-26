@@ -24,14 +24,20 @@ public class CMainGame : MonoBehaviour
     {
         network_manager = GetComponent<CNetworkManager>();
         network_manager.Connect();
+        Debug.Log("NetWorkManagerWorking");
+        Invoke("MatchingRoom", 2f);
 
-        //Invoke("MatchingRoom", 1f);
+        //string EX_Name = "Dummy";
+        //MatchingRoom(EX_Name);
     }
-    public void MatchingRoom(string PlayerName)
+    public void MatchingRoom()
     {
+        string PlayerName = "test";
         CPacket msg2 = CPacket.create((short)PROTOCOL.ENTER_GAME_ROOM);
         msg2.push(PlayerName);
         network_manager.send(msg2);
+        Debug.Log("MatchingRoomActive");
+        Debug.Log(PlayerName);
     }
     public void SendMsg(string chatmsg)
     {
@@ -80,8 +86,10 @@ public class CMainGame : MonoBehaviour
             case PROTOCOL.ENTER_GAME_ROOM: //플레이어
                 {
                     playerSN = msg.pop_int32();
-                    ServerObjectManager.current.MoveObject(playerSN,
-                        Vector3.zero,0, ServerObjectManager.OBJECT_TYPE.PLAYER);
+                    //ServerObjectManager.current.MoveObject(playerSN,
+                    //    Vector3.zero,0, ServerObjectManager.OBJECT_TYPE.PLAYER);
+                    Debug.Log("Recieved EnterGameRoom Successfully");
+                    Debug.Log("YourSN = " + playerSN);
                 }
                 break;
 
@@ -123,8 +131,8 @@ public class CMainGame : MonoBehaviour
                     float angle = msg.pop_float();
                     byte objectType = msg.pop_byte();
 
-                    ServerObjectManager.current.MoveObject(player_index,
-                        new Vector3(x,y,z), angle, (ServerObjectManager.OBJECT_TYPE)objectType);
+                    //ServerObjectManager.current.MoveObject(player_index,
+                    //    new Vector3(x,y,z), angle, (ServerObjectManager.OBJECT_TYPE)objectType);
                 }
                 break;
             case PROTOCOL.PLAYER_EXIT:
@@ -153,11 +161,11 @@ public class CMainGame : MonoBehaviour
 
             case PROTOCOL.ENEMY_TARGET:
                 {
-                    int enemyIndex = msg.pop_int32();
-                    int TargetIndex = msg.pop_int32();
-                    ServerObjectManager.current.ENEMY_TARGET(
-                        enemyIndex,
-                        TargetIndex);
+                    //int enemyIndex = msg.pop_int32();
+                    //int TargetIndex = msg.pop_int32();
+                    //ServerObjectManager.current.ENEMY_TARGET(
+                    //    enemyIndex,
+                    //    TargetIndex);
                 }
                 break;
 
