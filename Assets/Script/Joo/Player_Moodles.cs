@@ -297,7 +297,7 @@ public class Moodles_state
                     _Moodle_current_step = 0;
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
-                    UI_main.ui_main.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
@@ -315,7 +315,7 @@ public class Moodles_state
                     _Moodle_current_step = 1;
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
-                    UI_main.ui_main.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
@@ -333,7 +333,7 @@ public class Moodles_state
                     _Moodle_current_step = 2;
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.35f);
-                    UI_main.ui_main.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
@@ -351,7 +351,7 @@ public class Moodles_state
                     _Moodle_current_step = 3;
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.6f);
-                    UI_main.ui_main.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
@@ -369,7 +369,7 @@ public class Moodles_state
                     _Moodle_current_step = 4;
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Hungry, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.6f);
-                    UI_main.ui_main.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 break;     /* 24.02.26 */
             case Moodles_private_code.Stuffed:  //  0.15f, 0.25f, 0.45f, 0.7f  // Player_main_Update
@@ -382,6 +382,7 @@ public class Moodles_state
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0f);
                     Player_main.player_main.Is_Eat = true;
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
@@ -400,6 +401,7 @@ public class Moodles_state
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.05f);
                     Player_main.player_main.Is_Eat = true;
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
@@ -418,6 +420,7 @@ public class Moodles_state
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.15f);
                     Player_main.player_main.Is_Eat = true;
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
@@ -436,6 +439,7 @@ public class Moodles_state
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.2f);
                     Player_main.player_main.Is_Eat = false;
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
@@ -454,6 +458,7 @@ public class Moodles_state
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Stuffed, _Moodle_current_step);
                     Player_main.player_main.player_HP.Set_HP_Recovery_Speed_forMoodle(_Moodle_Code, 0.2f);
                     Player_main.player_main.Is_Eat = false;
+                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 break;     /* 24.02.26 */
             case Moodles_private_code.Thirsty:  //  0.13f, 0.25f, 0.7f, 0.85f  // PlayerState_Update, Player_HP_Update

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UI_Moodle : MonoBehaviour
 {
+    public static UI_Moodle ui_moodle;
     public Sprite[] Background_Good;
     public Sprite[] Background_Bad;
     public Sprite[] Moodletype;
@@ -12,6 +13,11 @@ public class UI_Moodle : MonoBehaviour
     [SerializeField] Transform MoodleWindow;
 
     List<Moodle_Prefab> currentMoodle = new List<Moodle_Prefab>();
+
+    private void Awake()
+    {
+        ui_moodle = this;
+    }
 
     public void Moodle_Ins(Moodles_private_code Moodlecode, int Moodlestep)
     {
@@ -34,7 +40,7 @@ public class UI_Moodle : MonoBehaviour
                         }
                         else
                         {
-                            SetMoodleicon(Moodlecode, Moodlestep, currentMoodle[i], current_indexnumber);                            
+                            SetMoodleicon(Moodlecode, Moodlestep, currentMoodle[i], current_indexnumber);
                         }
                     }
 
@@ -47,7 +53,6 @@ public class UI_Moodle : MonoBehaviour
                         GameObject tempObj = null;
                         tempObj = Instantiate(MoodlePrefab, MoodleWindow);
                         Moodle_Prefab slot = tempObj.GetComponentInChildren<Moodle_Prefab>();
-                        //Moodle_Prefab slot = tempObj.<Moodle_Prefab>();
                         current_indexnumber = currentMoodle.Count;
                         SetMoodleicon(Moodlecode, Moodlestep, slot, current_indexnumber);
                         currentMoodle.Add(slot);
@@ -62,7 +67,6 @@ public class UI_Moodle : MonoBehaviour
                 GameObject tempObj = null;
                 tempObj = Instantiate(MoodlePrefab, MoodleWindow);
                 Moodle_Prefab slot = tempObj.GetComponentInChildren<Moodle_Prefab>();
-                //Moodle_Prefab slot = tempObj.GetComponent<Moodle_Prefab>();
                 current_indexnumber = 0;
                 SetMoodleicon(Moodlecode, Moodlestep, slot, current_indexnumber);
                 currentMoodle.Add(slot);
