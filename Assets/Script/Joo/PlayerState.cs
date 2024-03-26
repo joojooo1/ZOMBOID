@@ -265,8 +265,10 @@ public class PlayerState : MonoBehaviour
     float Is_Cold_Timer = 0.0f;
     float Has_a_Cold_Timer = 0.0f;
     float Drunk_Timer = 0.0f;
+
     private void Update()
     {
+
         /****************** Player_Has_a_Cold ******************/
         if (Player_main.player_main.Is_Cold == false)
         {
