@@ -384,7 +384,7 @@ public class Moodles_state
                 else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
                     _current_state_to_string_KR = "적당한 포만감";
-                    _current_detail_state_to_string_KR = "배가 꽉찼다." + "\r\n" + "당신의 몸을 이롭게 할 겁니다.";
+                    _current_detail_state_to_string_KR = "배가 꽉찼다. 당신의 몸을 이롭게 할 겁니다.";
                     _current_state_to_string = "Well Fed";
                     _current_detail_state_to_string = "Tummy full. Goodness is making its way through your system.";
 
@@ -397,7 +397,7 @@ public class Moodles_state
                 else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
                     _current_state_to_string_KR = "배가 든든함";
-                    _current_detail_state_to_string_KR = "위장이 만족했다." + "\r\n" + "잠깐 체력과 근력이 증가한다.";
+                    _current_detail_state_to_string_KR = "위장이 만족했다. 잠깐 체력과 근력이 증가한다.";
                     _current_state_to_string = "Stuffed";
                     _current_detail_state_to_string = "Stomach contented. Health and strength aided.";
 
@@ -410,7 +410,7 @@ public class Moodles_state
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "어머니의 밥상";
-                    _current_detail_state_to_string_KR = "한 입 더 먹는 걸 멈추지 못했어..." + "\r\n" + "근력과 치유능력이 장시간 유지됨.";
+                    _current_detail_state_to_string_KR = "한 입 더 먹는 걸 멈추지 못했어... 근력과 치유능력이 장시간 유지됨.";
                     _current_state_to_string = "Full to Bursting";
                     _current_detail_state_to_string = "Couldn't take another single, solitary bite.";
 
@@ -781,7 +781,7 @@ public class Moodles_state
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "꽐라";
-                    _current_detail_state_to_string_KR = "느어랑 나밖에 업쓰어~ 이 세상은 쓰렉기야!" + "\r\n" + "사랑해~사랑해...";
+                    _current_detail_state_to_string_KR = "느어랑 나밖에 업쓰어~ 이 세상은 쓰렉기야! 사랑해~사랑해...";
                     _current_state_to_string = "Utterly Shit-Faced";
                     _current_detail_state_to_string = "Iss you an' me 'gainst the wurld. I love you. I LOVE YOU.";
 
@@ -859,7 +859,7 @@ public class Moodles_state
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "용량초과";
-                    _current_detail_state_to_string_KR = "등을 다칠 위험이 있음." + "\r\n" + "움직임이 제한됨.";
+                    _current_detail_state_to_string_KR = "등을 다칠 위험이 있음. 움직임이 제한됨.";
                     _current_state_to_string = "Extremely Heavy Load";
                     _current_detail_state_to_string = "Can't take much more! Movement compromised.";
 
@@ -1009,7 +1009,7 @@ public class Moodles_state
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "비몽사몽";
-                    _current_detail_state_to_string_KR = "너무 피곤하고. 힘이 안 난다." + "\r\n" + "무시무시하게 피곤하다.";
+                    _current_detail_state_to_string_KR = "너무 피곤하고. 힘이 안 난다. 무시무시하게 피곤하다.";
                     _current_state_to_string = "Ridiculously Tired";
                     _current_detail_state_to_string = "So tired. So desperately, inhumanly tired.";
 
@@ -1039,7 +1039,7 @@ public class Moodles_state
                 else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
                     _current_state_to_string_KR = "약간 더움";
-                    _current_detail_state_to_string_KR = "더워지기 시작함." + "\r\n" + "옷을 벗고 싶음. 갈증이 증가함.";
+                    _current_detail_state_to_string_KR = "더워지기 시작함. 옷을 벗고 싶음. 갈증이 증가함.";
                     _current_state_to_string = "Unpleasantly Hot";
                     _current_detail_state_to_string = "Consider taking off clothing. Thirst increased.";
 
@@ -1052,7 +1052,7 @@ public class Moodles_state
                 else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
                     _current_state_to_string_KR = "지나치게 더움";
-                    _current_detail_state_to_string_KR = "목이 마르고 땀이 남." + "\r\n" + "햇빛에 과다 노출됨.";
+                    _current_detail_state_to_string_KR = "목이 마르고 땀이 남. 햇빛에 과다 노출됨.";
                     _current_state_to_string = "Overheated";
                     _current_detail_state_to_string = "Thirsty. Sweaty. Over-exposed.";
 
@@ -1065,7 +1065,7 @@ public class Moodles_state
                 else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
                     _current_state_to_string_KR = "찜통";
-                    _current_detail_state_to_string_KR = "메스껍고 집중력이 떨어짐." + "\r\n" + "수분을 찾아 혈안이 됨.";
+                    _current_detail_state_to_string_KR = "메스껍고 집중력이 떨어짐. 수분을 찾아 혈안이 됨.";
                     _current_state_to_string = "Sunstruck";
                     _current_detail_state_to_string = "Nauseous, unable to concentrate and desperate for liquids.";
 
@@ -1078,7 +1078,7 @@ public class Moodles_state
                 else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "열사병";
-                    _current_detail_state_to_string_KR = "열사병으로 의식이 혼미함." + "\r\n" + "심각한 위기상황.";
+                    _current_detail_state_to_string_KR = "열사병으로 의식이 혼미함. 심각한 위기상황.";
                     _current_state_to_string = "Hyperthermic";
                     _current_detail_state_to_string = "Delirious from heat stroke and exposure. Severely endangered.";
 
@@ -1146,7 +1146,7 @@ public class Moodles_state
                 else if (_Moodle_current_value < _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "저체온증";
-                    _current_detail_state_to_string_KR = "몸과 마음이 추위에 사로잡혔음." + "\r\n" + "얼어죽는다.";
+                    _current_detail_state_to_string_KR = "몸과 마음이 추위에 사로잡혔음. 얼어죽는다.";
                     _current_state_to_string = "Hypothermic";
                     _current_detail_state_to_string = "Body and mind obsessed by the cold.";
 
@@ -1245,7 +1245,7 @@ public class Moodles_state
                 else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
                     _current_state_to_string_KR = "젖음";
-                    _current_detail_state_to_string_KR = "축축하다." + "\r\n" + "땀이 많이 나는 건가? 비가 많이 오는 건가?";
+                    _current_detail_state_to_string_KR = "축축하다. 땀이 많이 나는 건가? 비가 많이 오는 건가?";
                     _current_state_to_string = "Wet";
                     _current_detail_state_to_string = "Sweatier, or even more rained on?";
 
@@ -1512,7 +1512,7 @@ public class Moodles_state
                 else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
                     _current_state_to_string_KR = "감기";
-                    _current_detail_state_to_string_KR = "기침을 동반한 재채기." + "\r\n" + "이동속도와 치유능력이 저하됨.";
+                    _current_detail_state_to_string_KR = "기침을 동반한 재채기. 이동속도와 치유능력이 저하됨.";
                     _current_state_to_string = "You Have A Cold";
                     _current_detail_state_to_string = "Sneezing and coughing. Speed and healing reduced.";
                    
