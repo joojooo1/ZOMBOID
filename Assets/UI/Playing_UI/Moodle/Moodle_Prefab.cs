@@ -14,6 +14,10 @@ public class Moodle_Prefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     Animator anim;
 
+    public GameObject Moodle_InfoWindow;
+    public UnityEngine.UI.Text Moodle_State;
+    public UnityEngine.UI.Text Moodle_Detail;
+
     private void OnEnable()
     {
         anim = GetComponentInChildren<Animator>();
@@ -45,8 +49,6 @@ public class Moodle_Prefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void Get_Moodle_string(Moodles_private_code type)
     {
-        string current_state = "";
-
         switch(type)
         {
             case Moodles_private_code.Hungry:
@@ -148,10 +150,6 @@ public class Moodle_Prefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 
     // 세부정보 창 ( 마우스 올렸을때만 활성화 )
-
-    public GameObject Moodle_InfoWindow;
-    public UnityEngine.UI.Text Moodle_State;
-    public UnityEngine.UI.Text Moodle_Detail;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

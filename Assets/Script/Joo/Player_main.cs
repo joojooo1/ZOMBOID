@@ -76,6 +76,7 @@ public class Player_main : MonoBehaviour
         // test -------------------------------------------------------------
         if (Input.anyKeyDown)
         {
+            playerMoodles.Moodle_Wet.Set_Moodles_state(0.2f);
             playerMoodles.Moodle_Drunk.Set_Moodles_state(0.2f);
         }
 
@@ -83,12 +84,12 @@ public class Player_main : MonoBehaviour
         // ------------------------------------------------------------- test ÇÔ¼ö 
 
         /************************************* Player_Movement *************************************/
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        //Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
-        Vector3 pos = transform.position;
-        pos += input * Time.deltaTime * Get_Moving_Speed();
+        //Vector3 pos = transform.position;
+        //pos += input * Time.deltaTime * Get_Moving_Speed();
 
-        transform.position = pos;
+        //transform.position = pos;
 
         /************************************* Player_Satiety **************************************/
         Satiety_Timer += Time.deltaTime; 
