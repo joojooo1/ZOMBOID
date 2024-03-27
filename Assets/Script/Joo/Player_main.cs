@@ -74,7 +74,10 @@ public class Player_main : MonoBehaviour
     void Update()
     {
         // test -------------------------------------------------------------
-
+        if (Input.anyKeyDown)
+        {
+            playerMoodles.Moodle_Drunk.Set_Moodles_state(0.2f);
+        }
 
 
         // ------------------------------------------------------------- test ÇÔ¼ö 
