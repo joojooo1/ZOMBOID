@@ -9,10 +9,9 @@ using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public enum Zombie_Attack_Pattern
 {
-    punches = 0,
-    Scratches = 1,
-    Lacerations = 2,
-    Bites = 3
+    Scratches = 0,
+    Lacerations = 1,
+    Bites = 2
 }
 
 public class Player_main : MonoBehaviour
@@ -531,19 +530,15 @@ public class Player_main : MonoBehaviour
 
         if (!IsBack)  // 앞에서 공격 당하는 경우
         {
-            if (Rand_pattern >= 0 && Rand_pattern < 25)  // 25%
-            {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type, IsBack);
-            }
-            else if (Rand_pattern >= 25 && Rand_pattern < 50)  // 25%
+            if (Rand_pattern >= 0 && Rand_pattern < 33)  // 33%
             {
                 Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
             }
-            else if (Rand_pattern >= 50 && Rand_pattern < 75)  // 25%
+            else if (Rand_pattern >= 33 && Rand_pattern < 66)  // 33%
             {
                 Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
             }
-            else if (Rand_pattern >= 75 && Rand_pattern < 100)  // 25%
+            else if (Rand_pattern >= 66 && Rand_pattern < 100)  // 34%
             {
                 Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
             }
@@ -554,15 +549,11 @@ public class Player_main : MonoBehaviour
             {
                 Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
             }
-            else if (Rand_pattern >= 70 && Rand_pattern < 80)  // 10%
-            {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.punches, Zom_Type, IsBack);
-            }
-            else if (Rand_pattern >= 80 && Rand_pattern < 90)  // 10%
+            else if (Rand_pattern >= 70 && Rand_pattern < 85)  // 15%
             {
                 Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
             }
-            else if (Rand_pattern >= 90 && Rand_pattern < 100)  // 10%
+            else if (Rand_pattern >= 85 && Rand_pattern < 100)  // 15%
             {
                 Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
             }

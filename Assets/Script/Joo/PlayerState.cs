@@ -13,6 +13,7 @@ public class Player_body_Location
     bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
     bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     bool _Bleeding = false; // 출혈.. Moodles
+
      
 
     public Player_body_Location(body_point Body_Code)
@@ -66,11 +67,6 @@ public class Player_body_Location
             {
                 switch (Attack_Pattern)
                 {
-                    case Zombie_Attack_Pattern.punches:
-                        // 타격(피해o & 상처x) : 일시적으로 Damage 발생  // 깨뜨린 창문에도 생김
-
-                        Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
-                        break;
                     case Zombie_Attack_Pattern.Scratches:
                         // 긁힘  
 
@@ -468,7 +464,7 @@ public class PlayerState : MonoBehaviour
                 Bleeding_total_count++;
         }
         Player_main.player_main.playerMoodles.Moodle_Bleeding.Set_Moodles_state(Bleeding_total_count);  // 출혈
-        
+        Bleeding_total_count = 0;
     }
 
     [SerializeField] bool _Infection = false;  // 감염 여부 확인

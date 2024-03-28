@@ -205,7 +205,7 @@ public class Player_Moodles : MonoBehaviour
          체력 25% 미만: 낮은 울타리를 넘을때/달리기/파워워크 때 넘어질 확률 +20%,
                        수면 비활성화, 부상부위에 따라 이동, 근접데미지, 공격속도 크게 감소, 운동 비활성화
         */
-        Moodle_Bleeding = new Moodles_state(Moodles_private_code.Bleeding, 1f, 2f, 3f, 4f);
+        Moodle_Bleeding = new Moodles_state(Moodles_private_code.Bleeding, 1f, 2f, 4f, 6f);
         /*
          출혈 상처 1개 이상: 시간이 지남에 따라 체력 천천히 손실
          출혈 상처 2개 이상: 시간이 지남에 따라 체력 어느정도 손실, 운반능력 -1
@@ -1407,53 +1407,9 @@ public class Moodles_state
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 break;     /* 24.02.27 */
-            case Moodles_private_code.Bleeding:  //  1f, 2f, 3f, 4f  // Player_HP_Update  // PlayerState_Player_body_Location
+            case Moodles_private_code.Bleeding:  //  1f, 2f, 4f, 6f  // Player_HP_Update  // PlayerState_Player_body_Location
                 _Moodle_current_value = current_value;
-                if (current_value < _First_state)
-                {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _current_state_to_string_KR = "";
-                    _current_detail_state_to_string_KR = "";
-
-                    _Moodle_current_step = 0;
-                    Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
-                {
-                    _current_state_to_string_KR = "경미한 출혈";
-                    _current_detail_state_to_string_KR = "붕대가 필요합니다.";
-                    _current_state_to_string = "Minor Bleeding";
-                    _current_detail_state_to_string = "Bandage required.";
-
-                    _Moodle_current_step = 1;
-                    Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
-                {
-                    _current_state_to_string_KR = "출혈";
-                    _current_detail_state_to_string_KR = "근력과 이동속도가 저하됨.";
-                    _current_state_to_string = "Bleeding";
-                    _current_detail_state_to_string = "Strength and speed reduced.";
-
-                    _Moodle_current_step = 2;
-                    Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
-                {
-                    _current_state_to_string_KR = "심한 출혈";
-                    _current_detail_state_to_string_KR = "근력과 이동속도가 크게 저하됨.";
-                    _current_state_to_string = "Severe Bleeding";
-                    _current_detail_state_to_string = "Strength and speed severely reduced.";
-
-                    _Moodle_current_step = 3;
-                    Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                }
-                else if (current_value > _Fourth_state)  // 4단계
+                if (Player_main.player_main.playerState.Neck.Get_Is_Bleeding())   // 4단계
                 {
                     _current_state_to_string_KR = "대규모 혈액 손실";
                     _current_detail_state_to_string_KR = "사망 직전.";
@@ -1464,6 +1420,65 @@ public class Moodles_state
                     Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
+                else
+                {
+                    if (current_value < _First_state)
+                    {
+                        _current_state_to_string = "";
+                        _current_detail_state_to_string = "";
+                        _current_state_to_string_KR = "";
+                        _current_detail_state_to_string_KR = "";
+
+                        _Moodle_current_step = 0;
+                        Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
+                    {
+                        _current_state_to_string_KR = "경미한 출혈";
+                        _current_detail_state_to_string_KR = "붕대가 필요합니다.";
+                        _current_state_to_string = "Minor Bleeding";
+                        _current_detail_state_to_string = "Bandage required.";
+
+                        _Moodle_current_step = 1;
+                        Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
+                    {
+                        _current_state_to_string_KR = "출혈";
+                        _current_detail_state_to_string_KR = "근력과 이동속도가 저하됨.";
+                        _current_state_to_string = "Bleeding";
+                        _current_detail_state_to_string = "Strength and speed reduced.";
+
+                        _Moodle_current_step = 2;
+                        Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
+                    {
+                        _current_state_to_string_KR = "심한 출혈";
+                        _current_detail_state_to_string_KR = "근력과 이동속도가 크게 저하됨.";
+                        _current_state_to_string = "Severe Bleeding";
+                        _current_detail_state_to_string = "Strength and speed severely reduced.";
+
+                        _Moodle_current_step = 3;
+                        Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (current_value > _Fourth_state)  // 4단계
+                    {
+                        _current_state_to_string_KR = "대규모 혈액 손실";
+                        _current_detail_state_to_string_KR = "사망 직전.";
+                        _current_state_to_string = "Massive Blood Loss";
+                        _current_detail_state_to_string = "Death imminent.";
+
+                        _Moodle_current_step = 4;
+                        Player_main.player_main.Inven_main.Inventory_Weight.Set_Add_Moodles_Point(Moodles_private_code.Bleeding, _Moodle_current_step);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                }
+                
                 break;     /* 24.02.22 */
             case Moodles_private_code.Has_a_Cold:  //  0.2f, 0.4f, 0.6f, 0.8f  // PlayerState_Update  // Player_main_Update
                 _Moodle_current_value += current_value;
