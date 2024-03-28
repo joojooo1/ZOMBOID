@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Item_Type
-{
-    empty = 0,
-    Food = 1,
-    Medical = 2,
-    Weapons = 3,
-    Literature = 4,
-    Electronics = 5,
-    Clothing = 6,
-    Gardening = 7,
-    Container = 8
-}
+//public enum Item_Type
+//{
+//    empty = 0,
+//    Food = 1,
+//    Medical = 2,
+//    Weapons = 3,
+//    Literature = 4,
+//    Electronics = 5,
+//    Clothing = 6,
+//    Gardening = 7,
+//    Container = 8
+//}
 
 
 public class Item_invenWindow : MonoBehaviour

@@ -18,6 +18,7 @@ public class Player_body_Location
     public Player_body_Location(body_point Body_Code)
     {
         _Body_Location_Code = Body_Code;
+
     }
 
     public void Set_Body_state(Zombie_Attack_Pattern Attack_Pattern, string Zom_Type, bool IsBack)  // 좀비의 공격패턴, 좀비의 강도

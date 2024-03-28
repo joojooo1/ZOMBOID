@@ -22,8 +22,8 @@ MonoBehaviour:
   ContainerName_Kr: FannyPack
   ContainergWeight: 0.2
   Container_Image: {fileID: 21300000, guid: 29faac19f9e09a74a8e48f3a1716fe5b, type: 3}
-  Height: 1
-  Width: 2
+  Height: 4
+  Width: 3
   Nesting_Depth: 1
   WeightReduction: 0.5
   Store_Water: 0
