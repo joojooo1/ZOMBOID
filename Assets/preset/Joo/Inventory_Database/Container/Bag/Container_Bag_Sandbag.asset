@@ -22,8 +22,8 @@ MonoBehaviour:
   ContainerName_Kr: Sandbag
   ContainergWeight: 0.1
   Container_Image: {fileID: 21300000, guid: 034417655ada9d44e9770a98e9aa3d88, type: 3}
-  Height: 3
-  Width: 3
+  Height: 4
+  Width: 4
   Nesting_Depth: 1
   WeightReduction: 0.5
   Store_Water: 0
