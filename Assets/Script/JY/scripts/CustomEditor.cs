@@ -52,8 +52,9 @@ public class CustomInspector : Editor
 
         string[] displayedOptions = new string[] { "Tile","Left_Wall","Right_Wall","North_Corner_Wall",
                                                    "Left_DoorFrame","Right_DoorFrame","Left_Window","Righ_Window","Left_Door","Right_Door",
-                                                   "Left_Wall_Deco", "Right_Wall_Deco", "Left_Direction_Furniture" ,"Right_Direction_Furniture"};
-        int[] optionValues = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13 };
+                                                   "Left_Wall_Deco", "Right_Wall_Deco", "Left_Direction_Furniture" ,"Right_Direction_Furniture",
+                                                   "Left_Down_Fence", "Right_Dwon_Fence", "Tile_Deco", "Fence_Deco"};
+        int[] optionValues = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13,14,15,16,17 };
         int Buildin_Type_Value = EditorGUILayout.IntPopup("SetType", customClass.Building_Type_Value, displayedOptions, optionValues);
 
         string[] Options2 = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
@@ -63,8 +64,8 @@ public class CustomInspector : Editor
         EditorGUILayout.Space();
 
 
-        string[] Choosen_Sprite_Package_Options = new string[] {"Wall_Sprite", "Ground_Sprite", "Roof_Sprite", "Window_Sprite", "Door_Sprite"};
-        int[] Choosen_Sprite_Package_Values = new int[] {0,1,2,3,4};
+        string[] Choosen_Sprite_Package_Options = new string[] {"Wall_Sprite", "Ground_Sprite", "Roof_Sprite", "Window_Sprite", "Door_Sprite", "Furniture_Sprite","Fence_Sprite", "Ground_Deco"};
+        int[] Choosen_Sprite_Package_Values = new int[] {0,1,2,3,4,5,6,7};
         int Choosen_Sprite_Package = EditorGUILayout.IntPopup("Choose_Sprite_Package", customClass.ChangeAble_Sprite_Package, Choosen_Sprite_Package_Options, Choosen_Sprite_Package_Values);
 
 
@@ -517,6 +518,39 @@ public class CustomInspector : Editor
                     {
                         customClass.ChangeAble_Sprite_Arr = new Sprite[customClass.Door_Sprite_Arr.Length];
                         customClass.Door_Sprite_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
+                    }
+                    break;
+                case 5:
+                    bool TF6 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Furniture_Sprite_Arr);
+                    if (TF6)
+                    {
+                    }
+                    else
+                    {
+                        customClass.ChangeAble_Sprite_Arr = new Sprite[customClass.Furniture_Sprite_Arr.Length];
+                        customClass.Furniture_Sprite_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
+                    }
+                    break;
+                case 6:
+                    bool TF7 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Fence_Sprite_Arr);
+                    if (TF7)
+                    {
+                    }
+                    else
+                    {
+                        customClass.ChangeAble_Sprite_Arr = new Sprite[customClass.Fence_Sprite_Arr.Length];
+                        customClass.Fence_Sprite_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
+                    }
+                    break;
+                case 7:
+                    bool TF8 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Ground_Deco_Huge_Sprite_Arr);
+                    if (TF8)
+                    {
+                    }
+                    else
+                    {
+                        customClass.ChangeAble_Sprite_Arr = new Sprite[customClass.Ground_Deco_Huge_Sprite_Arr.Length];
+                        customClass.Ground_Deco_Huge_Sprite_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
                     }
                     break;
 
