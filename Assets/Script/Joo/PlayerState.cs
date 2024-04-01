@@ -14,7 +14,7 @@ public class Player_body_Location
     bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
     bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     bool _Bleeding = false; // 출혈.. Moodles
-
+    int DamageCount = 0;
      
 
     public Player_body_Location(body_point Body_Code)
@@ -150,6 +150,22 @@ public class Player_body_Location
         PlayerState.playerState.Bleeding_Count_change();
     }
     public bool Get_Is_Bleeding() { return _Bleeding; }
+
+    public void Set_DamageCount(bool Add)
+    {
+        if (Add)
+        {
+            DamageCount++;
+        }
+        else
+        {
+            DamageCount--;
+        }
+        Debug.Log(DamageCount);
+    }
+
+    public int Get_DamageCount() {  return DamageCount; }
+
 }
 
 public enum body_point

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_treatmentbar : MonoBehaviour
+public class UI_treatmentbar : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject Treatment_detail;
 
