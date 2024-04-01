@@ -5,12 +5,31 @@ using UnityEngine.EventSystems;
 
 public class UI_detailwindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    body_point body_Point;
+    int DamageCount;
     public GameObject TreatmentBar;
     [SerializeField] UnityEngine.UI.Image icon_Image;
 
-    public void SetImage(Sprite image)
+    public void SetObject(Sprite image, body_point position)
     {
         icon_Image.sprite = image;
+        body_Point = position;
+        DamageCount++;
+    }
+
+    public void Damage_Destroy()
+    {
+        DamageCount--;
+    }
+
+    public int Damage_Count()
+    {
+        return DamageCount;
+    }
+
+    public body_point GetPosition()
+    {
+        return body_Point;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
