@@ -32,7 +32,7 @@ public class CMainGame : MonoBehaviour
     }
     public void MatchingRoom()
     {
-        string PlayerName = "test";
+        string PlayerName = "TestClient Name";
         CPacket msg2 = CPacket.create((short)PROTOCOL.ENTER_GAME_ROOM);
         msg2.push(PlayerName);
         network_manager.send(msg2);
@@ -95,6 +95,8 @@ public class CMainGame : MonoBehaviour
 
             case PROTOCOL.CHAT_MSG:
                 {
+                    string chat = msg.pop_string();
+                    Debug.Log("Protocol Chat_Msg"+chat);
                     //string recvName = msg.pop_string();
                     //string recvmsg = msg.pop_string();
                     //int playerIndex = msg.pop_int32();
