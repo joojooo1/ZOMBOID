@@ -22,8 +22,8 @@ MonoBehaviour:
   ContainerName_Kr: Satchel
   ContainergWeight: 1
   Container_Image: {fileID: 21300000, guid: cbecdd3b93076f64aa4739b97863f1a5, type: 3}
-  Height: 4
-  Width: 4
+  Height: 6
+  Width: 8
   Nesting_Depth: 1
   WeightReduction: 0.3
   Store_Water: 0
