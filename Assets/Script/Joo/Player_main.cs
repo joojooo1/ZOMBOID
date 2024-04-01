@@ -7,11 +7,20 @@ using UnityEngine.XR;
 using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 
-public enum Zombie_Attack_Pattern
+public enum Damage_Pattern
 {
-    Scratches = 0,
-    Lacerations = 1,
-    Bites = 2
+    /* 심각도 1 */
+    Scratches = 0,   // 좀비에 의한 긁힘
+    Glass = 1,  // 유리조각 박힘
+    Abrasion = 2,  // 그 외의 일반적인 상처
+    /* 심각도 2 */
+    Lacerations = 3,  // 좀비에 의한 찢김
+    Infection = 4,  // 세균감염
+    bullet = 5,  // 총상
+    /* 심각도 3 */
+    Bites = 6,  // 좀비에 의한 물림
+    Fracture = 7,  // 골절
+    Burn = 8  // 화상
 }
 
 public class Player_main : MonoBehaviour
@@ -75,8 +84,7 @@ public class Player_main : MonoBehaviour
         // test -------------------------------------------------------------
         if (Input.anyKeyDown)
         {
-            playerMoodles.Moodle_Wet.Set_Moodles_state(0.2f);
-            playerMoodles.Moodle_Drunk.Set_Moodles_state(0.2f);
+            UI_State.State_icon_main.icon_Ins(0, 0);
         }
 
 
@@ -375,19 +383,19 @@ public class Player_main : MonoBehaviour
         {
             if (randomNumber >= 0 && randomNumber < 12)  // 12%
             {
-                Attack_point = playerState.Left_forearm;
+                Attack_point = playerState.Left_lowerarm;
             }
             else if (randomNumber >= 12 && randomNumber < 24)  // 12%
             {
-                Attack_point = playerState.Right_forearm;
+                Attack_point = playerState.Right_lowerarm;
             }
             else if (randomNumber >= 24 && randomNumber < 35)  // 11%
             {
-                Attack_point = playerState.Left_upper_arm;
+                Attack_point = playerState.Left_upperarm;
             }
             else if (randomNumber >= 35 && randomNumber < 46)  // 11%
             {
-                Attack_point = playerState.Right_upper_arm;
+                Attack_point = playerState.Right_upperarm;
             }
             else if (randomNumber >= 46 && randomNumber < 55)  // 9%
             {
@@ -407,11 +415,11 @@ public class Player_main : MonoBehaviour
             }
             else if (randomNumber >= 78 && randomNumber < 84)  // 6%
             {
-                Attack_point = playerState.upper_torso;
+                Attack_point = playerState.Chest;
             }
             else if (randomNumber >= 84 && randomNumber < 90)  // 6%
             {
-                Attack_point = playerState.Lower_torso;
+                Attack_point = playerState.Abdomen;
             }
             else if (randomNumber >= 90 && randomNumber < 94)  // 4%
             {
@@ -419,19 +427,19 @@ public class Player_main : MonoBehaviour
             }
             else if (randomNumber >= 94 && randomNumber < 95)  // 1%
             {
-                Attack_point = playerState.Left_thigh;
+                Attack_point = playerState.Left_upperleg;
             }
             else if (randomNumber >= 95 && randomNumber < 96)  // 1%
             {
-                Attack_point = playerState.Right_thigh;
+                Attack_point = playerState.Right_upperleg;
             }
             else if (randomNumber >= 96 && randomNumber < 97)  // 1%
             {
-                Attack_point = playerState.Left_shin;
+                Attack_point = playerState.Left_lowerleg;
             }
             else if (randomNumber >= 97 && randomNumber < 98)  // 1%
             {
-                Attack_point = playerState.Right_shin;
+                Attack_point = playerState.Right_lowerleg;
             }
             else if (randomNumber >= 98 && randomNumber < 99)  // 1%
             {
@@ -454,11 +462,11 @@ public class Player_main : MonoBehaviour
             }
             else if (randomNumber >= 90 && randomNumber < 92)  // 6% -> 2%
             {
-                Attack_point = playerState.upper_torso;
+                Attack_point = playerState.Chest;
             }
             else if (randomNumber >= 92 && randomNumber < 94)  // 6% -> 2%
             {
-                Attack_point = playerState.Lower_torso;
+                Attack_point = playerState.Abdomen;
             }
             else if (randomNumber >= 94 && randomNumber < 95)  // 8% -> 1%
             {
@@ -470,19 +478,19 @@ public class Player_main : MonoBehaviour
             }
             else if (randomNumber >= 96 && randomNumber < 97)  // 11% -> 1%
             {
-                Attack_point = playerState.Left_upper_arm;
+                Attack_point = playerState.Left_upperarm;
             }
             else if (randomNumber >= 97 && randomNumber < 98)  // 11% -> 1%
             {
-                Attack_point = playerState.Right_upper_arm;
+                Attack_point = playerState.Right_upperarm;
             }
             else if (randomNumber >= 98 && randomNumber < 99)  // 12% -> 1%
             {
-                Attack_point = playerState.Left_forearm;
+                Attack_point = playerState.Left_lowerarm;
             }
             else if (randomNumber >= 99 && randomNumber < 100)  // 12% -> 1%
             {
-                Attack_point = playerState.Right_forearm;
+                Attack_point = playerState.Right_lowerarm;
             }
         }
         else  // 기어다니는 좀비한테 공격 당하는 경우
@@ -497,19 +505,19 @@ public class Player_main : MonoBehaviour
             }
             else if (randomNumber >= 34 && randomNumber < 49)  // 1% -> 15%
             {
-                Attack_point = playerState.Left_shin;
+                Attack_point = playerState.Left_lowerleg;
             }
             else if (randomNumber >= 49 && randomNumber < 64)  // 1% -> 15%
             {
-                Attack_point = playerState.Right_shin;
+                Attack_point = playerState.Right_lowerleg;
             }
             else if (randomNumber >= 64 && randomNumber < 77)  // 1% -> 13%
             {
-                Attack_point = playerState.Left_thigh;
+                Attack_point = playerState.Left_upperleg;
             }
             else if (randomNumber >= 77 && randomNumber < 90)  // 1% -> 13%
             {
-                Attack_point = playerState.Right_thigh;
+                Attack_point = playerState.Right_upperleg;
             }
             else if (randomNumber >= 90 && randomNumber < 100)  // 10%
             {
@@ -532,30 +540,30 @@ public class Player_main : MonoBehaviour
         {
             if (Rand_pattern >= 0 && Rand_pattern < 33)  // 33%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
+                Attack_point.Set_Body_state(Damage_Pattern.Scratches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 33 && Rand_pattern < 66)  // 33%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
+                Attack_point.Set_Body_state(Damage_Pattern.Lacerations, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 66 && Rand_pattern < 100)  // 34%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
+                Attack_point.Set_Body_state(Damage_Pattern.Bites, Zom_Type, IsBack);
             }
         }
         else  // 뒤에서 공격 당하는 경우
         {
             if (Rand_pattern >= 0 && Rand_pattern < 70)  // 70%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Bites, Zom_Type, IsBack);
+                Attack_point.Set_Body_state(Damage_Pattern.Bites, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 70 && Rand_pattern < 85)  // 15%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Scratches, Zom_Type, IsBack);
+                Attack_point.Set_Body_state(Damage_Pattern.Scratches, Zom_Type, IsBack);
             }
             else if (Rand_pattern >= 85 && Rand_pattern < 100)  // 15%
             {
-                Attack_point.Set_Body_state(Zombie_Attack_Pattern.Lacerations, Zom_Type, IsBack);
+                Attack_point.Set_Body_state(Damage_Pattern.Lacerations, Zom_Type, IsBack);
             }
         }
 
