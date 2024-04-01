@@ -139,7 +139,6 @@ public class Moodle_Prefab : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 Moodle_State.text = Player_main.player_main.playerMoodles.Moodle_Zombie.Get_current_state_to_string();
                 Moodle_Detail.text = Player_main.player_main.playerMoodles.Moodle_Zombie.Get_current_detail_state_to_string();
                 break;
-                break;
             default:
                 Debug.Log("Error");
                 break;
