@@ -22,8 +22,8 @@ MonoBehaviour:
   ContainerName_Kr: Military Backpack
   ContainergWeight: 0.2
   Container_Image: {fileID: 21300000, guid: d9e6cada1da7a52418b437a77e5ef469, type: 3}
-  Height: 6
-  Width: 5
+  Height: 12
+  Width: 8
   Nesting_Depth: 1
   WeightReduction: 0.5
   Store_Water: 0

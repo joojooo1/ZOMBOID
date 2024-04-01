@@ -15,6 +15,19 @@ public class Inventory_Player_Shown : MonoBehaviour
         SmallBag = 2,
     }
 
+    public enum Item_Type
+    {
+        empty = 0,
+        Food_Ins = 1,
+        Medical_Ins = 2,
+        Weapons_Ins = 3,
+        Literature_Ins = 4,
+        Electronics_Ins = 5,
+        Clothing_Ins = 6,
+        Gardening_Ins = 7,
+        Container_Ins = 8
+    }
+
     [SerializeField]
     GameObject User_Inventory; //ÁÂ»ó´Ü ¹Ù
     [SerializeField]
