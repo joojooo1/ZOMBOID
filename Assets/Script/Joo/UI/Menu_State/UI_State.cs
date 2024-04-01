@@ -22,13 +22,27 @@ public class UI_State : MonoBehaviour
     {
         GameObject tempObj = null;
 
-        if (Damagelist.Count <= 3)
+        for(int i = 0; i < Damagelist.Count; i++)
         {
-            tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
-            UI_detailwindow temp = tempObj.GetComponent<UI_detailwindow>();
-            temp.SetImage(player_damage_SpriteArray[(int)damagetype]);
-            Damagelist.Add(temp);
+            if (Damagelist != null)
+            {
+                if (Damagelist[i].GetPosition() == position)
+                {
+                    tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
+                    UI_detailwindow temp = tempObj.GetComponent<UI_detailwindow>();
+                    temp.SetObject(player_damage_SpriteArray[(int)damagetype], position);
+                    Damagelist.Add(temp);
+                }
+            }
+            else
+            {
+                tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
+                UI_detailwindow temp = tempObj.GetComponent<UI_detailwindow>();
+                temp.SetObject(player_damage_SpriteArray[(int)damagetype], position);
+                Damagelist.Add(temp);
+            }
         }
+        
 
     }
 }
