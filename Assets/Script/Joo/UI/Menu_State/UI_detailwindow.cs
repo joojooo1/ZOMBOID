@@ -5,12 +5,14 @@ using UnityEngine.EventSystems;
 
 public class UI_detailwindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public body_point body_position;
     public GameObject TreatmentBar;
     [SerializeField] UnityEngine.UI.Image icon_Image;
 
-    public void SetImage(Sprite image)
+    public void SetImage(Sprite image, body_point positon)
     {
         icon_Image.sprite = image;
+        body_position = positon;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

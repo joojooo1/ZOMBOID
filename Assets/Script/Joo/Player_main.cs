@@ -84,7 +84,7 @@ public class Player_main : MonoBehaviour
         // test -------------------------------------------------------------
         if (Input.anyKeyDown)
         {
-            UI_State.State_icon_main.icon_Ins(0, 0);
+            UI_State.State_icon_main.icon_Ins(0, (body_point)8);
         }
 
 

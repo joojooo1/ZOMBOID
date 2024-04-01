@@ -22,11 +22,12 @@ public class UI_State : MonoBehaviour
     {
         GameObject tempObj = null;
 
-        if (Damagelist.Count <= 3)
+        if (Player_main.player_main.playerState.Player_body_point[(int)position].Get_DamageCount() < 3)
         {
             tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
             UI_detailwindow temp = tempObj.GetComponent<UI_detailwindow>();
-            temp.SetImage(player_damage_SpriteArray[(int)damagetype]);
+            temp.SetImage(player_damage_SpriteArray[(int)damagetype], position);
+            Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageCount(true);
             Damagelist.Add(temp);
         }
 
