@@ -84,7 +84,10 @@ public class Player_main : MonoBehaviour
         // test -------------------------------------------------------------
         if (Input.anyKeyDown)
         {
-            UI_State.State_icon_main.icon_Ins(0, 0);
+            for(int i = 0; i <17; i++)
+            {
+                UI_State.State_icon_main.icon_Ins(0, (body_point)i);
+            }
         }
 
 
