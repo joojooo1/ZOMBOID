@@ -25,19 +25,19 @@ public class Item_invenWindow : MonoBehaviour
     Transform SlotWindow;
     void Start()
     {
-        GameObject tempObj = null;
-        for (int i = 0; i < 30; ++i)
-        {
-            tempObj = Instantiate(slotPrefab, SlotWindow);
-            Item_Ins slot = tempObj.GetComponent<Item_Ins>();
-            slotlist.Add(slot);
-            slotlist[i].SetItem(Item_Type.empty, 0);
-        }
+        //GameObject tempObj = null;
+        //for (int i = 0; i < 30; ++i)
+        //{
+        //    tempObj = Instantiate(slotPrefab, SlotWindow);
+        //    Item_Ins slot = tempObj.GetComponent<Item_Ins>();
+        //    slotlist.Add(slot);
+        //    slotlist[i].SetItem(Item_Type.empty, 0);
+        //}
 
 
-        InsertItem((Item_Type)1, 1);
-        InsertItem((Item_Type)2, 2);
-        InsertItem((Item_Type)3, 3);
+        //InsertItem((Item_Type)1, 1);
+        //InsertItem((Item_Type)2, 2);
+        //InsertItem((Item_Type)3, 3);
     }
 
     private void Update()
@@ -46,17 +46,17 @@ public class Item_invenWindow : MonoBehaviour
     }
 
 
-    void InsertItem(Item_Type Type, int ItemCode)
-    {
-        for (int i = 0; i < slotlist.Count; ++i)
-        {
-            if (slotlist[i].CurrentType == Item_Type.empty)
-            {
-                slotlist[i].SetItem(Type, ItemCode);
-                return;
-            }
-        }
-    }
+    //void InsertItem(Item_Type Type, int ItemCode)
+    //{
+    //    for (int i = 0; i < slotlist.Count; ++i)
+    //    {
+    //        if (slotlist[i].CurrentType == Item_Type.empty)
+    //        {
+    //            slotlist[i].SetItem(Type, ItemCode);
+    //            return;
+    //        }
+    //    }
+    //}
 
     /*******  Food  *******/
 
