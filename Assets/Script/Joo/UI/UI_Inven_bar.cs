@@ -19,11 +19,11 @@ public class UI_Inven_bar : MonoBehaviour
     {
         //if (EventSystem.current.IsPointerOverGameObject())
         //{
-        //    inven.SetActive(true);
+        //    
         //}
         //else
         //{
-        //    inven.SetActive(false);
+        //    
         //}
     } 
 

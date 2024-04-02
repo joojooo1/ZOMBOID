@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 public class Player_body_Location
 {
@@ -14,7 +15,8 @@ public class Player_body_Location
     bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
     bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     bool _Bleeding = false; // 출혈.. Moodles
-    int DamageCount = 0;     
+    int DamageCount = 0;
+    float _Defense = 0f;
 
     public Player_body_Location(body_point Body_Code)
     {
@@ -25,24 +27,25 @@ public class Player_body_Location
     {
         _Current_Damagetype = Attack_Pattern;
 
-        float Zombie_Attack_power = 5.0f;
+        float Attack_power = 0.0f;
         if(Enemy_Type != "User")
         {
             if (Enemy_Type == "easy")
             {
-                Zombie_Attack_power *= 0.7f;  // 3.5
+                Attack_power = 5.0f * 0.7f;  // 3.5
             }
             else if (Enemy_Type == "normal")
             {
-                Zombie_Attack_power *= 1.0f;  // 5
+                Attack_power = 5.0f * 1.0f;  // 5
             }
             else if (Enemy_Type == "hard")
             {
-                Zombie_Attack_power *= 1.5f;  // 7.5
+                Attack_power = 5.0f * 1.5f;  // 7.5
             }
         }
         else
         {
+            
             // 유저로부터 받은 타격이면 데미지 가져와야 함
         }
         
@@ -81,7 +84,7 @@ public class Player_body_Location
                         case Damage_Pattern.Scratches:
                             // 긁힘  
 
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(7);  // 7% 확률로 감염
@@ -90,7 +93,7 @@ public class Player_body_Location
                         case Damage_Pattern.Lacerations:  // 깊은상처 (봉합 필요)
                             // 찢김
 
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(25);  // 25% 확률로 감염
@@ -99,7 +102,7 @@ public class Player_body_Location
                         case Damage_Pattern.Bites:
                             // 물림
 
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Set_Is_Infection(true);  // 100% 확률로 감염
@@ -113,11 +116,28 @@ public class Player_body_Location
                 {
                     switch (Attack_Pattern)
                     {
-                        case Damage_Pattern.Abrasion: break;
-                        case Damage_Pattern.bullet: break;
-                        case Damage_Pattern.Fracture: break;
-                        case Damage_Pattern.Lacerations: break;
-                        default: break;
+                        case Damage_Pattern.Abrasion:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        case Damage_Pattern.bullet:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        case Damage_Pattern.Fracture:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        case Damage_Pattern.Lacerations:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        default: 
+                            break;
                     }
                 }
                 
@@ -125,12 +145,14 @@ public class Player_body_Location
             }
         }
         
-
-        if (PlayerState.playerState.Get_Is_Infection())  // 감염된 경우
-        {
-            
-        }
     }
+
+    public void Set_Defense(int defense)
+    {
+        _Defense = _Defense + defense;
+    }
+
+    public float Get_Dafense() { return _Defense; }
 
     public Damage_Pattern Get_Bodypos_DamageType()
     {
@@ -303,6 +325,7 @@ public class PlayerState : MonoBehaviour
     float Is_Cold_Timer = 0.0f;
     float Has_a_Cold_Timer = 0.0f;
     float Drunk_Timer = 0.0f;
+    float Infection_Timer = 0.0f;
 
     private void Update()
     {
@@ -495,7 +518,13 @@ public class PlayerState : MonoBehaviour
             Drunk_Timer = 0;
         }
 
-        
+
+        if (Get_Is_Infection())  // 감염된 경우
+        {
+            Infection_Timer += Time.deltaTime;
+
+        }
+
     }
 
     public int Bleeding_total_count = 0;

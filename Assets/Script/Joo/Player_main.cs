@@ -66,6 +66,8 @@ public class Player_main : MonoBehaviour
     public bool Is_drunk = false;
     public bool Is_Cold = false;
     public bool Is_Sleeping = false;
+
+    float Enemy_Damage = 0;  // 상대유저의 공격력
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -85,10 +87,10 @@ public class Player_main : MonoBehaviour
         // test -------------------------------------------------------------
         if (Input.anyKeyDown)
         {
-            if (playerState.Player_body_point[8].Get_DamageCount() < 3)
-                UI_State.State_icon_main.icon_Ins(0, (body_point)8);
-            else
-                UI_State.State_icon_main.icon_Ins((Damage_Pattern)1, (body_point)7);
+            //if (playerState.Player_body_point[8].Get_DamageCount() < 3)
+            //    UI_State.State_icon_main.icon_Ins(0, (body_point)8);
+            //else
+            //    UI_State.State_icon_main.icon_Ins((Damage_Pattern)1, (body_point)7);
         }
 
         

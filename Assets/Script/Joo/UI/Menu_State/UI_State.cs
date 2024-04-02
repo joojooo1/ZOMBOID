@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UI_State : MonoBehaviour
+public class UI_State : MonoBehaviour, IPointerClickHandler
 {
+    public GameObject UI_window;
+    public Sprite[] UI_window_Image;
+    public UnityEngine.UI.Image Image;
+
     public static UI_State State_icon_main;
     public Sprite[] player_damage_SpriteArray;
 
@@ -16,6 +21,21 @@ public class UI_State : MonoBehaviour
     {
         State_icon_main = this;
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (UI_window.activeSelf)
+        {
+            UI_window.SetActive(false);
+            Image.sprite = UI_window_Image[0];
+        }
+        else
+        {
+            UI_window.SetActive(true);
+            Image.sprite = UI_window_Image[1];
+        }
+    }
+
 
 
     public void icon_Ins(Damage_Pattern damagetype, body_point position)
