@@ -12,7 +12,7 @@ public class UI_State : MonoBehaviour
 
     List<UI_detailwindow> Damagelist = new List<UI_detailwindow>();
 
-    private void OnEnable()
+    private void Start()
     {
         State_icon_main = this;
     }

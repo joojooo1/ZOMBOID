@@ -12,15 +12,15 @@ public enum Damage_Pattern
 {
     /* 심각도 1 */
     Scratches = 0,   // 좀비에 의한 긁힘
-    Glass = 1,  // 유리조각 박힘
-    Abrasion = 2,  // 그 외의 일반적인 상처
+    Glass = 1,  // 유리조각 박힘   ( 깨진 창문 넘을때, 유리조각 밟을때 )
+    Abrasion = 2,  // 그 외의 일반적인 상처  ( 상대 유저한테 공격당할때 )
     /* 심각도 2 */
-    Lacerations = 3,  // 좀비에 의한 찢김
+    Lacerations = 3,  // 좀비에 의한 찢김  ( + 상대 유저한테 심하게 공격당할때(깊은상처) )
     Infection = 4,  // 세균감염
-    bullet = 5,  // 총상
+    bullet = 5,  // 총상  ( 상대 유저한테 공격당할때 )
     /* 심각도 3 */
     Bites = 6,  // 좀비에 의한 물림
-    Fracture = 7,  // 골절
+    Fracture = 7,  // 골절  ( 상대 유저한테 공격당할때 )
     Burn = 8  // 화상
 }
 
