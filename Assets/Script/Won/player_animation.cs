@@ -27,37 +27,36 @@ public class player_animation : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                animator.SetBool("run", true);
+                animatorsetBool("run", true);
             }
             else
             {
-                animator.SetBool("walk", true);
+                animatorsetBool("walk", true);
             }
         }
         else
         {
-            animator.SetBool("run", false);
-            animator.SetBool("walk", false);
+            animatorsetBool("run", false);
+            animatorsetBool("walk", false);
         }
         if (Input.GetMouseButton(1))
         {
-            animator.SetBool("run", false);
-            animator.SetBool("Strife", true);
+            animatorsetBool("run", false);
+            animatorsetBool("Strife", true);
             Vector3 input = (rot.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
             input.Normalize();
-            Debug.Log(input);
-            
-            animator.SetFloat("x", input.x);
-            animator.SetFloat("z", -input.z);
+
+            animatorsetFloat("x", input.x);
+            animatorsetFloat("z", -input.z);
             if (Input.GetMouseButton(0) && !atk)
             {
                 atk = true;
-                animator.SetTrigger("ATK");
+                animatersetTrigger("ATK");
             }
         }
         else
         {
-            animator.SetBool("Strife", false);
+            animatorsetBool("Strife", false);
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -67,7 +66,7 @@ public class player_animation : MonoBehaviour
             }
             else
                 test_weapon_type = 0;
-            animator.SetFloat("weapon_type", test_weapon_type);
+            animatorsetFloat("weapon_type", test_weapon_type);
         }
     }
 
@@ -75,5 +74,18 @@ public class player_animation : MonoBehaviour
     public void aktEnd()
     {
         atk = false;
+    }
+
+    void animatorsetBool(string ANIMA_NAME,bool set)
+    {
+        animator.SetBool (ANIMA_NAME, set);
+    }
+    void animatersetTrigger(string ANIMA_NAME)
+    {
+        animator.SetTrigger(ANIMA_NAME);
+    }
+    void animatorsetFloat(string ANIMA_NAME, float set)
+    {
+        animator.SetFloat(ANIMA_NAME, set);
     }
 }
