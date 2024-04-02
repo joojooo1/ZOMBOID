@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class UI_detailwindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public body_point body_position;
+    public int position_Damage_Num;
     public GameObject TreatmentBar;
     [SerializeField] UnityEngine.UI.Image icon_Image;
 

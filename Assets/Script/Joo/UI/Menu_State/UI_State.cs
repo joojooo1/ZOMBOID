@@ -28,9 +28,22 @@ public class UI_State : MonoBehaviour
             UI_detailwindow temp = tempObj.GetComponent<UI_detailwindow>();
             temp.SetImage(player_damage_SpriteArray[(int)damagetype], position);
             Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageCount(true);
+            temp.position_Damage_Num = Player_main.player_main.playerState.Player_body_point[(int)position].Get_DamageCount();
             Damagelist.Add(temp);
         }
 
+    }
+
+    public void icon_Destroy(body_point position, int Damage_Num)
+    {
+        foreach(UI_detailwindow temp in Damagelist)
+        {
+            if(temp.position_Damage_Num == Damage_Num && temp.body_position == position)
+            {
+                Damagelist.Remove(temp);
+                Destroy(temp.gameObject);
+            }
+        }
     }
 }
 
