@@ -40,7 +40,7 @@ public class Inventory_8x6 : MonoBehaviour
         ThisID = Item_DataBase.item_database.Container_Ins[8];
         Example();
         DefiningSlots();
-        Generating_Slots_First(packageExample);
+        //Generating_Slots_First(packageExample);
     }
     public void Generating_Slots_First(short[,,] package)
     {
@@ -61,8 +61,8 @@ public class Inventory_8x6 : MonoBehaviour
                     {
                         for(int c = 0; c < deep; c++)
                         {
-                            int sum = (y * 8) + x;
-                            Slots[sum].GetComponentInChildren<Image>().sprite = Item_DataBase.item_database.food_Ins[package[1, b, a]].Food_Image[0];
+                            //int sum = (y * 8) + x;
+                            //Slots[sum].GetComponentInChildren<Image>().sprite = Item_DataBase.item_database.food_Ins[package[1, b, a]].Food_Image[0];
                         }
                     }
 
