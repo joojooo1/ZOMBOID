@@ -26,11 +26,11 @@ public class Item_DataBase : MonoBehaviour
     [SerializeField]
     Item_Ins DetailWindow;
 
-    public void OpenDetail(Item_Type type, int ItemCode)
-    {
-        DetailWindow.SetItem(type, ItemCode);
-        DetailWindow.gameObject.SetActive(true);
-    }
+    //public void OpenDetail(Item_Type type, int ItemCode)
+    //{
+    //    DetailWindow.SetItem(type, ItemCode);
+    //    DetailWindow.gameObject.SetActive(true);
+    //}
 
     public void CloseDetail()
     {

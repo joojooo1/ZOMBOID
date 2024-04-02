@@ -23,6 +23,9 @@ public class CustomClass : MonoBehaviour
     public Sprite[] Roof_Sprite_Arr; //2
     public Sprite[] Window_Sprite_Arr; //3
     public Sprite[] Door_Sprite_Arr; //4
+    public Sprite[] Furniture_Sprite_Arr;//5
+    public Sprite[] Fence_Sprite_Arr;//6
+    public Sprite[] Ground_Deco_Huge_Sprite_Arr;//7
 
 
     public Sprite[] ChangeAble_Sprite_Arr;
@@ -190,6 +193,36 @@ public class CustomClass : MonoBehaviour
                                     Instans.GetComponent<DoorsAct>().Door_Closed = ChangeAble_Sprite_Arr[ChangeAble_Sprite_Num];
                                     Instans.GetComponent<DoorsAct>().Door_Opened = ChangeAble_Sprite_Arr[ChangeAble_Sprite_Num + 2];
                                     Instans.layer = 6;
+                                    Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
+                                    break;
+                                case 10: // 문 우측
+                                    
+                                    break;
+                                case 11: // 문 우측
+                                    
+                                    break;
+                                case 12: // 좌측을 보는 가구
+                                    Instans.GetComponent<SpriteRenderer>().sortingLayerName = "Level1_Wall";
+                                    Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
+                                    break;
+                                case 13: // 우측을 보는 과구
+                                    Instans.GetComponent<SpriteRenderer>().sortingLayerName = "Level1_Wall";
+                                    Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
+                                    break;
+                                case 14: // 좌하로 향하는 펜스
+                                    Instans.GetComponent<SpriteRenderer>().sortingLayerName = "Level1_Wall";
+                                    Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
+                                    break;
+                                case 15: // 우하로 향하는 펜스
+                                    Instans.GetComponent<SpriteRenderer>().sortingLayerName = "Level1_Wall";
+                                    Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
+                                    break;
+                                case 16: // 타일 데코
+                                    Instans.GetComponent<SpriteRenderer>().sortingLayerName = "Level1_Tile";
+                                    Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
+                                    break;
+                                case 17: // 우하로 향하는 펜스
+                                    Instans.GetComponent<SpriteRenderer>().sortingLayerName = "Level1_Wall";
                                     Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
                                     break;
                             }

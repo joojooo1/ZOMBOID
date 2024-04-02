@@ -46,8 +46,8 @@ public class MapLoader : MonoBehaviour
         ImageNum = 0;
         TilesList = new List<GameObject> { };
         //StartGeneratingTiles(10, 10);
-        StartGeneratingTilesQuater(20, 20,0f);
-        StartGeneratingTilesQuater2(20, 20,1.95f);
+        StartGeneratingTilesQuater(50, 50,0f);
+        StartGeneratingTilesQuater2(50, 50,1.95f);
         Tiles=TilesList.ToArray();
     }
 

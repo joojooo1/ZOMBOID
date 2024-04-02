@@ -179,7 +179,6 @@ GameObject:
   - component: {fileID: 4144234180573857078}
   - component: {fileID: 986058157058993753}
   - component: {fileID: 2488707931508744437}
-  - component: {fileID: 2507873785723126713}
   m_Layer: 5
   m_Name: Moodle_Pre
   m_TagString: Untagged
@@ -279,17 +278,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2507873785723126713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5855829239811804790}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f944c33922cf246b0cbd7034b3986d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Back: {fileID: 9216891896408274996}
-  Icon: {fileID: 1552577915901004325}

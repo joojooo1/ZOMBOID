@@ -22,8 +22,8 @@ MonoBehaviour:
   ContainerName_Kr: Briefcase
   ContainergWeight: 1.5
   Container_Image: {fileID: 21300000, guid: 200ba4ff607fae84ca3bb6e56789bdcd, type: 3}
-  Height: 2
-  Width: 3
+  Height: 4
+  Width: 4
   Nesting_Depth: 1
   WeightReduction: 0.05
   Store_Water: 0

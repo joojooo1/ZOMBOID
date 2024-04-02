@@ -1,3 +1,4 @@
+using FreeNet;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -9,10 +10,11 @@ using UnityEngine.Playables;
 public class Player_body_Location
 {
     body_point _Body_Location_Code = new body_point();
-    Zombie_Attack_Pattern _Body_Current_state;
+    Damage_Pattern _Body_Current_state;
     bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
     bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     bool _Bleeding = false; // 출혈.. Moodles
+    int DamageCount = 0;
      
 
     public Player_body_Location(body_point Body_Code)
@@ -20,7 +22,7 @@ public class Player_body_Location
         _Body_Location_Code = Body_Code;
     }
 
-    public void Set_Body_state(Zombie_Attack_Pattern Attack_Pattern, string Zom_Type, bool IsBack)  // 좀비의 공격패턴, 좀비의 강도
+    public void Set_Body_state(Damage_Pattern Attack_Pattern, string Zom_Type, bool IsBack)  // 좀비의 공격패턴, 좀비의 강도
     {
         _Body_Current_state = Attack_Pattern;
 
@@ -66,12 +68,7 @@ public class Player_body_Location
             {
                 switch (Attack_Pattern)
                 {
-                    case Zombie_Attack_Pattern.punches:
-                        // 타격(피해o & 상처x) : 일시적으로 Damage 발생  // 깨뜨린 창문에도 생김
-
-                        Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
-                        break;
-                    case Zombie_Attack_Pattern.Scratches:
+                    case Damage_Pattern.Scratches:
                         // 긁힘  
 
                         Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
@@ -79,7 +76,7 @@ public class Player_body_Location
                         PlayerState.playerState.Calculating_Infection(7);  // 7% 확률로 감염
 
                         break;
-                    case Zombie_Attack_Pattern.Lacerations:
+                    case Damage_Pattern.Lacerations:
                         // 찢김
 
                         Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
@@ -87,7 +84,7 @@ public class Player_body_Location
                         PlayerState.playerState.Calculating_Infection(25);  // 25% 확률로 감염
 
                         break;
-                    case Zombie_Attack_Pattern.Bites:
+                    case Damage_Pattern.Bites:
                         // 물림
 
                         Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
@@ -109,7 +106,7 @@ public class Player_body_Location
         }
     }
 
-    public Zombie_Attack_Pattern Get_Body_state()
+    public Damage_Pattern Get_Body_state()
     {
         return _Body_Current_state;
     }
@@ -153,25 +150,41 @@ public class Player_body_Location
         PlayerState.playerState.Bleeding_Count_change();
     }
     public bool Get_Is_Bleeding() { return _Bleeding; }
+
+    public void Set_DamageCount(bool Add)
+    {
+        if (Add)
+        {
+            DamageCount++;
+        }
+        else
+        {
+            DamageCount--;
+        }
+        Debug.Log(DamageCount);
+    }
+
+    public int Get_DamageCount() {  return DamageCount; }
+
 }
 
 public enum body_point
 {
     Left_hand = 0,
     Right_hand = 1,
-    Left_forearm = 2,
-    Right_forearm = 3,
-    Left_upper_arm = 4,
-    Right_upper_arm = 5,
-    upper_torso = 6,
-    Lower_torso = 7,
+    Left_lowerarm = 2,
+    Right_lowerarm = 3,
+    Left_upperarm = 4,
+    Right_upperarm = 5,
+    Chest = 6,
+    Abdomen = 7,
     Head = 8,
     Neck = 9,
     Groin = 10,
-    Left_thigh = 11,
-    Right_thigh = 12,
-    Left_shin = 13,
-    Right_shin = 14,
+    Left_upperleg = 11,
+    Right_upperleg = 12,
+    Left_lowerleg = 13,
+    Right_lowerleg = 14,
     Left_foot = 15,
     Right_foot = 16
 }
@@ -185,17 +198,17 @@ public class PlayerState : MonoBehaviour
     // 오른손     공격받을 확률(기본): 8%
     public Player_body_Location Right_hand;
     // 왼팔목     공격받을 확률(기본): 12%
-    public Player_body_Location Left_forearm;
+    public Player_body_Location Left_lowerarm;
     // 오른팔목     공격받을 확률(기본): 12%
-    public Player_body_Location Right_forearm;
+    public Player_body_Location Right_lowerarm;
     // 왼 팔뚝     공격받을 확률(기본): 11%
-    public Player_body_Location Left_upper_arm;
+    public Player_body_Location Left_upperarm;
     // 오른 팔뚝     공격받을 확률(기본): 11%
-    public Player_body_Location Right_upper_arm;
+    public Player_body_Location Right_upperarm;
     // 가슴     공격받을 확률(기본): 6%
-    public Player_body_Location upper_torso;
+    public Player_body_Location Chest;
     // 복부     공격받을 확률(기본): 6%
-    public Player_body_Location Lower_torso;
+    public Player_body_Location Abdomen;
     // 머리     공격받을 확률(기본): 4%
     public Player_body_Location Head;
     // 목     공격받을 확률(기본): 7%
@@ -203,13 +216,13 @@ public class PlayerState : MonoBehaviour
     // 사타구니     공격받을 확률(기본): 9%
     public Player_body_Location Groin;
     // 왼 허벅지     공격받을 확률(기본): 1%
-    public Player_body_Location Left_thigh;
+    public Player_body_Location Left_upperleg;
     // 오른 허벅지     공격받을 확률(기본): 1%
-    public Player_body_Location Right_thigh;
+    public Player_body_Location Right_upperleg;
     // 왼 정강이     공격받을 확률(기본): 1%
-    public Player_body_Location Left_shin;
+    public Player_body_Location Left_lowerleg;
     // 오른 정강이     공격받을 확률(기본): 1%
-    public Player_body_Location Right_shin;
+    public Player_body_Location Right_lowerleg;
     // 왼발     공격받을 확률(기본): 1%
     public Player_body_Location Left_foot;
     // 오른발     공격받을 확률(기본): 1%
@@ -222,42 +235,41 @@ public class PlayerState : MonoBehaviour
 
         Left_hand = new Player_body_Location(body_point.Left_hand);
         Right_hand = new Player_body_Location(body_point.Right_hand);
-        Left_forearm = new Player_body_Location(body_point.Left_forearm);
-        Right_forearm = new Player_body_Location(body_point.Right_forearm);
-        Left_upper_arm = new Player_body_Location(body_point.Left_upper_arm);
-        Right_upper_arm = new Player_body_Location(body_point.Right_upper_arm);
-        upper_torso = new Player_body_Location(body_point.upper_torso);
-        Lower_torso = new Player_body_Location(body_point.Lower_torso);
+        Left_lowerarm = new Player_body_Location(body_point.Left_lowerarm);
+        Right_lowerarm = new Player_body_Location(body_point.Right_lowerarm);
+        Left_upperarm = new Player_body_Location(body_point.Left_upperarm);
+        Right_upperarm = new Player_body_Location(body_point.Right_upperarm);
+        Chest = new Player_body_Location(body_point.Chest);
+        Abdomen = new Player_body_Location(body_point.Abdomen);
         Head = new Player_body_Location(body_point.Head);
         Neck = new Player_body_Location(body_point.Neck);
         Groin = new Player_body_Location(body_point.Groin);
-        Left_thigh = new Player_body_Location(body_point.Left_thigh);
-        Right_thigh = new Player_body_Location(body_point.Right_thigh);
-        Left_shin = new Player_body_Location(body_point.Left_shin);
-        Right_shin = new Player_body_Location(body_point.Right_shin);
+        Left_upperleg = new Player_body_Location(body_point.Left_upperleg);
+        Right_upperleg = new Player_body_Location(body_point.Right_upperleg);
+        Left_lowerleg = new Player_body_Location(body_point.Left_lowerleg);
+        Right_lowerleg = new Player_body_Location(body_point.Right_lowerleg);
         Left_foot = new Player_body_Location(body_point.Left_foot);
         Right_foot = new Player_body_Location(body_point.Right_foot);
 
         Player_body_point.Add(Left_hand);
         Player_body_point.Add(Right_hand);
-        Player_body_point.Add(Left_forearm);
-        Player_body_point.Add(Right_forearm);
-        Player_body_point.Add(Left_upper_arm);
-        Player_body_point.Add(Right_upper_arm);
-        Player_body_point.Add(upper_torso);
-        Player_body_point.Add(Lower_torso);
+        Player_body_point.Add(Left_lowerarm);
+        Player_body_point.Add(Right_lowerarm);
+        Player_body_point.Add(Left_upperarm);
+        Player_body_point.Add(Right_upperarm);
+        Player_body_point.Add(Chest);
+        Player_body_point.Add(Abdomen);
         Player_body_point.Add(Head);
         Player_body_point.Add(Neck);
         Player_body_point.Add(Groin);
-        Player_body_point.Add(Left_thigh);
-        Player_body_point.Add(Right_thigh);
-        Player_body_point.Add(Left_shin);
-        Player_body_point.Add(Right_shin);
+        Player_body_point.Add(Left_upperleg);
+        Player_body_point.Add(Right_upperleg);
+        Player_body_point.Add(Left_lowerleg);
+        Player_body_point.Add(Right_lowerleg);
         Player_body_point.Add(Left_foot);
         Player_body_point.Add(Right_foot);
     }
 
-    // int a = 0;
     float Endurance_Timer = 0.0f;
     float Thirsty_Timer = 0.0f;
     float Unhappy_Timer = 0.0f;
@@ -292,7 +304,8 @@ public class PlayerState : MonoBehaviour
             Endurance_Timer += Time.deltaTime;
             if(Endurance_Timer > 0.3f)
             {
-                Set_Endurance(-2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate());
+                float Temp = 2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate();
+                Player_main.player_main.Set_Endurance(-Temp);
                 Endurance_Timer = 0.0f;
             }
         }
@@ -304,7 +317,8 @@ public class PlayerState : MonoBehaviour
                 Endurance_Timer += Time.deltaTime;
                 if (Endurance_Timer > 0.5f)
                 {
-                    Set_Endurance(3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate());
+                    float Temp = 3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate();
+                    Player_main.player_main.Set_Endurance(Temp);
                     Endurance_Timer = 0.0f;
                 }
             }
@@ -425,7 +439,6 @@ public class PlayerState : MonoBehaviour
         /****************** Player_Has_a_Cold ******************/
         if(Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() > 0)
         {
-            Player_main.player_main.Is_Cold = true;
             if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() <= 1)
             {
                 Has_a_Cold_Timer += Time.deltaTime;
@@ -438,7 +451,6 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            Player_main.player_main.Is_Cold = false;
             Has_a_Cold_Timer = 0;
         }
 
@@ -457,9 +469,10 @@ public class PlayerState : MonoBehaviour
             Drunk_Timer = 0;
         }
 
+        
     }
 
-    int Bleeding_total_count = 0;
+    public int Bleeding_total_count = 0;
     public void Bleeding_Count_change()  // 출혈 갯수 변경시 호출
     {
         for (int i = 0; i < 17; i++)
@@ -486,19 +499,6 @@ public class PlayerState : MonoBehaviour
 
         return _Infection;
     }
-
-    [SerializeField] float _Endurance = 100f;  // 지구력
-
-    public void Set_Endurance(float value)
-    {
-        _Endurance += value;
-        if(_Endurance > 100) { _Endurance = 100; }
-        else if(_Endurance < 0) { _Endurance = 0; }
-
-        Player_main.player_main.playerMoodles.Moodle_Endurance.Set_Moodles_state(value);
-    }
-
-    public float Get_Endurance() {  return _Endurance; }
 
     // 감기에 걸릴 확률 ( 기본 3% )
     [SerializeField] float _Probability_of_Catching_a_cold = 0.03f;
