@@ -16,17 +16,18 @@ public class animal : MonoBehaviour
     float rabbit_speed = 1;
     float deer_speed = 3;
     float fox_speed = 2;
-    GameObject TARGET;
+    public GameObject TARGET;
     Vector3 runpos;
     Vector3 walkpos;
     private NavMeshAgent navMeshAgent;
     bool isMove = false;
+    public GameObject animel_ani;
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        animalspec();
+        animator = animel_ani.GetComponent<Animator>();//
+        animalspec();//
         StartCoroutine("playerfind");
     }
 
@@ -38,12 +39,7 @@ public class animal : MonoBehaviour
             StopCoroutine("animalidle");
             StopCoroutine("playerfind");
             navMeshAgent.SetDestination(runpos);
-            if(transform.position == runpos)
-            {
-                animator.SetBool("run", false);
-                TARGET = null;
-                StartCoroutine("playerfind");
-            }
+            
         }
         else if (TARGET == null && isMove != true)
         { 
@@ -54,10 +50,15 @@ public class animal : MonoBehaviour
         {
 
             isMove = false;
-            animator.SetBool("walk", false);
+        }
+        if (transform.position == runpos)
+        {
+            Debug.Log("도망 완료");
+            TARGET = null;
+            StartCoroutine("playerfind");
         }
     }
-    void animalspec()
+    void animalspec()//
     {
         switch (gameObject.name)
         {
@@ -87,21 +88,29 @@ public class animal : MonoBehaviour
     {
         while (!isMove) 
         {
-            animator.SetBool("walk", false);
             yield return new WaitForSeconds(5f);
             SetRandomwalkpos();
         }
     }
-    void SetRandomwalkpos()// 랜덤한 목표 위치 설정
+    public void SetRandomwalkpos()// 랜덤한 목표 위치 설정
     {
 
-        StopCoroutine("animalidle");
-        animator.SetBool("walk", true);
-        isMove = true;
-        float randomX = Random.Range(-3f, 3f) + transform.position.x;
-        float randomY = Random.Range(-3f, 3f) + transform.position.y;
-        walkpos = new Vector3(randomX, randomY, transform.position.z);
-        navMeshAgent.SetDestination(walkpos);
+        // 무작위 좌표 설정 (예시로 (0, 0, 0)에서 10 범위 내의 무작위 좌표 설정)
+        Vector3 walkpos = new Vector3(Random.Range(-3F, 3f) + transform.position.x, Random.Range(-3f, 3f) + transform.position.y, transform.position.z);
+
+        // NavMeshHit 변수 생성
+        NavMeshHit hit;
+
+        // 무작위 좌표가 NavMesh 위에 있는지 확인
+        if (NavMesh.SamplePosition(walkpos, out hit, 10f, NavMesh.AllAreas))
+        {
+            StopCoroutine("animalidle");
+            isMove = true;
+            navMeshAgent.SetDestination(walkpos);
+            Debug.Log("보냄");
+        }
+        
+        
     }
     IEnumerator playerfind()
     {
@@ -124,13 +133,12 @@ public class animal : MonoBehaviour
                 float distance = Vector3.Distance(transform.position, playerObject.transform.position);
                 if (distance < closestDistance)
                 {
-                    Debug.Log(playerObject.name);
+                   
                     closestDistance = distance;
                     closestObject = playerObject.gameObject;
                     if (distance < 3)
                     {
-                        animator.SetBool("walk", false);
-                        animator.SetBool("run", true);
+
                         Vector3 fleeDirection = transform.position - closestObject.transform.position;
                         runpos = transform.position + fleeDirection;
                         TARGET = closestObject; 
@@ -141,4 +149,13 @@ public class animal : MonoBehaviour
 
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<animal>())
+        {
+            SetRandomwalkpos();
+            Debug.Log("동물 충돌 좌표 재설치");
+        }
+    }
+    
 }

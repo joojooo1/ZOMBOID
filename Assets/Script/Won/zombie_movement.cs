@@ -83,7 +83,7 @@ public class zombie_movement : MonoBehaviour
             }*/
         }
     }
-    void findplayer() //주변 플레이어 탐색
+    void findplayer() //주변 플레이어 탐색  ccccc
     {
         float angleStep = 360f / rayCount;
         for (float angle = 0; angle < 360; angle += angleStep)
@@ -117,7 +117,7 @@ public class zombie_movement : MonoBehaviour
             }
         }
     }
-    IEnumerator zomidlemove()//좀비 렌덤 좌표 배회하기
+    IEnumerator zomidlemove()//좀비 렌덤 좌표 배회하기cccccc
     {
         while (transform.position != targetPosition && player == null)
         {
@@ -125,7 +125,7 @@ public class zombie_movement : MonoBehaviour
             animator.SetBool("walk", true);
             Vector3 playerDirection = targetPosition - zombieTransform.position;
             Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-            zombieTransform.rotation = Quaternion.Slerp(zombieTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            zombieTransform.localRotation = Quaternion.Slerp(zombieTransform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
             if(zombie_crawl)
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             else
@@ -145,7 +145,7 @@ public class zombie_movement : MonoBehaviour
         isMoving = false;
         StartCoroutine(RandomMoveCoroutine());
     }
-    IEnumerator zommove()//플레이어on 좀비 이동
+    IEnumerator zommove()//플레이어on 좀비 이동cccccc
     {
         while (player && !atking)
         {
@@ -154,7 +154,7 @@ public class zombie_movement : MonoBehaviour
             navMeshAgent.SetDestination(player.transform.position);
             Vector3 playerDirection = player.transform.position - zombieTransform.position;
             Quaternion targetRotation = Quaternion.LookRotation(playerDirection, Vector3.right);
-            zombieTransform.rotation = Quaternion.Slerp(zombieTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            zombieTransform.localRotation = Quaternion.Slerp(zombieTransform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
             float player_atk = Vector3.Distance(player.transform.position , zombieTransform.position);
             if (player_atk <= atk_distance) 
             {
@@ -188,32 +188,7 @@ public class zombie_movement : MonoBehaviour
         }
         
     }
-    /*void animatorwalk()//플레이어on/off 추적시 애니메이션
-    {
-        Vector3 movementDirection = (transform.position - lastPosition).normalized;
-        if (movementDirection.magnitude > 0.1f)//좀비가 좌표변경시 애니메이션 결정및 방향설정
-        {
-            if (player != null)//플레이어on
-            {
-                animator.SetBool("run", true);
-                
-            }
-            else//플레이어off
-            {
-                
-                animator.SetBool("walk", true);
-                 
-            }
-        }
-        else//좀비 idle일떄
-        {
-            animator.SetBool("run", false);
-            animator.SetBool("walk", false);
-        }
-        // 현재 위치를 마지막 위치로 업데이트
-        lastPosition = transform.position;
-    }*/
-    IEnumerator RandomMoveCoroutine()// 대기 시간 후에 랜덤한 목표 위치 설정
+    IEnumerator RandomMoveCoroutine()// 대기 시간 후에 랜덤한 목표 위치 설정xxxxxx
     {
         yield return new WaitForSeconds(moveInterval);
         if(player == null)
@@ -223,7 +198,7 @@ public class zombie_movement : MonoBehaviour
             isMoving = true;
         }
     }
-    void SetRandomTargetPosition()// 랜덤한 목표 위치 설정
+    void SetRandomTargetPosition()// 랜덤한 목표 위치 설정cccccc
     {
         float randomX = Random.Range(-3F, 3f) + transform.position.x;
         float randomY = Random.Range(-3f, 3f) + transform.position.y;
@@ -232,7 +207,7 @@ public class zombie_movement : MonoBehaviour
         StartCoroutine(zomidlemove());
     }
 
-    void zom_up()//좀비가 일어날 확률
+    void zom_up()//좀비가 일어날 확률zzzzzzz
     {
         if (Random.Range(0, 10) > 5)
         {
@@ -281,8 +256,8 @@ public class zombie_movement : MonoBehaviour
             animator.SetTrigger("hit");
         //}
             
-    }
-    void zom_atk_anim()//좀비가 공격시작 애니메이션
+    }//zzzzz
+    void zom_atk_anim()//좀비가 공격시작 애니메이션cccccc
     {
         zom_speed_zero();
         animator.SetBool("run", false);
@@ -293,7 +268,7 @@ public class zombie_movement : MonoBehaviour
         }
         StartCoroutine(zommove());
     }
-    void zom_atk_try()//좀비의 공격 성공여부(공격 성공여부 판단시 좀비와의 거리가 1이하이면 공격이 성공한다.)
+    void zom_atk_try()//좀비의 공격 성공여부(공격 성공여부 판단시 좀비와의 거리가 1이하이면 공격이 성공한다.)zzzzzz
     {
         float player_atk = Vector3.Distance(player.transform.position, zombieTransform.position);
         if(player_atk <= atk_distance)
@@ -301,7 +276,7 @@ public class zombie_movement : MonoBehaviour
             //zomhp.zombie_atk(player);
         }
     }
-    void zom_atk_end()//좀비의 다시 공격하기위한 작업
+    void zom_atk_end()//좀비의 다시 공격하기위한 작업zzzzzzz
     {
         zom_speed_curret();
         animator.SetBool("playeratk", false);
@@ -312,7 +287,7 @@ public class zombie_movement : MonoBehaviour
     {
         zomhp.zom_data(player, zombie_crawl);
     }
-    void zom_anim_speed()//좀비의 이동속도에 따라 애니메이션 속도 변경
+    void zom_anim_speed()//좀비의 이동속도에 따라 애니메이션 속도 변경zzzzzzzz
     {
         switch (speed)
         {
@@ -334,20 +309,20 @@ public class zombie_movement : MonoBehaviour
                 break;
         }
     }
-    void zom_up_off()//좀비가 일어나뒤 이동속도 변경
+    void zom_up_off()//좀비가 일어나뒤 이동속도 변경zzzzzzzz
     {
         speed = zomhp.curret_speed;
         animator.SetBool("up", false);
     }
-    void zom_speed_zero()
+    void zom_speed_zero()//zzzzzzzz
     {
         speed = 0;
     }
-    void zom_speed_curret()
+    void zom_speed_curret()///zzzzzz
     {
         speed = zomhp.curret_speed;
     }
-    public void zom_Die()
+    public void zom_Die()//zzzzzzzzzzzzz
     {
         Collider collider = gameObject.GetComponent<Collider>();
         collider.enabled = false;
