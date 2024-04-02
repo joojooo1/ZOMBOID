@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.XR;
 using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
@@ -84,10 +85,13 @@ public class Player_main : MonoBehaviour
         // test -------------------------------------------------------------
         if (Input.anyKeyDown)
         {
-            UI_State.State_icon_main.icon_Ins(0, (body_point)8);
+            if (playerState.Player_body_point[8].Get_DamageCount() < 3)
+                UI_State.State_icon_main.icon_Ins(0, (body_point)8);
+            else
+                UI_State.State_icon_main.icon_Ins((Damage_Pattern)1, (body_point)7);
         }
 
-
+        
         // ------------------------------------------------------------- test ÇÔ¼ö 
 
         /************************************* Player_Movement *************************************/
