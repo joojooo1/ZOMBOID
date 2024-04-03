@@ -12,15 +12,15 @@ public enum Damage_Pattern
 {
     /* 심각도 1 */
     Scratches = 0,   // 좀비에 의한 긁힘
-    Glass = 1,  // 유리조각 박힘
-    Abrasion = 2,  // 그 외의 일반적인 상처
+    Glass = 1,  // 유리조각 박힘   ( 깨진 창문 넘을때, 유리조각 밟을때 )
+    Abrasion = 2,  // 그 외의 일반적인 상처  ( 상대 유저한테 공격당할때 )
     /* 심각도 2 */
-    Lacerations = 3,  // 좀비에 의한 찢김
+    Lacerations = 3,  // 좀비에 의한 찢김  ( + 상대 유저한테 심하게 공격당할때(깊은상처) )
     Infection = 4,  // 세균감염
-    bullet = 5,  // 총상
+    bullet = 5,  // 총상  ( 상대 유저한테 공격당할때 )
     /* 심각도 3 */
     Bites = 6,  // 좀비에 의한 물림
-    Fracture = 7,  // 골절
+    Fracture = 7,  // 골절  ( 상대 유저한테 공격당할때 )
     Burn = 8  // 화상
 }
 
@@ -66,6 +66,8 @@ public class Player_main : MonoBehaviour
     public bool Is_drunk = false;
     public bool Is_Cold = false;
     public bool Is_Sleeping = false;
+
+    float Enemy_Damage = 0;  // 상대유저의 공격력
     /* --------------------------------------------------------------------------------- */
 
     void Awake()
@@ -85,10 +87,10 @@ public class Player_main : MonoBehaviour
         // test -------------------------------------------------------------
         if (Input.anyKeyDown)
         {
-            if (playerState.Player_body_point[8].Get_DamageCount() < 3)
-                UI_State.State_icon_main.icon_Ins(0, (body_point)8);
-            else
-                UI_State.State_icon_main.icon_Ins((Damage_Pattern)1, (body_point)7);
+            //if (playerState.Player_body_point[8].Get_DamageCount() < 3)
+            //    UI_State.State_icon_main.icon_Ins(0, (body_point)8);
+            //else
+            //    UI_State.State_icon_main.icon_Ins((Damage_Pattern)1, (body_point)7);
         }
 
         

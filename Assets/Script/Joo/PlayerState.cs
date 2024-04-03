@@ -6,39 +6,50 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 public class Player_body_Location
 {
     body_point _Body_Location_Code = new body_point();
-    Damage_Pattern _Body_Current_state;
+    Damage_Pattern _Current_Damagetype;
     bool _Bandage = false;  // ºØ´ë °¨¾Ò´ÂÁö ¿©ºÎ·Î hp ±ðÀÌ´Â ¼Óµµ Á¶Àý
     bool _disinfection = false;  // ¼Òµ¶ Çß´ÂÁö ¿©ºÎ·Î »óÃ³ ³´´Â ¼Óµµ Á¶Àý
     bool _Bleeding = false; // ÃâÇ÷.. Moodles
     int DamageCount = 0;
-     
+    float _Defense = 0f;
 
     public Player_body_Location(body_point Body_Code)
     {
         _Body_Location_Code = Body_Code;
     }
 
-    public void Set_Body_state(Damage_Pattern Attack_Pattern, string Zom_Type, bool IsBack)  // Á»ºñÀÇ °ø°ÝÆÐÅÏ, Á»ºñÀÇ °­µµ
+    public void Set_Body_state(Damage_Pattern Attack_Pattern, string Enemy_Type, bool IsBack)  // Á»ºñÀÇ °ø°ÝÆÐÅÏ, Á»ºñÀÇ °­µµ
     {
-        _Body_Current_state = Attack_Pattern;
+        _Current_Damagetype = Attack_Pattern;
 
-        float Zombie_Attack_power = 5.0f;
-        if (Zom_Type == "easy")
+        float Attack_power = 0.0f;
+        if(Enemy_Type != "User")
         {
-            Zombie_Attack_power *= 0.7f;  // 3.5
+            if (Enemy_Type == "easy")
+            {
+                Attack_power = 5.0f * 0.7f;  // 3.5
+            }
+            else if (Enemy_Type == "normal")
+            {
+                Attack_power = 5.0f * 1.0f;  // 5
+            }
+            else if (Enemy_Type == "hard")
+            {
+                Attack_power = 5.0f * 1.5f;  // 7.5
+            }
         }
-        else if(Zom_Type == "normal")
+        else
         {
-            Zombie_Attack_power *= 1.0f;  // 5
+            
+            // À¯Àú·ÎºÎÅÍ ¹ÞÀº Å¸°ÝÀÌ¸é µ¥¹ÌÁö °¡Á®¿Í¾ß ÇÔ
         }
-        else if(Zom_Type == "hard")
-        {
-            Zombie_Attack_power *= 1.5f;  // 7.5
-        }
+        
+        
 
         System.Random rand = new System.Random();
         int rand_Block = rand.Next(100);
@@ -66,49 +77,86 @@ public class Player_body_Location
 
             if (rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // È¸ÇÇÀ² °è»ê
             {
-                switch (Attack_Pattern)
+                if(Enemy_Type != "User")
                 {
-                    case Damage_Pattern.Scratches:
-                        // ±ÜÈû  
+                    switch (Attack_Pattern)
+                    {
+                        case Damage_Pattern.Scratches:
+                            // ±ÜÈû  
 
-                        Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
-                        Set_Is_Bleeding(true);
-                        PlayerState.playerState.Calculating_Infection(7);  // 7% È®·ü·Î °¨¿°
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            PlayerState.playerState.Calculating_Infection(7);  // 7% È®·ü·Î °¨¿°
 
-                        break;
-                    case Damage_Pattern.Lacerations:
-                        // Âõ±è
+                            break;
+                        case Damage_Pattern.Lacerations:  // ±íÀº»óÃ³ (ºÀÇÕ ÇÊ¿ä)
+                            // Âõ±è
 
-                        Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
-                        Set_Is_Bleeding(true);
-                        PlayerState.playerState.Calculating_Infection(25);  // 25% È®·ü·Î °¨¿°
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            PlayerState.playerState.Calculating_Infection(25);  // 25% È®·ü·Î °¨¿°
 
-                        break;
-                    case Damage_Pattern.Bites:
-                        // ¹°¸²
+                            break;
+                        case Damage_Pattern.Bites:
+                            // ¹°¸²
 
-                        Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Zombie_Attack_power);
-                        Set_Is_Bleeding(true);
-                        PlayerState.playerState.Set_Is_Infection(true);  // 100% È®·ü·Î °¨¿°
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            PlayerState.playerState.Set_Is_Infection(true);  // 100% È®·ü·Î °¨¿°
 
-                        break;
-                    default:
-                        break;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else  // User °ø°Ý: °¨¿°x, ÀÏ¹ÝÀûÀÎ »óÃ³, ÃÑ»ó, °ñÀý, Âõ±è(°¨¿°x)
+                {
+                    switch (Attack_Pattern)
+                    {
+                        case Damage_Pattern.Abrasion:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        case Damage_Pattern.bullet:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        case Damage_Pattern.Fracture:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        case Damage_Pattern.Lacerations:
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Set_Is_Bleeding(true);
+                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            break;
+                        default: 
+                            break;
+                    }
+                }
+                
 
             }
         }
         
-
-        if (PlayerState.playerState.Get_Is_Infection())  // °¨¿°µÈ °æ¿ì
-        {
-            
-        }
     }
 
-    public Damage_Pattern Get_Body_state()
+    public void Set_Defense(int defense)
     {
-        return _Body_Current_state;
+        _Defense = _Defense + defense;
+    }
+
+    public float Get_Dafense() { return _Defense; }
+
+    public Damage_Pattern Get_Bodypos_DamageType()
+    {
+        return _Current_Damagetype;
     }
 
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
@@ -277,6 +325,7 @@ public class PlayerState : MonoBehaviour
     float Is_Cold_Timer = 0.0f;
     float Has_a_Cold_Timer = 0.0f;
     float Drunk_Timer = 0.0f;
+    float Infection_Timer = 0.0f;
 
     private void Update()
     {
@@ -469,7 +518,13 @@ public class PlayerState : MonoBehaviour
             Drunk_Timer = 0;
         }
 
-        
+
+        if (Get_Is_Infection())  // °¨¿°µÈ °æ¿ì
+        {
+            Infection_Timer += Time.deltaTime;
+
+        }
+
     }
 
     public int Bleeding_total_count = 0;

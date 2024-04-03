@@ -59,10 +59,16 @@ public class Inventory_Player_Shown : MonoBehaviour
     public short LS_Slot_Order;
     public bool LS_Is_Player;
 
+    Animator Anim;
+    public bool inven_open;
+
     private void Awake()
     {
         InvPS = this;
+        Anim = GetComponent<Animator>();
+        inven_open = false;
     }
+
     private void Start()
     {
         //초기 생성연산만
@@ -77,6 +83,12 @@ public class Inventory_Player_Shown : MonoBehaviour
         }
 
 
+    }
+
+    public void SetAnim(bool open)
+    {
+        inven_open = open;
+        Anim.SetBool("Open", inven_open);
     }
 
     private void Ready_For_Change_From_Slot()
