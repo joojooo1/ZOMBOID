@@ -6,8 +6,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
 using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
-
-
 public enum Damage_Pattern
 {
     /* ½É°¢µµ 1 */
@@ -85,12 +83,14 @@ public class Player_main : MonoBehaviour
     void Update()
     {
         // test -------------------------------------------------------------
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            //if (playerState.Player_body_point[8].Get_DamageCount() < 3)
-            //    UI_State.State_icon_main.icon_Ins(0, (body_point)8);
-            //else
-            //    UI_State.State_icon_main.icon_Ins((Damage_Pattern)1, (body_point)7);
+            if (playerState.Player_body_point[8].Get_DamageCount() < 3)
+                UI_State.State_icon_main.icon_Ins(0, (body_point)8);
+        }
+        else if (Input.GetKeyDown(KeyCode.N))
+        {
+            UI_State.State_icon_main.icon_Destroy((body_point)8, 1);
         }
 
         
