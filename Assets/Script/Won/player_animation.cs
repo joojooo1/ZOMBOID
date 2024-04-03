@@ -6,12 +6,17 @@ using UnityEngine.AI;
 public class player_animation : MonoBehaviour
 {
     public GameObject rot;
+    public GameObject audioobject;
     Animator animator;
     bool atk = false;
     public float test_weapon_type = 0;
+    public AudioClip Clip;
+    player_rot audio;
+    public AudioClip walkClip;
     // Start is called before the first frame update
     void Start()
     {
+        audio = audioobject.GetComponent<player_rot>();
         animator = GetComponent<Animator>();
     }
 
@@ -52,6 +57,8 @@ public class player_animation : MonoBehaviour
             {
                 atk = true;
                 animatersetTrigger("ATK");
+                audio.audioclip(Clip,1);
+                Debug.Log("소리 전송");
             }
         }
         else
@@ -87,5 +94,9 @@ public class player_animation : MonoBehaviour
     void animatorsetFloat(string ANIMA_NAME, float set)
     {
         animator.SetFloat(ANIMA_NAME, set);
+    }
+    void walkaudio()
+    {
+        audio.audioclip(walkClip, 0.5f);
     }
 }

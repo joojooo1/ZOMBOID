@@ -8,15 +8,20 @@ public class zom_pos : MonoBehaviour
 {
     NavMeshAgent nav;
     public GameObject target;
+    public Vector3 AUDIOPOS;
     zom_targetpos zom_Targetpos;
     public GameObject targetpos;
     Vector3 Tarpos;
+    public bool audioposget = false;
+    float ramdom;
     // Start is called before the first frame update
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
         zom_Targetpos = targetpos.GetComponent<zom_targetpos>();
         //nav.updateRotation = false;
+        ramdom = Random.Range(0, 3);
+        Debug.Log(ramdom);
     }
 
     // Update is called once per frame
@@ -25,7 +30,20 @@ public class zom_pos : MonoBehaviour
 
         if (target != null) 
         {
+            audioposget = false;
+
             nav.SetDestination(new Vector3(target.transform.position.x,target.transform.position.y,0));
+        }
+        else if(audioposget)
+        {
+            ramdom = Random.Range(0, 3);
+            Vector3 aa =  Random.insideUnitSphere * 3f;
+            nav.SetDestination(new Vector3(AUDIOPOS.x+ aa.x, AUDIOPOS.y+ aa.y, 0));
+        }
+        if(nav.remainingDistance <= nav.stoppingDistance +0.1f && audioposget)
+        {
+            audioposget = false;
+            zom_Targetpos.idlepos();
         }
     }
     public void zomldiepos(Vector3 pos)

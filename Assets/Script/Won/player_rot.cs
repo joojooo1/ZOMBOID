@@ -6,10 +6,12 @@ using static UnityEditor.PlayerSettings;
 public class player_rot : MonoBehaviour
 {
     Quaternion targetRotation;
+    private AudioSource playerAudioSource;
+    public LayerMask layerMask;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerAudioSource = GetComponent<AudioSource>();
     }
 
     float rotationSpeed = 1000;
@@ -37,6 +39,35 @@ public class player_rot : MonoBehaviour
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
             //gosever(targetRotation);
         }
+
+
+        float currentVolume = playerAudioSource.volume;
+        if (currentVolume > 0.5)
+        {
+            
+            //test
+            Collider[] colliders = Physics.OverlapSphere(transform.position, currentVolume*5, layerMask);
+            Debug.Log("충돌체 검색완료");
+            foreach (Collider collider in colliders)
+            {
+                Debug.Log(collider.name);
+                // 충돌체가 공통된 스크립트를 가지고 있는지 확인합니다.
+                zom_pos zomtarget = collider.GetComponent<zom_pos>();
+                Debug.Log(zomtarget);
+                if (zomtarget != null)
+                {
+                    zomtarget.audioposget = true;
+                    Debug.Log("자신을 타겟으로 보내기 시도");
+                    zomtarget.AUDIOPOS = transform.position;
+                    Debug.Log("자신을 타겟으로 보냄");
+                }
+            }
+        }
+    }
+    public void audioclip(AudioClip clip, float audiosound)
+    {
+        playerAudioSource.PlayOneShot(clip);
+        playerAudioSource.volume = audiosound;
     }
 
     void gosever(Quaternion player_rot)
