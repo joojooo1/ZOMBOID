@@ -6,6 +6,11 @@ using UnityEngine.AI;
 
 public class zom_targetpos : MonoBehaviour
 {
+    GameObject player;
+    public float detectionRadius = 5f;//인지범위의 반지름
+    public float durationTime = 5f;//플레이어 인지범위 초과시 추적하는 시간
+    public int rayCount = 18; // 원형으로 쏘는 Ray의 개수
+    public LayerMask playerLayer; //플레이어 레이어
     public zom_pos zompos;
     public GameObject zomnav;
     public bool live = true;
@@ -21,6 +26,8 @@ public class zom_targetpos : MonoBehaviour
         {
             zompos = zomnav.GetComponent<zom_pos>();
         }
+
+        StartCoroutine("find");
     }
 
     // Update is called once per frame
@@ -33,16 +40,64 @@ public class zom_targetpos : MonoBehaviour
             collider.enabled = false;
         }
     }
-
-    void findPlayer(GameObject target) 
+    bool fnidplayertarget = false;
+    public void findtarget(GameObject target) 
     {
+        if (target.tag == "Player")
+        {
+            Debug.Log("플레이어 타겟 소리로 찾기완료");
+        }
         zompos.target = target;
     }
-    private void OnTriggerEnter(Collider other)
+    void findplayer() //주변 플레이어 탐색  ccccc
     {
-        if (other.gameObject.tag == "Player" && !zompos.target)
+        Debug.Log("플레이어 탐색");
+        float angleStep = 360f / rayCount;
+        for (float angle = 0; angle < 360; angle += angleStep)
         {
-            findPlayer(other.gameObject);
+            Vector3 rayDirection = Quaternion.Euler(0, angle, 0) * zompos.transform.right;
+            RaycastHit hit;
+            float dis = detectionRadius;
+            if (angle < 45 || angle > 315)//탐지범위가 좀비 전면일때 확장
+            {
+                dis += 5;
+            }
+            if (Physics.Raycast(transform.position, rayDirection, out hit, dis, playerLayer))
+            {
+                if (hit.collider.gameObject.tag == "Player")
+                {
+                    if (!player)
+                    {
+                        player = hit.collider.gameObject;
+                        findtarget(player);
+                        fnidplayertarget = true;
+                        break;
+                    }
+                }
+                if (player = hit.collider.gameObject)
+                {
+                    fnidplayertarget = true;
+                }
+                else
+                {
+                    fnidplayertarget = false;
+                }
+            }
+            
+        }
+    }
+    IEnumerator find()
+    {
+        while (true)
+        {
+            if (fnidplayertarget)
+            {
+                findplayer();
+                yield return new WaitForSeconds(5);
+            }
+            findplayer();
+            player = null;
+            yield return new WaitForSeconds(3);
         }
     }
     public void idlepos()
