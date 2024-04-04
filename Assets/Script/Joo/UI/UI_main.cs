@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Rendering;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class UI_main : MonoBehaviour
 {
     public static UI_main ui_main;
-    public UI_State ui_player_state = new UI_State();
+    public UI_State ui_player_state;
 
     public bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
-    [SerializeField]
-    GameObject[] player_gender = new GameObject[2];
-    public bool Is_Female = false;
+
+    public bool Is_Female = true;
+    public Sprite[] player_gender;
+    public GameObject UI_Damage;
+    public UnityEngine.UI.Image UI_DamageImage;
+    public UnityEngine.UI.Image UI_DamageImage_base;
 
     public GameObject Clock;
     [SerializeField]
@@ -25,10 +29,22 @@ public class UI_main : MonoBehaviour
     void Awake()
     {
         ui_main = this;
-        // GameObject myInstance = Instantiate(player_gender[0],transform);  상처 발생시 생성
-
     }
 
+    private void OnEnable()
+    {
+        if (Is_Female)
+        {
+            UI_DamageImage.sprite = player_gender[3];
+            UI_DamageImage_base.sprite = player_gender[1];
+        }
+        else
+        {
+            UI_DamageImage.sprite = player_gender[2];
+            UI_DamageImage_base.sprite = player_gender[0];
+        }
+        UI_Damage.SetActive(false);
+    }
 
     public bool Get_Setting_Language_Type()
     {
@@ -69,7 +85,10 @@ public class UI_main : MonoBehaviour
                 player_Setting_Language_to_Korean = true;
             }
         }
+    }
 
-
+    public void Set_UIDamage()
+    {
+        
     }
 }

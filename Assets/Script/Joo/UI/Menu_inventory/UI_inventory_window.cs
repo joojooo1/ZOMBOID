@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UI_inventory_window : MonoBehaviour
 {
-
     public static UI_inventory_window inven_detail_Window;
 
     Animator Anim;
