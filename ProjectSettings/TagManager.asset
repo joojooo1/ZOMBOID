@@ -4,9 +4,21 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Wall
   - stair
   - CanGetOver
+  - New tag
+  - Door
+  - Window
+  - Car
+  - Water
+  - Heating
+  - Storage
+  - Electricity
+  - Bed
+  - TrashCan
+  - Refrigerator
+  - Sit
+  - Farm
   layers:
   - Default
   - TransparentFX
