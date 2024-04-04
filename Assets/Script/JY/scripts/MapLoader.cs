@@ -16,7 +16,7 @@ public class MapLoader : MonoBehaviour
     Transform GroundLevel2;
 
     [SerializeField]
-    GameObject[] Tiles;
+    public GameObject[] Tiles;
 
     List<GameObject> TilesList;
 
@@ -31,6 +31,9 @@ public class MapLoader : MonoBehaviour
     float RangeBetweenX = 0.63f;
     float RangeBetweenZ = 0.315f;
 
+    public int LengthofX;
+    public int LengthofY;
+
     private void Awake()
     {
         ML = this;
@@ -43,11 +46,13 @@ public class MapLoader : MonoBehaviour
     //}
     private void Start()
     {
+        LengthofX = 50;
+        LengthofY = 50;
         ImageNum = 0;
         TilesList = new List<GameObject> { };
         //StartGeneratingTiles(10, 10);
-        StartGeneratingTilesQuater(50, 50,0f);
-        StartGeneratingTilesQuater2(50, 50,1.95f);
+        StartGeneratingTilesQuater(LengthofX, LengthofY, 0f);
+        StartGeneratingTilesQuater2(LengthofX, LengthofY, 1.95f);
         Tiles=TilesList.ToArray();
     }
 
