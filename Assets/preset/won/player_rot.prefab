@@ -10135,6 +10135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d716a2bd850b604fb2b7cb6b53fca8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1296393026742118956
 GameObject:
   m_ObjectHideFlags: 0
@@ -11498,7 +11501,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rot: {fileID: 0}
+  audioobject: {fileID: 0}
   test_weapon_type: 0
+  Clip: {fileID: 0}
+  walkClip: {fileID: 0}
 --- !u!1 &2060484817095925193
 GameObject:
   m_ObjectHideFlags: 0
@@ -45285,7 +45291,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rot: {fileID: 0}
+  audioobject: {fileID: 0}
   test_weapon_type: 0
+  Clip: {fileID: 0}
+  walkClip: {fileID: 0}
 --- !u!1001 &7395338824803938142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45880,7 +45889,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rot: {fileID: 0}
+  audioobject: {fileID: 0}
   test_weapon_type: 0
+  Clip: {fileID: 0}
+  walkClip: {fileID: 0}
 --- !u!1001 &8420902103199867138
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -60,7 +60,7 @@ public class animal : MonoBehaviour
     }
     void animalspec()//
     {
-        switch (gameObject.name)
+        switch (this.gameObject.name)
         {
             case "fox":
                 hp = fox_max_hp;
@@ -74,6 +74,11 @@ public class animal : MonoBehaviour
                 break;
             case "deer":
                 hp = deer_max_hp;
+                speed = deer_speed;
+                navMeshAgent.speed = speed;
+                break;
+            case "boat":
+                hp = rabbit_max_hp * 3;
                 speed = deer_speed;
                 navMeshAgent.speed = speed;
                 break;

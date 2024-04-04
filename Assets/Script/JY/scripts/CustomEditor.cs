@@ -13,30 +13,6 @@ public class CustomInspector : Editor
         base.OnInspectorGUI();
 
         CustomClass customClass = (CustomClass)target;
-        /*
-        SerializedProperty boolVar = serializedObject.FindProperty("boolVar"); //Bool
-
-
-        SerializedProperty bool2 = serializedObject.FindProperty("bool2");
-
-
-        SerializedProperty intVar = serializedObject.FindProperty("intVar"); //Int
-
-
-        SerializedProperty intVar2 = serializedObject.FindProperty("intVar2"); //Int
-
-
-        SerializedProperty floatVar = serializedObject.FindProperty("floatVar"); //Float
-
-        
-        SerializedProperty arrayVar = serializedObject.FindProperty("SpriteArr"); //배열
-        for (int i = 0; i < arrayVar.arraySize; ++i)
-        {
-            SerializedProperty arrayElementVar = arrayVar.GetArrayElementAtIndex(i);
-
-        }
-        */
-        //SerializedProperty structVar = serializedObject.FindProperty("structVar"); //구조체
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         if (GUILayout.Button("Set"))
@@ -46,26 +22,29 @@ public class CustomInspector : Editor
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
+
         string[] Options = new string[] { "Change Mode", "Create Mode" };
         int[] OValues = new int[] { 0, 1 };
         int newIntVar3 = EditorGUILayout.IntPopup("C/C", customClass.Change_Create, Options, OValues);
+
+        
+
+        string[] Options2 = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+        int[] OValues2 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        int newIntVar4 = EditorGUILayout.IntPopup("Floor", customClass.Floor_Value, Options2, OValues2);
 
         string[] displayedOptions = new string[] { "Tile","Left_Wall","Right_Wall","North_Corner_Wall",
                                                    "Left_DoorFrame","Right_DoorFrame","Left_Window","Righ_Window","Left_Door","Right_Door",
                                                    "Left_Wall_Deco", "Right_Wall_Deco", "Left_Direction_Furniture" ,"Right_Direction_Furniture",
                                                    "Left_Down_Fence", "Right_Dwon_Fence", "Tile_Deco", "Fence_Deco"};
-        int[] optionValues = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12,13,14,15,16,17 };
+        int[] optionValues = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
         int Buildin_Type_Value = EditorGUILayout.IntPopup("SetType", customClass.Building_Type_Value, displayedOptions, optionValues);
 
-        string[] Options2 = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-        int[] OValues2 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        int newIntVar4 = EditorGUILayout.IntPopup("Floor", customClass.Floor_Value, Options2, OValues2);
-        
         EditorGUILayout.Space();
 
 
-        string[] Choosen_Sprite_Package_Options = new string[] {"Wall_Sprite", "Ground_Sprite", "Roof_Sprite", "Window_Sprite", "Door_Sprite", "Furniture_Sprite","Fence_Sprite", "Ground_Deco"};
-        int[] Choosen_Sprite_Package_Values = new int[] {0,1,2,3,4,5,6,7};
+        string[] Choosen_Sprite_Package_Options = new string[] {"Wall_Sprite", "Ground_Sprite", "Roof_Sprite", "Window_Sprite", "Door_Sprite", "Storage_Furniture_Sprite","Bedding_Furniture_Sprite","Sitting_Furniture","Fence_Sprite", "Ground_Deco"};
+        int[] Choosen_Sprite_Package_Values = new int[] {0,1,2,3,4,5,6,7,8};
         int Choosen_Sprite_Package = EditorGUILayout.IntPopup("Choose_Sprite_Package", customClass.ChangeAble_Sprite_Package, Choosen_Sprite_Package_Options, Choosen_Sprite_Package_Values);
 
 
@@ -92,6 +71,103 @@ public class CustomInspector : Editor
                 EditorUtility.SetDirty(customClass); // 변경된 값 저장
             }
 
+            string[] Furniture_displayedOptions = new string[] {"Water","Heating","Storage","Electricity","Bed","TrashCan","Refrigerator","Sit","Farm"};
+            int[] Furniture_optionValues = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8};
+            int FurnitureAction_Type_Value = EditorGUILayout.IntPopup("Acting Type Set", customClass.Furniture_ActingType_Value, Furniture_displayedOptions, Furniture_optionValues);
+
+            if (FurnitureAction_Type_Value != customClass.Furniture_ActingType_Value)
+            {
+                customClass.Furniture_ActingType_Value = FurnitureAction_Type_Value;
+                EditorUtility.SetDirty(customClass); // 변경된 값 저장
+            }
+
+            bool Sel1 = EditorGUILayout.Toggle("Select Size 1", customClass.Furniture_Size_1);
+            bool Sel2 = EditorGUILayout.Toggle("Select Size 2", customClass.Furniture_Size_2);
+            bool Sel4 = EditorGUILayout.Toggle("Select Size 4", customClass.Furniture_Size_4);
+
+            string NowSetting = "none";
+            switch (customClass.Furniture_Direction_Value)
+            {
+                case 0:
+                    NowSetting = "Right Up";
+                    break;
+                case 1:
+                    NowSetting = "Right Down";
+                    break;
+                case 2:
+                    NowSetting = "RU_Cannot_Enter";
+                    break;
+                case 3:
+                    NowSetting = "RD_Cannot_Enter";
+                    break;
+            }
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Toward Right up"))
+            {
+                customClass.Furniture_Direction_Value = 0;
+                EditorUtility.SetDirty(customClass);
+            }
+            if(GUILayout.Button("Toward Right down"))
+            {
+                customClass.Furniture_Direction_Value = 1;
+                EditorUtility.SetDirty(customClass);
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            if(GUILayout.Button("RU_Cannot_Enter"))
+            {
+                customClass.Furniture_Direction_Value = 2;
+                EditorUtility.SetDirty(customClass);
+            }
+            GUILayout.Label(NowSetting);
+            if(GUILayout.Button("RD_Cannot_Enter"))
+            {
+                customClass.Furniture_Direction_Value = 3;
+                EditorUtility.SetDirty(customClass);
+            }
+            GUILayout.EndHorizontal();
+
+            
+
+            if (Sel1 != customClass.Furniture_Size_1)
+            {
+                customClass.Furniture_Size_1 = Sel1;
+                EditorUtility.SetDirty(customClass); // 변경된 값 저장
+                if (customClass.Furniture_Size_1)
+                {
+                    customClass.Furniture_Size_2 = false;
+                    customClass.Furniture_Size_4 = false;
+                    EditorUtility.SetDirty(customClass);
+                }
+            }
+            else if (Sel2 != customClass.Furniture_Size_2)
+            {
+                customClass.Furniture_Size_2 = Sel2;
+                EditorUtility.SetDirty(customClass); // 변경된 값 저장
+                if (customClass.Furniture_Size_2)
+                {
+                    customClass.Furniture_Size_1 = false;
+                    customClass.Furniture_Size_4 = false;
+                    EditorUtility.SetDirty(customClass);
+                }
+            }
+            else if (Sel4 != customClass.Furniture_Size_4)
+            {
+                customClass.Furniture_Size_4 = Sel4;
+                EditorUtility.SetDirty(customClass); // 변경된 값 저장
+                if (customClass.Furniture_Size_4)
+                {
+                    customClass.Furniture_Size_2 = false;
+                    customClass.Furniture_Size_1 = false;
+                    EditorUtility.SetDirty(customClass);
+                }
+            }
+            
+
+
+
+
+
             float contentWidth = 512f; // 내용물의 전체 너비
             float scrollViewWidth = EditorGUIUtility.currentViewWidth;
             Vector2 scrollPosition = customClass.scrollPosition; // 스크롤뷰의 가운데 위치 계산
@@ -103,6 +179,13 @@ public class CustomInspector : Editor
                 customClass.scrollPosition = scrollPosition;
                 EditorUtility.SetDirty(customClass); // 변경된 값 저장
             }
+
+            if (customClass.Building_Type_Value == 14 || customClass.Building_Type_Value == 15)
+            {
+                //boolVar = EditorGUILayout.Toggle("My Bool", boolVar);
+            }
+
+            
             //GUILayout.BeginHorizontal();
 
             //if (Choosen_Sprite_Num != 100 && customClass.ChangeAble_Sprite_Arr.Length > 1)
@@ -175,8 +258,6 @@ public class CustomInspector : Editor
 
 
             //}
-
-
 
             //GUILayout.EndHorizontal();
             GUILayout.BeginVertical();
@@ -532,8 +613,32 @@ public class CustomInspector : Editor
                     }
                     break;
                 case 6:
-                    bool TF7 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Fence_Sprite_Arr);
+                    bool TF7 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Bedding_SP_Arr);
                     if (TF7)
+                    {
+                        
+                    }
+                    else
+                    {
+                        customClass.ChangeAble_Sprite_Arr = new Sprite[customClass.Bedding_SP_Arr.Length];
+                        customClass.Bedding_SP_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
+                    }
+                    break;
+                case 7:
+                    bool TF8 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Sitting_SP_Arr);
+                    if (TF8)
+                    {
+
+                    }
+                    else
+                    {
+                        customClass.ChangeAble_Sprite_Arr = new Sprite[customClass.Sitting_SP_Arr.Length];
+                        customClass.Sitting_SP_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
+                    }
+                    break;
+                case 8:
+                    bool TF9 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Fence_Sprite_Arr);
+                    if (TF9)
                     {
                     }
                     else
@@ -542,9 +647,9 @@ public class CustomInspector : Editor
                         customClass.Fence_Sprite_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
                     }
                     break;
-                case 7:
-                    bool TF8 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Ground_Deco_Huge_Sprite_Arr);
-                    if (TF8)
+                case 9:
+                    bool TF10 = customClass.ChangeAble_Sprite_Arr.SequenceEqual(customClass.Ground_Deco_Huge_Sprite_Arr);
+                    if (TF10)
                     {
                     }
                     else
@@ -553,6 +658,7 @@ public class CustomInspector : Editor
                         customClass.Ground_Deco_Huge_Sprite_Arr.CopyTo(customClass.ChangeAble_Sprite_Arr, 0);
                     }
                     break;
+
 
             }
         }
