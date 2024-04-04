@@ -64,6 +64,11 @@ public class zom_targetpos : MonoBehaviour
             }
             if (Physics.Raycast(transform.position, rayDirection, out hit, dis, playerLayer))
             {
+                if (!hit.collider.CompareTag("Player"))
+                {
+                    // 특정 태그를 가진 오브젝트를 무시하고자 할 때 실행할 작업
+                    return;
+                }
                 if (hit.collider.gameObject.tag == "Player")
                 {
                     if (!player)
@@ -93,27 +98,33 @@ public class zom_targetpos : MonoBehaviour
             if (fnidplayertarget)
             {
                 findplayer();
-                yield return new WaitForSeconds(5);
             }
-            findplayer();
-            player = null;
-            yield return new WaitForSeconds(3);
+            else
+            {
+                player = null;
+                findplayer();
+                
+            }
+            yield return new WaitForSeconds(5);
         }
     }
     public void idlepos()
     {
-        // 무작위 좌표 설정 (예시로 (0, 0, 0)에서 10 범위 내의 무작위 좌표 설정)
-        Vector3 randomPoint = new Vector3(Random.Range(-3F, 3f) + transform.position.x, Random.Range(-3f, 3f) + transform.position.y, transform.position.z);
-
-        // NavMeshHit 변수 생성
-        NavMeshHit hit;
-
-        // 무작위 좌표가 NavMesh 위에 있는지 확인
-        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+        if (!zompos.audioposget)
         {
-            zompos.zomldiepos(randomPoint);
+            Debug.Log("렌덤 좌표 설정");
+            // 무작위 좌표 설정 (예시로 (0, 0, 0)에서 10 범위 내의 무작위 좌표 설정)
+            Vector3 randomPoint = new Vector3(Random.Range(-3F, 3f) + transform.position.x, Random.Range(-3f, 3f) + transform.position.y, transform.position.z);
+
+            // NavMeshHit 변수 생성
+            NavMeshHit hit;
+
+            // 무작위 좌표가 NavMesh 위에 있는지 확인
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                zompos.zomldiepos(randomPoint);
+            }
+
         }
-        
-        
     }
 }
