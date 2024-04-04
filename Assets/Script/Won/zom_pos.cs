@@ -25,7 +25,7 @@ public class zom_pos : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (target != null) 
@@ -34,16 +34,11 @@ public class zom_pos : MonoBehaviour
 
             nav.SetDestination(new Vector3(target.transform.position.x,target.transform.position.y,0));
         }
-        else if(audioposget)
-        {
-            ramdom = Random.Range(0, 3);
-            Vector3 aa =  Random.insideUnitSphere * 3f;
-            nav.SetDestination(new Vector3(AUDIOPOS.x+ aa.x, AUDIOPOS.y+ aa.y, 0));
-        }
+        
         if(nav.remainingDistance <= nav.stoppingDistance +0.1f && audioposget)
         {
             audioposget = false;
-            zom_Targetpos.idlepos();
+            //zom_Targetpos.idlepos();
         }
     }
     public void zomldiepos(Vector3 pos)
@@ -63,5 +58,10 @@ public class zom_pos : MonoBehaviour
     void zomseverrot(Quaternion lookRotation)
     {
 
+    }
+    public void Audioposget(Vector3 pos)
+    {
+        audioposget = true;
+        nav.SetDestination(new Vector3(pos.x, pos.y, 0));
     }
 }

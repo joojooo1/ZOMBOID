@@ -56,10 +56,7 @@ public class player_rot : MonoBehaviour
                 Debug.Log(zomtarget);
                 if (zomtarget != null)
                 {
-                    zomtarget.audioposget = true;
-                    Debug.Log("자신을 타겟으로 보내기 시도");
-                    zomtarget.AUDIOPOS = transform.position;
-                    Debug.Log("자신을 타겟으로 보냄");
+                    zomtarget.Audioposget(transform.position);
                 }
             }
         }
