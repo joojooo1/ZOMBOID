@@ -22,6 +22,7 @@ public class UI_DamageImage : MonoBehaviour
 
     public void Damage_Ins(body_point position, int totalCount)
     {
+        //if()
         GameObject tempObj = null;
         int point = (int)position * 3;
 
