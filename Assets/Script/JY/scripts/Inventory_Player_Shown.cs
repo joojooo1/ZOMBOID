@@ -35,7 +35,9 @@ public class Inventory_Player_Shown : MonoBehaviour
     [SerializeField]
     GameObject Info_Box; // 세부정보 표시 창 UI
     [SerializeField]
-    GameObject Drag_Target_Image; // 드래그중인 이미지
+    public Transform Drag_Target_Prefeb; // 드래그중인 이미지
+    public Transform DT_Outline;
+    public Transform DT_Image;
 
     public List<short> Backpacks_List; // 장비, 가방 리스트
     public List<short> Storage_List; // 접근중인 저장소 리스트
@@ -48,15 +50,19 @@ public class Inventory_Player_Shown : MonoBehaviour
     public float Total_Weight; // ? / ?
     short BackPack_Depth_Define = 5;
 
+
     public short FS_Slot_X;
     public short FS_Slot_Y;
     public short FS_Slot_Order;
+
     public bool FS_Is_Player;
     public bool FS_Is_Virtical;
+
 
     public short LS_Slot_X;
     public short LS_Slot_Y;
     public short LS_Slot_Order;
+
     public bool LS_Is_Player;
 
     Animator Anim;
