@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     bool IsPointerIn = false;
-    public short Storage_Order_IfPlayer;
+    public short Storage_Order_IfPlayer;//플레이어 저장소 순서
     public short Slot_X;
     public short Slot_Y;
 
@@ -18,6 +18,9 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     public short Item_Weight;
     public bool Is_Virtical;
     public bool Is_Virtical_While_Moving;
+
+    public bool IsMain;
+    public Transform What_Main;
 
     Text Count;
     Image Image;
@@ -38,7 +41,6 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     }
     public void OnBeginDrag(PointerEventData eventData) // 시작
     {
-        //Debug.Log("DragStart");
         //InventoryOvermind.InventoryOM.FSN = InventorySlotNum;
         Debug.Log("BeingDrag");
         Inventory_Player_Shown.InvPS.FS_Slot_X = Slot_X;
@@ -82,6 +84,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
             Inventory_Player_Shown.InvPS.FS_Is_Virtical = Is_Virtical_While_Moving;
             //UPDATE
         }
+        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(Input.mousePosition.x+10,Input.mousePosition.y-10,0);
     }
 
     public void OnEndDrag(PointerEventData eventData) // 무조건 실행
@@ -92,6 +95,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
 
         //InventoryOvermind.InventoryOM.DragFailed();
         //드래그 타겟 이미지 비활성화
+        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(5000, 5000, 0);
         Debug.Log("EndDrag");
     }
     public void OnPointerEnter(PointerEventData eventData)
