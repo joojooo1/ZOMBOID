@@ -7,27 +7,30 @@ public class Inventory_8x6 : MonoBehaviour
 {
     int X_Length = 8;
     int Y_Length = 6;
+    public short Storage_Order;
+    short[,,] Recent_Recieved_Package;
+
     Item_Container ThisID;
     InventorySlot[] Slots;
 
-    short[,,] packageExample = new short[5, 8, 6];
-    
+    short[,,] packageExample1 = new short[5, 8, 6];
+
     public void Example()
     {
-        for(int deep = 0; deep < 5; deep++)
+        for (int deep = 0; deep < 5; deep++)
         {
-            for(int y=0; y < 6; y++)
+            for (int y = 0; y < 6; y++)
             {
-                for(int x = 0; x < 8; x++)
+                for (int x = 0; x < 8; x++)
                 {
-                    if (x < 2 && y < 2&&deep==0)
+                    if (x < 2 && y < 2 && deep == 0)
                     {
-                        packageExample[deep, x, y] = 1;
-                        
+                        packageExample1[deep, x, y] = 1;
+
                     }
                     if (x < 2 && y < 2 && deep == 1)
                     {
-                        packageExample[deep, x, y] = 1;
+                        packageExample1[deep, x, y] = 1;
                     }
                 }
             }
@@ -44,121 +47,92 @@ public class Inventory_8x6 : MonoBehaviour
     }
     public void Generating_Slots_First(short[,,] package)
     {
-        int x =package.GetLength(1);
+        int x = package.GetLength(1);
         int y = package.GetLength(2);
         int deep = package.GetLength(0);
+        List<InventorySlot> SlotsDefine = new List<InventorySlot>();
 
-        for(int i=0;i < Slots.Length; i++)
+        for (int amountofslots = 0; amountofslots < x * y; amountofslots++)
         {
-            int Slot_x = (int)Slots[i].Slot_X;
-            int Slot_y = (int)Slots[i].Slot_Y;
-
-            for(int a=0;a< Slot_y; a++)
+            //prefeb 생성
+            //0~7, 0~5
+            GameObject prefeb = null;
+            prefeb.GetComponentInChildren<Canvas>().sortingOrder = 1;
+            if (amountofslots >= 8)
             {
-                for(int b = 0; b < Slot_x; b++)
-                {
-                    if (package[0, b, a] != 0)//x,y축을 순차적으로 순회, z축0번 아이템타입을 확인 타입이0이 아니면 정보가 있음
-                    {
-                        for(int c = 0; c < deep; c++)
-                        {
-                            //int sum = (y * 8) + x;
-                            //Slots[sum].GetComponentInChildren<Image>().sprite = Item_DataBase.item_database.food_Ins[package[1, b, a]].Food_Image[0];
-                        }
-                    }
-
-
-                }
+                prefeb.GetComponent<InventorySlot>().Slot_Y = (short)(amountofslots / 8);
+                prefeb.GetComponent<InventorySlot>().Slot_X = (short)(amountofslots % 8);
+            }
+            else
+            {
+                prefeb.GetComponent<InventorySlot>().Slot_X = (short)amountofslots;
+                prefeb.GetComponent<InventorySlot>().Slot_Y = 0;
             }
 
-
-
+            //SlotsDefine.Add ~~~
+            Slots = SlotsDefine.ToArray();
         }
 
-       for(int a = 0; a < y; a++)
-        {
-            for(int b=0; b< x; a++)
-            {
-                for(int c = 0; c < deep; c++)
-                {
-                    if (deep == 0)
-                    {
-                        if (package[c, b, a] != 0)
-                        {
 
-                        }
-                    }
-                }
-            }
-        }
     }
     public void Refreshing_Changed_Slots()
     {
 
     }
 
-    public void DefiningSlots()
+    public bool Checking_Only_Size_For_InCanFit_86(bool IsVirtical, int First_Item_Lengthof_X, int First_Item_Lengthof_Y,
+        short Last_Slot_X_order, short Last_Slot_Y_order)
+    //Length = 1부터, order는 0부터
     {
-        //x열 0~7
-        //y열 0~5
+        bool Clear = false;
 
+        int x = First_Item_Lengthof_X;
+        int y = First_Item_Lengthof_Y;
 
-        for (int i = 0; i < Slots.Length; i++)
+        int sx = Last_Slot_X_order;
+        int sy = Last_Slot_Y_order;
+
+        int xl = X_Length;
+        int yl = Y_Length;
+
+        if (!IsVirtical)
         {
-            int LengthX = 0;
-            int LengthY = 0;
-            if (i > 7)
+
+            x = First_Item_Lengthof_Y;
+            y = First_Item_Lengthof_X;
+
+            sx = Last_Slot_X_order;
+            sy = Last_Slot_Y_order;
+
+            xl = X_Length;
+            yl = Y_Length;
+        }
+
+        if (((x - 1) + sx < xl))
+        {
+            if (((y - 1) + sy) < yl)
             {
-                int mul8 = i;
-                for (int j = 1; mul8 > 7; j++)
+                Clear = true;
+            }
+        }
+        else return Clear;
+
+        if (true)
+        {
+            for(int Ysecond = 0; Ysecond < y; Ysecond++)
+            {
+                for(int Xfirst = 0; Xfirst < x; Xfirst++)
                 {
-                    mul8 -= 8;
-                    if (mul8 <= 7)
+                    if (!(Recent_Recieved_Package[0, Last_Slot_X_order+Xfirst, Last_Slot_Y_order+Ysecond] == 0))
                     {
-                        LengthY = j;
-                        LengthX = mul8;
+                        return Clear;
                     }
                 }
-                Slots[i].Slot_X = (short)LengthX;
-                Slots[i].Slot_Y = (short)LengthY;
-
-            }
-            else
-            {
-                Slots[i].Slot_X = (short)i;
-                Slots[i].Slot_Y = 0;
             }
         }
-    }
 
-    public void Checking_Slots_For_InCanFit_86(bool IsVirtical, int Lengthof_X, int Lengthof_Y, short X_order, short Y_order)
-    {
-        //x 0~7
-        //y 0~5
-        //y1행은 9번째 i=8
-        if (!IsVirtical) // 가로 기존형태
-        {
-            int Order = (Y_order * 8 + X_order);
 
-            if ((Lengthof_X - (X_order)) < Lengthof_X)
-            {
-                Debug.Log("X Cannot Fit");
-            }
-            else
-            {
-                if ((Lengthof_Y - (Y_order)) < Lengthof_Y)
-                {
-                    Debug.Log("Y Cannot Fit");
-                }
-                else
-                {
-                    //공간이 충분하므로 이동연산
-                }
-            }
-        }
-        else
-        {
-
-        }
+        return Clear;
     }
 
     public void Adding_Item()
