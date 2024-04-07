@@ -128,7 +128,15 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
     public float Get_P_TotalEXP()
     {
-        return P_expRequirements[(int)P_Level][0];
+        if(P_Level < 10)
+            return P_expRequirements[(int)P_Level][0];
+        else
+            return P_expRequirements[(int)P_Level-1][0];
+    }
+
+    public float Get_P_EXP()
+    {
+        return Get_P_CurrentEXP() / Get_P_TotalEXP();
     }
 
     public string Get_P_SkillName()
@@ -253,7 +261,15 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
 
     public float Get_G_TotalEXP()
     {
-        return G_expRequirements[(int)G_Level][0];
+        if (G_Level < 10)
+            return G_expRequirements[(int)G_Level][0];
+        else
+            return G_expRequirements[(int)G_Level - 1][0];
+    }
+
+    public float Get_G_EXP()
+    {
+        return Get_G_CurrentEXP() / Get_G_TotalEXP();
     }
 
     public string Get_G_SkillName()
@@ -345,7 +361,15 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
 
     public float Get_W_TotalEXP()
     {
-        return W_expRequirements[(int)W_Level][0];
+        if (W_Level < 10)
+            return W_expRequirements[(int)W_Level][0];
+        else
+            return W_expRequirements[(int)W_Level - 1][0];
+    }
+
+    public float Get_W_EXP()
+    {
+        return Get_W_CurrentEXP() / Get_W_TotalEXP();
     }
 
     public string Get_W_SkillName()
@@ -482,7 +506,15 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
 
     public float Get_M_TotalEXP()
     {
-        return M_expRequirements[(int)M_Level][0];
+        if (M_Level < 10)
+            return M_expRequirements[(int)M_Level][0];
+        else
+            return M_expRequirements[(int)M_Level - 1][0];
+    }
+
+    public float Get_M_EXP()
+    {
+        return Get_M_CurrentEXP() / Get_M_TotalEXP();
     }
 
     public string Get_M_SkillName()
@@ -601,7 +633,15 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
 
     public float Get_Gun_TotalEXP()
     {
-        return Gun_expRequirements[(int)Gun_Level][0];
+        if (Gun_Level < 10)
+            return Gun_expRequirements[(int)Gun_Level][0];
+        else
+            return Gun_expRequirements[(int)Gun_Level - 1][0];
+    }
+
+    public float Get_Gun_EXP()
+    {
+        return Get_Gun_CurrentEXP() / Get_Gun_TotalEXP();
     }
 
     public string Get_Gun_SkillName()
@@ -756,7 +796,15 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
     public float Get_C_TotalEXP()
     {
-        return C_expRequirements[(int)C_Level][0];
+        if (C_Level < 10)
+            return C_expRequirements[(int)C_Level][0];
+        else
+            return C_expRequirements[(int)C_Level - 1][0];
+    }
+
+    public float Get_C_EXP()
+    {
+        return Get_C_CurrentEXP() / Get_C_TotalEXP();
     }
 
     public string Get_C_SkillName()
@@ -971,7 +1019,15 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public float Get_S_TotalEXP()
     {
-        return S_expRequirements[(int)S_Level][0];
+        if (S_Level < 10)
+            return S_expRequirements[(int)S_Level][0];
+        else
+            return S_expRequirements[(int)S_Level - 1][0];
+    }
+
+    public float Get_S_EXP()
+    {
+        return Get_S_CurrentEXP() / Get_S_TotalEXP();
     }
 
     public string Get_S_SkillName()
