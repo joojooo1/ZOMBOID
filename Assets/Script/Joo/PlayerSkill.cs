@@ -20,7 +20,7 @@ public class PlayerSkill : MonoBehaviour
     // 운동 능력
     public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기                                                    /* 24.02.16 test */
     public PlayerGeneralSkill_Level Lightfooted_Level;  // 조용한 발걸음 (플레이어의 발소리가 얼마나 멀리서 들리는지)        /* 24.02.16 test */
-    public PlayerGeneralSkill_Level Nimble_Level;  // 전투시 발걸음                                                       /* 24.02.16 test */
+    public PlayerGeneralSkill_Level Nimble_Level;  // 조준시 발걸음                                                       /* 24.02.16 test */
     public PlayerGeneralSkill_Level Sneaking_Level;  // 은밀한 움직임 (은밀히 걸을때 발소리 크기&좀비가 발견할 확률)                /* 24.02.16 test */
 
     // 전투 능력
@@ -51,36 +51,36 @@ public class PlayerSkill : MonoBehaviour
     {
         playerSkill = this;
 
-        Fitness_Level = new PlayerPassiveSkill_Level(5.0f, "Fitness");
-        Strength_Level = new PlayerPassiveSkill_Level(5.0f, "Strength");
+        Fitness_Level = new PlayerPassiveSkill_Level(5.0f, "Fitness", "체력");
+        Strength_Level = new PlayerPassiveSkill_Level(5.0f, "Strength", "근력");
 
-        Hunting_Level = new PlayerSurvivalSkill_Level(0f, "Hunting");
-        Fishing_Level = new PlayerSurvivalSkill_Level(0f, "Fishing");
-        Foraging_Level = new PlayerSurvivalSkill_Level(0f, "Foraging");
-        Riding_Level = new PlayerSurvivalSkill_Level(0f, "Riding");
+        Hunting_Level = new PlayerSurvivalSkill_Level(0f, "Hunting", "사냥");
+        Fishing_Level = new PlayerSurvivalSkill_Level(0f, "Fishing", "낚시");
+        Foraging_Level = new PlayerSurvivalSkill_Level(0f, "Foraging", "채집");
+        Riding_Level = new PlayerSurvivalSkill_Level(0f, "Riding", "승마");
 
-        Sprinting_Level = new PlayerGeneralSkill_Level(0f, "Sprinting");
-        Lightfooted_Level = new PlayerGeneralSkill_Level(0f, "Lightfooted");
-        Nimble_Level = new PlayerGeneralSkill_Level(0f, "Nimble");
-        Sneaking_Level = new PlayerGeneralSkill_Level(0f, "Sneaking");
+        Sprinting_Level = new PlayerGeneralSkill_Level(0f, "Sprinting", "능숙한 달리기");
+        Lightfooted_Level = new PlayerGeneralSkill_Level(0f, "Lightfooted", "조용한 발걸음");
+        Nimble_Level = new PlayerGeneralSkill_Level(0f, "Nimble", "조준시 발걸음");
+        Sneaking_Level = new PlayerGeneralSkill_Level(0f, "Sneaking", "은밀한 움직임");
 
-        Axe_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Axe);
-        LongBlunt_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlunt);
-        ShortBlunt_Level = new  (0f, Weapon_type.ShortBlunt);
-        LongBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlade);
-        ShortBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.ShortBlade);
-        Spear_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Spear);
+        Axe_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Axe, "Axe", "도끼");
+        LongBlunt_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlunt, "LongBlunt", "긴 둔기");
+        ShortBlunt_Level = new  (0f, Weapon_type.ShortBlunt, "ShortBlunt", "짧은 둔기");
+        LongBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlade, "LongBlade", "장검");
+        ShortBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.ShortBlade, "ShortBlade", "단검");
+        Spear_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Spear, "Spear", "창");
 
-        Maintenance_Level = new PlayerMaintenanceSkill_Level(0f);
+        Maintenance_Level = new PlayerMaintenanceSkill_Level(0f, "Maintenance", "물건관리");
 
-        Aiming_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Aiming");
-        Reloading_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Reloading");
+        Aiming_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Aiming", "조준");
+        Reloading_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Reloading", "재장전");
 
-        Carpentry_Level = new PlayerCraftingSkill_Level(0f, "Carpentry");
-        Cooking_Level = new PlayerCraftingSkill_Level(0f, "Cooking");
-        Farming_Level = new PlayerCraftingSkill_Level(0f, "Farming");
-        FirstAid_Level = new PlayerCraftingSkill_Level(0f, "FirstAid");
-        Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical");
+        Carpentry_Level = new PlayerCraftingSkill_Level(0f, "Carpentry", "목공");
+        Cooking_Level = new PlayerCraftingSkill_Level(0f, "Cooking", "요리");
+        Farming_Level = new PlayerCraftingSkill_Level(0f, "Farming", "농사");
+        FirstAid_Level = new PlayerCraftingSkill_Level(0f, "FirstAid", "의료");
+        Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical", "전기공학");
        
 
     }

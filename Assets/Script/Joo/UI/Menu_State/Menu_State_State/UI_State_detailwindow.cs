@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.HighDefinition.ScalableSettingLevelParameter;
 
 public class UI_State_detailwindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -27,4 +28,5 @@ public class UI_State_detailwindow : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         TreatmentBar.SetActive(false);
     }
+
 }
