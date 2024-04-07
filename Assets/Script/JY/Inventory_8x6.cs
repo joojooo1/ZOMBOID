@@ -42,7 +42,7 @@ public class Inventory_8x6 : MonoBehaviour
         Slots = GetComponentsInChildren<InventorySlot>();
         ThisID = Item_DataBase.item_database.Container_Ins[8];
         Example();
-        DefiningSlots();
+        //DefiningSlots();
         //Generating_Slots_First(packageExample);
     }
     public void Generating_Slots_First(short[,,] package)
