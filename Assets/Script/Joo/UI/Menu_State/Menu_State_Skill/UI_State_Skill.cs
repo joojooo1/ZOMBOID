@@ -12,18 +12,11 @@ public class UI_State_Skill : MonoBehaviour
     public GameObject Multiplier;
     public UnityEngine.UI.Text Multiplier_text;
 
-    public List<UI_State_Skill_List> list;
-
-    public Sprite Image;
+    public List<UI_State_Skill_Slider> list;
 
     public void Start()
     {
         state_skill_info = this;
-    }
-
-    public Sprite Change_FullImage()
-    {
-        return Image;
     }
 
     public void Set_InfoWindow(int num)
