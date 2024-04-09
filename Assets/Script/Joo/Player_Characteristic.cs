@@ -10,8 +10,7 @@ public enum Characteristic_type
 {
     Positives = 0,
     Negatives = 1,
-    Hobbies = 2,
-    Occupation = 3
+    Occupation = 2
 }
 
 public class Player_Characteristic : MonoBehaviour
@@ -1118,9 +1117,7 @@ public class Player_Characteristic : MonoBehaviour
         // 긴장 무들에 면역
     }
 
-    /*
-     취미 특성
-     */
+    // 낚시꾼
     Characteristic Characteristic_Angler(Characteristic Angler)
     {
         Angler.name = "Angler";
@@ -1129,7 +1126,7 @@ public class Player_Characteristic : MonoBehaviour
         Angler.Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
         Angler.Sprite = Characteristic_Image[54];
         Angler.Points = -4;
-        Angler.type = Characteristic_type.Hobbies;
+        Angler.type = Characteristic_type.Occupation;
         Angler.Choice = false;
         return Angler;
         // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
