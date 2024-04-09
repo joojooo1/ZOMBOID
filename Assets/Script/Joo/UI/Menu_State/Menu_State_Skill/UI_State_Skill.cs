@@ -12,8 +12,6 @@ public class UI_State_Skill : MonoBehaviour
     public GameObject Multiplier;
     public UnityEngine.UI.Text Multiplier_text;
 
-    public List<UI_State_Skill_Slider> list;
-
     public void Start()
     {
         state_skill_info = this;
