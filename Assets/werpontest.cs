@@ -18,11 +18,8 @@ public class werpontest : MonoBehaviour
     {
         
     }
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "zombie")
-        {
-            Debug.Log("근접무기 좀비공격함");
-        }
+        Debug.Log("AAAAAAAAAAAA");
     }
 }

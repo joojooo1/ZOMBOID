@@ -30,7 +30,7 @@ public class Bakee : MonoBehaviour
         while (true)
         {
             // yield return new WaitForEndOfFrame();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(10f);
             distance = math.distancesq(transform.position, player.transform.position);
             if(distance > LengthofSurface)
             {
@@ -45,7 +45,7 @@ public class Bakee : MonoBehaviour
         {
             yield return new WaitForSeconds(3f);
             TryBake();
-            Debug.Log("bk");
+            Debug.Log("bk");    
         }
     }
     void TryBake()
