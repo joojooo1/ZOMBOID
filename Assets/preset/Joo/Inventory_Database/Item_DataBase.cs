@@ -56,11 +56,11 @@ public class Item_DataBase : MonoBehaviour
         bool canbe = false;
         return canbe;
     }
-    public Sprite Requesting_Image(Item_Type item_Type, short ID) // 이미지 현재 원본
+    public Sprite Requesting_Image(short item_Type, short ID) // 이미지 현재 원본
     {
         switch (item_Type)
         {
-            case Item_Type.Food_Ins:
+            case 1:
                 Sprite Img = food_Ins[ID].Food_Image[0];
                 Debug.Log("IDB image send");
                 return Img;
@@ -84,8 +84,7 @@ public class Item_DataBase : MonoBehaviour
                 return 0;
         }
     }
-    public short Requesting_Wei
-    [SerializeField]
+    public short Requesting_Wei;
     Item_Ins DetailWindow;
 
     //public void OpenDetail(Item_Type type, int ItemCode)

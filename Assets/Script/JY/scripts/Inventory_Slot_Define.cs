@@ -9,27 +9,43 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
 {
     bool IsPointerIn = false;
     public short Storage_Order_IfPlayer;//플레이어 저장소 순서
-    public short Slot_X;
-    public short Slot_Y;
+    public short Slot_X; // v
+    public short Slot_Y; // v
 
-    public short Item_Type;
-    public short Item_ID;
+    public short Item_Type; // v
+    public short Item_ID; // v
     public short Item_Amount;
     public short Item_Weight;
     public bool Is_Virtical;
     public bool Is_Virtical_While_Moving;
 
-    public bool IsMain;
-    public Transform What_Main;
+    bool First_Con= false;
 
-    Text Count;
-    Image Image;
+    public bool IsMain; // v
+    public Transform What_Main; // v
+
+    public Text Count;
+    public Image Image;
 
     public void Start()
     {
         Image = GetComponentInChildren<Image>();
         Count = GetComponentInChildren<Text>();
         //count, image 연동 DB연동
+    }
+    public void On_F()
+    {
+        First_Con = true;
+    }
+    public void Off_F()
+    {
+        First_Con = false;
+    }
+    public bool Req_F()
+    {
+        bool Is_Setting;
+        Is_Setting = First_Con;
+        return Is_Setting;
     }
 
     public void Refresh_This_Slot()

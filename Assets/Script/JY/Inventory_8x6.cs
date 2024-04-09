@@ -19,53 +19,62 @@ public class Inventory_8x6 : MonoBehaviour
     short[,,] packageExample1 =
     {
         {
-             {1,0,0,1,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,1,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {1,0,1,0,0,0},
+            {0,0,0,0,0,0},
+            {1,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0}
         },
         {
-             {0,0,0,9,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,18,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {9,0,18,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0}
         },
         {
-             {0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
+           {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0}
         },
         {
-             {0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0}
         },
         {
-             {0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
-            ,{0,0,0,0,0,0,0,0}
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {0,0,0,0,0,0}
         }
     };
 
     private void Start()
     {
-        Slots = GetComponentsInChildren<InventorySlot>();
+        
         ThisID = Item_DataBase.item_database.Container_Ins[8];
-        //DefiningSlots();
-        //Generating_Slots_First(packageExample);
+        Generating_Slots_First(packageExample1);
     }
     public void Generating_Slots_First(short[,,] package)
     {
@@ -81,6 +90,12 @@ public class Inventory_8x6 : MonoBehaviour
             GameObject prefeb = Instantiate(SlotPrefeb, new Vector3(0f, 0f, 0f), Quaternion.identity);
             prefeb.transform.SetParent(this.transform);
             prefeb.GetComponentInChildren<Canvas>().sortingOrder = 1;
+            prefeb.transform.localScale = Vector3.one;
+            RectTransform canvasRectTransform = prefeb.GetComponentInChildren<Canvas>().GetComponent<RectTransform>();
+            canvasRectTransform.anchorMin = new Vector2(0f, 1f);
+            canvasRectTransform.anchorMax = new Vector2(0f, 1f);
+            canvasRectTransform.localPosition = Vector3.zero;
+            canvasRectTransform.sizeDelta = Vector2.zero;
             if (amountofslots >= 8)
             {
                 prefeb.GetComponent<InventorySlot>().Slot_Y = (short)(amountofslots / 8);
@@ -92,10 +107,25 @@ public class Inventory_8x6 : MonoBehaviour
                 prefeb.GetComponent<InventorySlot>().Slot_Y = 0;
             }
 
-            //SlotsDefine.Add ~~~
-            Slots = SlotsDefine.ToArray();
+            SlotsDefine.Add(prefeb.GetComponent<InventorySlot>());
+            
         }
+        Slots = SlotsDefine.ToArray();
 
+        for(int YLine =0; YLine < y; YLine++)
+        {
+            for(int XLine = 0; XLine<x; XLine++)
+            {
+                if (!(package[0, XLine, YLine] == 0))
+                {
+                    Slots[YLine * X_Length + XLine].Image.sprite = Item_DataBase.item_database.Requesting_Image(package[0, XLine, YLine], package[1, XLine, YLine]);
+                    Slots[YLine * X_Length + XLine].Item_Type = package[0, XLine, YLine];
+                    Slots[YLine * X_Length + XLine].Item_ID = package[1, XLine, YLine];
+                    Slots[YLine * X_Length + XLine].IsMain = true;
+
+                }
+            }
+        }
 
     }
     public void Refreshing_Changed_Slots()
