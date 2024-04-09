@@ -15,19 +15,6 @@ public class Inventory_Player_Shown : MonoBehaviour
         SmallBag = 2,
     }
 
-    public enum Item_Type
-    {
-        empty = 0,
-        Food_Ins = 1,
-        Medical_Ins = 2,
-        Weapons_Ins = 3,
-        Literature_Ins = 4,
-        Electronics_Ins = 5,
-        Clothing_Ins = 6,
-        Gardening_Ins = 7,
-        Container_Ins = 8
-    }
-
     [SerializeField]
     GameObject User_Inventory; //좌상단 바
     [SerializeField]
@@ -45,6 +32,7 @@ public class Inventory_Player_Shown : MonoBehaviour
     public List<short> Storage_Presets_List; // 초기 생성 
     public List<short[,,]> Packages_Player;
     public List<short[,,]> Packages_Storage;// 장비, 가방에 대응하는 아이템 배열( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
+    //                                                                              신선도,조리여부,개봉여부,크기,무게
     //2칸이상의 대부분의 장비 형태들은 방향을 기준으로 옆 블럭에 추가정보를 저장
     //가방의 경우 패키지 인덱스를 저장
     public float Total_Weight; // ? / ?

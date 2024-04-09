@@ -10,38 +10,60 @@ public class Inventory_8x6 : MonoBehaviour
     public short Storage_Order;
     short[,,] Recent_Recieved_Package;
 
+    public GameObject SlotPrefeb;
+
+
     Item_Container ThisID;
     InventorySlot[] Slots;
 
-    short[,,] packageExample1 = new short[5, 8, 6];
-
-    public void Example()
+    short[,,] packageExample1 =
     {
-        for (int deep = 0; deep < 5; deep++)
         {
-            for (int y = 0; y < 6; y++)
-            {
-                for (int x = 0; x < 8; x++)
-                {
-                    if (x < 2 && y < 2 && deep == 0)
-                    {
-                        packageExample1[deep, x, y] = 1;
-
-                    }
-                    if (x < 2 && y < 2 && deep == 1)
-                    {
-                        packageExample1[deep, x, y] = 1;
-                    }
-                }
-            }
+             {1,0,0,1,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,1,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+        },
+        {
+             {0,0,0,9,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,18,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+        },
+        {
+             {0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+        },
+        {
+             {0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+        },
+        {
+             {0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
+            ,{0,0,0,0,0,0,0,0}
         }
-    }
+    };
 
     private void Start()
     {
         Slots = GetComponentsInChildren<InventorySlot>();
         ThisID = Item_DataBase.item_database.Container_Ins[8];
-        Example();
         //DefiningSlots();
         //Generating_Slots_First(packageExample);
     }
@@ -56,7 +78,8 @@ public class Inventory_8x6 : MonoBehaviour
         {
             //prefeb »ý¼º
             //0~7, 0~5
-            GameObject prefeb = null;
+            GameObject prefeb = Instantiate(SlotPrefeb, new Vector3(0f, 0f, 0f), Quaternion.identity);
+            prefeb.transform.SetParent(this.transform);
             prefeb.GetComponentInChildren<Canvas>().sortingOrder = 1;
             if (amountofslots >= 8)
             {
