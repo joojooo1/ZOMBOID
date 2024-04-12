@@ -16,21 +16,27 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     public short Item_ID; // v
     public short Item_Amount;
     public short Item_Weight;
-    public bool Is_Virtical;
+
+    public bool Is_Virtical_Changed;
     public bool Is_Virtical_While_Moving;
+    public int Size;
 
-    bool First_Con= false;
 
-    public bool IsMain; // v
+    bool First_Con = false;
+
+    public bool IsMain; // v false= 종속(빈칸이 아님)
     public Transform What_Main; // v
+    public int Is_Changed;
 
-    public Text Count;
-    public Image Image;
+    public Transform ParentTransform;
+    public short ParentSize;
+
+    public GameObject Text;
+    public GameObject Image;
+    public GameObject BackgroundColor;
 
     public void Start()
     {
-        Image = GetComponentInChildren<Image>();
-        Count = GetComponentInChildren<Text>();
         //count, image 연동 DB연동
     }
     public void On_F()
@@ -50,36 +56,80 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
 
     public void Refresh_This_Slot()
     {
-        //ID로 이미지 가져옴
-        Count.text = Item_Amount.ToString();
+        //Count.text = Item_Amount.ToString();
         //Image.sprie =
 
     }
     public void OnBeginDrag(PointerEventData eventData) // 시작
     {
-        //InventoryOvermind.InventoryOM.FSN = InventorySlotNum;
-        Debug.Log("BeingDrag");
-        Inventory_Player_Shown.InvPS.FS_Slot_X = Slot_X;
-        Inventory_Player_Shown.InvPS.FS_Slot_Y = Slot_Y;
-        Is_Virtical_While_Moving = Is_Virtical;
-        if (Storage_Order_IfPlayer != 0)
+        if (IsMain)
         {
+            Debug.Log("BeingDrag");
+            Inventory_Player_Shown.InvPS.FS_Slot_X = Slot_X;
+            Inventory_Player_Shown.InvPS.FS_Slot_Y = Slot_Y;
+            Is_Virtical_While_Moving = Is_Virtical_Changed;
+
             Inventory_Player_Shown.InvPS.FS_Is_Player = true;
             Inventory_Player_Shown.InvPS.FS_Slot_Order = Storage_Order_IfPlayer;
-        }
 
+            Inventory_Player_Shown.InvPS.FSParent = ParentTransform;
+            Inventory_Player_Shown.InvPS.FSPSize = ParentSize;
+            Inventory_Player_Shown.InvPS.FS_Item_Size = Size;
+
+            Inventory_Player_Shown.InvPS.FSItSelf = this.transform;
+            Inventory_Player_Shown.InvPS.SubRequest_Drag_Image();
+        }
+        else
+        {
+            Inventory_Player_Shown.InvPS.FS_Slot_X = What_Main.GetComponent<InventorySlot>().Slot_X;
+            Inventory_Player_Shown.InvPS.FS_Slot_Y = What_Main.GetComponent<InventorySlot>().Slot_Y;
+            Is_Virtical_While_Moving = Is_Virtical_Changed;
+
+            Inventory_Player_Shown.InvPS.FS_Is_Player = true;
+            Inventory_Player_Shown.InvPS.FS_Slot_Order = Storage_Order_IfPlayer;
+
+            Inventory_Player_Shown.InvPS.FSParent = ParentTransform;
+            Inventory_Player_Shown.InvPS.FSPSize = ParentSize;
+            Inventory_Player_Shown.InvPS.FS_Item_Size = What_Main.GetComponent<InventorySlot>().Size;
+
+            Inventory_Player_Shown.InvPS.FSItSelf = What_Main.GetComponent<InventorySlot>().transform;
+            Inventory_Player_Shown.InvPS.SubRequest_Drag_Image();
+        }
     }
     public void OnDrop(PointerEventData eventDate) // 성공
     {
-        Debug.Log("Drop");
-        //Debug.Log("Drop");
-        Inventory_Player_Shown.InvPS.LS_Slot_X = Slot_X;
-        Inventory_Player_Shown.InvPS.LS_Slot_Y = Slot_Y;
-        if (Inventory_Player_Shown.InvPS.FS_Slot_Y != Inventory_Player_Shown.InvPS.LS_Slot_Y &&
-            Inventory_Player_Shown.InvPS.FS_Slot_X != Inventory_Player_Shown.InvPS.LS_Slot_X) // 제자리 연산 검증
+        if (IsMain)
         {
-            //InventoryOvermind.InventoryOM.ItemAdd(0, InventoryOvermind.InventoryOM.ItemCountArray[InventorySlotNum]);
-            //드롭이 정상진행 되어야 교환 함수 실행
+            Debug.Log("Drop");
+            Inventory_Player_Shown.InvPS.LS_Slot_X = Slot_X;
+            Inventory_Player_Shown.InvPS.LS_Slot_Y = Slot_Y;
+            //Inventory_Player_Shown.InvPS.LS_Transform = this.transform;
+            if (Inventory_Player_Shown.InvPS.FS_Slot_Y == Inventory_Player_Shown.InvPS.LS_Slot_Y &&
+                Inventory_Player_Shown.InvPS.FS_Slot_X == Inventory_Player_Shown.InvPS.LS_Slot_X) // 제자리 연산 검증
+            {
+                Debug.Log("Same Location");
+                return;
+            }
+
+            Inventory_Player_Shown.InvPS.LSParent = ParentTransform;
+            Inventory_Player_Shown.InvPS.LSPSize = ParentSize;
+            Inventory_Player_Shown.InvPS.LSItSelf = this.transform;
+            Inventory_Player_Shown.InvPS.Move_Request();
+        }
+        else
+        {
+            Inventory_Player_Shown.InvPS.LS_Slot_X = What_Main.GetComponent<InventorySlot>().Slot_X;
+            Inventory_Player_Shown.InvPS.LS_Slot_Y = What_Main.GetComponent<InventorySlot>().Slot_Y;
+            if (Inventory_Player_Shown.InvPS.FS_Slot_Y == Inventory_Player_Shown.InvPS.LS_Slot_Y &&
+                Inventory_Player_Shown.InvPS.FS_Slot_X == Inventory_Player_Shown.InvPS.LS_Slot_X) // 제자리 연산 검증
+            {
+                Debug.Log("Same Location");
+                return;
+            }
+            Inventory_Player_Shown.InvPS.LSParent = ParentTransform;
+            Inventory_Player_Shown.InvPS.LSPSize = ParentSize;
+            Inventory_Player_Shown.InvPS.LSItSelf = What_Main.GetComponent<InventorySlot>().transform;
+            Inventory_Player_Shown.InvPS.Move_Request();
         }
 
 
@@ -100,7 +150,8 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
             Inventory_Player_Shown.InvPS.FS_Is_Virtical = Is_Virtical_While_Moving;
             //UPDATE
         }
-        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(Input.mousePosition.x+10,Input.mousePosition.y-10,0);
+        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(Input.mousePosition.x + 10, Input.mousePosition.y - 10, 0);
+        //Inventory_Player_Shown.InvPS.
     }
 
     public void OnEndDrag(PointerEventData eventData) // 무조건 실행
@@ -116,21 +167,38 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        IsPointerIn = true;
-        //if (InventoryOvermind.InventoryOM.ItemCodeArray[InventorySlotNum] != 0)
-        //{
-        //    string name = InventoryOvermind.InventoryOM.ItemDataBase[InventoryOvermind.InventoryOM.ItemCodeArray[InventorySlotNum]].ItemName;
-        //    float att = InventoryOvermind.InventoryOM.ItemDataBase[InventoryOvermind.InventoryOM.ItemCodeArray[InventorySlotNum]].ItemAtdStat;
-        //    float def = InventoryOvermind.InventoryOM.ItemDataBase[InventoryOvermind.InventoryOM.ItemCodeArray[InventorySlotNum]].ItemDefStat;
-        //    int amount = InventoryOvermind.InventoryOM.ItemCountArray[InventorySlotNum];
-        //    ItemInfoTextBox.InfoTextBox.TextSet(name, att, def, amount, IsPointerIn, gameObject);
-        //}
-
+        if (IsMain)
+        {
+            IsPointerIn = true;
+            Inventory_Player_Shown.InvPS.LS_Slot_X = Slot_X;
+            Inventory_Player_Shown.InvPS.LS_Slot_Y = Slot_Y;
+            Inventory_Player_Shown.InvPS.LSParent = ParentTransform;
+            Inventory_Player_Shown.InvPS.LSPSize = ParentSize;
+            Inventory_Player_Shown.InvPS.LSItSelf = this.transform;
+            if (Inventory_Player_Shown.InvPS.Drag_Check_Only())
+            {
+                Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.GetComponent<Inventry_DragImage>().Change_Border_Color(true);
+            }
+        }
+        else
+        {
+            IsPointerIn = true;
+            Inventory_Player_Shown.InvPS.LS_Slot_X = What_Main.GetComponent<InventorySlot>().Slot_X;
+            Inventory_Player_Shown.InvPS.LS_Slot_Y = What_Main.GetComponent<InventorySlot>().Slot_Y;
+            Inventory_Player_Shown.InvPS.LSParent = ParentTransform;
+            Inventory_Player_Shown.InvPS.LSPSize = ParentSize;
+            Inventory_Player_Shown.InvPS.LSItSelf = What_Main.GetComponent<InventorySlot>().transform;
+            if (Inventory_Player_Shown.InvPS.Drag_Check_Only())
+            {
+                Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.GetComponent<Inventry_DragImage>().Change_Border_Color(true);
+            }
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         IsPointerIn = false;
+        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.GetComponent<Inventry_DragImage>().Change_Border_Color(false);
         //ItemInfoTextBox.InfoTextBox.TextSet(null, 0, 0, 0, IsPointerIn, null);
 
     }

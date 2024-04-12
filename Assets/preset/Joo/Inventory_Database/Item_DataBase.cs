@@ -61,26 +61,35 @@ public class Item_DataBase : MonoBehaviour
         switch (item_Type)
         {
             case 1:
-                Sprite Img = food_Ins[ID].Food_Image[0];
+                Sprite Img1 = food_Ins[ID].Food_Image[0];
                 Debug.Log("IDB image send");
-                return Img;
+                return Img1;
+            case 8:
+                Sprite Img8 = Container_Ins[ID].Container_Image;
+                Debug.Log("IDB image send");
+                return Img8;
             default:
                 Debug.Log("IDB image null");
                 return null;
         }
     }
-    public short Requesting_Size(Item_Type item_Type, short ID) // Å©±â 3ÀÚ¸´¼ö
+    public short Requesting_Size(short item_Type, short ID) // Å©±â 3ÀÚ¸´¼ö
     {
         switch (item_Type)
         {
-            case Item_Type.Food_Ins:
-                short num = 0;
-                num += (short)(food_Ins[ID].Width*100);
-                num += (short)0;
-                num += (short)(food_Ins[ID].Height);
-                return num;
+            case 1:
+                short num1 = 0;
+                num1 += (short)(food_Ins[ID].Width*100);
+                num1 += (short)0;
+                num1 += (short)(food_Ins[ID].Height);
+                return num1;
+            case 8:
+                short num8 = 0;
+                num8 += (short)(Container_Ins[ID].Width * 100);
+                num8 += (short)0;
+                num8 += (short)(Container_Ins[ID].Height);
+                return num8;
             default:
-                Debug.Log("IDB image null");
                 return 0;
         }
     }

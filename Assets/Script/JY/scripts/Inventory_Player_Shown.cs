@@ -22,9 +22,7 @@ public class Inventory_Player_Shown : MonoBehaviour
     [SerializeField]
     GameObject Info_Box; // 세부정보 표시 창 UI
     [SerializeField]
-    public Transform Drag_Target_Prefeb; // 드래그중인 이미지
-    public Transform DT_Outline;
-    public Transform DT_Image;
+    public Transform Drag_Target_Prefeb; // v 드래그중인 이미지
 
     public List<short> Backpacks_List; // 장비, 가방 리스트
     public List<short> Storage_List; // 접근중인 저장소 리스트
@@ -32,6 +30,7 @@ public class Inventory_Player_Shown : MonoBehaviour
     public List<short> Storage_Presets_List; // 초기 생성 
     public List<short[,,]> Packages_Player;
     public List<short[,,]> Packages_Storage;// 장비, 가방에 대응하는 아이템 배열( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
+
     //                                                                              신선도,조리여부,개봉여부,크기,무게
     //2칸이상의 대부분의 장비 형태들은 방향을 기준으로 옆 블럭에 추가정보를 저장
     //가방의 경우 패키지 인덱스를 저장
@@ -39,22 +38,31 @@ public class Inventory_Player_Shown : MonoBehaviour
     short BackPack_Depth_Define = 5;
 
 
-    public short FS_Slot_X;
-    public short FS_Slot_Y;
+    public short FS_Slot_X; // v
+    public short FS_Slot_Y; // v
     public short FS_Slot_Order;
+
+    public Transform FSParent; // v
+    public Transform FSItSelf; // v
+    public short FSPSize; // v
+    public int FS_Item_Size; // v
 
     public bool FS_Is_Player;
     public bool FS_Is_Virtical;
 
 
-    public short LS_Slot_X;
-    public short LS_Slot_Y;
+    public short LS_Slot_X; // v
+    public short LS_Slot_Y; // v
     public short LS_Slot_Order;
+
+    public Transform LSParent; // v
+    public Transform LSItSelf; // v
+    public short LSPSize; // v
 
     public bool LS_Is_Player;
 
     Animator Anim;
-    public bool inven_open;
+    public bool inven_open; // v
 
     private void Awake()
     {
@@ -108,10 +116,6 @@ public class Inventory_Player_Shown : MonoBehaviour
     //가방 배열
 
     //ID로 데이터베이스 크기참조, 초기생성, 순서 , 슬롯의 갱신 포함
-    private void First_Generating_Presets_of_Storage_Type(short Storage_Type)
-    {
-
-    }
 
     private void Generating_Acting_Inventory(short Backpack_ID, short[,,] Exiest_Packages, short Order)
     {
@@ -191,6 +195,187 @@ public class Inventory_Player_Shown : MonoBehaviour
         //Packages.Add(Exiest_Packages);
 
     }
+
+    public bool Drag_Check_Only()
+    {
+        int Width = FS_Item_Size / 100;
+        int Height = FS_Item_Size % 10;
+        short[,,] CopyPackage_FS = new short[1, 1, 1];
+        short[,,] CopyPackage_LS = new short[1, 1, 1];
+        switch (FSPSize)
+        {
+            case 86:
+                CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                break;
+        }
+        switch (LSPSize)
+        {
+            case 86:
+                CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                break;
+        }
+        
+        return Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage_LS);
+    }
+
+    public void SubRequest_Drag_Image()
+    {
+        Sprite Image = null;
+        short Type = FSItSelf.GetComponent<InventorySlot>().Item_Type;
+        short ID = FSItSelf.GetComponent<InventorySlot>().Item_ID;
+        int Size = FSItSelf.GetComponent<InventorySlot>().Size;
+
+        int Width= (int)Size / 100;
+        int Height= (int)Size % 10;
+
+        int Canvas_Width = SlotSize_Req(Width);
+        int Canvas_Height = SlotSize_Req(Height);
+
+        Image =Item_DataBase.item_database.Requesting_Image(Type, ID);
+
+
+        Drag_Target_Prefeb.GetComponent<Inventry_DragImage>().Change_Image(Image, Width, Height, Canvas_Width, Canvas_Height);
+    }
+
+    private int SlotSize_Req(int num)
+    {
+        //0 , 19 , 37
+        //1,  2,  3
+        int Length = 0;
+
+        switch (num)
+        {
+            case 1:
+                Length = 0;
+                break;
+            case 2:
+                Length = 19;
+                break;
+            case 3:
+                Length = 37;
+                break;
+        }
+        return Length;
+    }
+
+    public void Move_Request()
+    {
+        int Width = FS_Item_Size / 100;
+        int Height = FS_Item_Size % 10;
+        short[,,] CopyPackage_FS = new short[1, 1, 1];
+        short[,,] CopyPackage_LS = new short[1, 1, 1];
+        switch (FSPSize)
+        {
+            case 86:
+                CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                break;
+        }
+        switch (LSPSize)
+        {
+            case 86:
+                CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                break;
+        }
+        //Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage);
+        if (Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage_LS))
+        {
+            for(int i = 0; i < 5; i++)
+            {
+                CopyPackage_LS[i, LS_Slot_X, LS_Slot_Y] = CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y];
+                CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y] = 0;
+            }
+            switch (FSPSize)
+            {
+                case 86:
+                    FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
+                    break;
+            }
+            switch (LSPSize)
+            {
+                case 86:
+                    LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
+                    break;
+            }
+
+        }
+
+
+    }
+
+    
+
+    public bool Checking_Only_Size_For_InCanFit_All(bool IsVirtical, int First_Item_Lengthof_X, int First_Item_Lengthof_Y,
+        short Last_Slot_X_order, short Last_Slot_Y_order, int X_Length_OnStorage, int Y_Length_OnStorage, short[,,] Target_Package)
+    //Length = 1부터, order는 0부터
+    {
+        bool Clear = false;
+
+        int x = First_Item_Lengthof_X;
+        int y = First_Item_Lengthof_Y;
+
+        int sx = Last_Slot_X_order;
+        int sy = Last_Slot_Y_order;
+
+        int xl = X_Length_OnStorage;
+        int yl = Y_Length_OnStorage;
+
+        if (IsVirtical)
+        {
+
+            x = First_Item_Lengthof_Y;
+            y = First_Item_Lengthof_X;
+
+            sx = Last_Slot_X_order;
+            sy = Last_Slot_Y_order;
+
+            xl = X_Length_OnStorage;
+            yl = Y_Length_OnStorage;
+        }
+
+        if (((x - 1) + sx < xl)) // 배경연산
+        {
+            if (((y - 1) + sy) < yl)
+            {
+                Clear = true;
+            }
+            else return Clear;
+        }
+        else return Clear;
+
+        if (true)
+        {
+            for (int Ysecond = 0; Ysecond < y; Ysecond++)
+            {
+                for (int Xfirst = 0; Xfirst < x; Xfirst++)
+                {
+                    if (!(Target_Package[0, Last_Slot_X_order + Xfirst, Last_Slot_Y_order + Ysecond] == 0))
+                    {
+                        Clear = false;
+                        return Clear;
+                    }
+
+                    if (FSItSelf.GetComponent<InventorySlot>().Size != 101)
+                    {
+                        switch (LSPSize)
+                        {
+                            case 86:
+                                if (!LSParent.GetComponent<Inventory_8x6>().Slots[(Xfirst + Last_Slot_X_order) + 8 * (Ysecond + Last_Slot_Y_order)].IsMain)
+                                {
+                                    Clear = false;
+                                    return Clear;
+                                }
+                                break;
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+        return Clear;
+    }
+
     private void Changed_Backpacks_Output(short Backpack_ID, short[,,] Exiest_Packages, short Order)
     {
         //가방의 정보 고유번호 저장소를 host에게 저장
