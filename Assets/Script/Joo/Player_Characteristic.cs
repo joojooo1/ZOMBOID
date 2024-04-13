@@ -105,23 +105,33 @@ public class Player_Characteristic : MonoBehaviour
     public List<UI_Title_Characteristic_prefab> characteristics_list = new List<UI_Title_Characteristic_prefab>();
     public List<UI_Title_Characteristic_prefab> characteristics_Player = new List<UI_Title_Characteristic_prefab>();
 
-    public void Remove_Selected_list(int index, bool selected)
+    public void Remove_Selected_list(int Characteristic_number, bool selected)
     {
-        if(selected)
+        if (selected)
         {
-            Destroy(characteristics_Player[index].gameObject);
-            characteristics_Player.RemoveAt(index);
+            for(int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == Characteristic_number)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+            }
+
         }
         else
         {
-            Destroy(characteristics_list[index].gameObject);
-            characteristics_list.RemoveAt(index);
-        }
-    }
+            for (int i = 0; i < characteristics_list.Count; i++)
+            {
+                if (characteristics_list[i].Prefab.Characteristic_number == Characteristic_number)
+                {
+                    Destroy(characteristics_list[i].gameObject);
+                    characteristics_list.RemoveAt(i);
+                }
 
-    public void Enable_Origin_list(int index, bool OnOff)
-    {
-        characteristics_list[index].enabled = OnOff;
+            }
+
+        }
     }
 
     public void Set_Characteristic(int value, bool Choice, GameObject tempObj)
@@ -131,169 +141,169 @@ public class Player_Characteristic : MonoBehaviour
         switch (value)
         {
             case 0:
-                temp = Characteristic_Speed_Demon(temp);
+                temp = Characteristic_Speed_Demon(temp, Choice);
                 break;
             case 1:
-                temp = Characteristic_Cats_Eyes(temp);
+                temp = Characteristic_Cats_Eyes(temp, Choice);
                 break;
             case 2:
-                temp = Characteristic_Outdoorsman(temp);
+                temp = Characteristic_Outdoorsman(temp, Choice);
                 break;
             case 3:
-                temp = Characteristic_Fast_Reader(temp);
+                temp = Characteristic_Fast_Reader(temp, Choice);
                 break;
             case 4:
-                temp = Characteristic_Wakeful(temp);
+                temp = Characteristic_Wakeful(temp, Choice);
                 break;
             case 5:
-                temp = Characteristic_Iron_Gut(temp);
+                temp = Characteristic_Iron_Gut(temp, Choice);
                 break;
             case 6:
-                temp = Characteristic_Resilient(temp);
+                temp = Characteristic_Resilient(temp, Choice);
                 break;
             case 7:
-                temp = Characteristic_Light_Eater(temp);
+                temp = Characteristic_Light_Eater(temp, Choice);
                 break;
             case 8:
-                temp = Characteristic_Brave(temp);
+                temp = Characteristic_Brave(temp, Choice);
                 break;
             case 9:
-                temp = Characteristic_Graceful(temp);
+                temp = Characteristic_Graceful(temp, Choice);
                 break;
             case 10:
-                temp = Characteristic_Fit(temp);
+                temp = Characteristic_Fit(temp, Choice);
                 break;
             case 11:
-                temp = Characteristic_Low_Thirst(temp);
+                temp = Characteristic_Low_Thirst(temp, Choice);
                 break;
             case 12:
-                temp = Characteristic_Eagle_Eyed(temp);
+                temp = Characteristic_Eagle_Eyed(temp, Choice);
                 break;
             case 13:
-                temp = Characteristic_Fast_Healer(temp);
+                temp = Characteristic_Fast_Healer(temp, Choice);
                 break;
             case 14:
-                temp = Characteristic_Keen_Hearing(temp);
+                temp = Characteristic_Keen_Hearing(temp, Choice);
                 break;
             case 15:
-                temp = Characteristic_Stout(temp);
+                temp = Characteristic_Stout(temp, Choice);
                 break;
             case 16:
-                temp = Characteristic_Fast_Learner(temp);
+                temp = Characteristic_Fast_Learner(temp, Choice);
                 break;
             case 17:
-                temp = Characteristic_Thick_Skinned(temp);
+                temp = Characteristic_Thick_Skinned(temp, Choice);
                 break;
             case 18:
-                temp = Characteristic_Adrenaline_Junkie(temp);
+                temp = Characteristic_Adrenaline_Junkie(temp, Choice);
                 break;
             case 19:
-                temp = Characteristic_Athletic(temp);
+                temp = Characteristic_Athletic(temp, Choice);
                 break;
             case 20:
-                temp = Characteristic_Strong(temp);
+                temp = Characteristic_Strong(temp, Choice);
                 break;
             case 21:
-                temp = Characteristic_Sunday_driver(temp);
+                temp = Characteristic_Sunday_driver(temp, Choice);
                 break;
             case 22:
-                temp = Characteristic_Cowardly(temp);
+                temp = Characteristic_Cowardly(temp, Choice);
                 break;
             case 23:
-                temp = Characteristic_Clumsy(temp);
+                temp = Characteristic_Clumsy(temp, Choice);
                 break;
             case 24:
-                temp = Characteristic_Slow_Reader(temp);
+                temp = Characteristic_Slow_Reader(temp, Choice);
                 break;
             case 25:
-                temp = Characteristic_Short_Sighted(temp);
+                temp = Characteristic_Short_Sighted(temp, Choice);
                 break;
             case 26:
-                temp = Characteristic_Weak_Stomach(temp);
+                temp = Characteristic_Weak_Stomach(temp, Choice);
                 break;
             case 27:
-                temp = Characteristic_Smoker(temp);
+                temp = Characteristic_Smoker(temp, Choice);
                 break;
             case 28:
-                temp = Characteristic_Agoraphobic(temp);
+                temp = Characteristic_Agoraphobic(temp, Choice);
                 break;
             case 29:
-                temp = Characteristic_Hearty_Appetite(temp);
+                temp = Characteristic_Hearty_Appetite(temp, Choice);
                 break;
             case 30:
-                temp = Characteristic_Claustrophobic(temp);
+                temp = Characteristic_Claustrophobic(temp, Choice);
                 break;
             case 31:
-                temp = Characteristic_Hard_of_Hearing(temp);
+                temp = Characteristic_Hard_of_Hearing(temp, Choice);
                 break;
             case 32:
-                temp = Characteristic_Sleepyhead(temp);
+                temp = Characteristic_Sleepyhead(temp, Choice);
                 break;
             case 33:
-                temp = Characteristic_Prone_to_Illness(temp);
+                temp = Characteristic_Prone_to_Illness(temp, Choice);
                 break;
             case 34:
-                temp = Characteristic_Pacifist(temp);
+                temp = Characteristic_Pacifist(temp, Choice);
                 break;
             case 35:
-                temp = Characteristic_Asthmatic(temp);
+                temp = Characteristic_Asthmatic(temp, Choice);
                 break;
             case 36:
-                temp = Characteristic_Out_of_Shape(temp);
+                temp = Characteristic_Out_of_Shape(temp, Choice);
                 break;
             case 37:
-                temp = Characteristic_Overweight(temp);
+                temp = Characteristic_Overweight(temp, Choice);
                 break;
             case 38:
-                temp = Characteristic_High_Thirst(temp);
+                temp = Characteristic_High_Thirst(temp, Choice);
                 break;
             case 39:
-                temp = Characteristic_Slow_Healer(temp);
+                temp = Characteristic_Slow_Healer(temp, Choice);
                 break;
             case 40:
-                temp = Characteristic_Slow_Learner(temp);
+                temp = Characteristic_Slow_Learner(temp, Choice);
                 break;
             case 41:
-                temp = Characteristic_Restless_Sleeper(temp);
+                temp = Characteristic_Restless_Sleeper(temp, Choice);
                 break;
             case 42:
-                temp = Characteristic_Feeble(temp);
+                temp = Characteristic_Feeble(temp, Choice);
                 break;
             case 43:
-                temp = Characteristic_Underweight(temp);
+                temp = Characteristic_Underweight(temp, Choice);
                 break;
             case 44:
-                temp = Characteristic_Illiterate(temp);
+                temp = Characteristic_Illiterate(temp, Choice);
                 break;
             case 45:
-                temp = Characteristic_Thin_skinned(temp);
+                temp = Characteristic_Thin_skinned(temp, Choice);
                 break;
             case 46:
-                temp = Characteristic_Obese(temp);
+                temp = Characteristic_Obese(temp, Choice);
                 break;
             case 47:
-                temp = Characteristic_Unfit(temp);
+                temp = Characteristic_Unfit(temp, Choice);
                 break;
             case 48:
-                temp = Characteristic_Very_Underweight(temp);
+                temp = Characteristic_Very_Underweight(temp, Choice);
                 break;
             case 49:
-                temp = Characteristic_Emaciated(temp);
+                temp = Characteristic_Emaciated(temp, Choice);
                 break;
             case 50:
-                temp = Characteristic_Weak(temp);
+                temp = Characteristic_Weak(temp, Choice);
                 break;
             case 51:
-                temp = Characteristic_Deaf(temp);
+                temp = Characteristic_Deaf(temp, Choice);
                 break;
             case 52:
-                temp = Characteristic_Burglar(temp);
+                temp = Characteristic_Burglar(temp, Choice);
                 break;
             case 53:
-                temp = Characteristic_Desensitized(temp);
+                temp = Characteristic_Desensitized(temp, Choice);
                 break;
             case 54:
-                temp = Characteristic_Angler(temp);
+                temp = Characteristic_Angler(temp, Choice);
                 break;
             default: break;
         }
@@ -306,7 +316,7 @@ public class Player_Characteristic : MonoBehaviour
         {
             tempObj = Instantiate(Characteristic_Prefab, Characteristic_P_Window);
         }
-        else
+        else if (temp.type == Characteristic_type.Occupation || temp.Choice == true)
         {
             tempObj = Instantiate(Characteristic_Prefab, Characteristic_S_Window);
         }
@@ -333,7 +343,7 @@ public class Player_Characteristic : MonoBehaviour
        용감함, 우아함, 행운, 건강함, 낮은 갈증, 매의 눈, 빠른 회복, 예민한 청력, 정리쟁이, 통통함, 
        현자, 두꺼운 피부, 아드레날린 중독, 육상 선수, 튼튼함
     */
-    Characteristic Characteristic_Speed_Demon(Characteristic Speed_Demon)
+    Characteristic Characteristic_Speed_Demon(Characteristic Speed_Demon, bool Choice)
     {
         Speed_Demon.name = "Speed Demon";
         Speed_Demon.name_kr = "속도광";
@@ -343,13 +353,13 @@ public class Player_Characteristic : MonoBehaviour
         Speed_Demon.Sprite = Characteristic_Image[0];
         Speed_Demon.Points = -1;
         Speed_Demon.type = Characteristic_type.Positives;
-        Speed_Demon.Choice = false;
+        Speed_Demon.Choice = Choice;
         return Speed_Demon;
         // 모든 차량의 기어 전환 속도 +100%(200%), 최고 속도 +15%(115%), 엔진 RPM 상승, 후진 RPM 최대치로 고정
         // 비활성화되는 특성: 초보 운전
     }
 
-    Characteristic Characteristic_Cats_Eyes(Characteristic Cats_Eyes)
+    Characteristic Characteristic_Cats_Eyes(Characteristic Cats_Eyes, bool Choice)
     {
         Cats_Eyes.name = "Cat's Eyes";
         Cats_Eyes.name_kr = "고양이의 눈";
@@ -359,13 +369,13 @@ public class Player_Characteristic : MonoBehaviour
         Cats_Eyes.Sprite = Characteristic_Image[1];
         Cats_Eyes.Points = -2;
         Cats_Eyes.type = Characteristic_type.Positives;
-        Cats_Eyes.Choice = false;
+        Cats_Eyes.Choice = Choice;
         return Cats_Eyes;
         // 야간 시야 범위 +20%, 수색 반경 +0.2, 수색 어둠 페널티 - 20 %, 야간 밝기 증가,
         // 손전등, 차량 전조등 등의 광원의 범위 넓혀줌
     }
 
-    Characteristic Characteristic_Outdoorsman(Characteristic Outdoorsman)
+    Characteristic Characteristic_Outdoorsman(Characteristic Outdoorsman, bool Choice)
     {
         Outdoorsman.name = "Outdoorsman";
         Outdoorsman.name_kr = "등산애호가";
@@ -375,7 +385,7 @@ public class Player_Characteristic : MonoBehaviour
         Outdoorsman.Sprite = Characteristic_Image[2];
         Outdoorsman.Points = -2;
         Outdoorsman.type = Characteristic_type.Positives;
-        Outdoorsman.Choice = false;
+        Outdoorsman.Choice = Choice;
         return Outdoorsman;
         // 감기에 걸릴 확률 -90%, 나무를 지날 때 다칠 확률 - 50 %, 수색 반경 + 0.4
         // 수색 어둠 페널티 - 7 %, 수색 날씨 페널티 -13 %, 구멍난 판자로 불을 더 빨리 피움
@@ -397,7 +407,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 비활성화되는 특성: 서투름
     //}
 
-    Characteristic Characteristic_Fast_Reader(Characteristic Fast_Reader)
+    Characteristic Characteristic_Fast_Reader(Characteristic Fast_Reader, bool Choice)
     {
         Fast_Reader.name = "Fast Reader";
         Fast_Reader.name_kr = "속독";
@@ -407,13 +417,13 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Reader.Sprite = Characteristic_Image[3];
         Fast_Reader.Points = -2;
         Fast_Reader.type = Characteristic_type.Positives;
-        Fast_Reader.Choice = false;
+        Fast_Reader.Choice = Choice;
         return Fast_Reader;
         // 독서 속도 +30%
         // 비활성화되는 특성: 정독, 문맹
     }
 
-    Characteristic Characteristic_Wakeful(Characteristic Wakeful)
+    Characteristic Characteristic_Wakeful(Characteristic Wakeful, bool Choice)
     {
         Wakeful.name = "Wakeful";
         Wakeful.name_kr = "잠이 없는";
@@ -423,13 +433,13 @@ public class Player_Characteristic : MonoBehaviour
         Wakeful.Sprite = Characteristic_Image[4];
         Wakeful.Points = -2;
         Wakeful.type = Characteristic_type.Positives;
-        Wakeful.Choice = false;
+        Wakeful.Choice = Choice;
         return Wakeful;
         // 수면 효율 +10%, 피로도 증가량 -30%
         // 비활성화되는 특성: 잠꾸러기
     }
 
-    Characteristic Characteristic_Iron_Gut(Characteristic Iron_Gut)
+    Characteristic Characteristic_Iron_Gut(Characteristic Iron_Gut, bool Choice)
     {
         Iron_Gut.name = "Iron Gut";
         Iron_Gut.name_kr = "강철 위장";
@@ -439,13 +449,13 @@ public class Player_Characteristic : MonoBehaviour
         Iron_Gut.Sprite = Characteristic_Image[5];
         Iron_Gut.Points = -3;
         Iron_Gut.type = Characteristic_type.Positives;
-        Iron_Gut.Choice = false;
+        Iron_Gut.Choice = Choice;
         return Iron_Gut;
         // 식중독에 걸릴 확률 -50%, 식중독 유지시간 감소
         // 비활성화되는 특성: 소화불량
     }
 
-    Characteristic Characteristic_Resilient(Characteristic Resilient)
+    Characteristic Characteristic_Resilient(Characteristic Resilient, bool Choice)
     {
         Resilient.name = "Resilient";
         Resilient.name_kr = "강한 회복력";
@@ -455,7 +465,7 @@ public class Player_Characteristic : MonoBehaviour
         Resilient.Sprite = Characteristic_Image[6];
         Resilient.Points = -4;
         Resilient.type = Characteristic_type.Positives;
-        Resilient.Choice = false;
+        Resilient.Choice = Choice;
         return Resilient;
         // 감기에 걸릴 확률 -55%, 추위 영향 -20%, 추위 진행 속도 -50%, 좀비화 속도 -75%
         // 비활성화되는 특성: 질병에 취약함
@@ -476,7 +486,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 비활성화되는 특성: 넘치는 존재감
     //}
 
-    Characteristic Characteristic_Light_Eater(Characteristic Light_Eater)
+    Characteristic Characteristic_Light_Eater(Characteristic Light_Eater, bool Choice)
     {
         Light_Eater.name = "Light Eater";
         Light_Eater.name_kr = "소식가";
@@ -486,12 +496,13 @@ public class Player_Characteristic : MonoBehaviour
         Light_Eater.Sprite = Characteristic_Image[7];
         Light_Eater.Points = -4;
         Light_Eater.type = Characteristic_type.Positives;
-        Light_Eater.Choice = false;
+        Light_Eater.Choice = Choice;
         return Light_Eater;
         // 배고픔 진행속도 75%
+        // 비활성화되는 특성: 대식가
     }
 
-    Characteristic Characteristic_Brave(Characteristic Brave)
+    Characteristic Characteristic_Brave(Characteristic Brave, bool Choice)
     {
         Brave.name = "Brave";
         Brave.name_kr = "용감함";
@@ -501,13 +512,13 @@ public class Player_Characteristic : MonoBehaviour
         Brave.Sprite = Characteristic_Image[8];
         Brave.Points = -4;
         Brave.type = Characteristic_type.Positives;
-        Brave.Choice = false;
+        Brave.Choice = Choice;
         return Brave;
         // 긴장 상승량 -70%
         // 비활성화되는 특성: 겁쟁이, 광장공포증, 밀실공포증
     }
 
-    Characteristic Characteristic_Graceful(Characteristic Graceful)
+    Characteristic Characteristic_Graceful(Characteristic Graceful, bool Choice)
     {
         Graceful.name = "Graceful";
         Graceful.name_kr = "우아함";
@@ -517,7 +528,7 @@ public class Player_Characteristic : MonoBehaviour
         Graceful.Sprite = Characteristic_Image[9];
         Graceful.Points = -4;
         Graceful.type = Characteristic_type.Positives;
-        Graceful.Choice = false;
+        Graceful.Choice = Choice;
         return Graceful;
         // 움직일 때 발생하는 소음반경 -40%,
         // 달리기/질주로 낮은 울타리를 뛰어 넘거나 좀비를 공격할 때 넘어질 확률 -10%
@@ -540,7 +551,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 비활성화되는 특성: 불운
     //}
 
-    Characteristic Characteristic_Fit(Characteristic Fit)
+    Characteristic Characteristic_Fit(Characteristic Fit, bool Choice)
     {
         Fit.name = "Fit";
         Fit.name_kr = "건강함";
@@ -550,12 +561,12 @@ public class Player_Characteristic : MonoBehaviour
         Fit.Sprite = Characteristic_Image[10];
         Fit.Points = -6;
         Fit.type = Characteristic_type.Positives;
-        Fit.Choice = false;
+        Fit.Choice = Choice;
         return Fit;
         // 체력 +2
     }
 
-    Characteristic Characteristic_Low_Thirst(Characteristic Low_Thirst)
+    Characteristic Characteristic_Low_Thirst(Characteristic Low_Thirst, bool Choice)
     {
         Low_Thirst.name = "Low Thirst";
         Low_Thirst.name_kr = "낮은 갈증";
@@ -565,13 +576,13 @@ public class Player_Characteristic : MonoBehaviour
         Low_Thirst.Sprite = Characteristic_Image[11];
         Low_Thirst.Points = -6;
         Low_Thirst.type = Characteristic_type.Positives;
-        Low_Thirst.Choice = false;
+        Low_Thirst.Choice = Choice;
         return Low_Thirst;
         // 갈증 진행 속도 -50%
         // 비활성화되는 특성: 높은 갈증
     }
 
-    Characteristic Characteristic_Eagle_Eyed(Characteristic Eagle_Eyed)
+    Characteristic Characteristic_Eagle_Eyed(Characteristic Eagle_Eyed, bool Choice)
     {
         Eagle_Eyed.name = "Eagle Eyed";
         Eagle_Eyed.name_kr = "매의 눈";
@@ -581,13 +592,13 @@ public class Player_Characteristic : MonoBehaviour
         Eagle_Eyed.Sprite = Characteristic_Image[12];
         Eagle_Eyed.Points = -6;
         Eagle_Eyed.type = Characteristic_type.Positives;
-        Eagle_Eyed.Choice = false;
+        Eagle_Eyed.Choice = Choice;
         return Eagle_Eyed;
         // 시야 범위 증가, 시야 확보 속도 증가, 수색 반경 +0.5
         // 비활성화되는 특성: 짧은 시야
     }
 
-    Characteristic Characteristic_Fast_Healer(Characteristic Fast_Healer)
+    Characteristic Characteristic_Fast_Healer(Characteristic Fast_Healer, bool Choice)
     {
         Fast_Healer.name = "Fast Healer";
         Fast_Healer.name_kr = "빠른 회복";
@@ -597,13 +608,13 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Healer.Sprite = Characteristic_Image[13];
         Fast_Healer.Points = -6;
         Fast_Healer.type = Characteristic_type.Positives;
-        Fast_Healer.Choice = false;
+        Fast_Healer.Choice = Choice;
         return Fast_Healer;
         // 긁힘, 찢어짐, 물림, 깊은 상처, 화상 상처 심각도 -20%
         // 비활성화되는 특성: 느린 치유
     }
 
-    Characteristic Characteristic_Keen_Hearing(Characteristic Keen_Hearing)
+    Characteristic Characteristic_Keen_Hearing(Characteristic Keen_Hearing, bool Choice)
     {
         Keen_Hearing.name = "Keen Hearing";
         Keen_Hearing.name_kr = "예민한 청력";
@@ -613,7 +624,7 @@ public class Player_Characteristic : MonoBehaviour
         Keen_Hearing.Sprite = Characteristic_Image[14];
         Keen_Hearing.Points = -6;
         Keen_Hearing.type = Characteristic_type.Positives;
-        Keen_Hearing.Choice = false;
+        Keen_Hearing.Choice = Choice;
         return Keen_Hearing;
         // 소리 인지 반경 +100%(200%), 주변 시야 범위 증가
         // 비활성화되는 특성: 어두운 귀, 청각 장애
@@ -634,7 +645,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 비활성화되는 특성: 비체계적인
     //}
 
-    Characteristic Characteristic_Stout(Characteristic Stout)
+    Characteristic Characteristic_Stout(Characteristic Stout, bool Choice)
     {
         Stout.name = "Stout";
         Stout.name_kr = "통통함";
@@ -644,12 +655,12 @@ public class Player_Characteristic : MonoBehaviour
         Stout.Sprite = Characteristic_Image[15];
         Stout.Points = -6;
         Stout.type = Characteristic_type.Positives;
-        Stout.Choice = false;
+        Stout.Choice = Choice;
         return Stout;
         // 근력 +2, 밀쳐내기 확률 25% 증가
     }
 
-    Characteristic Characteristic_Fast_Learner(Characteristic Fast_Learner)
+    Characteristic Characteristic_Fast_Learner(Characteristic Fast_Learner, bool Choice)
     {
         Fast_Learner.name = "Fast Learner";
         Fast_Learner.name_kr = "현자";
@@ -659,13 +670,13 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Learner.Sprite = Characteristic_Image[16];
         Fast_Learner.Points = -6;
         Fast_Learner.type = Characteristic_type.Positives;
-        Fast_Learner.Choice = false;
+        Fast_Learner.Choice = Choice;
         return Fast_Learner;
         // 신체 능력(근력, 체력)을 제외한 모든 스킬의 경험치 획득량 +30%
         // 비활성화되는 특성: 느린 학습
     }
 
-    Characteristic Characteristic_Thick_Skinned(Characteristic Thick_Skinned)
+    Characteristic Characteristic_Thick_Skinned(Characteristic Thick_Skinned, bool Choice)
     {
         Thick_Skinned.name = "Thick Skinned";
         Thick_Skinned.name_kr = "두꺼운 피부";
@@ -675,14 +686,14 @@ public class Player_Characteristic : MonoBehaviour
         Thick_Skinned.Sprite = Characteristic_Image[17];
         Thick_Skinned.Points = -8;
         Thick_Skinned.type = Characteristic_type.Positives;
-        Thick_Skinned.Choice = false;
+        Thick_Skinned.Choice = Choice;
         return Thick_Skinned;
         // 긁힘, 찢어짐, 물림 확률 -30%
         // 회피율 : 15 + (무기 숙련도에 따른 수치 -5% ~ 7%) * {1.3(두꺼운 피부) or 0.77(얇은 피부)}
         // 비활성화되는 특성: 얇은 피부
     }
 
-    Characteristic Characteristic_Adrenaline_Junkie(Characteristic Adrenaline_Junkie)
+    Characteristic Characteristic_Adrenaline_Junkie(Characteristic Adrenaline_Junkie, bool Choice)
     {
         Adrenaline_Junkie.name = "Adrenaline Junkie";
         Adrenaline_Junkie.name_kr = "아드레날린 중독";
@@ -692,13 +703,13 @@ public class Player_Characteristic : MonoBehaviour
         Adrenaline_Junkie.Sprite = Characteristic_Image[18];
         Adrenaline_Junkie.Points = -8;
         Adrenaline_Junkie.type = Characteristic_type.Positives;
-        Adrenaline_Junkie.Choice = false;
+        Adrenaline_Junkie.Choice = Choice;
         return Adrenaline_Junkie;
         // 3단계 긴장이면 0.2, 4단계 긴장이면 0.25의 추가 이동속도를 얻는다.
         // 비활성화되는 특성: 겁쟁이, 광장공포증, 밀실공포증
     }
 
-    Characteristic Characteristic_Athletic(Characteristic Athletic)
+    Characteristic Characteristic_Athletic(Characteristic Athletic, bool Choice)
     {
         Athletic.name = "Athletic";
         Athletic.name_kr = "육상 선수";
@@ -708,12 +719,12 @@ public class Player_Characteristic : MonoBehaviour
         Athletic.Sprite = Characteristic_Image[19];
         Athletic.Points = -10;
         Athletic.type = Characteristic_type.Positives;
-        Athletic.Choice = false;
+        Athletic.Choice = Choice;
         return Athletic;
         // 체력 +4, 달리기 속도 +20%, 이동으로 인한 지구력 소모율 -20%
     }
 
-    Characteristic Characteristic_Strong(Characteristic Strong)
+    Characteristic Characteristic_Strong(Characteristic Strong, bool Choice)
     {
         Strong.name = "Strong";
         Strong.name_kr = "튼튼함";
@@ -723,7 +734,7 @@ public class Player_Characteristic : MonoBehaviour
         Strong.Sprite = Characteristic_Image[20];
         Strong.Points = -10;
         Strong.type = Characteristic_type.Positives;
-        Strong.Choice = false;
+        Strong.Choice = Choice;
         return Strong;
         // 근력 +4, 밀쳐낼 확률 +40%
     }
@@ -739,7 +750,7 @@ public class Player_Characteristic : MonoBehaviour
        비만, 비실함, 심한 저체중, 수척함, 약함, 청각 장애
 
     */
-    Characteristic Characteristic_Sunday_driver(Characteristic Sunday_driver)
+    Characteristic Characteristic_Sunday_driver(Characteristic Sunday_driver, bool Choice)
     {
         Sunday_driver.name = "Sunday driver";
         Sunday_driver.name_kr = "초보 운전";
@@ -749,13 +760,13 @@ public class Player_Characteristic : MonoBehaviour
         Sunday_driver.Sprite = Characteristic_Image[21];
         Sunday_driver.Points = +1;
         Sunday_driver.type = Characteristic_type.Negatives;
-        Sunday_driver.Choice = false;
+        Sunday_driver.Choice = Choice;
         return Sunday_driver;
         // 차량 가속력 -40%, 최대 속도가 30mph[= 48km]로 제한, 최대 속도로 주행중 기름이 추가로 소모됨
         // 비활성화되는 특성: 속도광
     }
 
-    Characteristic Characteristic_Cowardly(Characteristic Cowardly)
+    Characteristic Characteristic_Cowardly(Characteristic Cowardly, bool Choice)
     {
         Cowardly.name = "Cowardly";
         Cowardly.name_kr = "겁쟁이";
@@ -765,13 +776,13 @@ public class Player_Characteristic : MonoBehaviour
         Cowardly.Sprite = Characteristic_Image[22];
         Cowardly.Points = +2;
         Cowardly.type = Characteristic_type.Negatives;
-        Cowardly.Choice = false;
+        Cowardly.Choice = Choice;
         return Cowardly;
         // 긴장 상승률 +100%
         // 비활성화되는 특성: 용감함, 아드레날린 중독
     }
 
-    Characteristic Characteristic_Clumsy(Characteristic Clumsy)
+    Characteristic Characteristic_Clumsy(Characteristic Clumsy, bool Choice)
     {
         Clumsy.name = "Clumsy";
         Clumsy.name_kr = "덤벙댐";
@@ -781,7 +792,7 @@ public class Player_Characteristic : MonoBehaviour
         Clumsy.Sprite = Characteristic_Image[23];
         Clumsy.Points = +2;
         Clumsy.type = Characteristic_type.Negatives;
-        Clumsy.Choice = false;
+        Clumsy.Choice = Choice;
         return Clumsy;
         // 움직일 때 발생하는 소음반경 +20%, 넘어질 확률 +10%
         // 달리거나 전력 질주를 하는 도중 낮은 울타리를 넘거나 좀비와 부딫힐 때 넘어질 확률이 추가로 10% 증가
@@ -803,7 +814,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 비활성화되는 특성: 민첩한
     //}
 
-    Characteristic Characteristic_Slow_Reader(Characteristic Slow_Reader)
+    Characteristic Characteristic_Slow_Reader(Characteristic Slow_Reader, bool Choice)
     {
         Slow_Reader.name = "Slow Reader";
         Slow_Reader.name_kr = "정독";
@@ -813,13 +824,13 @@ public class Player_Characteristic : MonoBehaviour
         Slow_Reader.Sprite = Characteristic_Image[24];
         Slow_Reader.Points = +2;
         Slow_Reader.type = Characteristic_type.Negatives;
-        Slow_Reader.Choice = false;
+        Slow_Reader.Choice = Choice;
         return Slow_Reader;
         // 독서 속도 -30%
         // 비활성화되는 특성: 속독, 문맹
     }
 
-    Characteristic Characteristic_Short_Sighted(Characteristic Short_Sighted)
+    Characteristic Characteristic_Short_Sighted(Characteristic Short_Sighted, bool Choice)
     {
         Short_Sighted.name = "Short Sighted";
         Short_Sighted.name_kr = "짧은 시야";
@@ -829,14 +840,14 @@ public class Player_Characteristic : MonoBehaviour
         Short_Sighted.Sprite = Characteristic_Image[25];
         Short_Sighted.Points = +2;
         Short_Sighted.type = Characteristic_type.Negatives;
-        Short_Sighted.Choice = false;
+        Short_Sighted.Choice = Choice;
         return Short_Sighted;
         // 시야 확보 속도 감소, 수색 반경 -2
         // ( 안경이나 독서용 안경을 장비하면 페널티가 아예 무효화됨 )
         // 비활성화되는 특성: 매의 눈
     }
 
-    Characteristic Characteristic_Weak_Stomach(Characteristic Weak_Stomach)
+    Characteristic Characteristic_Weak_Stomach(Characteristic Weak_Stomach, bool Choice)
     {
         Weak_Stomach.name = "Weak Stomach";
         Weak_Stomach.name_kr = "소화불량";
@@ -846,13 +857,13 @@ public class Player_Characteristic : MonoBehaviour
         Weak_Stomach.Sprite = Characteristic_Image[26];
         Weak_Stomach.Points = +3;
         Weak_Stomach.type = Characteristic_type.Negatives;
-        Weak_Stomach.Choice = false;
+        Weak_Stomach.Choice = Choice;
         return Weak_Stomach;
         // 식중독에 걸릴 확률 +100%, 식중독 유지 시간 증가
         // 비활성화되는 특성: 강철 위장
     }
 
-    Characteristic Characteristic_Smoker(Characteristic Smoker)
+    Characteristic Characteristic_Smoker(Characteristic Smoker, bool Choice)
     {
         Smoker.name = "Smoker";
         Smoker.name_kr = "골초";
@@ -862,14 +873,14 @@ public class Player_Characteristic : MonoBehaviour
         Smoker.Sprite = Characteristic_Image[27];
         Smoker.Points = +4;
         Smoker.type = Characteristic_type.Negatives;
-        Smoker.Choice = false;
+        Smoker.Choice = Choice;
         return Smoker;
         // 스트레스 상시 상승, 흡연으로 인한 질병 무들이 발생하지 않음
         // 흡연시 불행 -10, 흡연시 스트레스 0으로 감소
         // 담배를 피우지 않으면 스트레스가 2단계 무들인 '동요함'까지 상승
     }
 
-    Characteristic Characteristic_Agoraphobic(Characteristic Agoraphobic)
+    Characteristic Characteristic_Agoraphobic(Characteristic Agoraphobic, bool Choice)
     {
         Agoraphobic.name = "Agoraphobic";
         Agoraphobic.name_kr = "광장공포증";
@@ -879,11 +890,11 @@ public class Player_Characteristic : MonoBehaviour
         Agoraphobic.Sprite = Characteristic_Image[28];
         Agoraphobic.Points = +4;
         Agoraphobic.type = Characteristic_type.Negatives;
-        Agoraphobic.Choice = false;
+        Agoraphobic.Choice = Choice;
         return Agoraphobic;
         // 야외에 있을 때 공황 발생, 수색 반경 -1.5
         // ( 밖으로 나가면 매우 빠르게 긴장이 올라 7초도 안돼서 공황상태에 도달 )
-        // 비활성화되는 특성: 용감함, 아드레날린 중독, 밀실 공포증
+        // 비활성화되는 특성: 용감함, 아드레날린 중독, 밀실공포증
     }
 
     //Characteristic Characteristic_Conspicuous(Characteristic Conspicuous)
@@ -901,7 +912,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 비활성화되는 특성: 부족한 존재감
     //}
 
-    Characteristic Characteristic_Hearty_Appetite(Characteristic Hearty_Appetite)
+    Characteristic Characteristic_Hearty_Appetite(Characteristic Hearty_Appetite, bool Choice)
     {
         Hearty_Appetite.name = "Hearty Appetite";
         Hearty_Appetite.name_kr = "대식가";
@@ -911,13 +922,13 @@ public class Player_Characteristic : MonoBehaviour
         Hearty_Appetite.Sprite = Characteristic_Image[29];
         Hearty_Appetite.Points = +4;
         Hearty_Appetite.type = Characteristic_type.Negatives;
-        Hearty_Appetite.Choice = false;
+        Hearty_Appetite.Choice = Choice;
         return Hearty_Appetite;
         // 배고픔 진행 속도 150%, 채집보너스: 동물 / 산딸기 / 버섯 / 포장식품 +3%
         // 비활성화되는 특성: 소식가
     }
 
-    Characteristic Characteristic_Claustrophobic(Characteristic Claustrophobic)
+    Characteristic Characteristic_Claustrophobic(Characteristic Claustrophobic, bool Choice)
     {
         Claustrophobic.name = "Claustrophobic";
         Claustrophobic.name_kr = "밀실공포증";
@@ -927,7 +938,7 @@ public class Player_Characteristic : MonoBehaviour
         Claustrophobic.Sprite = Characteristic_Image[30];
         Claustrophobic.Points = +4;
         Claustrophobic.type = Characteristic_type.Negatives;
-        Claustrophobic.Choice = false;
+        Claustrophobic.Choice = Choice;
         return Claustrophobic;
         // 실내에 있을 때 공황 발생
         // 비활성화되는 특성: 용감함, 아드레날린 중독, 광장공포증
@@ -964,7 +975,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 비활성화되는 특성: 정리쟁이
     //}
 
-    Characteristic Characteristic_Hard_of_Hearing(Characteristic Hard_of_Hearing)
+    Characteristic Characteristic_Hard_of_Hearing(Characteristic Hard_of_Hearing, bool Choice)
     {
         Hard_of_Hearing.name = "Hard of Hearing";
         Hard_of_Hearing.name_kr = "어두운 귀";
@@ -974,13 +985,13 @@ public class Player_Characteristic : MonoBehaviour
         Hard_of_Hearing.Sprite = Characteristic_Image[31];
         Hard_of_Hearing.Points = +4;
         Hard_of_Hearing.type = Characteristic_type.Negatives;
-        Hard_of_Hearing.Choice = false;
+        Hard_of_Hearing.Choice = Choice;
         return Hard_of_Hearing;
         // 소리 인지 범위 감소, 소리가 먹먹하게 들림, 주변 밝기 감소
         // 비활성화되는 특성: 예민한 청력, 청각 장애
     }
 
-    Characteristic Characteristic_Sleepyhead(Characteristic Sleepyhead)
+    Characteristic Characteristic_Sleepyhead(Characteristic Sleepyhead, bool Choice)
     {
         Sleepyhead.name = "Sleepyhead";
         Sleepyhead.name_kr = "잠꾸러기";
@@ -990,13 +1001,13 @@ public class Player_Characteristic : MonoBehaviour
         Sleepyhead.Sprite = Characteristic_Image[32];
         Sleepyhead.Points = +4;
         Sleepyhead.type = Characteristic_type.Negatives;
-        Sleepyhead.Choice = false;
+        Sleepyhead.Choice = Choice;
         return Sleepyhead;
         // 피로도 상승률 +30%, 수면 효율 -10%
         // 비활성화되는 특성: 잠이 없는
     }
 
-    Characteristic Characteristic_Prone_to_Illness(Characteristic Prone_to_Illness)
+    Characteristic Characteristic_Prone_to_Illness(Characteristic Prone_to_Illness, bool Choice)
     {
         Prone_to_Illness.name = "Prone to Illness";
         Prone_to_Illness.name_kr = "질병에 취약함";
@@ -1006,13 +1017,13 @@ public class Player_Characteristic : MonoBehaviour
         Prone_to_Illness.Sprite = Characteristic_Image[33];
         Prone_to_Illness.Points = +4;
         Prone_to_Illness.type = Characteristic_type.Negatives;
-        Prone_to_Illness.Choice = false;
+        Prone_to_Illness.Choice = Choice;
         return Prone_to_Illness;
         // 감기에 걸릴 확률 +70%, 추위 내성 -20%, 추위 진행 속도 +50%, 좀비화 속도 +25%
         // 비활성화되는 특성: 강한 회복력
     }
 
-    Characteristic Characteristic_Pacifist(Characteristic Pacifist)
+    Characteristic Characteristic_Pacifist(Characteristic Pacifist, bool Choice)
     {
         Pacifist.name = "Pacifist";
         Pacifist.name_kr = "평화주의자";
@@ -1022,12 +1033,12 @@ public class Player_Characteristic : MonoBehaviour
         Pacifist.Sprite = Characteristic_Image[34];
         Pacifist.Points = +4;
         Pacifist.type = Characteristic_type.Negatives;
-        Pacifist.Choice = false;
+        Pacifist.Choice = Choice;
         return Pacifist;
         // 모든 무기, 물건관리, 조준 스킬의 경험치 습득률 -25%
     }
 
-    Characteristic Characteristic_Asthmatic(Characteristic Asthmatic)
+    Characteristic Characteristic_Asthmatic(Characteristic Asthmatic, bool Choice)
     {
         Asthmatic.name = "Asthmatic";
         Asthmatic.name_kr = "천식환자";
@@ -1037,7 +1048,7 @@ public class Player_Characteristic : MonoBehaviour
         Asthmatic.Sprite = Characteristic_Image[35];
         Asthmatic.Points = +5;
         Asthmatic.type = Characteristic_type.Negatives;
-        Asthmatic.Choice = false;
+        Asthmatic.Choice = Choice;
         return Asthmatic;
         // 달리기와 질주의 지구력 소모량 +40%, 도구와 무기 사용의 지구력 소모량 +30%
     }
@@ -1057,7 +1068,7 @@ public class Player_Characteristic : MonoBehaviour
     //    // 출혈 상태의 상처를 치료하면 공황무들 발생
     //}
 
-    Characteristic Characteristic_Out_of_Shape(Characteristic Out_of_Shape)
+    Characteristic Characteristic_Out_of_Shape(Characteristic Out_of_Shape, bool Choice)
     {
         Out_of_Shape.name = "Out of Shape";
         Out_of_Shape.name_kr = "건강 이상";
@@ -1067,12 +1078,12 @@ public class Player_Characteristic : MonoBehaviour
         Out_of_Shape.Sprite = Characteristic_Image[36];
         Out_of_Shape.Points = +6;
         Out_of_Shape.type = Characteristic_type.Negatives;
-        Out_of_Shape.Choice = false;
+        Out_of_Shape.Choice = Choice;
         return Out_of_Shape;
         // 체력 -2
     }
 
-    Characteristic Characteristic_Overweight(Characteristic Overweight)
+    Characteristic Characteristic_Overweight(Characteristic Overweight, bool Choice)
     {
         Overweight.name = "Overweight";
         Overweight.name_kr = "과체중";
@@ -1082,7 +1093,7 @@ public class Player_Characteristic : MonoBehaviour
         Overweight.Sprite = Characteristic_Image[37];
         Overweight.Points = +6;
         Overweight.type = Characteristic_type.Negatives;
-        Overweight.Choice = false;
+        Overweight.Choice = Choice;
         return Overweight;
         // 시작 몸무게: 95kg
         // 몸무게 기준: 85~99kg
@@ -1093,7 +1104,7 @@ public class Player_Characteristic : MonoBehaviour
         // 낮은 담장을 뛰어넘을 때 넘어지지 않을 확률 +10%
     }
 
-    Characteristic Characteristic_High_Thirst(Characteristic High_Thirst)
+    Characteristic Characteristic_High_Thirst(Characteristic High_Thirst, bool Choice)
     {
         High_Thirst.name = "High Thirst";
         High_Thirst.name_kr = "높은 갈증";
@@ -1103,13 +1114,13 @@ public class Player_Characteristic : MonoBehaviour
         High_Thirst.Sprite = Characteristic_Image[38];
         High_Thirst.Points = +6;
         High_Thirst.type = Characteristic_type.Negatives;
-        High_Thirst.Choice = false;
+        High_Thirst.Choice = Choice;
         return High_Thirst;
         // 갈증 진행 속도 +100%
         // 비활성화되는 특성: 낮은 갈증
     }
 
-    Characteristic Characteristic_Slow_Healer(Characteristic Slow_Healer)
+    Characteristic Characteristic_Slow_Healer(Characteristic Slow_Healer, bool Choice)
     {
         Slow_Healer.name = "Slow Healer";
         Slow_Healer.name_kr = "느린 치유";
@@ -1119,12 +1130,12 @@ public class Player_Characteristic : MonoBehaviour
         Slow_Healer.Sprite = Characteristic_Image[39];
         Slow_Healer.Points = +6;
         Slow_Healer.type = Characteristic_type.Negatives;
-        Slow_Healer.Choice = false;
+        Slow_Healer.Choice = Choice;
         return Slow_Healer;
         // 긁힘, 찢어짐, 물림, 깊은 상처, 화상 상처 심각도 증가
         // 비활성화되는 특성: 빠른 회복
     }
-    Characteristic Characteristic_Slow_Learner(Characteristic Slow_Learner)
+    Characteristic Characteristic_Slow_Learner(Characteristic Slow_Learner, bool Choice)
     {
         Slow_Learner.name = "Slow Learner";
         Slow_Learner.name_kr = "느린 학습";
@@ -1134,13 +1145,13 @@ public class Player_Characteristic : MonoBehaviour
         Slow_Learner.Sprite = Characteristic_Image[40];
         Slow_Learner.Points = +6;
         Slow_Learner.type = Characteristic_type.Negatives;
-        Slow_Learner.Choice = false;
+        Slow_Learner.Choice = Choice;
         return Slow_Learner;
         // 모든 스킬의 경험치 획득량 -30%
         // 비활성화되는 특성: 현자
     }
 
-    Characteristic Characteristic_Restless_Sleeper(Characteristic Restless_Sleeper)
+    Characteristic Characteristic_Restless_Sleeper(Characteristic Restless_Sleeper, bool Choice)
     {
         Restless_Sleeper.name = "Restless Sleeper";
         Restless_Sleeper.name_kr = "수면장애";
@@ -1150,12 +1161,12 @@ public class Player_Characteristic : MonoBehaviour
         Restless_Sleeper.Sprite = Characteristic_Image[41];
         Restless_Sleeper.Points = +6;
         Restless_Sleeper.type = Characteristic_type.Negatives;
-        Restless_Sleeper.Choice = false;
+        Restless_Sleeper.Choice = Choice;
         return Restless_Sleeper;
         // 최대 수면 시간이 3시간으로 제한됨, 수면으로 경감되는 피로도 감소
     }
 
-    Characteristic Characteristic_Feeble(Characteristic Feeble)
+    Characteristic Characteristic_Feeble(Characteristic Feeble, bool Choice)
     {
         Feeble.name = "Feeble";
         Feeble.name_kr = "연약함";
@@ -1165,12 +1176,12 @@ public class Player_Characteristic : MonoBehaviour
         Feeble.Sprite = Characteristic_Image[42];
         Feeble.Points = +6;
         Feeble.type = Characteristic_type.Negatives;
-        Feeble.Choice = false;
+        Feeble.Choice = Choice;
         return Feeble;
         // 근력 -2
     }
 
-    Characteristic Characteristic_Underweight(Characteristic Underweight)
+    Characteristic Characteristic_Underweight(Characteristic Underweight, bool Choice)
     {
         Underweight.name = "Underweight";
         Underweight.name_kr = "저체중";
@@ -1180,7 +1191,7 @@ public class Player_Characteristic : MonoBehaviour
         Underweight.Sprite = Characteristic_Image[43];
         Underweight.Points = +6;
         Underweight.type = Characteristic_type.Negatives;
-        Underweight.Choice = false;
+        Underweight.Choice = Choice;
         return Underweight;
         // 시작 몸무게: 70kg
         // 몸무게 기준: 65~75kg
@@ -1190,7 +1201,7 @@ public class Player_Characteristic : MonoBehaviour
         // 높은 담장을 넘을 확률 -15%
     }
 
-    Characteristic Characteristic_Illiterate(Characteristic Illiterate)
+    Characteristic Characteristic_Illiterate(Characteristic Illiterate, bool Choice)
     {
         Illiterate.name = "Illiterate";
         Illiterate.name_kr = "문맹";
@@ -1200,13 +1211,13 @@ public class Player_Characteristic : MonoBehaviour
         Illiterate.Sprite = Characteristic_Image[44];
         Illiterate.Points = +8;
         Illiterate.type = Characteristic_type.Negatives;
-        Illiterate.Choice = false;
+        Illiterate.Choice = Choice;
         return Illiterate;
         // 읽기 비활성화
         // 비활성화되는 특성: 속독, 정독
     }
 
-    Characteristic Characteristic_Thin_skinned(Characteristic Thin_skinned)
+    Characteristic Characteristic_Thin_skinned(Characteristic Thin_skinned, bool Choice)
     {
         Thin_skinned.name = "Thin skinned";
         Thin_skinned.name_kr = "얇은 피부";
@@ -1216,7 +1227,7 @@ public class Player_Characteristic : MonoBehaviour
         Thin_skinned.Sprite = Characteristic_Image[45];
         Thin_skinned.Points = +8;
         Thin_skinned.type = Characteristic_type.Negatives;
-        Thin_skinned.Choice = false;
+        Thin_skinned.Choice = Choice;
         return Thin_skinned;
         // 모든 긁힘, 찢어짐, 물림 확률 +23%
         // 나무를 지나갈 때 부상이 생길 확률 +30%
@@ -1224,7 +1235,7 @@ public class Player_Characteristic : MonoBehaviour
         // 비활성화되는 특성: 두꺼운 피부
     }
 
-    Characteristic Characteristic_Obese(Characteristic Obese)
+    Characteristic Characteristic_Obese(Characteristic Obese, bool Choice)
     {
         Obese.name = "Obese";
         Obese.name_kr = "비만";
@@ -1234,7 +1245,7 @@ public class Player_Characteristic : MonoBehaviour
         Obese.Sprite = Characteristic_Image[46];
         Obese.Points = +10;
         Obese.type = Characteristic_type.Negatives;
-        Obese.Choice = false;
+        Obese.Choice = Choice;
         return Obese;
         // 체력 -2
         // 달리기 속도 감소
@@ -1244,7 +1255,7 @@ public class Player_Characteristic : MonoBehaviour
         // 좀비와 부딪칠 때 넘어질 확률 -10%
     }
 
-    Characteristic Characteristic_Unfit(Characteristic Unfit)
+    Characteristic Characteristic_Unfit(Characteristic Unfit, bool Choice)
     {
         Unfit.name = "Unfit";
         Unfit.name_kr = "비실함";
@@ -1254,12 +1265,12 @@ public class Player_Characteristic : MonoBehaviour
         Unfit.Sprite = Characteristic_Image[47];
         Unfit.Points = +10;
         Unfit.type = Characteristic_type.Negatives;
-        Unfit.Choice = false;
+        Unfit.Choice = Choice;
         return Unfit;
         // 체력 -4
     }
 
-    Characteristic Characteristic_Very_Underweight(Characteristic Very_Underweight)
+    Characteristic Characteristic_Very_Underweight(Characteristic Very_Underweight, bool Choice)
     {
         Very_Underweight.name = "Very Underweight";
         Very_Underweight.name_kr = "심한 저체중";
@@ -1269,7 +1280,7 @@ public class Player_Characteristic : MonoBehaviour
         Very_Underweight.Sprite = Characteristic_Image[48];
         Very_Underweight.Points = +10;
         Very_Underweight.type = Characteristic_type.Negatives;
-        Very_Underweight.Choice = false;
+        Very_Underweight.Choice = Choice;
         return Very_Underweight;
         // 시작 몸무게: 60kg
         // 몸무게 기준: 50~64kg
@@ -1280,7 +1291,7 @@ public class Player_Characteristic : MonoBehaviour
         // 높은 담장을 넘을 확률 -25%
     }
 
-    Characteristic Characteristic_Emaciated(Characteristic Emaciated)
+    Characteristic Characteristic_Emaciated(Characteristic Emaciated, bool Choice)
     {
         Emaciated.name = "Emaciated";
         Emaciated.name_kr = "수척함";
@@ -1290,7 +1301,7 @@ public class Player_Characteristic : MonoBehaviour
         Emaciated.Sprite = Characteristic_Image[49];
         Emaciated.Points = +0;  // 선택불가
         Emaciated.type = Characteristic_type.Negatives;
-        Emaciated.Choice = false;
+        Emaciated.Choice = Choice;
         return Emaciated;
         // 몸무게 기준: 49kg 이하
         // 체력 -2
@@ -1302,7 +1313,7 @@ public class Player_Characteristic : MonoBehaviour
         // 체중이 35kg 이하로 내려가면 영양실조로 죽게 됨
     }
 
-    Characteristic Characteristic_Weak(Characteristic Weak)
+    Characteristic Characteristic_Weak(Characteristic Weak, bool Choice)
     {
         Weak.name = "Weak";
         Weak.name_kr = "약함";
@@ -1312,12 +1323,12 @@ public class Player_Characteristic : MonoBehaviour
         Weak.Sprite = Characteristic_Image[50];
         Weak.Points = +10;
         Weak.type = Characteristic_type.Negatives;
-        Weak.Choice = false;
+        Weak.Choice = Choice;
         return Weak;
         // 근력 -5, 무게제한 6으로 감소됨
     }
 
-    Characteristic Characteristic_Deaf(Characteristic Deaf)
+    Characteristic Characteristic_Deaf(Characteristic Deaf, bool Choice)
     {
         Deaf.name = "Deaf";
         Deaf.name_kr = "청각 장애";
@@ -1327,7 +1338,7 @@ public class Player_Characteristic : MonoBehaviour
         Deaf.Sprite = Characteristic_Image[51];
         Deaf.Points = +12;
         Deaf.type = Characteristic_type.Negatives;
-        Deaf.Choice = false;
+        Deaf.Choice = Choice;
         return Deaf;
         // 소리가 들리지 않는다
         // 비활성화되는 특성: 예민한 청력, 어두운 귀
@@ -1346,7 +1357,7 @@ public class Player_Characteristic : MonoBehaviour
      */
 
     // 좀도둑
-    Characteristic Characteristic_Burglar(Characteristic Burglar)
+    Characteristic Characteristic_Burglar(Characteristic Burglar, bool Choice)
     {
         Burglar.name = "Burglar";
         Burglar.name_kr = "좀도둑";
@@ -1356,14 +1367,14 @@ public class Player_Characteristic : MonoBehaviour
         Burglar.Sprite = Characteristic_Image[52];
         Burglar.Points = +0;
         Burglar.type = Characteristic_type.Occupation;
-        Burglar.Choice = false;
+        Burglar.Choice = Choice;
         return Burglar;
         // 스킬 제한없이 차량 배선 따기 가능
         // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
     }
 
     // 군인
-    Characteristic Characteristic_Desensitized(Characteristic Desensitized)
+    Characteristic Characteristic_Desensitized(Characteristic Desensitized, bool Choice)
     {
         Desensitized.name = "Desensitized";
         Desensitized.name_kr = "둔감함";
@@ -1373,13 +1384,13 @@ public class Player_Characteristic : MonoBehaviour
         Desensitized.Sprite = Characteristic_Image[53];
         Desensitized.Points = +0;
         Desensitized.type = Characteristic_type.Occupation;
-        Desensitized.Choice = false;
+        Desensitized.Choice = Choice;
         return Desensitized;
         // 긴장 무들에 면역
     }
 
     // 낚시꾼
-    Characteristic Characteristic_Angler(Characteristic Angler)
+    Characteristic Characteristic_Angler(Characteristic Angler, bool Choice)
     {
         Angler.name = "Angler";
         Angler.name_kr = "낚시꾼";
@@ -1389,7 +1400,7 @@ public class Player_Characteristic : MonoBehaviour
         Angler.Sprite = Characteristic_Image[54];
         Angler.Points = -4;
         Angler.type = Characteristic_type.Occupation;
-        Angler.Choice = false;
+        Angler.Choice = Choice;
         return Angler;
         // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
     }

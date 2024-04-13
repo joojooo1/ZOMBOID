@@ -44,7 +44,7 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
             Prefab.Choice = true;
             for(int i = 0; i < Player_Characteristic.instance.characteristics_list.Count; i++)
             {
-                if (Player_Characteristic.instance.characteristics_list[i].Prefab == Prefab)
+                if (Player_Characteristic.instance.characteristics_list[i].Prefab.Characteristic_number == Prefab.Characteristic_number)
                 {
                     GameObject tempObj = null;
                     Player_Characteristic.instance.Set_Characteristic(Prefab.Characteristic_number, Prefab.Choice, tempObj);
@@ -56,7 +56,15 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
         else  // characteristics_Player -> characteristics_list
         {
             Prefab.Choice = false;
-
+            for (int i = 0; i < Player_Characteristic.instance.characteristics_Player.Count; i++)
+            {
+                if (Player_Characteristic.instance.characteristics_Player[i].Prefab.Characteristic_number == Prefab.Characteristic_number)
+                {
+                    GameObject tempObj = null;
+                    Player_Characteristic.instance.Set_Characteristic(Prefab.Characteristic_number, Prefab.Choice, tempObj);
+                    Player_Characteristic.instance.Remove_Selected_list(Prefab.Characteristic_number, true);
+                }
+            }
 
 
         }
@@ -77,3 +85,27 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
     }
 
 }
+
+
+
+/*
+ 0 <-> 21
+ 3 <-> 24, 44
+ 4 <-> 32
+ 5 <-> 26
+ 6 <-> 33
+ 7 <-> 29
+ 8 <-> 22, 28, 30
+ 9 <-> 23
+ 11 <-> 38
+ 12 <-> 25
+ 13 <-> 39
+ 14 <-> 31, 51
+ 16 <-> 40
+ 17 <-> 45
+ 18 <-> 22, 28, 30
+
+
+
+
+ */
