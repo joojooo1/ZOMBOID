@@ -2376,6 +2376,8 @@ MonoBehaviour:
   - {fileID: 3689584533846215410}
   - {fileID: 6775795922238698790}
   - {fileID: 4969782526629940951}
+  Window_value: {fileID: 275090838928422601}
+  Value_Prefab: {fileID: 3575595358308766695, guid: d52e20ca69f0f274dbf8ca7819aae096, type: 3}
 --- !u!1 &3437631860305373712
 GameObject:
   m_ObjectHideFlags: 0
@@ -3942,6 +3944,7 @@ GameObject:
   - component: {fileID: 8496392145675925321}
   - component: {fileID: 7600793564462051075}
   - component: {fileID: 3689584533846215410}
+  - component: {fileID: 1374820634556156729}
   m_Layer: 5
   m_Name: Button_fisher
   m_TagString: Untagged
@@ -4064,6 +4067,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1374820634556156729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5849967060600884478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972d9bd08f0349c4ba9a14c62a5152ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
 --- !u!1 &5889164692719563637
 GameObject:
   m_ObjectHideFlags: 0
@@ -4664,6 +4680,7 @@ GameObject:
   - component: {fileID: 6412554272283543691}
   - component: {fileID: 2061967485497499111}
   - component: {fileID: 6775795922238698790}
+  - component: {fileID: 1879649099827583830}
   m_Layer: 5
   m_Name: Button_burglar
   m_TagString: Untagged
@@ -4786,6 +4803,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1879649099827583830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7002376138442342260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972d9bd08f0349c4ba9a14c62a5152ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 1
 --- !u!1 &7345503769460133356
 GameObject:
   m_ObjectHideFlags: 0
@@ -5331,7 +5361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debb07c2c7a1bac4e865b154342f51d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  P_button: {fileID: 1975033310305562865}
+  value_name: {fileID: 0}
+  value_totalvalue: {fileID: 0}
 --- !u!1 &8528145926572434047
 GameObject:
   m_ObjectHideFlags: 0
@@ -5419,6 +5450,7 @@ GameObject:
   - component: {fileID: 6755763092916674598}
   - component: {fileID: 4960278605759942600}
   - component: {fileID: 4969782526629940951}
+  - component: {fileID: 8141988611181112229}
   m_Layer: 5
   m_Name: Button_veteran
   m_TagString: Untagged
@@ -5541,6 +5573,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8141988611181112229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8645017893046223400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972d9bd08f0349c4ba9a14c62a5152ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 2
 --- !u!1 &8820626991702226626
 GameObject:
   m_ObjectHideFlags: 0
@@ -5674,6 +5719,7 @@ GameObject:
   - component: {fileID: 275090838928422601}
   - component: {fileID: 7342412094618632456}
   - component: {fileID: 9192931440024590325}
+  - component: {fileID: 8364817651718414555}
   m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
@@ -5738,6 +5784,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8364817651718414555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967183149423149456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 7
+    m_Right: 7
+    m_Top: 7
+    m_Bottom: 7
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 1
+  m_CellSize: {x: 193.4167, y: 12.123}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &9175734190145372203
 GameObject:
   m_ObjectHideFlags: 0
