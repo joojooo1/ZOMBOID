@@ -2,25 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum Characteristic_Value_type
 {
     Fitness = 0,
     Strength = 1,
     Fishing = 2,
-    Burglar = 3,
-    Veteran = 4
+    Foraging = 3,
+    Lightfooted = 4,
+    Nimble = 5,
+    Sneaking = 6,
+    Insensitivity = 7,
+    Aiming = 8,
+    Reloading = 9
 }
 
 public class UI_Title : MonoBehaviour
 {
     public static UI_Title ui_title;
 
-    public Button[] Button_Job;
+    public GameObject title_mune_Bar;
+    public GameObject Choice_Job_Prefab;
+
+    public UnityEngine.UI.Button[] Button_Job;
 
     public Transform Window_value;
     [SerializeField] GameObject Value_Prefab;
     List<UI_Title_Characteristic_value_prefab> value_List = new List<UI_Title_Characteristic_value_prefab>();
+
+    [SerializeField] UnityEngine.UI.Text Total_Point_Window;
+    int Total_Point;
+    [SerializeField] GameObject Nextbutton;
 
     void Awake()
     {
@@ -29,15 +42,44 @@ public class UI_Title : MonoBehaviour
 
     private void OnEnable()
     {
-        for(int i = 0; i < 2; i++)
+        Total_Point = 8;
+        Total_Point_Window.text = Total_Point.ToString();
+        Total_Point_Window.color = Color.green;
+
+        for (int i = 0; i < 2; i++)
         {
             GameObject Totalvalue = Instantiate(Value_Prefab, Window_value);
             value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
         }
-        value_List[0].Create_Totalvalue("Fitness", Characteristic_Value_type.Fitness);
-        value_List[0].Set_Characteristic_T_value(Characteristic_Value_type.Fitness, 5);
-        value_List[1].Create_Totalvalue("Strength", Characteristic_Value_type.Strength);
-        value_List[1].Set_Characteristic_T_value(Characteristic_Value_type.Strength, 5);
+        value_List[0].Create_Totalvalue("Fitness", "체력", 5, Player_Job.None,Characteristic_Value_type.Fitness);
+        value_List[0].Set_Characteristic_T_value(Characteristic_Value_type.Fitness, 0);
+        value_List[1].Create_Totalvalue("Strength", "근력", 5, Player_Job.None, Characteristic_Value_type.Strength);
+        value_List[1].Set_Characteristic_T_value(Characteristic_Value_type.Strength, 0);
+    }
+
+    private void Update()
+    {
+        for(int i = 0;i<value_List.Count;i++)
+        {
+            value_List[i].Set_Language();
+        }
+    }
+
+    public void Set_TotalPoint_text(int point)
+    {
+        Total_Point += point;
+
+        Total_Point_Window.text = Total_Point.ToString();
+        if(Total_Point >= 0)
+        {
+            Total_Point_Window.color = Color.green;
+            Nextbutton.SetActive(true);
+        }
+        else
+        {
+            Total_Point_Window.color = Color.red;
+            Nextbutton.SetActive(false);
+        }
     }
 
     public void On_Button(int index)
@@ -89,56 +131,282 @@ public class UI_Title : MonoBehaviour
 
     public void Job_fisher()
     {
-        Debug.Log("Job_fisher");
-        for (int i = 0; i < value_List.Count; i++)
+        if(Player_Characteristic.instance.player_Job != Player_Job.fisher)
         {
-            if (value_List[i]._type == Characteristic_Value_type.Burglar
-                || value_List[i]._type == Characteristic_Value_type.Veteran)
+            if (Player_Characteristic.instance.player_Job == Player_Job.Burglar)
             {
-                value_List.Remove(value_List[i]);
+                Set_TotalPoint_text(6);
             }
-        }
-        GameObject Totalvalue = null;
-        Totalvalue = Instantiate(Value_Prefab, Window_value);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Fishing", Characteristic_Value_type.Fishing);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Fishing ,3);
-        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+            else if (Player_Characteristic.instance.player_Job == Player_Job.Veteran)
+            {
+                Set_TotalPoint_text(8);
+            }
+            Player_Characteristic.instance.player_Job = Player_Job.fisher;
+            Set_TotalPoint_text(-4);
+
+            for (int i = 0; i < value_List.Count;)
+            {
+                if (value_List[i].Job_type == Player_Job.Burglar
+                    || value_List[i].Job_type == Player_Job.Veteran)
+                {
+                    Destroy(value_List[i].gameObject);
+                    value_List.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Fishing)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Fishing", "낚시", 3, Player_Job.fisher, Characteristic_Value_type.Fishing);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Fishing, 125);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Foraging)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Foraging", "채집", 1, Player_Job.fisher, Characteristic_Value_type.Foraging);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Foraging, 75);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+
+        }        
     }
 
     public void Job_Burglar()
     {
-        Debug.Log("Job_burglar");
-        for (int i = 0; i < value_List.Count; i++)
+        if (Player_Characteristic.instance.player_Job != Player_Job.Burglar)
         {
-            if (value_List[i]._type == Characteristic_Value_type.Fishing
-                || value_List[i]._type == Characteristic_Value_type.Veteran)
+            if (Player_Characteristic.instance.player_Job == Player_Job.fisher)
             {
-                value_List.Remove(value_List[i]);
+                Set_TotalPoint_text(4);
             }
-        }
-        GameObject Totalvalue = null;
-        Totalvalue = Instantiate(Value_Prefab, Window_value);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Burglar", Characteristic_Value_type.Burglar);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Burglar, 3);
-        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+            else if (Player_Characteristic.instance.player_Job == Player_Job.Veteran)
+            {
+                Set_TotalPoint_text(8);
+            }
+            Player_Characteristic.instance.player_Job = Player_Job.Burglar;
+            Set_TotalPoint_text(-6);
+
+            for (int i = 0; i < value_List.Count;)
+            {
+                if (value_List[i].Job_type == Player_Job.fisher
+                    || value_List[i].Job_type == Player_Job.Veteran)
+                {
+                    Destroy(value_List[i].gameObject);
+                    value_List.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Lightfooted)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Lightfooted", "조용한 발걸음", 2, Player_Job.Burglar, Characteristic_Value_type.Lightfooted);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Lightfooted, 100);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Nimble)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Nimble", "조준시 발걸음", 2, Player_Job.Burglar, Characteristic_Value_type.Nimble);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Nimble, 100);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Sneaking)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Sneaking", "은밀한 움직임", 2, Player_Job.Burglar, Characteristic_Value_type.Sneaking);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Sneaking, 100);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+
+        }        
     }
 
     public void Job_Veteran()
     {
-        Debug.Log("Job_veteran");
-        for (int i = 0; i < value_List.Count; i++)
+        if (Player_Characteristic.instance.player_Job != Player_Job.Veteran)
         {
-            if (value_List[i]._type == Characteristic_Value_type.Fishing
-                || value_List[i]._type == Characteristic_Value_type.Burglar)
+            if (Player_Characteristic.instance.player_Job == Player_Job.fisher)
             {
-                value_List.Remove(value_List[i]);
+                Set_TotalPoint_text(4);
             }
-        }
+            else if (Player_Characteristic.instance.player_Job == Player_Job.Burglar)
+            {
+                Set_TotalPoint_text(6);
+            }
+            Player_Characteristic.instance.player_Job = Player_Job.Veteran;
+            Set_TotalPoint_text(-8);
+
+            for (int i = 0; i < value_List.Count;)
+            {
+                if (value_List[i].Job_type == Player_Job.fisher
+                    || value_List[i].Job_type == Player_Job.Burglar)
+                {
+                    Destroy(value_List[i].gameObject);
+                    value_List.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Insensitivity)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Insensitivity", "둔감함", 1, Player_Job.Veteran, Characteristic_Value_type.Insensitivity);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Insensitivity, 0);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Aiming)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Aiming", "조준", 2, Player_Job.Veteran, Characteristic_Value_type.Aiming);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Aiming, 100);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+            for (int i = 0; i < value_List.Count; i++)
+            {
+                if (value_List[i]._type == Characteristic_Value_type.Reloading)
+                    break;
+                else
+                {
+                    if (i == value_List.Count - 1)
+                    {
+                        GameObject Totalvalue = null;
+                        Totalvalue = Instantiate(Value_Prefab, Window_value);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Reloading", "재장전", 2, Player_Job.Veteran, Characteristic_Value_type.Reloading);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Reloading, 100);
+                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+                    }
+                }
+            }
+
+        }        
+    }
+
+    public void Add_value_list(string name, string name_kr, float level, float add_value, Player_Job Job, Characteristic_Value_type type)
+    {
         GameObject Totalvalue = null;
         Totalvalue = Instantiate(Value_Prefab, Window_value);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Veteran", Characteristic_Value_type.Veteran);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Veteran ,3);
+        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue(name, name_kr, level, Job, type);
+        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(type, add_value);
         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+    }
+
+    public void Remove_value_list()
+    {
+
+    }
+
+
+    public void Set_Player_Setting_Job()  // [ 다음 ] 버튼 누르면 호출
+    {
+        for(int i = 0; i < value_List.Count; i++)
+        {
+            switch(value_List[i]._type)
+            {
+                case Characteristic_Value_type.Fitness:
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Strength:
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Fishing:
+                    Player_main.player_main.Skill.Fishing_Level.Set_S_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Foraging:
+                    Player_main.player_main.Skill.Foraging_Level.Set_S_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Lightfooted:
+                    Player_main.player_main.Skill.Lightfooted_Level.Set_G_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Nimble:
+                    Player_main.player_main.Skill.Nimble_Level.Set_G_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Sneaking:
+                    Player_main.player_main.Skill.Sneaking_Level.Set_G_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Insensitivity:
+                    
+                    break;
+                case Characteristic_Value_type.Aiming:
+                    Player_main.player_main.Skill.Aiming_Level.Set_Gun_Level(value_List[i].Get_Level());
+                    break;
+                case Characteristic_Value_type.Reloading:
+                    Player_main.player_main.Skill.Reloading_Level.Set_Gun_Level(value_List[i].Get_Level());
+                    break;
+                default: break;
+            }
+        }
     }
 
 }

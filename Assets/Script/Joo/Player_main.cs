@@ -22,6 +22,8 @@ public enum Damage_Pattern
     Burn = 8  // È­»ó
 }
 
+
+
 public class Player_main : MonoBehaviour
 {
     public static Player_main player_main;

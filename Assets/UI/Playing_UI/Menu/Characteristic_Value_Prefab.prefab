@@ -92,6 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value_name: {fileID: 5975094082700224394}
   value_totalvalue: {fileID: 787581811641892204}
+  Job_type: 0
+  _type: 0
 --- !u!1 &3823246501722497747
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,8 +128,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 182.5047, y: -6.0615}
-  m_SizeDelta: {x: 21.8216, y: 12.123}
+  m_AnchoredPosition: {x: 170.57538, y: -6.0615}
+  m_SizeDelta: {x: 45.6802, y: 12.123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2807494859022069124
 CanvasRenderer:
@@ -164,7 +166,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 6
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
