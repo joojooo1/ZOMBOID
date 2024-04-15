@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,6 +98,7 @@ public class player_animation : MonoBehaviour
     }
     public void animatorsetFloat(string ANIMA_NAME, float set)
     {
+
         animator.SetFloat(ANIMA_NAME, set);
     }
     void walkaudio()
@@ -106,17 +108,12 @@ public class player_animation : MonoBehaviour
     public void animatorsetting(float setting)
     {
         animator.SetLayerWeight(1, setting);
-        Debug.Log(animator.GetLayerIndex("leg_R"));
-    }
-    void lowasd()
-    {
-        animator.applyRootMotion = true;
-    }
-    void lowdsa()
-    {
-        animator.applyRootMotion = false;
-        playernav.GetComponent<player_movement>().OffMeshLinkasd();
         
+    }
+    void end()
+    {
+        
+
     }
 
 }

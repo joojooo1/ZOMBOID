@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.HighDefinition.ScalableSettingLevelParameter;
 
 public class PlayerPassiveSkill_Level  // 체력, 근력
 {
     string P_SkillName = "";
+    string P_SkillName_kr = "";
     float P_Level = 0f;
     float P_Min_Level = 0f;
     float P_Max_Level = 10f;
@@ -15,11 +17,12 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerPassiveSkill_Level(float initialLevel, string skillName)
+    public PlayerPassiveSkill_Level(float initialLevel, string skillName, string skillname_kr)
     {
         if (initialLevel >= P_Min_Level && initialLevel <= P_Max_Level)
         {
             P_SkillName = skillName;
+            P_SkillName_kr = skillname_kr;
             P_Level = initialLevel;
             InitializeExpRequirements();
 
@@ -37,7 +40,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
                    (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
                  */
             }
-            else if(P_SkillName == "Strength")
+            else if (P_SkillName == "Strength")
             {
                 Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
@@ -75,8 +78,8 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
     public void SetEXP(float exp)
     {
-        P_EXP += exp;
-        if(P_Level < P_Max_Level && P_EXP >= P_expRequirements[(int)P_Level][0])
+        P_EXP = P_EXP + exp;
+        if (P_Level < P_Max_Level && P_EXP >= P_expRequirements[(int)P_Level][0])
         {
             P_EXP -= P_expRequirements[(int)P_Level][0];
             P_Level++;
@@ -122,11 +125,38 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
     {
         return P_EXP;
     }
+
+    public float Get_P_TotalEXP()
+    {
+        if(P_Level < 10)
+            return P_expRequirements[(int)P_Level][0];
+        else
+            return P_expRequirements[(int)P_Level-1][0];
+    }
+
+    public float Get_P_EXP()
+    {
+        return Get_P_CurrentEXP() / Get_P_TotalEXP();
+    }
+
+    public string Get_P_SkillName()
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            return P_SkillName_kr;
+        }
+        else
+        {
+            return P_SkillName;
+        }
+    }
+
 }
 
 public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 발걸음, 은밀한 움직임
 {
     string G_SkillName = "";
+    string G_SkillName_kr = "";
     float G_Level = 0f;
     float G_Min_Level = 0f;
     float G_Max_Level = 10f;
@@ -138,11 +168,12 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerGeneralSkill_Level(float initialLevel, string skillname)  
+    public PlayerGeneralSkill_Level(float initialLevel, string skillname, string skillname_kr)  
     {
         if (initialLevel >= G_Min_Level && initialLevel <= G_Max_Level)
         {
             G_SkillName = skillname;
+            G_SkillName_kr = skillname_kr;
             G_Level = initialLevel;
             InitializeExpRequirements();
 
@@ -227,12 +258,38 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
     {
         return G_EXP;
     }
+
+    public float Get_G_TotalEXP()
+    {
+        if (G_Level < 10)
+            return G_expRequirements[(int)G_Level][0];
+        else
+            return G_expRequirements[(int)G_Level - 1][0];
+    }
+
+    public float Get_G_EXP()
+    {
+        return Get_G_CurrentEXP() / Get_G_TotalEXP();
+    }
+
+    public string Get_G_SkillName()
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            return G_SkillName_kr;
+        }
+        else
+        {
+            return G_SkillName;
+        }
+    }
 }
 
 public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, 창
 {
     Weapon_type W_type;
     string W_SkillName = "";
+    string W_SkillName_kr = "";
     float W_Level = 0f;
     float W_Min_Level = 0f;
     float W_Max_Level = 10f;
@@ -242,12 +299,14 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerWeaponSkill_Level(float initialLevel, Weapon_type type)
+    public PlayerWeaponSkill_Level(float initialLevel, Weapon_type type, string skillname, string skillname_kr)
     {
         if (initialLevel >= W_Min_Level && initialLevel <= W_Max_Level)
         {
             W_type = type;
             W_Level = initialLevel;
+            W_SkillName = skillname;
+            W_SkillName_kr = skillname_kr;
             InitializeExpRequirements();
         }
     }
@@ -298,6 +357,31 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     public float Get_W_CurrentEXP()
     {
         return W_EXP;
+    }
+
+    public float Get_W_TotalEXP()
+    {
+        if (W_Level < 10)
+            return W_expRequirements[(int)W_Level][0];
+        else
+            return W_expRequirements[(int)W_Level - 1][0];
+    }
+
+    public float Get_W_EXP()
+    {
+        return Get_W_CurrentEXP() / Get_W_TotalEXP();
+    }
+
+    public string Get_W_SkillName()
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            return W_SkillName_kr;
+        }
+        else
+        {
+            return W_SkillName;
+        }
     }
 
     // 무기 착용, 해제 시 각각 반영되는 효과 설정
@@ -358,6 +442,7 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
 public class PlayerMaintenanceSkill_Level  // 물건관리
 {
     string M_SkillName = "";
+    string M_SkillName_kr = "";
     float M_Level = 0f;
     float M_Min_Level = 0f;
     float M_Max_Level = 10f;
@@ -367,11 +452,13 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerMaintenanceSkill_Level(float initialLevel)
+    public PlayerMaintenanceSkill_Level(float initialLevel, string skillname, string skillname_kr)
     {
         if (initialLevel >= M_Min_Level && initialLevel <= M_Max_Level)
         {
             M_Level = initialLevel;
+            M_SkillName = skillname;
+            M_SkillName_kr = skillname_kr;
             InitializeExpRequirements();
         }
     }
@@ -417,6 +504,31 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
         return M_EXP;
     }
 
+    public float Get_M_TotalEXP()
+    {
+        if (M_Level < 10)
+            return M_expRequirements[(int)M_Level][0];
+        else
+            return M_expRequirements[(int)M_Level - 1][0];
+    }
+
+    public float Get_M_EXP()
+    {
+        return Get_M_CurrentEXP() / Get_M_TotalEXP();
+    }
+
+    public string Get_M_SkillName()
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            return M_SkillName_kr;
+        }
+        else
+        {
+            return M_SkillName;
+        }
+    }
+
     float maintenancemod = 1;
     public float Get_Maintenance(Item_Weapons Weapon)  // 근접무기의 내구도 소모율에 영향
     {
@@ -452,6 +564,7 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
 {
     Weapon_type Gun_type;
     string Gun_SkillName = "";
+    string Gun_SkillName_kr = "";
     float Gun_Level = 0f;
     float Gun_Min_Level = 0f;
     float Gun_Max_Level = 10f;
@@ -461,12 +574,13 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerGunSkill_Level(float initialLevel, Weapon_type type, string SkillName)
+    public PlayerGunSkill_Level(float initialLevel, Weapon_type type, string skillname, string skillname_kr)
     {
         if (initialLevel >= Gun_Min_Level && initialLevel <= Gun_Max_Level)
         {
             Gun_type = type;
-            Gun_SkillName = SkillName;
+            Gun_SkillName = skillname;
+            Gun_SkillName_kr = skillname_kr;
             Gun_Level = initialLevel;
             InitializeExpRequirements();
         }
@@ -517,6 +631,31 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
         return Gun_EXP;
     }
 
+    public float Get_Gun_TotalEXP()
+    {
+        if (Gun_Level < 10)
+            return Gun_expRequirements[(int)Gun_Level][0];
+        else
+            return Gun_expRequirements[(int)Gun_Level - 1][0];
+    }
+
+    public float Get_Gun_EXP()
+    {
+        return Get_Gun_CurrentEXP() / Get_Gun_TotalEXP();
+    }
+
+    public string Get_Gun_SkillName()
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            return Gun_SkillName_kr;
+        }
+        else
+        {
+            return Gun_SkillName;
+        }
+    }
+
     // 무기 착용, 해제 시 각각 반영되는 효과 설정
     public void Set_Gun_Equipping_Effect(bool IsEquipping)
     {
@@ -545,10 +684,12 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
 public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 {
     string C_SkillName = "";
+    string C_SkillName_kr = "";
     float C_Level = 0f;
     float C_Min_Level = 0f;
     float C_Max_Level = 10f;
 
+    public bool Change_Multiplier = true;
     float C_Additional_points_through_Books = 1f;
 
     float C_EXP = 0f;
@@ -556,11 +697,12 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerCraftingSkill_Level(float initialLevel, string skillname)
+    public PlayerCraftingSkill_Level(float initialLevel, string skillname, string skillname_kr)
     {
         if (initialLevel >= C_Min_Level && initialLevel <= C_Max_Level)
         {
             C_SkillName = skillname;
+            C_SkillName_kr = skillname_kr;
             C_Level = initialLevel;
             InitializeExpRequirements();
 
@@ -650,6 +792,36 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
     public float Get_C_CurrentEXP()
     {
         return C_EXP;
+    }
+
+    public float Get_C_TotalEXP()
+    {
+        if (C_Level < 10)
+            return C_expRequirements[(int)C_Level][0];
+        else
+            return C_expRequirements[(int)C_Level - 1][0];
+    }
+
+    public float Get_C_EXP()
+    {
+        return Get_C_CurrentEXP() / Get_C_TotalEXP();
+    }
+
+    public string Get_C_SkillName()
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            return C_SkillName_kr;
+        }
+        else
+        {
+            return C_SkillName;
+        }
+    }
+
+    public float Get_C_Multiplier()
+    {
+        return C_Additional_points_through_Books;
     }
 
     public void Set_C_Books_Point(Item_Literature Book)  // skillbook 일때 호출
@@ -743,10 +915,12 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 {
     string S_SkillName = "";
+    string S_SkillName_kr = "";
     float S_Level = 0f;
     float S_Min_Level = 0f;
     float S_Max_Level = 10f;
 
+    public bool Change_Multiplier = true;
     float S_Additional_points_through_Books = 1f;
 
     float S_EXP = 0f;
@@ -754,11 +928,12 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
-    public PlayerSurvivalSkill_Level(float initialLevel, string skillname)
+    public PlayerSurvivalSkill_Level(float initialLevel, string skillname, string skillname_kr)
     {
         if (initialLevel >= S_Min_Level && initialLevel <= S_Max_Level)
         {
             S_SkillName = skillname;
+            S_SkillName_kr = skillname_kr;
             S_Level = initialLevel;
             InitializeExpRequirements();
 
@@ -840,6 +1015,36 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
     public float Get_S_CurrentEXP()
     {
         return S_EXP;
+    }
+
+    public float Get_S_TotalEXP()
+    {
+        if (S_Level < 10)
+            return S_expRequirements[(int)S_Level][0];
+        else
+            return S_expRequirements[(int)S_Level - 1][0];
+    }
+
+    public float Get_S_EXP()
+    {
+        return Get_S_CurrentEXP() / Get_S_TotalEXP();
+    }
+
+    public string Get_S_SkillName()
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            return S_SkillName_kr;
+        }
+        else
+        {
+            return S_SkillName;
+        }
+    }
+
+    public float Get_S_Multiplier()
+    {
+        return S_Additional_points_through_Books;
     }
 
     public void Set_S_Books_Point(int Book_level)

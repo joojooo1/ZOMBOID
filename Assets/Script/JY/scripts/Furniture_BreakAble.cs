@@ -18,5 +18,6 @@ public class Furniture_BreakAble : MonoBehaviour
         IsLarge = tof3;
         IsMain = tof4;
     }
-    
+   
+
 }

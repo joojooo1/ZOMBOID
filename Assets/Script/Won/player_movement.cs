@@ -20,8 +20,7 @@ public class player_movement : MonoBehaviour
     Vector3 lastpos;
     string anima_name;
     public GameObject playerrot;
-
-
+    public bool low_Fen = false;
     private readonly float[] targetAngles = { -45f, 45f, 135f, -135f };
     // Start is called before the first frame update
     void Start()
@@ -31,23 +30,32 @@ public class player_movement : MonoBehaviour
             playeranime[i] = playeraimeobject[i].GetComponent<player_animation>();
             Debug.Log(i);
         }
-        Collider asd = GetComponent<Collider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         //_main = gameObject.GetComponent<Player_main>();
     }
+    Vector3 Fence;
     Vector3 inputpos;
+    public float test =0;
+    private void Update()
+    {
+        navMeshAgent.speed = this.GetComponent<Player_main>().Get_Moving_Speed();
+        inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") +(UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
+        inputpos.Normalize();
+        inputpos *= Time.fixedDeltaTime * (navMeshAgent.speed);
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-        inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), UnityEngine.Input.GetAxisRaw("Vertical")/2, 0f);
-        inputpos.Normalize();
-        playerpos = new Vector3(transform.position.x + (inputpos.x * Time.deltaTime * 3.5f), transform.position.y + (inputpos.y * Time.deltaTime * 3.5f), 0f);
-        navMeshAgent.SetDestination(playerpos);
-        if (!navMeshAgent.enabled)
+
+        if (navMeshAgent.enabled)
+        {
+            navMeshAgent.Move(inputpos);
+        } 
+        if (!navMeshAgent.enabled&& !low_Fen)
         {
             if (UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
             {
-                transform.position = new Vector3 (test.x-0.5f,test.y -1f,0);
+                //transform.position = new Vector3 (test.x-0.5f,test.y -1f,0);
                 for (int i = 0; i < playeranime.Length; i++)
                 {
                     if (playeraimeobject[i].activeSelf)
@@ -61,40 +69,26 @@ public class player_movement : MonoBehaviour
                 navMeshAgent.enabled = true;
             }
         }
-        if (UnityEngine.Input.GetKeyDown(KeyCode.G))
+        
+        if (low_Fen)
         {
-            for (int i = 0; i < playeranime.Length; i++)
-            {
-                if (!playeraimeobject[i].activeSelf)
-                {
 
-                    playeranime[i].animatorsetFloat("mobile_interaction", 1f);
-                    playeranime[i].animatersetTrigger("don`t_move");
-                }
-            }
-            float currentXRotation = playerrot.transform.rotation.eulerAngles.y;
-            if (currentXRotation >= 180)
+            transform.position = Vector3.Lerp(transform.position, Fence, Time.deltaTime * 3);
+            if (Vector3.Distance(transform.position, Fence) <0.1)
             {
-                currentXRotation -= 360;
-            }
-            Debug.Log("playerrot" + currentXRotation);
-            // 가장 가까운 목표 회전 각도 선택
-            float closestAngle = targetAngles[0];
-            float minDifference = Mathf.Abs(targetAngles[0] - currentXRotation);
-
-            foreach (float angle in targetAngles)
-            {
-                float difference = Mathf.Abs(angle - currentXRotation);
-                if (difference < minDifference)
+                low_Fen = false;
+                for (int i = 0; i < playeranime.Length; i++)
                 {
-                    minDifference = difference;
-                    closestAngle = angle;
+                    if (playeraimeobject[i].activeSelf)
+                    {
+                        playeranime[i].animatorsetting(0.7f);
+
+                    }
+
                 }
+                navMeshAgent.enabled = true;
             }
-            Debug.Log(closestAngle);
-            low_fence(closestAngle);
         }
-
     }
     void playergoseverpos(Vector3 playergoseverpos)
     {
@@ -104,50 +98,91 @@ public class player_movement : MonoBehaviour
     {
         //�������� ��ǥ �޾� �̵� navMeshAgent.SetDestination(playergetseverpos);
     }
-    OffMeshLink link;
+
     string animation_object;
     Furniture_BreakAble FB;
-    Vector3 test;
+    Vector3 playerobject;
     private void OnTriggerStay(Collider other)
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.F))
         {
             lastpos = transform.position;
-            if (other.gameObject.transform.parent.GetComponent<Furniture_BreakAble>().Can_Enter_Animation)
+            if (other.gameObject.transform.parent.tag == "CanGetOver" && !low_Fen)
             {
-                FB = other.gameObject.transform.parent.GetComponent<Furniture_BreakAble>();
-                animation_object = other.gameObject.transform.parent.tag;
-                test = FB.transform.position;
-                if (FB.PointMainBody)
-                {
-                    test = FB.PointMainBody.position;
-                    FB = FB.PointMainBody.gameObject.transform.parent.GetComponent<Furniture_BreakAble>();
-                    animation_object = FB.PointMainBody.gameObject.transform.parent.tag;
-                }
-                Debug.Log(animation_object);
-                if(animation_object == "Bed")
-                {
-                    playobject_bed();
-                }
-                else if (animation_object == "Sit")
-                {
-                    playobject_sit();
-                }
-                
-                navMeshAgent.enabled = false;
-                Debug.Log(lastpos);
+                playobject_low_fence(other);
+
             }
-            else
+            if (other.gameObject.transform.parent.tag == "Sit" || other.gameObject.transform.parent.tag == "Bed" || other.gameObject.transform.tag == "Sit" || other.gameObject.transform.tag == "Bed")
             {
-                Debug.Log(FB.Can_Enter_Animation);
+                playerobject_sit_or_bed(other);
             }
+            
         }
         
-        if (other.gameObject.transform.parent.GetComponent<OffMeshLink>())
+    }
+    void playerobject_sit_or_bed(Collider other)
+    {
+        if (other.gameObject.transform.parent.GetComponent<Furniture_BreakAble>().Can_Enter_Animation)
         {
-            
-            link = other.gameObject.transform.parent.GetComponent<OffMeshLink>();
+            FB = other.gameObject.transform.parent.GetComponent<Furniture_BreakAble>();
+            animation_object = other.gameObject.transform.parent.tag;
+            playerobject = FB.transform.position;
+            if (FB.PointMainBody)
+            {
+                playerobject = FB.PointMainBody.position;
+                FB = FB.PointMainBody.gameObject.transform.parent.GetComponent<Furniture_BreakAble>();
+                animation_object = FB.PointMainBody.gameObject.transform.parent.tag;
+            }
+            Debug.Log(animation_object);
+            if (animation_object == "Bed")
+            {
+                playobject_bed();
+            }
+            else if (animation_object == "Sit")
+            {
+                playobject_sit();
+            }
+
+           navMeshAgent.enabled = false;
+            Debug.Log(lastpos);
         }
+    }
+    void playobject_low_fence(Collider other)
+    {
+        for (int i = 0; i < playeranime.Length; i++)
+        {
+            if (playeraimeobject[i].activeSelf)
+            {
+
+                playeranime[i].animatorsetting(0f);
+                playeranime[i].animatersetTrigger("end");
+
+            }
+
+        }
+        navMeshAgent.enabled = false;
+        // 충돌한 방향 계산
+        
+        float currentXRotation = playerrot.transform.rotation.eulerAngles.y;
+         if (currentXRotation >= 180)
+         {
+             currentXRotation -= 360;
+         }
+         // 가장 가까운 목표 회전 각도 선택
+         float closestAngle = targetAngles[0];
+         float minDifference = Mathf.Abs(targetAngles[0] - currentXRotation);
+         foreach (float angle in targetAngles)
+         {
+             float difference = Mathf.Abs(angle - currentXRotation);
+             if (difference <= minDifference)
+             {
+                 minDifference = difference;
+                 closestAngle = angle;
+             }
+         }
+        low_fence(closestAngle);
+        Fence = new Vector3(transform.position.x + low_fence_x, transform.position.y + low_fence_y, transform.position.z);
+        low_Fen = true;
     }
     void playobject_bed()
     {
@@ -169,14 +204,14 @@ public class player_movement : MonoBehaviour
         {
             Debug.Log("회전값" + 50F);
             playerrot.transform.localRotation = Quaternion.Euler(0f, 50f, 0f);
-            transform.position = new Vector3(test.x + 0.5f, test.y - 0.5f, 0);
+            transform.position = new Vector3(playerobject.x + 0.5f, playerobject.y - 0.5f, 0);
             //sit 210 bad 50
         }
         else
         {
             Debug.Log("회전값" + -50F);
             playerrot.transform.localRotation = Quaternion.Euler(0f, -50f, 0f);
-            transform.position = new Vector3(test.x + 0.3f, test.y - 0.55f, 0);//x+0.4y-0.3
+            transform.position = new Vector3(playerobject.x + 0.3f, playerobject.y - 0.55f, 0);//x+0.4y-0.3
                                                                                //sit 140 bad -50
         }
     }
@@ -196,39 +231,18 @@ public class player_movement : MonoBehaviour
         {
             Debug.Log("회전값" + 50F);
             playerrot.transform.localRotation = Quaternion.Euler(0f, 140f, 0f);
-            transform.position = new Vector3(test.x + 0.25f, test.y - 1.07f, 0);
+            transform.position = new Vector3(playerobject.x + 0.25f, playerobject.y - 1.07f, 0);
             //sit 210 bad 50
         }
         else
         {
-            Debug.Log(test);
+            Debug.Log(playerobject);
             playerrot.transform.localRotation = Quaternion.Euler(0f, 220f, 0f);
-            transform.position = new Vector3(test.x - 0.2f, test.y - 1.07f, 0);//x+0.4y-0.3
+            transform.position = new Vector3(playerobject.x - 0.2f, playerobject.y - 1.07f, 0);//x+0.4y-0.3
                                                                                //sit 140 bad -50
         }
     }
-    public void OffMeshLinkasd()
-    {
-        for (int i = 0; i < playeraimeobject.Length; i++)
-        {
-            if (playeraimeobject[i].activeSelf)
-            {
-                navMeshAgent.enabled = false;
-                transform.position = new Vector3(transform.position.x + low_fence_x, transform.position.y + low_fence_y, transform.position.z);
-                break;
-            }
-        }
-        for (int i = 0; i < playeraimeobject.Length; i++)
-        {
-            playeraimeobject[i].transform.localPosition = Vector3.zero;
-            if (playeraimeobject[i].activeSelf)
-            {
-                playeranime[i].animatorsetFloat("mobile_interaction", 0);
-            }
-        }
-        navMeshAgent.enabled = true;
-
-    }
+    
     float low_fence_x = 0.3f;
     float low_fence_y = 0.5f;
     void low_fence(float rot)
@@ -237,20 +251,20 @@ public class player_movement : MonoBehaviour
         switch (rot)
         {
             case -45:
-                low_fence_x = -0.3f;
-                low_fence_y = 0.5f;
+                low_fence_x = -0.63f;
+                low_fence_y = 0.315f;
                 break;
             case 135:
-                low_fence_x = 0.3f;
-                low_fence_y = -0.5f;
+                low_fence_x = 0.63f;
+                low_fence_y = -0.315f;
                 break;
             case 45:
-                low_fence_x = 0.3f;
-                low_fence_y = 0.5f;
+                low_fence_x = 0.63f;
+                low_fence_y = 0.315f;
                 break;
             case -135:
-                low_fence_x = -0.3f;
-                low_fence_y = -0.5f;
+                low_fence_x = -0.63f;
+                low_fence_y = -0.315f;
                 break;
         }
     }

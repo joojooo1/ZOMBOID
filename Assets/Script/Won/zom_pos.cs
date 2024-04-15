@@ -10,18 +10,22 @@ public class zom_pos : MonoBehaviour
     public GameObject target;
     public Vector3 AUDIOPOS;
     zom_targetpos zom_Targetpos;
+    public GameObject zombody;
     public GameObject targetpos;
     Vector3 Tarpos;
     public bool audioposget = false;
     float ramdom;
+    float zomspeed;
     // Start is called before the first frame update
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        zomspeed = nav.speed;
         zom_Targetpos = targetpos.GetComponent<zom_targetpos>();
+        zombody = targetpos.transform.parent.gameObject;
         //nav.updateRotation = false;
         ramdom = Random.Range(0, 3);
-        Debug.Log(ramdom);
+
     }
 
     // Update is called once per frame
@@ -33,6 +37,11 @@ public class zom_pos : MonoBehaviour
             audioposget = false;
 
             nav.SetDestination(new Vector3(target.transform.position.x,target.transform.position.y,0));
+            if (nav.remainingDistance <= nav.stoppingDistance + 0.1f)
+            {
+                targetpos.GetComponent<zom_anime>().animatorsetBool("playeratk", true);
+                nav.speed = 0;
+            }
         }
         
         if(nav.remainingDistance <= nav.stoppingDistance +0.1f && audioposget)
@@ -40,6 +49,10 @@ public class zom_pos : MonoBehaviour
             audioposget = false;
             //zom_Targetpos.idlepos();
         }
+        /*if (nav.isOnOffMeshLink)
+        {
+            nav.updateRotation = false;
+        }*/
     }
     public void zomldiepos(Vector3 pos)
     {
@@ -47,7 +60,7 @@ public class zom_pos : MonoBehaviour
         Tarpos = pos;
         Vector3 direction = (pos - nav.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        nav.transform.rotation = Quaternion.RotateTowards(nav.transform.rotation, lookRotation, 0);
+        //nav.transform.rotation = Quaternion.RotateTowards(nav.transform.rotation, lookRotation, 0);
         nav.SetDestination(new Vector3(pos.x,pos.y,0));
     }
    
@@ -63,5 +76,20 @@ public class zom_pos : MonoBehaviour
     {
         audioposget = true;
         nav.SetDestination(new Vector3(pos.x, pos.y, 0));
+    }
+    
+    public void zomon()
+    {
+        zombody.SetActive(true);
+        zom_Targetpos.StartCoroutine("find");
+    }
+    public void zomoff()
+    {
+        zom_Targetpos.StopCoroutine("find");
+        zombody.SetActive(false);
+    }
+    public void zomatkend()
+    {
+        nav.speed = zomspeed;
     }
 }

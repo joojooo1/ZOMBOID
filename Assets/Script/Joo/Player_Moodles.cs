@@ -239,11 +239,6 @@ public class Player_Moodles : MonoBehaviour
          플레이어가 감염되고 사망한 경우.
          불타 재가 되지 않고나 땅에 시체를 남기는 경우 좀비로 부활
          */
-        Moodle_Restricted_Movement = new Moodles_state(Moodles_private_code.Restricted_Movement, 0f, 0f, 0f, 0f); // 임의로 설정 (기준: 신발 착용 x || 다리에 부목댄 경우 || 총 부담 > 175% Weight 경우)
-        /*
-         맨발, 다리부상, 과부하, 무거운 옷 착용, 속도에 영향을 미침
-         달리기/파워워킹 할 수 없음
-         */
     }
 
     bool _Player_Setting_Language_to_Korean;
