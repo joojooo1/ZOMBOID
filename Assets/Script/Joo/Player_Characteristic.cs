@@ -296,15 +296,15 @@ public class Player_Characteristic : MonoBehaviour
             case 51:
                 temp = Characteristic_Deaf(temp, Choice);
                 break;
-            case 52:
-                temp = Characteristic_Burglar(temp, Choice);
-                break;
-            case 53:
-                temp = Characteristic_Desensitized(temp, Choice);
-                break;
-            case 54:
-                temp = Characteristic_Angler(temp, Choice);
-                break;
+            //case 52:
+            //    temp = Characteristic_Burglar(temp, Choice);
+            //    break;
+            //case 53:
+            //    temp = Characteristic_Desensitized(temp, Choice);
+            //    break;
+            //case 54:
+            //    temp = Characteristic_Angler(temp, Choice);
+            //    break;
             default: break;
         }
 
@@ -1346,10 +1346,6 @@ public class Player_Characteristic : MonoBehaviour
     }
 
 
-
-
-
-
     /*
      직업 전용 특성
       - 좀도둑
@@ -1357,51 +1353,94 @@ public class Player_Characteristic : MonoBehaviour
      */
 
     // 좀도둑
-    Characteristic Characteristic_Burglar(Characteristic Burglar, bool Choice)
-    {
-        Burglar.name = "Burglar";
-        Burglar.name_kr = "좀도둑";
-        Burglar.Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
-        Burglar.Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
-        Burglar.Characteristic_number = 52;
-        Burglar.Sprite = Characteristic_Image[52];
-        Burglar.Points = +0;
-        Burglar.type = Characteristic_type.Occupation;
-        Burglar.Choice = Choice;
-        return Burglar;
-        // 스킬 제한없이 차량 배선 따기 가능
-        // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
-    }
+    //Characteristic Characteristic_Burglar(Characteristic Burglar, bool Choice)
+    //{
+    //    Burglar.name = "Burglar";
+    //    Burglar.name_kr = "좀도둑";
+    //    Burglar.Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
+    //    Burglar.Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
+    //    Burglar.Characteristic_number = 52;
+    //    Burglar.Sprite = Characteristic_Image[52];
+    //    Burglar.Points = +0;
+    //    Burglar.type = Characteristic_type.Occupation;
+    //    Burglar.Choice = Choice;
+    //    return Burglar;
+    //    // 스킬 제한없이 차량 배선 따기 가능
+    //    // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
+    //}
+
+    //public void Characteristic_Burglar(bool _Choice)
+    //{
+    //    string name = "Burglar";
+    //    string name_kr = "좀도둑";
+    //    string Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
+    //    string Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
+    //    int Characteristic_number = 52;
+    //    Sprite Sprite = Characteristic_Image[52];
+    //    int Points = +0;
+    //    Characteristic_type type = Characteristic_type.Occupation;
+    //    bool Choice = _Choice;
+    //    // 스킬 제한없이 차량 배선 따기 가능
+    //    // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
+    //}
 
     // 군인
-    Characteristic Characteristic_Desensitized(Characteristic Desensitized, bool Choice)
-    {
-        Desensitized.name = "Desensitized";
-        Desensitized.name_kr = "둔감함";
-        Desensitized.Explanation_for_Characteristic = "War... War never changes.";
-        Desensitized.Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
-        Desensitized.Characteristic_number = 53;
-        Desensitized.Sprite = Characteristic_Image[53];
-        Desensitized.Points = +0;
-        Desensitized.type = Characteristic_type.Occupation;
-        Desensitized.Choice = Choice;
-        return Desensitized;
-        // 긴장 무들에 면역
-    }
+    //Characteristic Characteristic_Desensitized(Characteristic Desensitized, bool Choice)
+    //{
+    //    Desensitized.name = "Desensitized";
+    //    Desensitized.name_kr = "둔감함";
+    //    Desensitized.Explanation_for_Characteristic = "War... War never changes.";
+    //    Desensitized.Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
+    //    Desensitized.Characteristic_number = 53;
+    //    Desensitized.Sprite = Characteristic_Image[53];
+    //    Desensitized.Points = +0;
+    //    Desensitized.type = Characteristic_type.Occupation;
+    //    Desensitized.Choice = Choice;
+    //    return Desensitized;
+    //    // 긴장 무들에 면역
+    //}
+
+    //public void Characteristic_Desensitized(bool _Choice)
+    //{
+    //    string name = "Desensitized";
+    //    string name_kr = "둔감함";
+    //    string Explanation_for_Characteristic = "War... War never changes.";
+    //    string Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
+    //    int Characteristic_number = 53;
+    //    Sprite Sprite = Characteristic_Image[53];
+    //    int Points = +0;
+    //    Characteristic_type type = Characteristic_type.Occupation;
+    //    bool Choice = _Choice;
+    //    // 긴장 무들에 면역
+    //}
 
     // 낚시꾼
-    Characteristic Characteristic_Angler(Characteristic Angler, bool Choice)
-    {
-        Angler.name = "Angler";
-        Angler.name_kr = "낚시꾼";
-        Angler.Explanation_for_Characteristic = "Knows the basics of fishing.";
-        Angler.Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
-        Angler.Characteristic_number = 54;
-        Angler.Sprite = Characteristic_Image[54];
-        Angler.Points = -4;
-        Angler.type = Characteristic_type.Occupation;
-        Angler.Choice = Choice;
-        return Angler;
-        // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
-    }
+    //Characteristic Characteristic_Angler(Characteristic Angler, bool Choice)
+    //{
+    //    Angler.name = "Angler";
+    //    Angler.name_kr = "낚시꾼";
+    //    Angler.Explanation_for_Characteristic = "Knows the basics of fishing.";
+    //    Angler.Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
+    //    Angler.Characteristic_number = 54;
+    //    Angler.Sprite = Characteristic_Image[54];
+    //    Angler.Points = -4;
+    //    Angler.type = Characteristic_type.Occupation;
+    //    Angler.Choice = Choice;
+    //    return Angler;
+    //    // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
+    //}
+
+    //public void Characteristic_Angler(bool _Choice)
+    //{
+    //    string name = "Angler";
+    //    string name_kr = "낚시꾼";
+    //    string Explanation_for_Characteristic = "Knows the basics of fishing.";
+    //    string Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
+    //    int Characteristic_number = 54;
+    //    Sprite Sprite = Characteristic_Image[54];
+    //    int Points = -4;
+    //    Characteristic_type type = Characteristic_type.Occupation;
+    //    bool Choice = _Choice;
+    //    // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
+    //}
 }
