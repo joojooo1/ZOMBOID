@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,14 @@ public class player_animation : MonoBehaviour
 {
     public GameObject rot;
     public GameObject audioobject;
-    Animator animator;
+    public Animator animator;
     bool atk = false;
     public float test_weapon_type = 0;
     public AudioClip Clip;
     player_rot audio;
+    Collider collider;
     public AudioClip walkClip;
+    public GameObject playernav;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +63,7 @@ public class player_animation : MonoBehaviour
                 audio.audioclip(Clip,1);
                 Debug.Log("소리 전송");
             }
+            
         }
         else
         {
@@ -83,20 +87,33 @@ public class player_animation : MonoBehaviour
         atk = false;
     }
 
-    void animatorsetBool(string ANIMA_NAME,bool set)
+    public void animatorsetBool(string ANIMA_NAME,bool set)
     {
         animator.SetBool (ANIMA_NAME, set);
+        
     }
-    void animatersetTrigger(string ANIMA_NAME)
+    public void animatersetTrigger(string ANIMA_NAME)
     {
         animator.SetTrigger(ANIMA_NAME);
     }
-    void animatorsetFloat(string ANIMA_NAME, float set)
+    public void animatorsetFloat(string ANIMA_NAME, float set)
     {
+
         animator.SetFloat(ANIMA_NAME, set);
     }
     void walkaudio()
     {
         audio.audioclip(walkClip, 0.5f);
     }
+    public void animatorsetting(float setting)
+    {
+        animator.SetLayerWeight(1, setting);
+        
+    }
+    void end()
+    {
+        
+
+    }
+
 }

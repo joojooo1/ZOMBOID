@@ -8,14 +8,18 @@ public class CameraMove2 : MonoBehaviour
 
     [SerializeField]
     GameObject Player;
+    float smoothSpeed = 0.125f;
     void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.position = new Vector3(Player.transform.position.x,Player.transform.position.y/*-3.4f*/,Player.transform.position.z-2f);
+        Vector3 desiredPosition = new Vector3(Player.transform.position.x,Player.transform.position.y/*-3.4f*/,Player.transform.position.z-2f);
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed); // º¸°£
+
+        transform.position = smoothedPosition;
     }
 }

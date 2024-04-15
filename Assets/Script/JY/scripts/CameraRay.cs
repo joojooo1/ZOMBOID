@@ -10,7 +10,7 @@ public class CameraRay : MonoBehaviour
     [SerializeField]
     GameObject Player;
 
-    public float speed = 3;
+    public float smoothSpeed = 0.125f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +18,7 @@ public class CameraRay : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         ////anim.SetFloat("x", input.x);
@@ -29,6 +29,8 @@ public class CameraRay : MonoBehaviour
 
 
         //transform.position = pos;
-        transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y,-10f );
+        Vector3 desiredPosition = new Vector3(Player.transform.position.x, Player.transform.position.y,-10f );
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
     }
 }
