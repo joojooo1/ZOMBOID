@@ -476,69 +476,76 @@ public class Moodles_state
                 }
                 break;     /* 24.03.05 */
             case Moodles_private_code.Panic:  //  0.3f, 0.5f, 0.8f, 0.9f  // Player_main_Update  // Player_main_Calculate_HitForce
-                _Moodle_current_value += current_value;
-                if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }
-                else if (_Moodle_current_value < 0) { _Moodle_current_value = 0; }
-
-                if (current_value < _First_state)
+                if (Player_Characteristic.instance.player_Job != Player_Job.Veteran)
                 {
-                    _current_state_to_string = "";
-                    _current_detail_state_to_string = "";
-                    _current_state_to_string_KR = "";
-                    _current_detail_state_to_string_KR = "";
+                    _Moodle_current_value += current_value;
+                    if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }
+                    else if (_Moodle_current_value < 0) { _Moodle_current_value = 0; }
 
-                    _Moodle_current_step = 0;
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0f);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    if (_Moodle_current_value < _First_state)
+                    {
+                        _current_state_to_string = "";
+                        _current_detail_state_to_string = "";
+                        _current_state_to_string_KR = "";
+                        _current_detail_state_to_string_KR = "";
+
+                        _Moodle_current_step = 0;
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0f);
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0f);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
+                    {
+                        _current_state_to_string_KR = "살짝 긴장됨";
+                        _current_detail_state_to_string_KR = "숨어서 심호흡을 하십시오.";
+                        _current_state_to_string = "Slight Panic";
+                        _current_detail_state_to_string = "Do your best to remain calm.";
+
+                        _Moodle_current_step = 1;
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.013f);
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0f);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
+                    {
+                        _current_state_to_string_KR = "긴장됨";
+                        _current_detail_state_to_string_KR = "명중률이 저하됨.";
+                        _current_state_to_string = "Panic";
+                        _current_detail_state_to_string = "Accuracy reduced.";
+
+                        _Moodle_current_step = 2;
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.026f);
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.1f);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
+                    {
+                        _current_state_to_string_KR = "심하게 긴장됨";
+                        _current_detail_state_to_string_KR = "명중률이 크게 저하됨.";
+                        _current_state_to_string = "Strong Panic";
+                        _current_detail_state_to_string = "Accuracy severely reduced.";
+
+                        _Moodle_current_step = 3;
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.039f);
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.2f);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
+                    else if (_Moodle_current_value > _Fourth_state)  // 4단계
+                    {
+                        _current_state_to_string_KR = "공황상태";
+                        _current_detail_state_to_string_KR = "명중률과 시야가 심각하게 저하됨.";
+                        _current_state_to_string = "Extreme Panic";
+                        _current_detail_state_to_string = "Accuracy and vision severely reduced.";
+
+                        _Moodle_current_step = 4;
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.052f);
+                        Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.3f);
+                        UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    }
                 }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
+                else
                 {
-                    _current_state_to_string_KR = "살짝 긴장됨";
-                    _current_detail_state_to_string_KR = "숨어서 심호흡을 하십시오.";
-                    _current_state_to_string = "Slight Panic";
-                    _current_detail_state_to_string = "Do your best to remain calm.";
-
-                    _Moodle_current_step = 1;
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.013f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0f);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
-                {
-                    _current_state_to_string_KR = "긴장됨";
-                    _current_detail_state_to_string_KR = "명중률이 저하됨.";
-                    _current_state_to_string = "Panic";
-                    _current_detail_state_to_string = "Accuracy reduced.";
-
-                    _Moodle_current_step = 2;
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.026f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.1f);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
-                {
-                    _current_state_to_string_KR = "심하게 긴장됨";
-                    _current_detail_state_to_string_KR = "명중률이 크게 저하됨.";
-                    _current_state_to_string = "Strong Panic";
-                    _current_detail_state_to_string = "Accuracy severely reduced.";
-
-                    _Moodle_current_step = 3;
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.039f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.2f);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
-                }
-                else if (current_value > _Fourth_state)  // 4단계
-                {
-                    _current_state_to_string_KR = "공황상태";
-                    _current_detail_state_to_string_KR = "명중률과 시야가 심각하게 저하됨.";
-                    _current_state_to_string = "Extreme Panic";
-                    _current_detail_state_to_string = "Accuracy and vision severely reduced.";
-
-                    _Moodle_current_step = 4;
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Critical_Hit_Chance_forMoodle(_Moodle_Code, 0.052f);
-                    Player_main.player_main.playerSkill_ActivationProbability.Set_Increase_in_Attack_Power_forMoodle(_Moodle_Code, _Moodle_current_step, 0.3f);
-                    UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
+                    _Moodle_current_value = 0;
                 }
                 break;     /* 24.03.06 */
             case Moodles_private_code.Bored:  //  0.25f, 0.5f, 0.75f, 0.9f  // 질나쁜 음식 먹을때만 반영하도록 구현 예정

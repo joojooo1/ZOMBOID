@@ -13,6 +13,14 @@ public enum Characteristic_type
     Occupation = 2
 }
 
+public enum Player_Job
+{
+    None = 0,
+    fisher = 1,
+    Burglar = 2,
+    Veteran = 3
+}
+
 public class Characteristic
 {
     public string name;
@@ -36,26 +44,26 @@ public class Player_Characteristic : MonoBehaviour
     [SerializeField] GameObject Characteristic_Prefab;
 
     public static Player_Characteristic instance;
+
+    public Player_Job player_Job;
+
     private void Awake()
     {
         instance = this;
         //Set_Weight_Characteristic();
-        for (int i = 0; i < Characteristic_Image.Length - 3; i++)
+        for (int i = 0; i < 52; i++)
         {
-            GameObject tempObj = null;
-            Set_Characteristic(i, false, tempObj);
+            if(i != 49)
+            {
+                GameObject tempObj = null;
+                Set_Characteristic(i, false, tempObj);
+            }
         }
     }
 
     private void Update()
     {
-        //for(int i = 0; i < Weight.Length; i++)
-        //{
-        //    if (Player_main.player_main.Get_Weight() > Weight[i])
-        //    {
-        //        Debug.Log(i);
-        //    }
-        //}
+
 
     }
 
@@ -117,7 +125,6 @@ public class Player_Characteristic : MonoBehaviour
                     characteristics_Player.RemoveAt(i);
                 }
             }
-
         }
         else
         {
@@ -128,15 +135,25 @@ public class Player_Characteristic : MonoBehaviour
                     Destroy(characteristics_list[i].gameObject);
                     characteristics_list.RemoveAt(i);
                 }
-
             }
+        }
+    }
 
+
+    public void Set_Characteristic_in_list(int value, bool Choice, GameObject tempObj)
+    {
+        for (int i = 0; i < characteristics_list.Count; i++)
+        {
+            if (characteristics_list[i].Prefab.Characteristic_number == value)
+                break;
+
+            if(i == characteristics_list.Count -1 && characteristics_list[i].Prefab.Characteristic_number != value)
+                Set_Characteristic(value, Choice, tempObj);
         }
     }
 
     public void Set_Characteristic(int value, bool Choice, GameObject tempObj)
     {
-        //tempObj = Instantiate(Characteristic_Prefab, Characteristic_P_Window);
         Characteristic temp = new Characteristic();
         switch (value)
         {
@@ -296,15 +313,6 @@ public class Player_Characteristic : MonoBehaviour
             case 51:
                 temp = Characteristic_Deaf(temp, Choice);
                 break;
-            //case 52:
-            //    temp = Characteristic_Burglar(temp, Choice);
-            //    break;
-            //case 53:
-            //    temp = Characteristic_Desensitized(temp, Choice);
-            //    break;
-            //case 54:
-            //    temp = Characteristic_Angler(temp, Choice);
-            //    break;
             default: break;
         }
 

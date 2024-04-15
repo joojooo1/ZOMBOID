@@ -121,6 +121,11 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
         return P_Level;
     }
 
+    public void Set_P_Level(float Start_Level)
+    {
+        P_Level = Start_Level;
+    }
+
     public float Get_P_CurrentEXP()
     {
         return P_EXP;
@@ -252,6 +257,11 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
     public float Get_G_Level()
     {
         return G_Level;
+    }
+
+    public void Set_G_Level(float Start_Level)
+    {
+        G_Level = Start_Level;
     }
 
     public float Get_G_CurrentEXP()
@@ -626,6 +636,11 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
         return Gun_Level;
     }
 
+    public void Set_Gun_Level(float Start_Level)
+    {
+        Gun_Level = Start_Level;
+    }
+
     public float Get_Gun_CurrentEXP()
     {
         return Gun_EXP;
@@ -787,6 +802,11 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
     public float Get_C_Level()
     {
         return C_Level;
+    }
+
+    public void Set_C_Level(float Start_Level)
+    {
+        C_Level = Start_Level;
     }
 
     public float Get_C_CurrentEXP()
@@ -1010,6 +1030,11 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
     public float Get_S_Level()
     {
         return S_Level;
+    }
+
+    public void Set_S_Level(float Start_Level)
+    {
+        S_Level = Start_Level;
     }
 
     public float Get_S_CurrentEXP()
