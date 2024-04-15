@@ -11502,9 +11502,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rot: {fileID: 0}
   audioobject: {fileID: 0}
+  animator: {fileID: 0}
   test_weapon_type: 0
   Clip: {fileID: 0}
   walkClip: {fileID: 0}
+  playernav: {fileID: 0}
 --- !u!1 &2060484817095925193
 GameObject:
   m_ObjectHideFlags: 0
@@ -45292,9 +45294,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rot: {fileID: 0}
   audioobject: {fileID: 0}
+  animator: {fileID: 0}
   test_weapon_type: 0
   Clip: {fileID: 0}
   walkClip: {fileID: 0}
+  playernav: {fileID: 0}
 --- !u!1001 &7395338824803938142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45890,9 +45894,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rot: {fileID: 0}
   audioobject: {fileID: 0}
+  animator: {fileID: 0}
   test_weapon_type: 0
   Clip: {fileID: 0}
   walkClip: {fileID: 0}
+  playernav: {fileID: 0}
 --- !u!1001 &8420902103199867138
 PrefabInstance:
   m_ObjectHideFlags: 0

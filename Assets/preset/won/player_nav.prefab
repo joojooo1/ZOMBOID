@@ -50,6 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Playermovement_speed: 7
   Playerturnspeed: 10
+  playeraimeobject: []
+  playeranime: []
+  playerrot: {fileID: 0}
+  low_Fen: 0
+  test: 0
 --- !u!195 &6502910326077092333
 NavMeshAgent:
   m_ObjectHideFlags: 0
