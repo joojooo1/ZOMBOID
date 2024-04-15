@@ -18,7 +18,7 @@ MonoBehaviour:
   FoodState: 0
   Cooking_time_to_NextStep: 4
   Height: 1
-  Width: 1
+  Width: 2
   Nesting_Depth: 1
   FoodName: Bass
   FoodName_Kr: "\uBC30\uC2A4"
