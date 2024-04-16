@@ -88,10 +88,21 @@ public class UI_Title_Characteristic_value_prefab : MonoBehaviour
                 value_totalvalue.text = "";
             else
             {
-                if(_add_value > 0)
-                    value_totalvalue.text = "Lv." + _level.ToString() + "(+" + _add_value.ToString() + "%)";
+                if(_level > 0)
+                {
+                    if (_add_value > 0)
+                        value_totalvalue.text = "Lv." + _level.ToString() + "(+" + _add_value.ToString() + "%)";
+                    else
+                        value_totalvalue.text = "Lv." + _level.ToString();
+                }
                 else
-                    value_totalvalue.text = "Lv." + _level.ToString();
+                {
+                    if (_add_value > 0)
+                        value_totalvalue.text = _add_value.ToString() + "%";
+                    else
+                        value_totalvalue.text = "";
+                }
+
             }
             value_name.color = Color.green;
             value_totalvalue.color = Color.green;

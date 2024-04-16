@@ -22,9 +22,6 @@ public class UI_Title : MonoBehaviour
 {
     public static UI_Title ui_title;
 
-    public GameObject title_mune_Bar;
-    public GameObject Choice_Job_Prefab;
-
     public UnityEngine.UI.Button[] Button_Job;
 
     public Transform Window_value;

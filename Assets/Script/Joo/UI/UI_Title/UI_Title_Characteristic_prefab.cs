@@ -172,6 +172,66 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
                         case 45:
                             Player_Characteristic.instance.Remove_Selected_list(17, false);
                             break;
+                        case 46:
+                            Player_Characteristic.instance.Remove_Selected_list(37, false);
+                            Player_Characteristic.instance.Remove_Selected_list(43, false);
+                            Player_Characteristic.instance.Remove_Selected_list(48, false);
+                            break;
+                        case 37:
+                            Player_Characteristic.instance.Remove_Selected_list(46, false);
+                            Player_Characteristic.instance.Remove_Selected_list(43, false);
+                            Player_Characteristic.instance.Remove_Selected_list(48, false);
+                            break;
+                        case 43:
+                            Player_Characteristic.instance.Remove_Selected_list(46, false);
+                            Player_Characteristic.instance.Remove_Selected_list(37, false);
+                            Player_Characteristic.instance.Remove_Selected_list(48, false);
+                            break;
+                        case 48:
+                            Player_Characteristic.instance.Remove_Selected_list(46, false);
+                            Player_Characteristic.instance.Remove_Selected_list(37, false);
+                            Player_Characteristic.instance.Remove_Selected_list(43, false);
+                            break;
+                        case 50:
+                            Player_Characteristic.instance.Remove_Selected_list(42, false);
+                            Player_Characteristic.instance.Remove_Selected_list(15, false);
+                            Player_Characteristic.instance.Remove_Selected_list(20, false);
+                            break;
+                        case 42:
+                            Player_Characteristic.instance.Remove_Selected_list(50, false);
+                            Player_Characteristic.instance.Remove_Selected_list(15, false);
+                            Player_Characteristic.instance.Remove_Selected_list(20, false);
+                            break;
+                        case 15:
+                            Player_Characteristic.instance.Remove_Selected_list(50, false);
+                            Player_Characteristic.instance.Remove_Selected_list(42, false);
+                            Player_Characteristic.instance.Remove_Selected_list(20, false);
+                            break;
+                        case 20:
+                            Player_Characteristic.instance.Remove_Selected_list(50, false);
+                            Player_Characteristic.instance.Remove_Selected_list(42, false);
+                            Player_Characteristic.instance.Remove_Selected_list(15, false);
+                            break;
+                        case 47:
+                            Player_Characteristic.instance.Remove_Selected_list(36, false);
+                            Player_Characteristic.instance.Remove_Selected_list(10, false);
+                            Player_Characteristic.instance.Remove_Selected_list(19, false);
+                            break;
+                        case 36:
+                            Player_Characteristic.instance.Remove_Selected_list(47, false);
+                            Player_Characteristic.instance.Remove_Selected_list(10, false);
+                            Player_Characteristic.instance.Remove_Selected_list(19, false);
+                            break;
+                        case 10:
+                            Player_Characteristic.instance.Remove_Selected_list(47, false);
+                            Player_Characteristic.instance.Remove_Selected_list(36, false);
+                            Player_Characteristic.instance.Remove_Selected_list(19, false);
+                            break;
+                        case 19:
+                            Player_Characteristic.instance.Remove_Selected_list(47, false);
+                            Player_Characteristic.instance.Remove_Selected_list(36, false);
+                            Player_Characteristic.instance.Remove_Selected_list(10, false);
+                            break;
                         default: break;
                     }
 
@@ -312,6 +372,66 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
                             break;
                         case 45:
                             Player_Characteristic.instance.Set_Characteristic(17, false, Obj);
+                            break;
+                        case 46:
+                            Player_Characteristic.instance.Set_Characteristic(37, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(43, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(48, false, Obj);
+                            break;
+                        case 37:
+                            Player_Characteristic.instance.Set_Characteristic(46, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(43, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(48, false, Obj);
+                            break;
+                        case 43:
+                            Player_Characteristic.instance.Set_Characteristic(46, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(37, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(48, false, Obj);
+                            break;
+                        case 48:
+                            Player_Characteristic.instance.Set_Characteristic(46, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(37, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(43, false, Obj);
+                            break;
+                        case 50:
+                            Player_Characteristic.instance.Set_Characteristic(42, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(15, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(20, false, Obj);
+                            break;
+                        case 42:
+                            Player_Characteristic.instance.Set_Characteristic(50, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(15, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(20, false, Obj);
+                            break;
+                        case 15:
+                            Player_Characteristic.instance.Set_Characteristic(50, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(42, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(20, false, Obj);
+                            break;
+                        case 20:
+                            Player_Characteristic.instance.Set_Characteristic(50, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(42, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(15, false, Obj);
+                            break;
+                        case 47:
+                            Player_Characteristic.instance.Set_Characteristic(36, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(10, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(19, false, Obj);
+                            break;
+                        case 36:
+                            Player_Characteristic.instance.Set_Characteristic(47, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(10, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(19, false, Obj);
+                            break;
+                        case 10:
+                            Player_Characteristic.instance.Set_Characteristic(47, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(36, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(19, false, Obj);
+                            break;
+                        case 19:
+                            Player_Characteristic.instance.Set_Characteristic(47, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(36, false, Obj);
+                            Player_Characteristic.instance.Set_Characteristic(10, false, Obj);
                             break;
                         default: break;
                     }
