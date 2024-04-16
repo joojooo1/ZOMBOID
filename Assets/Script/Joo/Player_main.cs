@@ -315,11 +315,12 @@ public class Player_main : MonoBehaviour
         return Weight;
     }
 
-    public void Set_Weight(float value)
+    public void Set_Weight(float value)   // 시작시 83 + value
     {
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
+        Debug.Log(Weight);
     }
 
 
@@ -578,7 +579,6 @@ public class Player_main : MonoBehaviour
 
     }
 
-
     public float Calculate_damage_to_Zombie()  // Player -> Zombie 공격
     {
         System.Random rand_Damage = new System.Random();
@@ -601,6 +601,8 @@ public class Player_main : MonoBehaviour
         {
             Total_Damage *= 1.2f;
         }
+
+
 
 
         return Total_Damage;

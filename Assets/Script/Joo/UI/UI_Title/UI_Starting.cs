@@ -7,11 +7,11 @@ public class UI_Starting : MonoBehaviour
     [SerializeField] UnityEngine.UI.Text text;
     [SerializeField] GameObject start_button;
 
-    float Timer = 21f;
+    float Timer = 20f;
     int i = 0;
     Animator anim;
 
-    public bool Map_Setting_complete = true;
+    public bool Map_Setting_complete = false;
 
     private void Awake()
     {
@@ -20,11 +20,21 @@ public class UI_Starting : MonoBehaviour
 
     void Update()
     {
+        if (Map_Setting_complete)
+        {
+            UI_main.ui_main.Playing = true;
+        }
+
         if (i < 4)
             Timer += Time.deltaTime;
 
         if(Timer > 13f)
         {
+            if(i == 0)
+            {
+                Player_Characteristic.instance.Start_Setting();
+            }
+
             if (i < 3)
             {
                 text.text = Set_Start_Text(i);
@@ -39,7 +49,7 @@ public class UI_Starting : MonoBehaviour
                 {
                     start_button.SetActive(true);
                     text.text = Set_Start_Text(3);
-                    anim.SetBool("start", true);
+                    anim.SetBool("start", true);                    
                 }
             }
 
@@ -49,7 +59,7 @@ public class UI_Starting : MonoBehaviour
 
     public string Set_Start_Text(int num)
     {
-        if (GameManager.gameManager.player_Setting_Language_to_Korean)
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
         {
             switch (num)
             {

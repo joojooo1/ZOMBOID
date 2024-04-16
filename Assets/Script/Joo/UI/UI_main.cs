@@ -10,6 +10,8 @@ public class UI_main : MonoBehaviour
     public static UI_main ui_main;
     public UI_State ui_player_state;
 
+    public bool Playing = false;
+
     public bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
 
     public bool Is_Female = true;
@@ -29,6 +31,18 @@ public class UI_main : MonoBehaviour
     void Awake()
     {
         ui_main = this;
+    }
+
+    public void Set_Gender(int value)
+    {
+        if(value == 0)
+        {
+            Is_Female = false;
+        }
+        else
+        {
+            Is_Female = true;
+        }
     }
 
     private void OnEnable()
@@ -74,17 +88,17 @@ public class UI_main : MonoBehaviour
     {
         
         Player_main.player_main.playerMoodles.Set_Player_Language(player_Setting_Language_to_Korean);
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (player_Setting_Language_to_Korean)  // Korean -> English
-            {
-                player_Setting_Language_to_Korean = false;
-            }
-            else                                     // English -> Korean
-            {
-                player_Setting_Language_to_Korean = true;
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    if (player_Setting_Language_to_Korean)  // Korean -> English
+        //    {
+        //        player_Setting_Language_to_Korean = false;
+        //    }
+        //    else                                     // English -> Korean
+        //    {
+        //        player_Setting_Language_to_Korean = true;
+        //    }
+        //}
     }
 
     public void Set_UIDamage()
