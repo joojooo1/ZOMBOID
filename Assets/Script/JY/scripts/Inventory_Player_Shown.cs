@@ -26,6 +26,13 @@ public class Inventory_Player_Shown : MonoBehaviour
     GameObject Info_Box; // 세부정보 표시 창 UI
     [SerializeField]
     public Transform Drag_Target_Prefeb; // v 드래그중인 이미지
+    [SerializeField]
+    Sprite[] Equipment_Sample_Array; // v ? ※
+
+    [SerializeField]
+    GameObject[] Equipment; // v ? ※
+
+    public short[,,] Equipment_Package_Notbe_Synchronized; // v ? ※
 
     public List<short> Backpacks_List; // 장비, 가방 리스트
     public List<short> Storage_List; // 접근중인 저장소 리스트
@@ -76,6 +83,8 @@ public class Inventory_Player_Shown : MonoBehaviour
         InvPS = this;
         Anim = GetComponent<Animator>();
         inven_open = false;
+
+
     }
 
     private void Start()
@@ -91,7 +100,35 @@ public class Inventory_Player_Shown : MonoBehaviour
 
         }
 
+        // 장비 정의
 
+        Equipment_Package_Notbe_Synchronized = new short[5, 18, 1]; 
+        for (int Count = 0; Count < Equipment.Length; Count++)
+        {
+            Equipment[Count].GetComponent<InventorySlot>().Storage_Order_IfPlayer = 0;
+            Equipment[Count].GetComponent<InventorySlot>().Slot_X = (short)Count;
+            Equipment[Count].GetComponent<InventorySlot>().Slot_Y = 0;
+            Equipment[Count].GetComponent<InventorySlot>().Item_Type = Equipment_Package_Notbe_Synchronized[0, Count, 0];
+            Equipment[Count].GetComponent<InventorySlot>().Item_ID = Equipment_Package_Notbe_Synchronized[1, Count, 0];
+            Equipment[Count].GetComponent<InventorySlot>().Item_Amount = Equipment_Package_Notbe_Synchronized[2, Count, 0];
+            Equipment[Count].GetComponent<InventorySlot>().Equipment = true;
+            Equipment[Count].GetComponent<InventorySlot>().EquipPosition = Count;
+            //투,안,마 3.재킷,조끼 5.시,글,벨,신,바,다리보호구 11.다리,허리,허리,등 가방 15.외티 내티 속옷
+            Equipment[Count].GetComponent<InventorySlot>().IsMain = true;
+            Equipment[Count].GetComponent<InventorySlot>().ParentTransform = this.transform;
+            Equipment[Count].GetComponent<InventorySlot>().ParentSize = 100;//임의로 100
+            //Equipment[Count].GetComponent<InventorySlot>().Image = Equipment[Count].GetComponentInChildren<Image>().gameObject;
+            //Image[] Kids = Equipment[Count].GetComponentsInChildren<Image>();
+            //foreach (Image InKids in Kids)
+            //{
+            //    if (!InKids.gameObject == Equipment[Count].GetComponent<InventorySlot>().Image)
+            //    {
+            //        Equipment[Count].GetComponent<InventorySlot>().BackgroundColor = InKids.gameObject;
+            //    }
+            //}
+            short Size = Item_DataBase.item_database.Requesting_Size(Equipment_Package_Notbe_Synchronized[0, Count, 0], Equipment_Package_Notbe_Synchronized[1, Count, 0]);
+            Equipment[Count].GetComponent<InventorySlot>().Size = Size;
+        }
     }
 
     public void SetAnim(bool open)
@@ -99,30 +136,6 @@ public class Inventory_Player_Shown : MonoBehaviour
         inven_open = open;
         Anim.SetBool("Open", inven_open);
     }
-
-    private void Ready_For_Change_From_Slot()
-    {
-        //p배열 s배열 돌면서 시작item db 획득, 도착 8x6 스크립트 검색
-        if (FS_Is_Player)
-        {
-            //Packages_Player[FS_Slot_Order]
-        }
-        else
-        {
-            //Packages_Storage[LS_Slot_Order]
-        }
-
-
-    }
-
-    //플레이어 장비
-
-    //가방 리스트
-    //소지품 리스트
-
-    //가방 배열
-
-    //ID로 데이터베이스 크기참조, 초기생성, 순서 , 슬롯의 갱신 포함
 
     private void Generating_Acting_Inventory(short Backpack_ID, short[,,] Exiest_Packages, short Order)
     {
@@ -209,7 +222,7 @@ public class Inventory_Player_Shown : MonoBehaviour
         int Height = FS_Item_Size % 10;
         short[,,] CopyPackage_FS = new short[1, 1, 1];
         short[,,] CopyPackage_LS = new short[1, 1, 1];
-        switch (FSPSize)
+        switch (FSPSize) // 사이즈 조정 ※
         {
             case 86:
                 CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
@@ -221,7 +234,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                 CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
                 break;
         }
-        
+
         return Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage_LS);
     }
 
@@ -232,19 +245,19 @@ public class Inventory_Player_Shown : MonoBehaviour
         short ID = FSItSelf.GetComponent<InventorySlot>().Item_ID;
         int Size = FSItSelf.GetComponent<InventorySlot>().Size;
 
-        int Width= (int)Size / 100;
-        int Height= (int)Size % 10;
+        int Width = (int)Size / 100;
+        int Height = (int)Size % 10;
 
         int Canvas_Width = SlotSize_Req(Width);
         int Canvas_Height = SlotSize_Req(Height);
 
-        Image =Item_DataBase.item_database.Requesting_Image(Type, ID);
+        Image = Item_DataBase.item_database.Requesting_Image(Type, ID);
 
 
         Drag_Target_Prefeb.GetComponent<Inventry_DragImage>().Change_Image(Image, Width, Height, Canvas_Width, Canvas_Height);
     }
 
-    private int SlotSize_Req(int num)
+    private int SlotSize_Req(int num) // 사이즈 조정 ※
     {
         //0 , 19 , 37
         //1,  2,  3
@@ -271,28 +284,100 @@ public class Inventory_Player_Shown : MonoBehaviour
         int Height = FS_Item_Size % 10;
         short[,,] CopyPackage_FS = new short[1, 1, 1];
         short[,,] CopyPackage_LS = new short[1, 1, 1];
-        switch (FSPSize)
+
+        if (FSPSize == 100&&LSPSize == 100)
         {
-            case 86:
-                CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
-                break;
+            return;
         }
-        switch (LSPSize)
+        else if (LSPSize == 100) // 들어가서 return 안나옴, 크기검증 없음
         {
-            case 86:
-                CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
-                break;
-        }
-        //Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage);
-        if (Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage_LS))
-        {
-            for(int i = 0; i < 5; i++)
+            switch (FSPSize) // 스위치 조정 ※
+            {
+                case 100:
+                    CopyPackage_FS = this.Equipment_Package_Notbe_Synchronized;
+                    break;
+
+                case 86:
+                    CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                    break;
+            }
+            switch (LSPSize)
+            {
+                case 100:
+                    CopyPackage_LS = this.Equipment_Package_Notbe_Synchronized;
+                    //장비 타입 검증 해야됨 ※
+                    break;
+
+                case 86:
+                    CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                    break;
+            }
+
+            for (int i = 0; i < 5; i++)
             {
                 CopyPackage_LS[i, LS_Slot_X, LS_Slot_Y] = CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y];
                 CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y] = 0;
             }
             switch (FSPSize)
             {
+                case 100:
+                    Refreshing_Equipment_Slots(CopyPackage_FS);
+                    break;
+
+                case 86:
+                    FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
+                    //SendServer_Inv_Info(CopyPackage_FS, 38, true); 나중에 킬것 ※
+
+                    break;
+            }
+            switch (LSPSize)
+            {
+                case 100:
+                    Refreshing_Equipment_Slots(CopyPackage_LS);
+                    break;
+
+                case 86:
+                    LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
+                    SendServer_Inv_Info(CopyPackage_LS, 38, true);
+                    break;
+            }
+            return;
+        }
+        else // 하위로 진행 크기검증 있음
+        {
+            switch (FSPSize) // 스위치 조정 ※
+            {
+                case 100:
+                    CopyPackage_FS = this.Equipment_Package_Notbe_Synchronized;
+                    break;
+                case 86:
+                    CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                    break;
+            }
+            switch (LSPSize)
+            {
+                case 100:
+                    CopyPackage_FS = this.Equipment_Package_Notbe_Synchronized;
+                    break;
+                case 86:
+                    CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                    break;
+            }
+        }
+
+        //Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage);
+        if (Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage_LS))
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                CopyPackage_LS[i, LS_Slot_X, LS_Slot_Y] = CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y];
+                CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y] = 0;
+            }
+            switch (FSPSize)
+            {
+                case 100:
+                    Refreshing_Equipment_Slots(CopyPackage_FS);
+                    break;
                 case 86:
                     FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
                     //SendServer_Inv_Info(CopyPackage_FS, 38, true);
@@ -301,6 +386,9 @@ public class Inventory_Player_Shown : MonoBehaviour
             }
             switch (LSPSize)
             {
+                case 100:
+                    Refreshing_Equipment_Slots(CopyPackage_LS);
+                    break;
                 case 86:
                     LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
                     SendServer_Inv_Info(CopyPackage_LS, 38, true);
@@ -312,14 +400,64 @@ public class Inventory_Player_Shown : MonoBehaviour
 
     }
 
-    
+    public void Refreshing_Equipment_Slots(short[,,] changedPackage)
+    {
+        int x = changedPackage.GetLength(1);
+        int y = 1;
+        int deep = changedPackage.GetLength(0);
+
+        int YLine = 0;
+        for (int XLine = 0; XLine < x; XLine++)
+        {
+            if (!(changedPackage[0, XLine, YLine] == 0)) // 비어있지않음
+            {
+                Equipment[XLine].GetComponent<InventorySlot>().Image.GetComponent<Image>().sprite = Item_DataBase.item_database.Requesting_Image(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
+                Equipment[XLine].GetComponent<InventorySlot>().Image.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                Equipment[XLine].GetComponent<InventorySlot>().BackgroundColor.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f); //?
+                short Size = Item_DataBase.item_database.Requesting_Size(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
+
+                Equipment[XLine].GetComponent<InventorySlot>().Item_Type = changedPackage[0, XLine, YLine];
+                Equipment[XLine].GetComponent<InventorySlot>().Item_ID = changedPackage[1, XLine, YLine];
+                Equipment[XLine].GetComponent<InventorySlot>().ParentTransform = this.transform;
+                Equipment[XLine].GetComponent<InventorySlot>().ParentSize = 100;
+                Equipment[XLine].GetComponent<InventorySlot>().Size = Size;
+
+                Equipment[XLine].GetComponent<InventorySlot>().What_Main = null;
+                Equipment[XLine].GetComponent<InventorySlot>().IsMain = true;
+
+                //Equipment[XLine].GetComponent<InventorySlot>().Is_Changed--;
+            }
+            else // 빔
+            {
+                Equipment[XLine].GetComponent<InventorySlot>().Image.GetComponent<Image>().sprite = Equipment_Sample_Array[XLine];
+                Equipment[XLine].GetComponent<InventorySlot>().BackgroundColor.GetComponent<Image>().color = new Color(0.6f, 0.6f, 0.6f, 1f); // ?
+                Equipment[XLine].GetComponent<InventorySlot>().Item_Type = 0;
+                Equipment[XLine].GetComponent<InventorySlot>().Item_ID = 0;
+
+                Equipment[XLine].GetComponent<InventorySlot>().ParentTransform = this.transform;
+                Equipment[XLine].GetComponent<InventorySlot>().ParentSize = 100;
+                //short SizeOfItem = Item_DataBase.item_database.Requesting_Size(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
+                //Equipment[XLine].GetComponent<InventorySlot>().Size = SizeOfItem;
+            }
+        }
+
+
+
+       Equipment_Package_Notbe_Synchronized = changedPackage;
+    }
 
     public bool Checking_Only_Size_For_InCanFit_All(bool IsVirtical, int First_Item_Lengthof_X, int First_Item_Lengthof_Y,
         short Last_Slot_X_order, short Last_Slot_Y_order, int X_Length_OnStorage, int Y_Length_OnStorage, short[,,] Target_Package)
     //Length = 1부터, order는 0부터
     {
+        
         bool Clear = false;
-
+        if (LSPSize == 100)
+        {
+            // 장비 검증연산 해야됨
+            Clear = true;
+            return Clear;
+        }
         int x = First_Item_Lengthof_X;
         int y = First_Item_Lengthof_Y;
 
@@ -404,8 +542,8 @@ public class Inventory_Player_Shown : MonoBehaviour
                     int location_Packet = 1000000000;
                     int Info_Packet = 10000000;
 
-                    location_Packet += 100000000*XLine; // 1
-                    location_Packet += 1000000 *YLine; // 2
+                    location_Packet += 100000000 * XLine; // 1
+                    location_Packet += 1000000 * YLine; // 2
                     location_Packet += 1000 * Order; // 3
                     //(1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
 
@@ -414,7 +552,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                         switch (a)
                         {
                             case 0:
-                                Info_Packet += (1000000*Changed_Package[a, XLine, YLine]); //type 1,1
+                                Info_Packet += (1000000 * Changed_Package[a, XLine, YLine]); //type 1,1
                                 break;
                             case 1:
                                 Info_Packet += (1000 * Changed_Package[a, XLine, YLine]); //id 3,2
@@ -423,7 +561,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                                 Info_Packet += (1 * Changed_Package[a, XLine, YLine]); //amount 4,3
                                 break;
                             case 3:
-                                Info_Packet += (100000*Changed_Package[a, XLine, YLine]); //dir 2,1
+                                Info_Packet += (100000 * Changed_Package[a, XLine, YLine]); //dir 2,1
                                 break;
                             case 4:
                                 location_Packet += Changed_Package[a, XLine, YLine];
