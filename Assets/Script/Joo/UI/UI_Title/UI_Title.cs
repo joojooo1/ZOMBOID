@@ -359,9 +359,18 @@ public class UI_Title : MonoBehaviour
         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
     }
 
-    public void Remove_value_list()
+    public void Remove_value_list(Characteristic_Value_type type, string name)
     {
+        for(int i = 0; i < value_List.Count; i++)
+        {
+            if (value_List[i].Job_type == Player_Job.None && value_List[i]._type == type && value_List[i].name == name)
+            {
+                switch (type)
+                {
 
+                }
+            }
+        }
     }
 
 

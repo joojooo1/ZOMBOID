@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &627311184764848890
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7363,7 +7363,6 @@ GameObject:
   - component: {fileID: 3626245807670445080}
   - component: {fileID: 6909070436690936756}
   - component: {fileID: 8754535077998531318}
-  - component: {fileID: 1465753632049420742}
   m_Layer: 5
   m_Name: Characteristic_Choice
   m_TagString: Untagged
@@ -7438,22 +7437,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uD2B9\uC131 \uC120\uD0DD"
---- !u!114 &1465753632049420742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8397848418993044214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: debb07c2c7a1bac4e865b154342f51d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value_name: {fileID: 0}
-  value_totalvalue: {fileID: 0}
-  Job_type: 0
-  _type: 0
 --- !u!1 &8528145926572434047
 GameObject:
   m_ObjectHideFlags: 0
