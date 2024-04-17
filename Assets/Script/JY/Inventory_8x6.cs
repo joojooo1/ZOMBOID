@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class Inventory_8x6 : MonoBehaviour
 {
-    int X_Length = 8;
-    int Y_Length = 6;
+    int X_Length = 8; // v
+    int Y_Length = 6; // v
     public short Storage_Order;
-    public short[,,] Recent_Recieved_Package;
+    public bool IsPlayers;
+    public short[,,] Recent_Recieved_Package; // v
 
-    public GameObject SlotPrefeb;
+    public GameObject SlotPrefeb; // v
 
 
     Item_Container ThisID;
-    public InventorySlot[] Slots;
+    public InventorySlot[] Slots; // v
 
     short[,,] packageExample1 =
     {
@@ -72,10 +73,19 @@ public class Inventory_8x6 : MonoBehaviour
 
     private void Start()
     {
-
         ThisID = Item_DataBase.item_database.Container_Ins[8];
         Generating_Slots_First(packageExample1);
+        Ex_Add();
+        Storage_Order = 38;
+        IsPlayers = true;
     }
+
+    public void Ex_Add() // 서버 테스팅후 지울것
+    {
+        Inventory_Library.IL.Inventory_DB.Add(Recent_Recieved_Package);
+        Debug.Log(Inventory_Library.IL.Inventory_DB.Count);
+    }
+
     public void Generating_Slots_First(short[,,] package)
     {
         int x = package.GetLength(1);
@@ -352,7 +362,6 @@ public class Inventory_8x6 : MonoBehaviour
 
 
         Recent_Recieved_Package = changedPackage;
-
     }
 
     private int SlotSize_Req(int num)

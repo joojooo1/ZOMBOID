@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FreeNet;
+using VirusWarGameServer;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 using UnityEngine.EventSystems;
 
 public class Inventory_Player_Shown : MonoBehaviour
@@ -31,6 +34,10 @@ public class Inventory_Player_Shown : MonoBehaviour
     public List<short[,,]> Packages_Player;
     public List<short[,,]> Packages_Storage;// 장비, 가방에 대응하는 아이템 배열( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
 
+    [SerializeField]
+    public List<Transform> Player_Storages;
+    [SerializeField]
+    public List<Transform> Other_Storages;
     //                                                                              신선도,조리여부,개봉여부,크기,무게
     //2칸이상의 대부분의 장비 형태들은 방향을 기준으로 옆 블럭에 추가정보를 저장
     //가방의 경우 패키지 인덱스를 저장
@@ -288,12 +295,15 @@ public class Inventory_Player_Shown : MonoBehaviour
             {
                 case 86:
                     FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
+                    //SendServer_Inv_Info(CopyPackage_FS, 38, true);
+
                     break;
             }
             switch (LSPSize)
             {
                 case 86:
                     LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
+                    SendServer_Inv_Info(CopyPackage_LS, 38, true);
                     break;
             }
 
@@ -375,6 +385,63 @@ public class Inventory_Player_Shown : MonoBehaviour
 
         return Clear;
     }
+
+    //방향, type, id, 갯수 // 특정
+
+
+
+    public void SendServer_Inv_Info(short[,,] Changed_Package, short Order, bool IsP)
+    {
+        int x = Changed_Package.GetLength(1);
+        int y = Changed_Package.GetLength(2);
+        int deep = Changed_Package.GetLength(0);
+        for (int YLine = 0; YLine < y; YLine++)
+        {
+            for (int XLine = 0; XLine < x; XLine++)
+            {
+                if (!(Changed_Package[0, XLine, YLine] == 0))
+                {
+                    int location_Packet = 1000000000;
+                    int Info_Packet = 10000000;
+
+                    location_Packet += 100000000*XLine; // 1
+                    location_Packet += 1000000 *YLine; // 2
+                    location_Packet += 1000 * Order; // 3
+                    //(1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
+
+                    for (int a = 0; a < deep; a++)
+                    {
+                        switch (a)
+                        {
+                            case 0:
+                                Info_Packet += (1000000*Changed_Package[a, XLine, YLine]); //type 1,1
+                                break;
+                            case 1:
+                                Info_Packet += (1000 * Changed_Package[a, XLine, YLine]); //id 3,2
+                                break;
+                            case 2:
+                                Info_Packet += (1 * Changed_Package[a, XLine, YLine]); //amount 4,3
+                                break;
+                            case 3:
+                                Info_Packet += (100000*Changed_Package[a, XLine, YLine]); //dir 2,1
+                                break;
+                            case 4:
+                                location_Packet += Changed_Package[a, XLine, YLine];
+                                break;
+                        }
+                    }
+
+
+                    CPacket InvPacket = CPacket.create((int)PROTOCOL.INV_SYNCHRONIZATION);
+                    InvPacket.push(location_Packet);
+                    InvPacket.push(Info_Packet);
+                    CMainGame.current.Inv_Sync(InvPacket);
+                }
+            }
+        }
+    }
+
+
 
     private void Changed_Backpacks_Output(short Backpack_ID, short[,,] Exiest_Packages, short Order)
     {
