@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
-using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
+//using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 public enum Damage_Pattern
 {
     /* ½É°¢µµ 1 */

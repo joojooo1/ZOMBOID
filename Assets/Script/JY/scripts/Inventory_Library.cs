@@ -13,8 +13,16 @@ public class Inventory_Library : MonoBehaviour
     private void Awake()
     {
         IL = this;
+        Inventory_DB = new List<short[,,]>();
     }
-
+    private void Start()
+    {
+        for(int i = 0; i < 38; i++)
+        {
+            short[,,] dumy= new short[1, 1, 1];
+            Inventory_DB.Add(dumy);
+        }
+    }
     public void Setting_ThisPlayer_Host()
     {
         Is_Host = true;

@@ -30,6 +30,8 @@ namespace VirusWarGameServer
         //몬스터가 때리는걸 클라이언트에서 보낸다.
         ENEMY_ATTACK,
 
+        INV_SYNCHRONIZATION,
+
         END
     }
 }
