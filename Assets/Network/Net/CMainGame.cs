@@ -77,6 +77,11 @@ public class CMainGame : MonoBehaviour
     }
     public int playerSN = -1;
 
+    public void Inv_Sync(CPacket InvPacket)
+    {
+        network_manager.send(InvPacket);
+    }
+
     public void on_recv(CPacket msg)
     {
         PROTOCOL protocol = (PROTOCOL)msg.pop_protocol_id();
@@ -170,8 +175,59 @@ public class CMainGame : MonoBehaviour
                     //    TargetIndex);
                 }
                 break;
+            case PROTOCOL.INV_SYNCHRONIZATION:
+                {
+                    int Location_Info = msg.pop_int32();
+                    int Basic_Info = msg.pop_int32();
+                    Debug.Log("loc" + Location_Info);
+                    Debug.Log("Basic" + Basic_Info);
 
+                    int XLoc = (Location_Info - 1000000000) / 100000000;
+                    int YLoc = (Location_Info % 100000000) / 1000000;
+                    int Order = (Location_Info % 1000000) / 1000;
+
+                    int Type = (Basic_Info - 10000000) / 1000000;
+                    int ID = (Basic_Info % 100000) / 1000;
+                    int Amount = Basic_Info % 1000;
+                    int Direction = (Basic_Info % 1000000) / 100000;
+
+                    //( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
+                    Inventory_Library.IL.Inventory_DB[Order][0, (short)XLoc, (short)YLoc] = (short)Type;
+                    Inventory_Library.IL.Inventory_DB[Order][1, (short)XLoc, (short)YLoc] = (short)ID;
+                    Inventory_Library.IL.Inventory_DB[Order][2, (short)XLoc, (short)YLoc] = (short)Amount;
+                    Inventory_Library.IL.Inventory_DB[Order][3, (short)XLoc, (short)YLoc] = (short)Direction;
+                    Debug.Log("Library Number " + Order);
+                    Debug.Log("Type changed to " + Type);
+                    Debug.Log("ID changed to " + ID);
+                    Debug.Log("Amount changed to " + Amount);
+                    Debug.Log("Direction changed to " + Direction);
+                    //Inventory_Library.IL.Inventory_DB[Order][4, (short)XLoc, (short)YLoc] =;
+                    int NSize = 0;
+                    if (Inventory_Library.IL.Inventory_DB[Order].GetLength(2) < 10)
+                    {
+                        NSize += 10 * Inventory_Library.IL.Inventory_DB[Order].GetLength(1);
+                        NSize += Inventory_Library.IL.Inventory_DB[Order].GetLength(2);
+                    }
+
+
+
+                    foreach (Transform VisualArea in Inventory_Player_Shown.InvPS.Player_Storages)
+                    {
+                        switch (NSize)
+                        {
+                            case 86:
+                                if (VisualArea.GetComponent<Inventory_8x6>().Storage_Order == Order)
+                                {
+                                    VisualArea.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(Inventory_Library.IL.Inventory_DB[Order]);
+                                    Debug.Log("Size86 Checked, Refreshing Complete.");
+                                }
+                                break;
+                        }
+                    }
+                }
+                    break;
 
         }
     }
 }
+
