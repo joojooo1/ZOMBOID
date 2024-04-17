@@ -604,7 +604,7 @@ public class Moodles_state
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
                 break;     /* 24.03.06 */  // 질나쁜 음식 먹을때만 반영하도록 구현 예정
-            case Moodles_private_code.Stressed:  //  0.25f, 0.5f, 0.75f, 0.9f  // 
+            case Moodles_private_code.Stressed:  //  0.25f, 0.5f, 0.75f, 0.9f  // Player_main_Update(골초특성)
                 _Moodle_current_value += current_value;
                 if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }
                 else if (_Moodle_current_value < 0) { _Moodle_current_value = 0; }

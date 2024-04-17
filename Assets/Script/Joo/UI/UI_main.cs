@@ -88,17 +88,7 @@ public class UI_main : MonoBehaviour
     {
         
         Player_main.player_main.playerMoodles.Set_Player_Language(player_Setting_Language_to_Korean);
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    if (player_Setting_Language_to_Korean)  // Korean -> English
-        //    {
-        //        player_Setting_Language_to_Korean = false;
-        //    }
-        //    else                                     // English -> Korean
-        //    {
-        //        player_Setting_Language_to_Korean = true;
-        //    }
-        //}
+
     }
 
     public void Set_UIDamage()
