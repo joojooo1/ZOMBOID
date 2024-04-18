@@ -159,11 +159,11 @@ public class Player_HP : MonoBehaviour
             Player_current_Health = Player_Min_Health;
             if (Player_main.player_main.playerState.Get_Is_Infection())
             {
-                Player_main.player_main.playerMoodles.Moodle_Zombie.Set_Moodles_state(0);
+                Player_main.player_main.playerMoodles.Moodle_Zombie.Set_Moodles_state(1);
             }
             else
             {
-                Player_main.player_main.playerMoodles.Moodle_Dead.Set_Moodles_state(0);
+                Player_main.player_main.playerMoodles.Moodle_Dead.Set_Moodles_state(1);
             }
         }
 

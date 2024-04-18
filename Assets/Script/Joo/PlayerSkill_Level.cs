@@ -944,6 +944,7 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
     float S_Additional_points_through_Books = 1f;
 
     float S_EXP = 0f;
+    public float S_Exp_characteristic = 1f;
     List<float>[] S_expRequirements;
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
@@ -1000,7 +1001,7 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public void SetEXP(float exp)
     {
-        S_EXP = S_EXP + (exp * S_Additional_points_through_Books);
+        S_EXP = S_EXP + (exp * S_Additional_points_through_Books * S_Exp_characteristic);
         if (S_Level < S_Max_Level && S_EXP >= S_expRequirements[(int)S_Level][0])
         {
             S_EXP -= S_expRequirements[(int)S_Level][0];

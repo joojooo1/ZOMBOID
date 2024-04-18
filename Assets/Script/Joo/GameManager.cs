@@ -34,64 +34,68 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Timer += Time.deltaTime;        
-
-        if(Timer > 8)
+        if (UI_main.ui_main.Playing)
         {
-            if (Minute >= 50)
-            {
-                if (Hour < 23)
-                    Hour += 1;          
-                else
-                {
-                    Hour = 0;
-                    Elapsed_time++;
+            Timer += Time.deltaTime;
 
-                    if (Day < 31)
-                        Day += 1;
+            if (Timer > 8)
+            {
+                if (Minute >= 50)
+                {
+                    if (Hour < 23)
+                        Hour += 1;
                     else
                     {
-                        Month += 1;
-                        Day = 1;
+                        Hour = 0;
+                        Elapsed_time++;
+
+                        if (Day < 31)
+                            Day += 1;
+                        else
+                        {
+                            Month += 1;
+                            Day = 1;
+                        }
+
+                        System.Random rand = new System.Random();
+                        float Temp = rand.Next(-50, 50);
+                        Current_Temperature = Temperature + (Temp / 10);
+
+                        Player_main.player_main.playerState.Set_Apparent_Temperature(Temp / 10);
+                        Set_Windchill();
+
+                        if (Elapsed_time == 7)  // 총 40일중 7일차에 물, 전기 끊김
+                        {
+                            Is_Water = false;
+                            Is_Electricity = false;
+                        }
                     }
 
-                    System.Random rand = new System.Random();
-                    float Temp = rand.Next(-50, 50);
-                    Current_Temperature = Temperature + (Temp / 10);
+                    Minute = 0;
+                }
+                else
+                    Minute += 10;
 
-                    Set_Windchill();
-
-                    if(Elapsed_time == 7)  // 총 40일중 7일차에 물, 전기 끊김
-                    {
-                        Is_Water = false;
-                        Is_Electricity = false;
-                    }
+                if (UI_main.ui_main.Clock == enabled)
+                {
+                    UI_main.ui_main.Set_Clock(Hour.ToString(), Minute.ToString(), Month, Day, Current_Temperature);
                 }
 
-                Minute = 0;
-            }
-            else
-                Minute += 10;
-
-            if(UI_main.ui_main.Clock == enabled)
-            {
-                UI_main.ui_main.Set_Clock(Hour.ToString(), Minute.ToString(), Month, Day, Current_Temperature);
+                Timer = 0;
             }
 
-            Timer = 0;
-        }
-
-        if (Hour == 23)  // 오후 11시에 칼로리 체크해서 체중 변동
-        {
-            if (Player_main.player_main.Get_Calories() < 0)
+            if (Hour == 23)  // 오후 11시에 칼로리 체크해서 체중 변동
             {
-                Player_main.player_main.Set_Weight(2);
+                if (Player_main.player_main.Get_Calories() < 0)
+                {
+                    Player_main.player_main.Set_Weight(2);
+                }
+                else if (Player_main.player_main.Get_Calories() > 1600)
+                {
+                    Player_main.player_main.Set_Weight(-1);
+                }
             }
-            else if (Player_main.player_main.Get_Calories() > 1600)
-            {
-                Player_main.player_main.Set_Weight(-1);
-            }
-        }
+        }       
 
     }
 
@@ -102,7 +106,7 @@ public class GameManager : MonoBehaviour
         float Temp = rand.Next(0, 10);
 
         Player_main.player_main.playerMoodles.Moodle_Windchill.Set_Moodles_state(Temp);
-        Player_main.player_main.playerState.Set_Apparent_Temperature(Player_main.player_main.playerState.Get_Apparent_Temperature());
+        
     }
 
     public float Get_Current_Temperature() { return (float)Current_Temperature; }
