@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5056181991479184333}
   - component: {fileID: 710878254988068610}
   - component: {fileID: 3782071685842955529}
-  - component: {fileID: 6047221681183851723}
+  - component: {fileID: 475684720242648991}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -316,8 +316,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2efb73cfea79ed54c9592af02c75b3ce, type: 2}
   - {fileID: 11400000, guid: ee75c604641d74f4781475422b528fa2, type: 2}
   - {fileID: 11400000, guid: 401c17dd34598cc41a35edae0607185a, type: 2}
-  DetailWindow: {fileID: 0}
---- !u!114 &6047221681183851723
+  Requesting_Wei: 0
+--- !u!114 &475684720242648991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -331,6 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Characteristic_P_Window: {fileID: 0}
   Characteristic_N_Window: {fileID: 0}
+  Characteristic_S_Window: {fileID: 0}
   Characteristic_Image:
   - {fileID: 21300000, guid: 5c3702ccc26ecbc4d8e370a294f4b17c, type: 3}
   - {fileID: 21300000, guid: 7427328756a9c35489797ee905d53c4e, type: 3}
@@ -388,3 +389,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1c5e458e0f6b2ca498e6b9cf65efde9b, type: 3}
   - {fileID: 21300000, guid: d7c1a96ea47aedb4790ac62704592724, type: 3}
   Characteristic_Prefab: {fileID: 7837809173966675109, guid: ac157a9cee4932c46a45c8cae683d170, type: 3}
+  player_Job: 0
+  Smoker_characteristics: 0
+  Agoraphobic_characteristics: 0
+  Claustrophobic_characteristics: 0
+  Outdoorsman_characteristics: 0
+  Restless_Sleeper_characteristics: 0
+  Resilient_Characteristic: 0
+  Prone_to_Illness_Characteristic: 0
+  characteristics_list: []
+  characteristics_Player: []

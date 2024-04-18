@@ -32,7 +32,7 @@ public class UI_Starting : MonoBehaviour
         {
             if(i == 0)
             {
-                Player_Characteristic.instance.Start_Setting();
+                Player_Characteristic.current.Start_Setting();
             }
 
             if (i < 3)
@@ -49,7 +49,8 @@ public class UI_Starting : MonoBehaviour
                 {
                     start_button.SetActive(true);
                     text.text = Set_Start_Text(3);
-                    anim.SetBool("start", true);                    
+                    anim.SetBool("start", true);
+                    Timer = 0;
                 }
             }
 

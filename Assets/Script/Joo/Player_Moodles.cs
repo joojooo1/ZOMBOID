@@ -230,11 +230,11 @@ public class Player_Moodles : MonoBehaviour
          90% 이상: 체온발생량 크게 증가, 운반 능력 -2, 나쁜 음식or시체더미(20구이상)로 인한 경우 체력이 천천히 감소,
                    좀비화or중독이면 체력 치명적으로 감소 & 스트레스 무들
         */
-        Moodle_Dead = new Moodles_state(Moodles_private_code.Dead, 0f, 0f, 0f, 0f);  // 체력이 0이되면 바로 실행
+        Moodle_Dead = new Moodles_state(Moodles_private_code.Dead, 1f, 0f, 0f, 0f);  // 체력이 0이되면 바로 실행
         /*
          플레이어가 감염되지 않고 사망한 경우
          */
-        Moodle_Zombie = new Moodles_state(Moodles_private_code.Zombie, 0f, 0f, 0f, 0f);  // 임의로 설정 (기준: 체력 0 && Dead가 아닌 경우)
+        Moodle_Zombie = new Moodles_state(Moodles_private_code.Zombie, 1f, 0f, 0f, 0f);  // 임의로 설정 (기준: 체력 0 && Dead가 아닌 경우)
         /*
          플레이어가 감염되고 사망한 경우.
          불타 재가 되지 않고나 땅에 시체를 남기는 경우 좀비로 부활
@@ -476,7 +476,7 @@ public class Moodles_state
                 }
                 break;     /* 24.03.05 */
             case Moodles_private_code.Panic:  //  0.3f, 0.5f, 0.8f, 0.9f  // Player_main_Update  // Player_main_Calculate_HitForce
-                if (Player_Characteristic.instance.player_Job != Player_Job.Veteran)
+                if (Player_Characteristic.current.player_Job != Player_Job.Veteran)
                 {
                     _Moodle_current_value += current_value;
                     if (_Moodle_current_value > 1) { _Moodle_current_value = 1; }

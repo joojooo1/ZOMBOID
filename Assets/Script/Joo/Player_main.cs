@@ -35,7 +35,7 @@ public class Player_main : MonoBehaviour
     public PlayerState playerState;
     public Player_HP player_HP;
     public Player_Moodles playerMoodles;
-    public Player_Characteristic player_Characteristic;
+   
 
     [SerializeField] UnityEngine.UI.Text Weight_text;
 
@@ -57,6 +57,7 @@ public class Player_main : MonoBehaviour
     [SerializeField] float Driving_control = 1f;  // 운전 제어력
     public float Driving_Speed_min = 2f;  // 운전 최저 속도
     public float Driving_Speed_max = 5f;  // 운전 최고 속도
+    public float Read_Speed = 1f;  // 책 읽는 속도
 
     public bool ability_Sleeping = true;
     public bool ability_Eat = true;
@@ -76,12 +77,13 @@ public class Player_main : MonoBehaviour
     public bool Is_Smoking = false;
     public bool Is_Outdoor = false;
     public bool Is_Driving = false;
+    public bool Is_Eating = false;
+    public bool Is_food_poisoning = false;  // 식중독
 
-    public bool Smoker_characteristics = false;
-    public bool Agoraphobic_characteristics = false;
-    public bool Claustrophobic_characteristics = false;
-    public bool Restless_Sleeper_characteristics = false;
-
+    public float Likelihood_of_food_poisoning = 0.2f;  // 식중독에 걸릴 확률
+    public float Time_for_food_poisoning = 200f;  // 식중독 유지 시간
+    public float Satiety_value = 0.06f;  // 포만감 감소되는 양
+    public float Panic_value = 0.15f;
 
     float Enemy_Damage = 0;  // 상대유저의 공격력
     /* --------------------------------------------------------------------------------- */
@@ -102,23 +104,35 @@ public class Player_main : MonoBehaviour
     float Cold_Timer = 0.0f;
     float Smoker_Timer = 0.0f;
     float Sleeping_Timer = 0.0f;
+    float Food_Poison_Timer = 0.0f;
     void Update()
     {
         Weight_text.text = Weight.ToString();
         if (!ability_Sleeping) { Is_Sleeping = false; }
         else { Is_Sleeping = true; }
-        // test -------------------------------------------------------------
 
+        /* -------------------------- Is_Eating -------------------------- */
+        // 음식먹을 때 Calculating_Food_Poisoning 호출
 
-
-        // ------------------------------------------------------------- test 함수 
-
+        if (Is_food_poisoning)
+        {
+            Food_Poison_Timer += Time.deltaTime;
+            if(Food_Poison_Timer > Time_for_food_poisoning)
+            {
+                Food_Poison_Timer = 0;
+                Is_food_poisoning = false;
+            }
+            else if(Food_Poison_Timer > 0 && Food_Poison_Timer < 200)
+            {
+                playerMoodles.Moodle_Sick.Set_Moodles_state(0.03f);
+            }
+        }
 
         /************************************* Player_Satiety **************************************/
         Satiety_Timer += Time.deltaTime; 
         if (Satiety_Timer > 1.0f)  // 포만감 2초에 1.5씩 감소
         {
-            Satiety -= 0.06f;  // 포만감 -300 ~ 300
+            Satiety -= Satiety_value;  // 포만감 -300 ~ 300
             if (Satiety < -300) { Satiety = -300.0f; }
             else if (Satiety > 300) { Satiety = 300.0f; }
 
@@ -156,26 +170,26 @@ public class Player_main : MonoBehaviour
             Is_Running = false;
 
         /************************************* Player_Panic **************************************/
-        if (Agoraphobic_characteristics)
+        if (Player_Characteristic.current.Agoraphobic_characteristics)
         {
             if (Is_Outdoor)
             {
                 Panic_Timer_for_Agoraphobic += Time.deltaTime;
                 if (Panic_Timer > 1f) 
                 { 
-                    playerMoodles.Moodle_Panic.Set_Moodles_state(0.15f);
+                    playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
                     Panic_Timer_for_Agoraphobic = 0;
                 }                
             }
         }
-        else if (Claustrophobic_characteristics)
+        else if (Player_Characteristic.current.Claustrophobic_characteristics)
         {
             if (!Is_Outdoor)
             {
                 Panic_Timer_for_Agoraphobic += Time.deltaTime;
                 if (Panic_Timer > 1f)
                 {
-                    playerMoodles.Moodle_Panic.Set_Moodles_state(0.15f);
+                    playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
                     Panic_Timer_for_Agoraphobic = 0;
                 }
             }
@@ -210,7 +224,7 @@ public class Player_main : MonoBehaviour
         }
 
         /************************************* Player_Stressed **************************************/
-        if (Smoker_characteristics)
+        if (Player_Characteristic.current.Smoker_characteristics)
         {
             Smoker_Timer += Time.deltaTime;
             if (Is_Smoking)
@@ -241,7 +255,8 @@ public class Player_main : MonoBehaviour
             }
         }
 
-        if (Restless_Sleeper_characteristics)
+        /************************************* Player_Sleep **************************************/
+        if (Player_Characteristic.current.Restless_Sleeper_characteristics)
         {
             if (Is_Sleeping)
             {
@@ -425,6 +440,17 @@ public class Player_main : MonoBehaviour
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
         Debug.Log(Weight);
+    }
+
+    public void Calculating_Food_Poisoning(float food_value)
+    {
+        System.Random rand = new System.Random();
+        int randomNumber = rand.Next(100);
+
+        if (((float)randomNumber / 100) < Likelihood_of_food_poisoning + food_value)
+        {
+            Is_food_poisoning = true;
+        }
     }
 
 

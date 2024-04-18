@@ -128,17 +128,17 @@ public class UI_Title : MonoBehaviour
 
     public void Job_fisher()
     {
-        if(Player_Characteristic.instance.player_Job != Player_Job.fisher)
+        if(Player_Characteristic.current.player_Job != Player_Job.fisher)
         {
-            if (Player_Characteristic.instance.player_Job == Player_Job.Burglar)
+            if (Player_Characteristic.current.player_Job == Player_Job.Burglar)
             {
                 Set_TotalPoint_text(6);
             }
-            else if (Player_Characteristic.instance.player_Job == Player_Job.Veteran)
+            else if (Player_Characteristic.current.player_Job == Player_Job.Veteran)
             {
                 Set_TotalPoint_text(8);
             }
-            Player_Characteristic.instance.player_Job = Player_Job.fisher;
+            Player_Characteristic.current.player_Job = Player_Job.fisher;
             Set_TotalPoint_text(-4);
 
             for (int i = 0; i < value_List.Count;)
@@ -192,17 +192,17 @@ public class UI_Title : MonoBehaviour
 
     public void Job_Burglar()
     {
-        if (Player_Characteristic.instance.player_Job != Player_Job.Burglar)
+        if (Player_Characteristic.current.player_Job != Player_Job.Burglar)
         {
-            if (Player_Characteristic.instance.player_Job == Player_Job.fisher)
+            if (Player_Characteristic.current.player_Job == Player_Job.fisher)
             {
                 Set_TotalPoint_text(4);
             }
-            else if (Player_Characteristic.instance.player_Job == Player_Job.Veteran)
+            else if (Player_Characteristic.current.player_Job == Player_Job.Veteran)
             {
                 Set_TotalPoint_text(8);
             }
-            Player_Characteristic.instance.player_Job = Player_Job.Burglar;
+            Player_Characteristic.current.player_Job = Player_Job.Burglar;
             Set_TotalPoint_text(-6);
 
             for (int i = 0; i < value_List.Count;)
@@ -272,17 +272,17 @@ public class UI_Title : MonoBehaviour
 
     public void Job_Veteran()
     {
-        if (Player_Characteristic.instance.player_Job != Player_Job.Veteran)
+        if (Player_Characteristic.current.player_Job != Player_Job.Veteran)
         {
-            if (Player_Characteristic.instance.player_Job == Player_Job.fisher)
+            if (Player_Characteristic.current.player_Job == Player_Job.fisher)
             {
                 Set_TotalPoint_text(4);
             }
-            else if (Player_Characteristic.instance.player_Job == Player_Job.Burglar)
+            else if (Player_Characteristic.current.player_Job == Player_Job.Burglar)
             {
                 Set_TotalPoint_text(6);
             }
-            Player_Characteristic.instance.player_Job = Player_Job.Veteran;
+            Player_Characteristic.current.player_Job = Player_Job.Veteran;
             Set_TotalPoint_text(-8);
 
             for (int i = 0; i < value_List.Count;)
@@ -352,11 +352,31 @@ public class UI_Title : MonoBehaviour
 
     public void Add_value_list(string name, string name_kr, float level, float add_value, Player_Job Job, Characteristic_Value_type type)
     {
-        GameObject Totalvalue = null;
-        Totalvalue = Instantiate(Value_Prefab, Window_value);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue(name, name_kr, level, Job, type);
-        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(type, add_value);
-        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+        for(int i = 0; i < value_List.Count; i++)
+        {
+            if (value_List[i].Job_type == Job && value_List[i]._type == type)
+            {
+                if (level != 0)
+                {
+                    value_List[i].Set_Characteristic_T_value(type, level);
+                }
+                if(add_value != 0)
+                {
+                    value_List[i].Set_Characteristic_T_value(type, add_value);
+                }
+                break;
+            }
+            
+            if(i == value_List.Count -1 && value_List[i].Job_type != Job && value_List[i]._type != type)
+            {
+                GameObject Totalvalue = null;
+                Totalvalue = Instantiate(Value_Prefab, Window_value);
+                Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue(name, name_kr, level, Job, type);
+                Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(type, add_value);
+                value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
+            }
+        }
+
     }
 
     public void Remove_value_list(Characteristic_Value_type type, string name)

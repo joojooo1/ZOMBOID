@@ -44,14 +44,20 @@ public class Player_Characteristic : MonoBehaviour
     [SerializeField] Sprite[] Characteristic_Image;
     [SerializeField] GameObject Characteristic_Prefab;
 
-    public static Player_Characteristic instance;
+    public Player_Job player_Job = Player_Job.None;
 
-    public Player_Job player_Job;
+    public bool Smoker_characteristics = false;
+    public bool Agoraphobic_characteristics = false;
+    public bool Claustrophobic_characteristics = false;
+    public bool Outdoorsman_characteristics = false;
+    public bool Restless_Sleeper_characteristics = false;
+    public bool Resilient_Characteristic = false;
+    public bool Prone_to_Illness_Characteristic = false;
 
+    public static Player_Characteristic current = null;
     private void Awake()
     {
-        instance = this;
-
+        current = this;
         for (int i = 0; i < 52; i++)
         {
             if(i != 49)
@@ -127,42 +133,95 @@ public class Player_Characteristic : MonoBehaviour
                 // 체력
                 case 47:
                     Player_main.player_main.Skill.Fitness_Level.Set_P_Level(1);
+                    
                     break;
                 case 36:
                     Player_main.player_main.Skill.Fitness_Level.Set_P_Level(2);
+                    
                     break;
                 case 10:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(6);
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(7);
+                    
                     break;
                 case 19:
                     Player_main.player_main.Skill.Fitness_Level.Set_P_Level(9);
+                    
                     break;
 
                 // Bool type
                 case 27:
-                    Player_main.player_main.Smoker_characteristics = true;
+                    Smoker_characteristics = true;
                     break;
                 case 28:
-                    Player_main.player_main.Agoraphobic_characteristics = true;
+                    Agoraphobic_characteristics = true;
                     break;
                 case 30:
-                    Player_main.player_main.Claustrophobic_characteristics = true;
-                    break;
-                case 41:
-                    Player_main.player_main.Restless_Sleeper_characteristics = true;
+                    Claustrophobic_characteristics = true;
                     break;
                 case 2:
-                    Player_main.player_main.playerState.Outdoorsman_characteristics = true;
+                    Outdoorsman_characteristics = true;
                     break;
+                case 6:
+                    Resilient_Characteristic = true;
+                    break;
+
+
 
 
                 case 0:
                     Player_main.player_main.Driving_Speed_max *= characteristics_Player[i].Prefab.value_list[0];
                     break;
+                case 3:
+                    Player_main.player_main.Read_Speed += characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 4:
+                    Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= (1 + characteristics_Player[i].Prefab.value_list[0]);                    
+                    if(Player_main.player_main.playerState.Tired_value * (1 + characteristics_Player[i].Prefab.value_list[1]) < 0)
+                    {
+                        Player_main.player_main.playerState.Tired_value = 0.0005f;   // 피로도 증가량 거의 없는 정도로 조정
+                    }
+                    else
+                    {
+                        Player_main.player_main.playerState.Tired_value *= (1 + characteristics_Player[i].Prefab.value_list[1]);
+                    }
+                    break;
+                case 5:
+                    if ((Player_main.player_main.Likelihood_of_food_poisoning + characteristics_Player[i].Prefab.value_list[0]) < 0)
+                    {
+                        Player_main.player_main.Likelihood_of_food_poisoning = 0.0005f;   // 식중독에 걸릴 확률 거의 없는 정도로 조정
+                    }
+                    else
+                    {
+                        Player_main.player_main.Likelihood_of_food_poisoning += characteristics_Player[i].Prefab.value_list[0];
+                    }
+                    Player_main.player_main.Time_for_food_poisoning *= characteristics_Player[i].Prefab.value_list[1];
+                    break;
+                case 7:
+                    Player_main.player_main.Satiety_value *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 29:
+                    Player_main.player_main.Satiety_value *= characteristics_Player[i].Prefab.value_list[0];
+                    Player_main.player_main.Skill.Foraging_Level.S_Exp_characteristic = characteristics_Player[i].Prefab.value_list[1];
+                    break;
+                case 8:
+                    Player_main.player_main.Panic_value *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 33:
+                    Prone_to_Illness_Characteristic = true;
+
+                    break;
+                case 41:
+                    Restless_Sleeper_characteristics = true;
+                    Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+
                 case 1:
                     // 고양이의 눈 ( 야간 시야 범위 +20% ( 야간 밝기 증가, 손전등, 차량 전조등 등의 광원의 범위 넓혀줌 ) )
                     break;
-
+                case 9:
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling(characteristics_Player[i].Prefab.value_list[0]);
+                    // 우아함 ( 움직일 때 발생하는 소음반경 -40%)
+                    break;
             }
 
         }
@@ -746,7 +805,7 @@ public class Player_Characteristic : MonoBehaviour
         Cats_Eyes.Choice = Choice;
         Cats_Eyes.value_list.Add(0.2f);
         return Cats_Eyes;
-        // 야간 시야 범위 +20% ( 야간 밝기 증가, 손전등, 차량 전조등 등의 광원의 범위 넓혀줌 )
+        // 야간 시야 범위 +20% ( 야간 밝기 증가, 손전등, 차량 전조등 등의 광원의 범위 넓혀줌 )  ( 미구현사항 )
     }
 
     Characteristic Characteristic_Outdoorsman(Characteristic Outdoorsman, bool Choice)
@@ -765,22 +824,6 @@ public class Player_Characteristic : MonoBehaviour
         // 감기에 걸릴 확률 -90%
         // 나무를 지날 때 다칠 확률 -50%, 구멍난 판자로 불을 더 빨리 피움 ( 미구현사항 )
     }
-
-    //Characteristic Characteristic_Dextrous(Characteristic Dextrous)
-    //{
-    //    Dextrous.name = "Dextrous";
-    //    Dextrous.name_kr = "민첩한";
-    //    Dextrous.Explanation_for_Characteristic = "Transfers inventory items quickly.";
-    //    Dextrous.Explanation_for_Characteristic_kr = "소지품창에 물건을 넣고 꺼낼 때 속도가 빨라집니다.";
-    //    Dextrous.Sprite = Characteristic_Image[3];
-    //    Dextrous.Points = -2;
-    //    Dextrous.type = Characteristic_type.Positives;
-    //    Dextrous.Choice = false;
-    //    return Dextrous;
-    //    // 물품을 옮기는 시간 50% (아이템을 장착하는 데는 차이가 없고 오직 줍기와 옮기는 속도에만 영향을 끼침)
-    //    // ex. 기본: 옷(1초), 쇠지렛대(2초), 도끼/대형망치(3초)
-    //    // 비활성화되는 특성: 서투름
-    //}
 
     Characteristic Characteristic_Fast_Reader(Characteristic Fast_Reader, bool Choice)
     {
@@ -846,29 +889,11 @@ public class Player_Characteristic : MonoBehaviour
         Resilient.Points = -4;
         Resilient.type = Characteristic_type.Positives;
         Resilient.Choice = Choice;
-        Resilient.value_list.Add(-0.55f);
-        Resilient.value_list.Add(-0.2f);
-        Resilient.value_list.Add(-0.5f);
-        Resilient.value_list.Add(-0.75f);
         return Resilient;
-        // 감기에 걸릴 확률 -55%, 추위 영향 -20%, 추위 진행 속도 -50%, 좀비화 속도 -75%
+        // 감기에 걸릴 확률 -55%, 좀비화 속도 -75%,
+        // 추위 영향 -20%, 추위 진행 속도 -50%  ( 미구현사항: 게임에 큰 영향 x )
         // 비활성화되는 특성: 질병에 취약함
     }
-
-    //Characteristic Characteristic_Inconspicuous(Characteristic Inconspicuous)
-    //{
-    //    Inconspicuous.name = "Inconspicuous";
-    //    Inconspicuous.name_kr = "부족한 존재감";
-    //    Inconspicuous.Explanation_for_Characteristic = "Less likely to be spotted by zombies.";
-    //    Inconspicuous.Explanation_for_Characteristic_kr = "좀비에게 덜 발견됩니다.";
-    //    Inconspicuous.Sprite = Characteristic_Image[8];
-    //    Inconspicuous.Points = -4;
-    //    Inconspicuous.type = Characteristic_type.Positives;
-    //    Inconspicuous.Choice = false;
-    //    return Inconspicuous;
-    //    // 좀비에게 발견될 확률 50%
-    //    // 비활성화되는 특성: 넘치는 존재감
-    //}
 
     Characteristic Characteristic_Light_Eater(Characteristic Light_Eater, bool Choice)
     {
@@ -881,7 +906,7 @@ public class Player_Characteristic : MonoBehaviour
         Light_Eater.Points = -4;
         Light_Eater.type = Characteristic_type.Positives;
         Light_Eater.Choice = Choice;
-        Light_Eater.value_list.Add(-0.25f);
+        Light_Eater.value_list.Add(0.75f);
         return Light_Eater;
         // 배고픔 진행속도 75%
         // 비활성화되는 특성: 대식가
@@ -898,7 +923,7 @@ public class Player_Characteristic : MonoBehaviour
         Brave.Points = -4;
         Brave.type = Characteristic_type.Positives;
         Brave.Choice = Choice;
-        Brave.value_list.Add(-0.7f);
+        Brave.value_list.Add(0.7f);
         return Brave;
         // 긴장 상승량 -70%
         // 비활성화되는 특성: 겁쟁이, 광장공포증, 밀실공포증
@@ -915,29 +940,14 @@ public class Player_Characteristic : MonoBehaviour
         Graceful.Points = -4;
         Graceful.type = Characteristic_type.Positives;
         Graceful.Choice = Choice;
-        Graceful.value_list.Add(-0.4f);
         Graceful.value_list.Add(-0.1f);
+        Graceful.value_list.Add(-0.4f);
         return Graceful;
         // 움직일 때 발생하는 소음반경 -40%,
         // 달리기/질주로 낮은 울타리를 뛰어 넘거나 좀비를 공격할 때 넘어질 확률 -10%
         // 전투중 발생하는 소음이나 유리를 밟을 때 등 다른 소음에는 영향을 주지 않고, 오직 발소리만 줄여줌
         // 비활성화되는 특성: 덤벙댐
     }
-    //Characteristic Characteristic_Lucky(Characteristic Lucky)
-    //{
-    //    Lucky.name = "Lucky";
-    //    Lucky.name_kr = "행운";
-    //    Lucky.Explanation_for_Characteristic = "Sometimes things just go your way.";
-    //    Lucky.Explanation_for_Characteristic_kr = "때때로 생각지도 않던 물건을 얻을 수 있습니다.";
-    //    Lucky.Sprite = Characteristic_Image[12];
-    //    Lucky.Points = -4;
-    //    Lucky.type = Characteristic_type.Positives;
-    //    Lucky.Choice = false;
-    //    return Lucky;
-    //    // 아이템 발견 확률 +10%, 아이템 수리 실패율 -5%, 수색 반경 +1
-    //    // 멀티플레이에서는 사용할 수 없습니다.
-    //    // 비활성화되는 특성: 불운
-    //}
 
     Characteristic Characteristic_Fit(Characteristic Fit, bool Choice)
     {
@@ -1314,21 +1324,6 @@ public class Player_Characteristic : MonoBehaviour
         // 비활성화되는 특성: 용감함, 아드레날린 중독, 밀실공포증
     }
 
-    //Characteristic Characteristic_Conspicuous(Characteristic Conspicuous)
-    //{
-    //    Conspicuous.name = "Conspicuous";
-    //    Conspicuous.name_kr = "넘치는 존재감";
-    //    Conspicuous.Explanation_for_Characteristic = "More likely to be spotted by zombies.";
-    //    Conspicuous.Explanation_for_Characteristic_kr = "좀비에게 발견될 확률이 높아집니다.";
-    //    Conspicuous.Sprite = Characteristic_Image[9];
-    //    Conspicuous.Points = 4;
-    //    Conspicuous.type = Characteristic_type.Negatives;
-    //    Conspicuous.Choice = false;
-    //    return Conspicuous;
-    //    // 좀비에게 발견될 확률 200%
-    //    // 비활성화되는 특성: 부족한 존재감
-    //}
-
     Characteristic Characteristic_Hearty_Appetite(Characteristic Hearty_Appetite, bool Choice)
     {
         Hearty_Appetite.name = "Hearty Appetite";
@@ -1340,8 +1335,8 @@ public class Player_Characteristic : MonoBehaviour
         Hearty_Appetite.Points = +4;
         Hearty_Appetite.type = Characteristic_type.Negatives;
         Hearty_Appetite.Choice = Choice;
-        Hearty_Appetite.value_list.Add(0.5f);
-        Hearty_Appetite.value_list.Add(0.03f);
+        Hearty_Appetite.value_list.Add(1.5f);
+        Hearty_Appetite.value_list.Add(1.03f);
         return Hearty_Appetite;
         // 배고픔 진행 속도 150%, 채집보너스: 동물 / 산딸기 / 버섯 / 포장식품 +3%
         // 비활성화되는 특성: 소식가
@@ -1601,6 +1596,7 @@ public class Player_Characteristic : MonoBehaviour
         Restless_Sleeper.Points = +6;
         Restless_Sleeper.type = Characteristic_type.Negatives;
         Restless_Sleeper.Choice = Choice;
+        Restless_Sleeper.value_list.Add(0.7f);
         return Restless_Sleeper;
         // 최대 수면 시간이 3시간으로 제한됨 ( 1시간 후에 다시 취침 가능 )
         // 수면으로 경감되는 피로도 감소 ( 임의설정 -30% )
@@ -1818,101 +1814,4 @@ public class Player_Characteristic : MonoBehaviour
     }
 
 
-    /*
-     직업 전용 특성
-      - 좀도둑
-      - 둔감함
-     */
-
-    // 좀도둑
-    //Characteristic Characteristic_Burglar(Characteristic Burglar, bool Choice)
-    //{
-    //    Burglar.name = "Burglar";
-    //    Burglar.name_kr = "좀도둑";
-    //    Burglar.Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
-    //    Burglar.Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
-    //    Burglar.Characteristic_number = 52;
-    //    Burglar.Sprite = Characteristic_Image[52];
-    //    Burglar.Points = +0;
-    //    Burglar.type = Characteristic_type.Occupation;
-    //    Burglar.Choice = Choice;
-    //    return Burglar;
-    //    // 스킬 제한없이 차량 배선 따기 가능
-    //    // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
-    //}
-
-    //public void Characteristic_Burglar(bool _Choice)
-    //{
-    //    string name = "Burglar";
-    //    string name_kr = "좀도둑";
-    //    string Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
-    //    string Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
-    //    int Characteristic_number = 52;
-    //    Sprite Sprite = Characteristic_Image[52];
-    //    int Points = +0;
-    //    Characteristic_type type = Characteristic_type.Occupation;
-    //    bool Choice = _Choice;
-    //    // 스킬 제한없이 차량 배선 따기 가능
-    //    // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
-    //}
-
-    // 군인
-    //Characteristic Characteristic_Desensitized(Characteristic Desensitized, bool Choice)
-    //{
-    //    Desensitized.name = "Desensitized";
-    //    Desensitized.name_kr = "둔감함";
-    //    Desensitized.Explanation_for_Characteristic = "War... War never changes.";
-    //    Desensitized.Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
-    //    Desensitized.Characteristic_number = 53;
-    //    Desensitized.Sprite = Characteristic_Image[53];
-    //    Desensitized.Points = +0;
-    //    Desensitized.type = Characteristic_type.Occupation;
-    //    Desensitized.Choice = Choice;
-    //    return Desensitized;
-    //    // 긴장 무들에 면역
-    //}
-
-    //public void Characteristic_Desensitized(bool _Choice)
-    //{
-    //    string name = "Desensitized";
-    //    string name_kr = "둔감함";
-    //    string Explanation_for_Characteristic = "War... War never changes.";
-    //    string Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
-    //    int Characteristic_number = 53;
-    //    Sprite Sprite = Characteristic_Image[53];
-    //    int Points = +0;
-    //    Characteristic_type type = Characteristic_type.Occupation;
-    //    bool Choice = _Choice;
-    //    // 긴장 무들에 면역
-    //}
-
-    // 낚시꾼
-    //Characteristic Characteristic_Angler(Characteristic Angler, bool Choice)
-    //{
-    //    Angler.name = "Angler";
-    //    Angler.name_kr = "낚시꾼";
-    //    Angler.Explanation_for_Characteristic = "Knows the basics of fishing.";
-    //    Angler.Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
-    //    Angler.Characteristic_number = 54;
-    //    Angler.Sprite = Characteristic_Image[54];
-    //    Angler.Points = -4;
-    //    Angler.type = Characteristic_type.Occupation;
-    //    Angler.Choice = Choice;
-    //    return Angler;
-    //    // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
-    //}
-
-    //public void Characteristic_Angler(bool _Choice)
-    //{
-    //    string name = "Angler";
-    //    string name_kr = "낚시꾼";
-    //    string Explanation_for_Characteristic = "Knows the basics of fishing.";
-    //    string Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
-    //    int Characteristic_number = 54;
-    //    Sprite Sprite = Characteristic_Image[54];
-    //    int Points = -4;
-    //    Characteristic_type type = Characteristic_type.Occupation;
-    //    bool Choice = _Choice;
-    //    // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
-    //}
 }

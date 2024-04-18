@@ -376,11 +376,16 @@ public class PlayerState : MonoBehaviour
     float Infection_Timer = 0.0f;
 
     public float Tired_reduction_for_Sleeping = 1f;  // 수면으로 경감되는 피로도
+    public float Tired_value = 0.01f;  // 피로도 증가량
+
+    public float Zombification = 0.0f;
 
     private void Update()
     {
-        if (Player_main.player_main.Restless_Sleeper_characteristics) { Tired_reduction_for_Sleeping = 0.7f; }
-        else { Tired_reduction_for_Sleeping = 1f; }
+        if(Zombification == 1)
+        {
+            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Player_main.player_main.player_HP.Get_Player_HP());
+        }
 
         /****************** Player_Has_a_Cold ******************/
         if (Player_main.player_main.Is_Cold == false)
@@ -423,8 +428,6 @@ public class PlayerState : MonoBehaviour
                     Endurance_Timer = 0.0f;
                 }
             }
-
-
         }
 
         /****************** Player_Thirsty ******************/
@@ -502,19 +505,19 @@ public class PlayerState : MonoBehaviour
                 switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                 {
                     case 0:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.01f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
                         break;
                     case 1:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.01f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
                         break;
                     case 2:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.012f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication);
                         break;
                     case 3:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.015f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication);
                         break;
                     case 4:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.04f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication);
                         break;
                 }
 
@@ -583,8 +586,19 @@ public class PlayerState : MonoBehaviour
         if (Get_Is_Infection())  // 감염된 경우
         {
             Infection_Timer += Time.deltaTime;
+            if(Infection_Timer > 5f)
+            {
+                if (Player_Characteristic.current.Resilient_Characteristic)
+                {
+                    Zombification += (0.07f * 0.25f);
+                }
+                else
+                    Zombification += 0.07f;
 
+                Infection_Timer = 0;
+            }
         }
+
 
     }
 
@@ -621,7 +635,6 @@ public class PlayerState : MonoBehaviour
     float _Probability_of_Catching_a_cold_forMoodle = 1f;
     float _Probability_of_Catching_a_cold_for_Hyperthermia_Cold = 0f;
     float _Probability_of_Catching_a_cold_for_Wet = 0f;
-    public bool Outdoorsman_characteristics = false;
 
     public void Set_Probability_of_Catching_a_cold(Moodles_private_code _Moodle_Code, float value)  // Moodle_Hyperthermia_Cold, Wet
     {
@@ -641,14 +654,23 @@ public class PlayerState : MonoBehaviour
 
     public float Get_Probability_of_Catching_a_cold()
     {
-        if (Outdoorsman_characteristics)
+        float value = _Probability_of_Catching_a_cold + _Probability_of_Catching_a_cold_forMoodle;
+        if (Player_Characteristic.current.Outdoorsman_characteristics)
         {
-            return (_Probability_of_Catching_a_cold + _Probability_of_Catching_a_cold_forMoodle) * 0.1f;
+            value *= 0.1f;
         }
-        else
+
+        if (Player_Characteristic.current.Resilient_Characteristic)
         {
-            return _Probability_of_Catching_a_cold + _Probability_of_Catching_a_cold_forMoodle;
+            value *= 0.45f;
         }
+
+        if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
+        {
+            value *= 1.7f;
+        }
+
+        return value;
     }
 
 
@@ -664,8 +686,15 @@ public class PlayerState : MonoBehaviour
 
     public void Set_Apparent_Temperature(float value)
     {
-        Apparent_Temperature = value;
-        if((Get_Apparent_Temperature() + value) >= 36f)
+        if(Apparent_Temperature == 0)
+        {
+            Apparent_Temperature = value;
+        }
+        else
+        {
+            Apparent_Temperature += value;
+        }
+        if((Get_Apparent_Temperature()) >= 36f)
         {
             Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(Apparent_Temperature);
         }
