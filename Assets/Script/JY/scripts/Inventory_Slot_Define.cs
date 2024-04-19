@@ -21,6 +21,9 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     public bool Is_Virtical_While_Moving;
     public int Size;
 
+    public bool Equipment;
+    public int EquipPosition;
+
 
     bool First_Con = false;
 
@@ -31,8 +34,10 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     public Transform ParentTransform;
     public short ParentSize;
 
+    public GameObject Putti;
     public GameObject Text;
     public GameObject Image;
+    public GameObject BorderLine;
     public GameObject BackgroundColor;
 
     public void Start()
@@ -105,7 +110,8 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
             Inventory_Player_Shown.InvPS.LS_Slot_Y = Slot_Y;
             //Inventory_Player_Shown.InvPS.LS_Transform = this.transform;
             if (Inventory_Player_Shown.InvPS.FS_Slot_Y == Inventory_Player_Shown.InvPS.LS_Slot_Y &&
-                Inventory_Player_Shown.InvPS.FS_Slot_X == Inventory_Player_Shown.InvPS.LS_Slot_X) // 제자리 연산 검증
+                Inventory_Player_Shown.InvPS.FS_Slot_X == Inventory_Player_Shown.InvPS.LS_Slot_X&&
+                Inventory_Player_Shown.InvPS.FSParent == Inventory_Player_Shown.InvPS.LSParent) // 제자리 연산 검증
             {
                 Debug.Log("Same Location");
                 return;
@@ -121,7 +127,8 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
             Inventory_Player_Shown.InvPS.LS_Slot_X = What_Main.GetComponent<InventorySlot>().Slot_X;
             Inventory_Player_Shown.InvPS.LS_Slot_Y = What_Main.GetComponent<InventorySlot>().Slot_Y;
             if (Inventory_Player_Shown.InvPS.FS_Slot_Y == Inventory_Player_Shown.InvPS.LS_Slot_Y &&
-                Inventory_Player_Shown.InvPS.FS_Slot_X == Inventory_Player_Shown.InvPS.LS_Slot_X) // 제자리 연산 검증
+                Inventory_Player_Shown.InvPS.FS_Slot_X == Inventory_Player_Shown.InvPS.LS_Slot_X &&
+                Inventory_Player_Shown.InvPS.FSParent == Inventory_Player_Shown.InvPS.LSParent) // 제자리 연산 검증
             {
                 Debug.Log("Same Location");
                 return;

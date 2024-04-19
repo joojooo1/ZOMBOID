@@ -7,6 +7,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class Player_body_Location
 {
@@ -28,7 +29,7 @@ public class Player_body_Location
         _Current_Damagetype = Attack_Pattern;
 
         float Attack_power = 0.0f;
-        if(Enemy_Type != "User")
+        if (Enemy_Type != "User")
         {
             if (Enemy_Type == "easy")
             {
@@ -45,11 +46,11 @@ public class Player_body_Location
         }
         else
         {
-            
+
             // 유저로부터 받은 타격이면 데미지 가져와야 함
         }
-        
-        
+
+
 
         System.Random rand = new System.Random();
         int rand_Block = rand.Next(100);
@@ -77,7 +78,7 @@ public class Player_body_Location
 
             if (rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
             {
-                if(Enemy_Type != "User")
+                if (Enemy_Type != "User")
                 {
                     switch (Attack_Pattern)
                     {
@@ -136,15 +137,15 @@ public class Player_body_Location
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
-                        default: 
+                        default:
                             break;
                     }
                 }
-                
+
 
             }
         }
-        
+
     }
 
     public void Set_Defense(int defense)
@@ -162,14 +163,51 @@ public class Player_body_Location
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
     public bool Get_Is_disinfection() { return _disinfection; }
 
-    public void Set_Is_Bandage(bool Is_Bandage) 
-    { 
+    public void Set_Is_Bandage(bool Is_Bandage, int Damage_Num)
+    {
         _Bandage = Is_Bandage;
         if (_disinfection == true)  // 소독하고
         {
             if (_Bandage)  // 붕대를 감은 경우
             {
                 Set_Is_Bleeding(false);
+                for (int i = 0; i < UI_State.State_icon_main.Damagelist.Count;)
+                {
+                    if (UI_State.State_icon_main.Damagelist[i].body_position == _Body_Location_Code
+                        && UI_State.State_icon_main.Damagelist[i].position_Damage_Num == Damage_Num)
+                    {
+                        UI_State.State_icon_main.Damagelist[i]._Bandage_Count += 1;
+                        switch (UI_State.State_icon_main.Damagelist[i]._damagetype)
+                        {
+                            case Damage_Pattern.Scratches:
+                            case Damage_Pattern.Glass:
+                            case Damage_Pattern.Abrasion:
+                                if (UI_State.State_icon_main.Damagelist[i]._Bandage_Count >= 2)
+                                {
+                                    Full_recovery(Damage_Num);
+                                }
+                                break;
+                            case Damage_Pattern.Lacerations:
+                            case Damage_Pattern.Infection:
+                            case Damage_Pattern.bullet:
+                                if (UI_State.State_icon_main.Damagelist[i]._Bandage_Count >= 3)
+                                {
+                                    Full_recovery(Damage_Num);
+                                }
+                                break;
+                            case Damage_Pattern.Bites:
+                            case Damage_Pattern.Fracture:
+                            case Damage_Pattern.Burn:
+                                if (UI_State.State_icon_main.Damagelist[i]._Bandage_Count >= 4)
+                                {
+                                    Full_recovery(Damage_Num);
+                                }
+                                break;
+
+                        }
+
+                    }
+                }
             }
             else  // 붕대를 감지 않은 경우
             {
@@ -182,6 +220,7 @@ public class Player_body_Location
             if (_Bandage)  // 붕대를 감은 경우
             {
                 Set_Is_Bleeding(false);
+                //_Bandage_Count += 0.7f;
             }
             else  // 붕대를 감지 않은 경우
             {
@@ -189,11 +228,13 @@ public class Player_body_Location
                 PlayerState.playerState.Calculating_Infection(30);  // 30% 확률로 감염
             }
         }
+
+
     }
     public bool Get_Is_Bandage() { return _Bandage; }
 
-    public void Set_Is_Bleeding(bool Is_Bleeding) 
-    { 
+    public void Set_Is_Bleeding(bool Is_Bleeding)
+    {
         _Bleeding = Is_Bleeding;
         PlayerState.playerState.Bleeding_Count_change();
     }
@@ -212,8 +253,15 @@ public class Player_body_Location
         Debug.Log(DamageCount);
     }
 
-    public int Get_DamageCount() {  return DamageCount; }
+    public int Get_DamageCount() { return DamageCount; }
 
+    public void Full_recovery(int Damage_Num)
+    {
+        Set_Is_disinfection(false);
+        Set_Is_Bleeding(false);
+        UI_State.State_icon_main.icon_Destroy(_Body_Location_Code, Damage_Num);
+
+    }
 }
 
 public enum body_point
@@ -327,8 +375,17 @@ public class PlayerState : MonoBehaviour
     float Drunk_Timer = 0.0f;
     float Infection_Timer = 0.0f;
 
+    public float Tired_reduction_for_Sleeping = 1f;  // 수면으로 경감되는 피로도
+    public float Tired_value = 0.01f;  // 피로도 증가량
+
+    public float Zombification = 0.0f;
+
     private void Update()
     {
+        if(Zombification == 1)
+        {
+            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Player_main.player_main.player_HP.Get_Player_HP());
+        }
 
         /****************** Player_Has_a_Cold ******************/
         if (Player_main.player_main.Is_Cold == false)
@@ -371,8 +428,6 @@ public class PlayerState : MonoBehaviour
                     Endurance_Timer = 0.0f;
                 }
             }
-
-
         }
 
         /****************** Player_Thirsty ******************/
@@ -450,22 +505,31 @@ public class PlayerState : MonoBehaviour
                 switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                 {
                     case 0:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.01f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
                         break;
                     case 1:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.01f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
                         break;
                     case 2:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.012f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication);
                         break;
                     case 3:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.015f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication);
                         break;
                     case 4:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(0.04f * Endurance_level * intoxication);
+                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication);
                         break;
                 }
 
+                Tired_Timer = 0;
+            }
+        }
+        else
+        {
+            Tired_Timer += Time.deltaTime;
+            if(Tired_Timer > 3f )
+            {
+                Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(-0.5f * Tired_reduction_for_Sleeping);
                 Tired_Timer = 0;
             }
         }
@@ -522,8 +586,19 @@ public class PlayerState : MonoBehaviour
         if (Get_Is_Infection())  // 감염된 경우
         {
             Infection_Timer += Time.deltaTime;
+            if(Infection_Timer > 5f)
+            {
+                if (Player_Characteristic.current.Resilient_Characteristic)
+                {
+                    Zombification += (0.07f * 0.25f);
+                }
+                else
+                    Zombification += 0.07f;
 
+                Infection_Timer = 0;
+            }
         }
+
 
     }
 
@@ -579,7 +654,23 @@ public class PlayerState : MonoBehaviour
 
     public float Get_Probability_of_Catching_a_cold()
     {
-        return _Probability_of_Catching_a_cold + _Probability_of_Catching_a_cold_forMoodle;
+        float value = _Probability_of_Catching_a_cold + _Probability_of_Catching_a_cold_forMoodle;
+        if (Player_Characteristic.current.Outdoorsman_characteristics)
+        {
+            value *= 0.1f;
+        }
+
+        if (Player_Characteristic.current.Resilient_Characteristic)
+        {
+            value *= 0.45f;
+        }
+
+        if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
+        {
+            value *= 1.7f;
+        }
+
+        return value;
     }
 
 
@@ -595,8 +686,15 @@ public class PlayerState : MonoBehaviour
 
     public void Set_Apparent_Temperature(float value)
     {
-        Apparent_Temperature = value;
-        if((Get_Apparent_Temperature() + value) >= 36f)
+        if(Apparent_Temperature == 0)
+        {
+            Apparent_Temperature = value;
+        }
+        else
+        {
+            Apparent_Temperature += value;
+        }
+        if((Get_Apparent_Temperature()) >= 36f)
         {
             Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(Apparent_Temperature);
         }

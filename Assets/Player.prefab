@@ -985,6 +985,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Playermovement_speed: 7
   Playerturnspeed: 10000
+  playeraimeobject: []
+  playeranime: []
+  playerrot: {fileID: 0}
+  low_Fen: 0
+  test: 0
 --- !u!54 &8801438680588040346
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1095,7 +1100,7 @@ MonoBehaviour:
   playerState: {fileID: 6656421304549569139}
   player_HP: {fileID: 1046426336433378471}
   playerMoodles: {fileID: 3195372121684297361}
-  player_Characteristic: {fileID: 0}
+  Weight_text: {fileID: 0}
   Weight: 83
   Calories: 300
   Satiety: 0
@@ -1106,10 +1111,15 @@ MonoBehaviour:
   Moving_Speed: 3
   Action_Speed: 1
   Coughing_Noise_radius: 15
-  Driving_control: 1
   Endurance: 100
+  Driving_control: 1
+  Driving_Speed_min: 2
+  Driving_Speed_max: 5
+  Read_Speed: 1
   ability_Sleeping: 1
   ability_Eat: 1
+  ability_Read: 1
+  ability_Hear: 1
   Is_Equipping_Weapons: 0
   Current_equipping_Weapon: {fileID: 0}
   Is_Aiming: 0
@@ -1120,6 +1130,15 @@ MonoBehaviour:
   Is_drunk: 0
   Is_Cold: 0
   Is_Sleeping: 0
+  Is_Smoking: 0
+  Is_Outdoor: 0
+  Is_Driving: 0
+  Is_Eating: 0
+  Is_food_poisoning: 0
+  Likelihood_of_food_poisoning: 0.2
+  Time_for_food_poisoning: 200
+  Satiety_value: 0.06
+  Panic_value: 0.15
 --- !u!114 &6656421304549569139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,6 +1151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54e776be6ec65e40902cb60002c3fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tired_reduction_for_Sleeping: 1
+  Tired_value: 0.01
+  Zombification: 0
   Bleeding_total_count: 0
   _Infection: 0
   _Probability_of_Catching_a_cold: 0.03

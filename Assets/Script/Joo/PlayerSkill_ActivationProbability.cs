@@ -360,7 +360,7 @@ public class PlayerSkill_ActivationProbability
 
 
     // ³Ñ¾îÁú È®·ü ( - )  // Fitness  // Moodle_Heavy_Load, Moodle_Pain
-    float Probability_of_Falling = 0f;
+    float Probability_of_Falling = 0.2f;
     float Probability_of_Falling_forSkill = 0f;
     float Probability_of_Falling_forMoodle = 0f;
     public float Get_Probability_of_Falling() 
@@ -375,6 +375,10 @@ public class PlayerSkill_ActivationProbability
         }
     }
 
+    public void Set_Probability_of_Falling(float value)
+    {
+        Probability_of_Falling += value;
+    }
     public void Set_Probability_of_Falling_forSkill(float SkillLevel)
     {
         if (Probability_of_Falling_forSkill == 0f)

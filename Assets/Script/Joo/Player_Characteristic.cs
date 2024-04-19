@@ -13,6 +13,14 @@ public enum Characteristic_type
     Occupation = 2
 }
 
+public enum Player_Job
+{
+    None = 0,
+    fisher = 1,
+    Burglar = 2,
+    Veteran = 3
+}
+
 public class Characteristic
 {
     public string name;
@@ -25,6 +33,7 @@ public class Characteristic
     public int Points;
     public Characteristic_type type;
     public bool Choice;
+    public List<float> value_list = new List<float>();
 }
 
 public class Player_Characteristic : MonoBehaviour
@@ -35,72 +44,492 @@ public class Player_Characteristic : MonoBehaviour
     [SerializeField] Sprite[] Characteristic_Image;
     [SerializeField] GameObject Characteristic_Prefab;
 
-    public static Player_Characteristic instance;
+    public Player_Job player_Job = Player_Job.None;
+
+    public bool Smoker_characteristics = false;
+    public bool Agoraphobic_characteristics = false;
+    public bool Claustrophobic_characteristics = false;
+    public bool Outdoorsman_characteristics = false;
+    public bool Restless_Sleeper_characteristics = false;
+    public bool Resilient_Characteristic = false;
+    public bool Prone_to_Illness_Characteristic = false;
+
+    public static Player_Characteristic current = null;
     private void Awake()
     {
-        instance = this;
-        //Set_Weight_Characteristic();
-        for (int i = 0; i < Characteristic_Image.Length - 3; i++)
+        current = this;
+        for (int i = 0; i < 52; i++)
         {
-            GameObject tempObj = null;
-            Set_Characteristic(i, false, tempObj);
+            if(i != 49)
+            {
+                GameObject tempObj = null;
+                Set_Characteristic(i, false, tempObj);
+            }
         }
-    }
-
-    private void Update()
-    {
-        //for(int i = 0; i < Weight.Length; i++)
-        //{
-        //    if (Player_main.player_main.Get_Weight() > Weight[i])
-        //    {
-        //        Debug.Log(i);
-        //    }
-        //}
-
     }
 
     /* 캐릭터 생성시 선택할 특성 */
 
     /*  체중
      
-     비만: 선택시 초기 몸무게 105kg. 몸무게가 100 이상일 때 활성화.
-     과체중: 선택시 초기 몸무게 95kg. 몸무게가 85~99 사이일 때 활성화.
-     저체중: 선택시 초기 몸무게 70kg. 몸무게가 66~75 사이일 때 활성화.
-     심한 저체중: 선택시 초기 몸무게 60kg. 몸무게가 51~65 사이일 때 활성화.
-     수척함: 몸무게가 50 이하일 때 활성화.
+     비만: 선택시 초기 몸무게 105kg. 몸무게가 100 이상일 때 활성화.  ( Characteristic_number = 46 )
+     과체중: 선택시 초기 몸무게 95kg. 몸무게가 85~99 사이일 때 활성화.  ( Characteristic_number = 37 )
+     저체중: 선택시 초기 몸무게 70kg. 몸무게가 66~75 사이일 때 활성화.  ( Characteristic_number = 43 )
+     심한 저체중: 선택시 초기 몸무게 60kg. 몸무게가 51~65 사이일 때 활성화.  ( Characteristic_number = 48 )
+     수척함: 몸무게가 50 이하일 때 활성화.  ( Characteristic_number = 49 )
 
      */
 
     /*   근력/체력
 
-     약함 근력이 0~1 사이일 때 활성화
-     연약함: 근력이 2~4 사이일 때 활성화
-     통통함: 선택하지 않아도 근력이 6~8 사이일 때 활성화
-     튼튼함: 선택하지 않아도 근력이 9 이상일 때 활성화
-     비실함: 체력이 0~1 사이일 때 활성화
-     건강 이상: 체력이 2~4 사이일 때 활성화
-     건강함: 선택하지 않아도 체력이 6~8 사이일 때 활성화
-     육상 선수: 선택하지 않아도 체력이 9 이상일 때 활성화
+     약함 근력이 0~1 사이일 때 활성화  ( Characteristic_number = 50 )
+     연약함: 근력이 2~4 사이일 때 활성화  ( Characteristic_number = 42 )
+     통통함: 선택하지 않아도 근력이 6~8 사이일 때 활성화  ( Characteristic_number = 15 )
+     튼튼함: 선택하지 않아도 근력이 9 이상일 때 활성화  ( Characteristic_number = 20 )
+
+     비실함: 체력이 0~1 사이일 때 활성화  ( Characteristic_number = 47 )
+     건강 이상: 체력이 2~4 사이일 때 활성화  ( Characteristic_number = 36 )
+     건강함: 선택하지 않아도 체력이 6~8 사이일 때 활성화  ( Characteristic_number = 10 )
+     육상 선수: 선택하지 않아도 체력이 9 이상일 때 활성화  ( Characteristic_number = 19 )
 
      */
 
-    //public Weight_Characteristic[] Weight = new Weight_Characteristic[5];
+    public void Start_Setting()
+    {
+        UI_Title.ui_title.Set_Player_Setting_Job();
 
-    //public class Weight_Characteristic
-    //{
-    //    public string name;
-    //    public string name_kr;
-    //    public Sprite Sprites;
+        for (int i = 0; i < characteristics_Player.Count; i++)
+        {
+            switch (characteristics_Player[i].Prefab.Characteristic_number)
+            {
+                // 체중
+                case 46:
+                    Player_main.player_main.Set_Weight(22);
+                    break;
+                case 37:
+                    Player_main.player_main.Set_Weight(12);
+                    break;
+                case 43:
+                    Player_main.player_main.Set_Weight(-13);
+                    break;
+                case 48:
+                    Player_main.player_main.Set_Weight(-23);
+                    break;
 
-    //    public float value;
-    //    public int Points;
-    //}
+                // 근력
+                case 50:
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(1);
+                    break;
+                case 42:
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(2);
+                    break;
+                case 15:
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(6);
+                    break;
+                case 20:
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(9);
+                    break;
 
-    //void Set_Weight_Characteristic()
-    //{
-    //    Weight[0].name = "수척함";
-    //    Weight[0].name_kr = "수척함";
-    //}
+                // 체력
+                case 47:
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(1);
+                    
+                    break;
+                case 36:
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(2);
+                    
+                    break;
+                case 10:
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(7);
+                    
+                    break;
+                case 19:
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(9);
+                    
+                    break;
+
+                // Bool type
+                case 27:
+                    Smoker_characteristics = true;
+                    break;
+                case 28:
+                    Agoraphobic_characteristics = true;
+                    break;
+                case 30:
+                    Claustrophobic_characteristics = true;
+                    break;
+                case 2:
+                    Outdoorsman_characteristics = true;
+                    break;
+                case 6:
+                    Resilient_Characteristic = true;
+                    break;
+
+
+
+
+                case 0:
+                    Player_main.player_main.Driving_Speed_max *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 3:
+                    Player_main.player_main.Read_Speed += characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 4:
+                    Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= (1 + characteristics_Player[i].Prefab.value_list[0]);                    
+                    if(Player_main.player_main.playerState.Tired_value * (1 + characteristics_Player[i].Prefab.value_list[1]) < 0)
+                    {
+                        Player_main.player_main.playerState.Tired_value = 0.0005f;   // 피로도 증가량 거의 없는 정도로 조정
+                    }
+                    else
+                    {
+                        Player_main.player_main.playerState.Tired_value *= (1 + characteristics_Player[i].Prefab.value_list[1]);
+                    }
+                    break;
+                case 5:
+                    if ((Player_main.player_main.Likelihood_of_food_poisoning + characteristics_Player[i].Prefab.value_list[0]) < 0)
+                    {
+                        Player_main.player_main.Likelihood_of_food_poisoning = 0.0005f;   // 식중독에 걸릴 확률 거의 없는 정도로 조정
+                    }
+                    else
+                    {
+                        Player_main.player_main.Likelihood_of_food_poisoning += characteristics_Player[i].Prefab.value_list[0];
+                    }
+                    Player_main.player_main.Time_for_food_poisoning *= characteristics_Player[i].Prefab.value_list[1];
+                    break;
+                case 7:
+                    Player_main.player_main.Satiety_value *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 29:
+                    Player_main.player_main.Satiety_value *= characteristics_Player[i].Prefab.value_list[0];
+                    Player_main.player_main.Skill.Foraging_Level.S_Exp_characteristic = characteristics_Player[i].Prefab.value_list[1];
+                    break;
+                case 8:
+                    Player_main.player_main.Panic_value *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 33:
+                    Prone_to_Illness_Characteristic = true;
+
+                    break;
+                case 41:
+                    Restless_Sleeper_characteristics = true;
+                    Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+
+                case 1:
+                    // 고양이의 눈 ( 야간 시야 범위 +20% ( 야간 밝기 증가, 손전등, 차량 전조등 등의 광원의 범위 넓혀줌 ) )
+                    break;
+                case 9:
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling(characteristics_Player[i].Prefab.value_list[0]);
+                    // 우아함 ( 움직일 때 발생하는 소음반경 -40%)
+                    break;
+            }
+
+        }
+    }
+
+    // 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 21, 22, 23, 24, 25, 26, 29,
+    // 31, 32, 33, 34, 35, 38, 39, 40, 44, 45, 49, 51
+
+    private void Update()
+    {
+        if (UI_main.ui_main.Playing)
+        {
+            if (Player_main.player_main.Get_Weight() >= 100)  // Characteristic_number = 46
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 37
+                        || characteristics_Player[i].Prefab.Characteristic_number == 43
+                        || characteristics_Player[i].Prefab.Characteristic_number == 48
+                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(46, true, tempObj);
+            }
+            else if(Player_main.player_main.Get_Weight() >= 85 && Player_main.player_main.Get_Weight() < 100)  // Characteristic_number = 37
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                        || characteristics_Player[i].Prefab.Characteristic_number == 43
+                        || characteristics_Player[i].Prefab.Characteristic_number == 48
+                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(37, true, tempObj);
+            }
+            else if (Player_main.player_main.Get_Weight() >= 76 && Player_main.player_main.Get_Weight() < 85)  // 정상
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                        || characteristics_Player[i].Prefab.Characteristic_number == 37
+                        || characteristics_Player[i].Prefab.Characteristic_number == 43
+                        || characteristics_Player[i].Prefab.Characteristic_number == 48
+                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+            }
+            else if (Player_main.player_main.Get_Weight() >= 66 && Player_main.player_main.Get_Weight() < 76)  // Characteristic_number = 43
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                        || characteristics_Player[i].Prefab.Characteristic_number == 37
+                        || characteristics_Player[i].Prefab.Characteristic_number == 48
+                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(43, true, tempObj);
+            }
+            else if (Player_main.player_main.Get_Weight() >= 51 && Player_main.player_main.Get_Weight() < 66)  // Characteristic_number = 48
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                        || characteristics_Player[i].Prefab.Characteristic_number == 37
+                        || characteristics_Player[i].Prefab.Characteristic_number == 43
+                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(48, true, tempObj);
+            }
+            else if (Player_main.player_main.Get_Weight() < 51)  // Characteristic_number = 49
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                        || characteristics_Player[i].Prefab.Characteristic_number == 37
+                        || characteristics_Player[i].Prefab.Characteristic_number == 43
+                        || characteristics_Player[i].Prefab.Characteristic_number == 48)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(49, true, tempObj);
+            }
+
+
+            if(Player_main.player_main.Skill.Strength_Level.Get_P_Level() < 2) // Characteristic_number = 50
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 42
+                        || characteristics_Player[i].Prefab.Characteristic_number == 15
+                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(50, true, tempObj);
+            }
+            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() >= 2 && Player_main.player_main.Skill.Strength_Level.Get_P_Level() < 5) // Characteristic_number = 42
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                        || characteristics_Player[i].Prefab.Characteristic_number == 15
+                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(42, true, tempObj);
+            }
+            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() == 5)  // 정상
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                        || characteristics_Player[i].Prefab.Characteristic_number == 42
+                        || characteristics_Player[i].Prefab.Characteristic_number == 15
+                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+            }
+            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() >= 6 && Player_main.player_main.Skill.Strength_Level.Get_P_Level() < 9) // Characteristic_number = 15
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                        || characteristics_Player[i].Prefab.Characteristic_number == 42
+                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(15, true, tempObj);
+            }
+            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() >= 9) // Characteristic_number = 20
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                        || characteristics_Player[i].Prefab.Characteristic_number == 42
+                        || characteristics_Player[i].Prefab.Characteristic_number == 15)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(20, true, tempObj);
+            }
+
+
+            if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() < 2) // Characteristic_number = 47
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 36
+                        || characteristics_Player[i].Prefab.Characteristic_number == 10
+                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(47, true, tempObj);
+            }
+            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() >= 2 && Player_main.player_main.Skill.Fitness_Level.Get_P_Level() < 5) // Characteristic_number = 36
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                        || characteristics_Player[i].Prefab.Characteristic_number == 10
+                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(36, true, tempObj);
+            }
+            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() == 5) // 정상
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                        || characteristics_Player[i].Prefab.Characteristic_number == 36
+                        || characteristics_Player[i].Prefab.Characteristic_number == 10
+                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+            }
+            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() >= 6 && Player_main.player_main.Skill.Fitness_Level.Get_P_Level() < 9) // Characteristic_number = 10
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                        || characteristics_Player[i].Prefab.Characteristic_number == 36
+                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(10, true, tempObj);
+            }
+            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() >= 9) // Characteristic_number = 19
+            {
+                for (int i = 0; i < characteristics_Player.Count;)
+                {
+                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                        || characteristics_Player[i].Prefab.Characteristic_number == 36
+                        || characteristics_Player[i].Prefab.Characteristic_number == 10)
+                    {
+                        Destroy(characteristics_Player[i].gameObject);
+                        characteristics_Player.RemoveAt(i);
+                    }
+                    else
+                        i++;
+                }
+
+                GameObject tempObj = null;
+                Set_Characteristic(19, true, tempObj);
+            }
+        }
+    }
+
+    
 
     public List<UI_Title_Characteristic_prefab> characteristics_list = new List<UI_Title_Characteristic_prefab>();
     public List<UI_Title_Characteristic_prefab> characteristics_Player = new List<UI_Title_Characteristic_prefab>();
@@ -117,7 +546,6 @@ public class Player_Characteristic : MonoBehaviour
                     characteristics_Player.RemoveAt(i);
                 }
             }
-
         }
         else
         {
@@ -128,15 +556,25 @@ public class Player_Characteristic : MonoBehaviour
                     Destroy(characteristics_list[i].gameObject);
                     characteristics_list.RemoveAt(i);
                 }
-
             }
+        }
+    }
 
+
+    public void Set_Characteristic_in_list(int value, bool Choice, GameObject tempObj)
+    {
+        for (int i = 0; i < characteristics_list.Count; i++)
+        {
+            if (characteristics_list[i].Prefab.Characteristic_number == value)
+                break;
+
+            if(i == characteristics_list.Count -1 && characteristics_list[i].Prefab.Characteristic_number != value)
+                Set_Characteristic(value, Choice, tempObj);
         }
     }
 
     public void Set_Characteristic(int value, bool Choice, GameObject tempObj)
     {
-        //tempObj = Instantiate(Characteristic_Prefab, Characteristic_P_Window);
         Characteristic temp = new Characteristic();
         switch (value)
         {
@@ -296,15 +734,6 @@ public class Player_Characteristic : MonoBehaviour
             case 51:
                 temp = Characteristic_Deaf(temp, Choice);
                 break;
-            //case 52:
-            //    temp = Characteristic_Burglar(temp, Choice);
-            //    break;
-            //case 53:
-            //    temp = Characteristic_Desensitized(temp, Choice);
-            //    break;
-            //case 54:
-            //    temp = Characteristic_Angler(temp, Choice);
-            //    break;
             default: break;
         }
 
@@ -343,6 +772,7 @@ public class Player_Characteristic : MonoBehaviour
        용감함, 우아함, 행운, 건강함, 낮은 갈증, 매의 눈, 빠른 회복, 예민한 청력, 정리쟁이, 통통함, 
        현자, 두꺼운 피부, 아드레날린 중독, 육상 선수, 튼튼함
     */
+
     Characteristic Characteristic_Speed_Demon(Characteristic Speed_Demon, bool Choice)
     {
         Speed_Demon.name = "Speed Demon";
@@ -354,8 +784,11 @@ public class Player_Characteristic : MonoBehaviour
         Speed_Demon.Points = -1;
         Speed_Demon.type = Characteristic_type.Positives;
         Speed_Demon.Choice = Choice;
+        Speed_Demon.value_list.Add(0.15f);
+
         return Speed_Demon;
-        // 모든 차량의 기어 전환 속도 +100%(200%), 최고 속도 +15%(115%), 엔진 RPM 상승, 후진 RPM 최대치로 고정
+        // 모든 차량의 기어 전환 속도 +100%(200%)  ( 미구현사항 )
+        // 최고 속도 +15%(115%) [0]
         // 비활성화되는 특성: 초보 운전
     }
 
@@ -370,9 +803,9 @@ public class Player_Characteristic : MonoBehaviour
         Cats_Eyes.Points = -2;
         Cats_Eyes.type = Characteristic_type.Positives;
         Cats_Eyes.Choice = Choice;
+        Cats_Eyes.value_list.Add(0.2f);
         return Cats_Eyes;
-        // 야간 시야 범위 +20%, 수색 반경 +0.2, 수색 어둠 페널티 - 20 %, 야간 밝기 증가,
-        // 손전등, 차량 전조등 등의 광원의 범위 넓혀줌
+        // 야간 시야 범위 +20% ( 야간 밝기 증가, 손전등, 차량 전조등 등의 광원의 범위 넓혀줌 )  ( 미구현사항 )
     }
 
     Characteristic Characteristic_Outdoorsman(Characteristic Outdoorsman, bool Choice)
@@ -386,26 +819,11 @@ public class Player_Characteristic : MonoBehaviour
         Outdoorsman.Points = -2;
         Outdoorsman.type = Characteristic_type.Positives;
         Outdoorsman.Choice = Choice;
+        Outdoorsman.value_list.Add(-0.5f);
         return Outdoorsman;
-        // 감기에 걸릴 확률 -90%, 나무를 지날 때 다칠 확률 - 50 %, 수색 반경 + 0.4
-        // 수색 어둠 페널티 - 7 %, 수색 날씨 페널티 -13 %, 구멍난 판자로 불을 더 빨리 피움
+        // 감기에 걸릴 확률 -90%
+        // 나무를 지날 때 다칠 확률 -50%, 구멍난 판자로 불을 더 빨리 피움 ( 미구현사항 )
     }
-
-    //Characteristic Characteristic_Dextrous(Characteristic Dextrous)
-    //{
-    //    Dextrous.name = "Dextrous";
-    //    Dextrous.name_kr = "민첩한";
-    //    Dextrous.Explanation_for_Characteristic = "Transfers inventory items quickly.";
-    //    Dextrous.Explanation_for_Characteristic_kr = "소지품창에 물건을 넣고 꺼낼 때 속도가 빨라집니다.";
-    //    Dextrous.Sprite = Characteristic_Image[3];
-    //    Dextrous.Points = -2;
-    //    Dextrous.type = Characteristic_type.Positives;
-    //    Dextrous.Choice = false;
-    //    return Dextrous;
-    //    // 물품을 옮기는 시간 50% (아이템을 장착하는 데는 차이가 없고 오직 줍기와 옮기는 속도에만 영향을 끼침)
-    //    // ex. 기본: 옷(1초), 쇠지렛대(2초), 도끼/대형망치(3초)
-    //    // 비활성화되는 특성: 서투름
-    //}
 
     Characteristic Characteristic_Fast_Reader(Characteristic Fast_Reader, bool Choice)
     {
@@ -418,6 +836,7 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Reader.Points = -2;
         Fast_Reader.type = Characteristic_type.Positives;
         Fast_Reader.Choice = Choice;
+        Fast_Reader.value_list.Add(0.3f);
         return Fast_Reader;
         // 독서 속도 +30%
         // 비활성화되는 특성: 정독, 문맹
@@ -434,6 +853,8 @@ public class Player_Characteristic : MonoBehaviour
         Wakeful.Points = -2;
         Wakeful.type = Characteristic_type.Positives;
         Wakeful.Choice = Choice;
+        Wakeful.value_list.Add(0.1f);
+        Wakeful.value_list.Add(-0.3f);
         return Wakeful;
         // 수면 효율 +10%, 피로도 증가량 -30%
         // 비활성화되는 특성: 잠꾸러기
@@ -450,8 +871,10 @@ public class Player_Characteristic : MonoBehaviour
         Iron_Gut.Points = -3;
         Iron_Gut.type = Characteristic_type.Positives;
         Iron_Gut.Choice = Choice;
+        Iron_Gut.value_list.Add(-0.5f);
+        Iron_Gut.value_list.Add(-0.2f);
         return Iron_Gut;
-        // 식중독에 걸릴 확률 -50%, 식중독 유지시간 감소
+        // 식중독에 걸릴 확률 -50%, 식중독 유지시간 감소 (임의설정 -20%)
         // 비활성화되는 특성: 소화불량
     }
 
@@ -467,24 +890,10 @@ public class Player_Characteristic : MonoBehaviour
         Resilient.type = Characteristic_type.Positives;
         Resilient.Choice = Choice;
         return Resilient;
-        // 감기에 걸릴 확률 -55%, 추위 영향 -20%, 추위 진행 속도 -50%, 좀비화 속도 -75%
+        // 감기에 걸릴 확률 -55%, 좀비화 속도 -75%,
+        // 추위 영향 -20%, 추위 진행 속도 -50%  ( 미구현사항: 게임에 큰 영향 x )
         // 비활성화되는 특성: 질병에 취약함
     }
-
-    //Characteristic Characteristic_Inconspicuous(Characteristic Inconspicuous)
-    //{
-    //    Inconspicuous.name = "Inconspicuous";
-    //    Inconspicuous.name_kr = "부족한 존재감";
-    //    Inconspicuous.Explanation_for_Characteristic = "Less likely to be spotted by zombies.";
-    //    Inconspicuous.Explanation_for_Characteristic_kr = "좀비에게 덜 발견됩니다.";
-    //    Inconspicuous.Sprite = Characteristic_Image[8];
-    //    Inconspicuous.Points = -4;
-    //    Inconspicuous.type = Characteristic_type.Positives;
-    //    Inconspicuous.Choice = false;
-    //    return Inconspicuous;
-    //    // 좀비에게 발견될 확률 50%
-    //    // 비활성화되는 특성: 넘치는 존재감
-    //}
 
     Characteristic Characteristic_Light_Eater(Characteristic Light_Eater, bool Choice)
     {
@@ -497,6 +906,7 @@ public class Player_Characteristic : MonoBehaviour
         Light_Eater.Points = -4;
         Light_Eater.type = Characteristic_type.Positives;
         Light_Eater.Choice = Choice;
+        Light_Eater.value_list.Add(0.75f);
         return Light_Eater;
         // 배고픔 진행속도 75%
         // 비활성화되는 특성: 대식가
@@ -513,6 +923,7 @@ public class Player_Characteristic : MonoBehaviour
         Brave.Points = -4;
         Brave.type = Characteristic_type.Positives;
         Brave.Choice = Choice;
+        Brave.value_list.Add(0.7f);
         return Brave;
         // 긴장 상승량 -70%
         // 비활성화되는 특성: 겁쟁이, 광장공포증, 밀실공포증
@@ -529,27 +940,14 @@ public class Player_Characteristic : MonoBehaviour
         Graceful.Points = -4;
         Graceful.type = Characteristic_type.Positives;
         Graceful.Choice = Choice;
+        Graceful.value_list.Add(-0.1f);
+        Graceful.value_list.Add(-0.4f);
         return Graceful;
         // 움직일 때 발생하는 소음반경 -40%,
         // 달리기/질주로 낮은 울타리를 뛰어 넘거나 좀비를 공격할 때 넘어질 확률 -10%
         // 전투중 발생하는 소음이나 유리를 밟을 때 등 다른 소음에는 영향을 주지 않고, 오직 발소리만 줄여줌
         // 비활성화되는 특성: 덤벙댐
     }
-    //Characteristic Characteristic_Lucky(Characteristic Lucky)
-    //{
-    //    Lucky.name = "Lucky";
-    //    Lucky.name_kr = "행운";
-    //    Lucky.Explanation_for_Characteristic = "Sometimes things just go your way.";
-    //    Lucky.Explanation_for_Characteristic_kr = "때때로 생각지도 않던 물건을 얻을 수 있습니다.";
-    //    Lucky.Sprite = Characteristic_Image[12];
-    //    Lucky.Points = -4;
-    //    Lucky.type = Characteristic_type.Positives;
-    //    Lucky.Choice = false;
-    //    return Lucky;
-    //    // 아이템 발견 확률 +10%, 아이템 수리 실패율 -5%, 수색 반경 +1
-    //    // 멀티플레이에서는 사용할 수 없습니다.
-    //    // 비활성화되는 특성: 불운
-    //}
 
     Characteristic Characteristic_Fit(Characteristic Fit, bool Choice)
     {
@@ -562,6 +960,7 @@ public class Player_Characteristic : MonoBehaviour
         Fit.Points = -6;
         Fit.type = Characteristic_type.Positives;
         Fit.Choice = Choice;
+        Fit.value_list.Add(2);
         return Fit;
         // 체력 +2
     }
@@ -577,6 +976,7 @@ public class Player_Characteristic : MonoBehaviour
         Low_Thirst.Points = -6;
         Low_Thirst.type = Characteristic_type.Positives;
         Low_Thirst.Choice = Choice;
+        Low_Thirst.value_list.Add(-0.5f);
         return Low_Thirst;
         // 갈증 진행 속도 -50%
         // 비활성화되는 특성: 높은 갈증
@@ -593,8 +993,10 @@ public class Player_Characteristic : MonoBehaviour
         Eagle_Eyed.Points = -6;
         Eagle_Eyed.type = Characteristic_type.Positives;
         Eagle_Eyed.Choice = Choice;
+        Eagle_Eyed.value_list.Add(0.3f);
+        Eagle_Eyed.value_list.Add(0.3f);
         return Eagle_Eyed;
-        // 시야 범위 증가, 시야 확보 속도 증가, 수색 반경 +0.5
+        // 시야 범위 증가 (임의설정 +30%), 시야 확보 속도 증가 (임의설정 +30%)
         // 비활성화되는 특성: 짧은 시야
     }
 
@@ -609,6 +1011,7 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Healer.Points = -6;
         Fast_Healer.type = Characteristic_type.Positives;
         Fast_Healer.Choice = Choice;
+        Fast_Healer.value_list.Add(-0.2f);
         return Fast_Healer;
         // 긁힘, 찢어짐, 물림, 깊은 상처, 화상 상처 심각도 -20%
         // 비활성화되는 특성: 느린 치유
@@ -625,8 +1028,10 @@ public class Player_Characteristic : MonoBehaviour
         Keen_Hearing.Points = -6;
         Keen_Hearing.type = Characteristic_type.Positives;
         Keen_Hearing.Choice = Choice;
+        Keen_Hearing.value_list.Add(1f);
+        Keen_Hearing.value_list.Add(0.3f);
         return Keen_Hearing;
-        // 소리 인지 반경 +100%(200%), 주변 시야 범위 증가
+        // 소리 인지 반경 +100%(200%), 주변 시야 범위 증가 (임의설정 +30%)
         // 비활성화되는 특성: 어두운 귀, 청각 장애
     }
 
@@ -656,6 +1061,8 @@ public class Player_Characteristic : MonoBehaviour
         Stout.Points = -6;
         Stout.type = Characteristic_type.Positives;
         Stout.Choice = Choice;
+        Stout.value_list.Add(2);
+        Stout.value_list.Add(0.25f);
         return Stout;
         // 근력 +2, 밀쳐내기 확률 25% 증가
     }
@@ -671,6 +1078,7 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Learner.Points = -6;
         Fast_Learner.type = Characteristic_type.Positives;
         Fast_Learner.Choice = Choice;
+        Fast_Learner.value_list.Add(0.3f);
         return Fast_Learner;
         // 신체 능력(근력, 체력)을 제외한 모든 스킬의 경험치 획득량 +30%
         // 비활성화되는 특성: 느린 학습
@@ -687,6 +1095,8 @@ public class Player_Characteristic : MonoBehaviour
         Thick_Skinned.Points = -8;
         Thick_Skinned.type = Characteristic_type.Positives;
         Thick_Skinned.Choice = Choice;
+        Thick_Skinned.value_list.Add(-0.3f);
+        Thick_Skinned.value_list.Add(1.3f);
         return Thick_Skinned;
         // 긁힘, 찢어짐, 물림 확률 -30%
         // 회피율 : 15 + (무기 숙련도에 따른 수치 -5% ~ 7%) * {1.3(두꺼운 피부) or 0.77(얇은 피부)}
@@ -704,6 +1114,8 @@ public class Player_Characteristic : MonoBehaviour
         Adrenaline_Junkie.Points = -8;
         Adrenaline_Junkie.type = Characteristic_type.Positives;
         Adrenaline_Junkie.Choice = Choice;
+        Adrenaline_Junkie.value_list.Add(0.2f);
+        Adrenaline_Junkie.value_list.Add(0.25f);
         return Adrenaline_Junkie;
         // 3단계 긴장이면 0.2, 4단계 긴장이면 0.25의 추가 이동속도를 얻는다.
         // 비활성화되는 특성: 겁쟁이, 광장공포증, 밀실공포증
@@ -720,6 +1132,9 @@ public class Player_Characteristic : MonoBehaviour
         Athletic.Points = -10;
         Athletic.type = Characteristic_type.Positives;
         Athletic.Choice = Choice;
+        Athletic.value_list.Add(4);
+        Athletic.value_list.Add(0.2f);
+        Athletic.value_list.Add(-0.2f);
         return Athletic;
         // 체력 +4, 달리기 속도 +20%, 이동으로 인한 지구력 소모율 -20%
     }
@@ -735,6 +1150,8 @@ public class Player_Characteristic : MonoBehaviour
         Strong.Points = -10;
         Strong.type = Characteristic_type.Positives;
         Strong.Choice = Choice;
+        Strong.value_list.Add(4);
+        Strong.value_list.Add(0.4f);
         return Strong;
         // 근력 +4, 밀쳐낼 확률 +40%
     }
@@ -748,8 +1165,8 @@ public class Player_Characteristic : MonoBehaviour
        대식가, 밀실공포증, 불운, 비체계적인, 어두운 귀, 잠꾸러기, 질병에 취약함, 평화주의자, 천식환자, 피 공포증,
        건강 이상, 과체중, 높은 갈증, 느린 치유, 느린 학습, 수면장애, 연약함, 저체중, 문맹, 얇은 피부,
        비만, 비실함, 심한 저체중, 수척함, 약함, 청각 장애
-
     */
+
     Characteristic Characteristic_Sunday_driver(Characteristic Sunday_driver, bool Choice)
     {
         Sunday_driver.name = "Sunday driver";
@@ -761,8 +1178,10 @@ public class Player_Characteristic : MonoBehaviour
         Sunday_driver.Points = +1;
         Sunday_driver.type = Characteristic_type.Negatives;
         Sunday_driver.Choice = Choice;
+        Sunday_driver.value_list.Add(-0.4f);
         return Sunday_driver;
-        // 차량 가속력 -40%, 최대 속도가 30mph[= 48km]로 제한, 최대 속도로 주행중 기름이 추가로 소모됨
+        // 차량 가속력 -40%
+        // 최대 속도가 30mph[= 48km]로 제한, 최대 속도로 주행중 기름이 추가로 소모됨   ( 미구현사항 )
         // 비활성화되는 특성: 속도광
     }
 
@@ -777,6 +1196,7 @@ public class Player_Characteristic : MonoBehaviour
         Cowardly.Points = +2;
         Cowardly.type = Characteristic_type.Negatives;
         Cowardly.Choice = Choice;
+        Cowardly.value_list.Add(1f);
         return Cowardly;
         // 긴장 상승률 +100%
         // 비활성화되는 특성: 용감함, 아드레날린 중독
@@ -793,6 +1213,9 @@ public class Player_Characteristic : MonoBehaviour
         Clumsy.Points = +2;
         Clumsy.type = Characteristic_type.Negatives;
         Clumsy.Choice = Choice;
+        Clumsy.value_list.Add(0.2f);
+        Clumsy.value_list.Add(0.1f);
+        Clumsy.value_list.Add(0.1f);
         return Clumsy;
         // 움직일 때 발생하는 소음반경 +20%, 넘어질 확률 +10%
         // 달리거나 전력 질주를 하는 도중 낮은 울타리를 넘거나 좀비와 부딫힐 때 넘어질 확률이 추가로 10% 증가
@@ -825,6 +1248,7 @@ public class Player_Characteristic : MonoBehaviour
         Slow_Reader.Points = +2;
         Slow_Reader.type = Characteristic_type.Negatives;
         Slow_Reader.Choice = Choice;
+        Slow_Reader.value_list.Add(-0.3f);
         return Slow_Reader;
         // 독서 속도 -30%
         // 비활성화되는 특성: 속독, 문맹
@@ -841,8 +1265,9 @@ public class Player_Characteristic : MonoBehaviour
         Short_Sighted.Points = +2;
         Short_Sighted.type = Characteristic_type.Negatives;
         Short_Sighted.Choice = Choice;
+        Short_Sighted.value_list.Add(-0.2f);
         return Short_Sighted;
-        // 시야 확보 속도 감소, 수색 반경 -2
+        // 시야 확보 속도 감소  ( 임의설정 -20% )
         // ( 안경이나 독서용 안경을 장비하면 페널티가 아예 무효화됨 )
         // 비활성화되는 특성: 매의 눈
     }
@@ -858,8 +1283,10 @@ public class Player_Characteristic : MonoBehaviour
         Weak_Stomach.Points = +3;
         Weak_Stomach.type = Characteristic_type.Negatives;
         Weak_Stomach.Choice = Choice;
+        Weak_Stomach.value_list.Add(1f);
+        Weak_Stomach.value_list.Add(0.3f);
         return Weak_Stomach;
-        // 식중독에 걸릴 확률 +100%, 식중독 유지 시간 증가
+        // 식중독에 걸릴 확률 +100%, 식중독 유지 시간 증가  ( 임의설정 30% )
         // 비활성화되는 특성: 강철 위장
     }
 
@@ -875,7 +1302,7 @@ public class Player_Characteristic : MonoBehaviour
         Smoker.type = Characteristic_type.Negatives;
         Smoker.Choice = Choice;
         return Smoker;
-        // 스트레스 상시 상승, 흡연으로 인한 질병 무들이 발생하지 않음
+        // 스트레스 상시 상승 ( 임의설정 5초당 3 상승 ), 흡연으로 인한 질병 무들이 발생하지 않음
         // 흡연시 불행 -10, 흡연시 스트레스 0으로 감소
         // 담배를 피우지 않으면 스트레스가 2단계 무들인 '동요함'까지 상승
     }
@@ -892,25 +1319,10 @@ public class Player_Characteristic : MonoBehaviour
         Agoraphobic.type = Characteristic_type.Negatives;
         Agoraphobic.Choice = Choice;
         return Agoraphobic;
-        // 야외에 있을 때 공황 발생, 수색 반경 -1.5
+        // 야외에 있을 때 공황 발생
         // ( 밖으로 나가면 매우 빠르게 긴장이 올라 7초도 안돼서 공황상태에 도달 )
         // 비활성화되는 특성: 용감함, 아드레날린 중독, 밀실공포증
     }
-
-    //Characteristic Characteristic_Conspicuous(Characteristic Conspicuous)
-    //{
-    //    Conspicuous.name = "Conspicuous";
-    //    Conspicuous.name_kr = "넘치는 존재감";
-    //    Conspicuous.Explanation_for_Characteristic = "More likely to be spotted by zombies.";
-    //    Conspicuous.Explanation_for_Characteristic_kr = "좀비에게 발견될 확률이 높아집니다.";
-    //    Conspicuous.Sprite = Characteristic_Image[9];
-    //    Conspicuous.Points = 4;
-    //    Conspicuous.type = Characteristic_type.Negatives;
-    //    Conspicuous.Choice = false;
-    //    return Conspicuous;
-    //    // 좀비에게 발견될 확률 200%
-    //    // 비활성화되는 특성: 부족한 존재감
-    //}
 
     Characteristic Characteristic_Hearty_Appetite(Characteristic Hearty_Appetite, bool Choice)
     {
@@ -923,6 +1335,8 @@ public class Player_Characteristic : MonoBehaviour
         Hearty_Appetite.Points = +4;
         Hearty_Appetite.type = Characteristic_type.Negatives;
         Hearty_Appetite.Choice = Choice;
+        Hearty_Appetite.value_list.Add(1.5f);
+        Hearty_Appetite.value_list.Add(1.03f);
         return Hearty_Appetite;
         // 배고픔 진행 속도 150%, 채집보너스: 동물 / 산딸기 / 버섯 / 포장식품 +3%
         // 비활성화되는 특성: 소식가
@@ -986,8 +1400,10 @@ public class Player_Characteristic : MonoBehaviour
         Hard_of_Hearing.Points = +4;
         Hard_of_Hearing.type = Characteristic_type.Negatives;
         Hard_of_Hearing.Choice = Choice;
+        Hard_of_Hearing.value_list.Add(-0.3f);
+        Hard_of_Hearing.value_list.Add(-0.3f);
         return Hard_of_Hearing;
-        // 소리 인지 범위 감소, 소리가 먹먹하게 들림, 주변 밝기 감소
+        // 소리 인지 범위 감소 ( 임의설정 -30% ) , 소리가 먹먹하게 들림, 주변 밝기 감소 ( 임의설정 -30% )
         // 비활성화되는 특성: 예민한 청력, 청각 장애
     }
 
@@ -1002,6 +1418,8 @@ public class Player_Characteristic : MonoBehaviour
         Sleepyhead.Points = +4;
         Sleepyhead.type = Characteristic_type.Negatives;
         Sleepyhead.Choice = Choice;
+        Sleepyhead.value_list.Add(0.3f);
+        Sleepyhead.value_list.Add(-0.1f);
         return Sleepyhead;
         // 피로도 상승률 +30%, 수면 효율 -10%
         // 비활성화되는 특성: 잠이 없는
@@ -1018,6 +1436,10 @@ public class Player_Characteristic : MonoBehaviour
         Prone_to_Illness.Points = +4;
         Prone_to_Illness.type = Characteristic_type.Negatives;
         Prone_to_Illness.Choice = Choice;
+        Prone_to_Illness.value_list.Add(0.7f);
+        Prone_to_Illness.value_list.Add(-0.2f);
+        Prone_to_Illness.value_list.Add(0.5f);
+        Prone_to_Illness.value_list.Add(0.25f);
         return Prone_to_Illness;
         // 감기에 걸릴 확률 +70%, 추위 내성 -20%, 추위 진행 속도 +50%, 좀비화 속도 +25%
         // 비활성화되는 특성: 강한 회복력
@@ -1034,6 +1456,7 @@ public class Player_Characteristic : MonoBehaviour
         Pacifist.Points = +4;
         Pacifist.type = Characteristic_type.Negatives;
         Pacifist.Choice = Choice;
+        Pacifist.value_list.Add(-0.25f);
         return Pacifist;
         // 모든 무기, 물건관리, 조준 스킬의 경험치 습득률 -25%
     }
@@ -1049,6 +1472,8 @@ public class Player_Characteristic : MonoBehaviour
         Asthmatic.Points = +5;
         Asthmatic.type = Characteristic_type.Negatives;
         Asthmatic.Choice = Choice;
+        Asthmatic.value_list.Add(0.4f);
+        Asthmatic.value_list.Add(0.3f);
         return Asthmatic;
         // 달리기와 질주의 지구력 소모량 +40%, 도구와 무기 사용의 지구력 소모량 +30%
     }
@@ -1079,6 +1504,7 @@ public class Player_Characteristic : MonoBehaviour
         Out_of_Shape.Points = +6;
         Out_of_Shape.type = Characteristic_type.Negatives;
         Out_of_Shape.Choice = Choice;
+        Out_of_Shape.value_list.Add(-2);
         return Out_of_Shape;
         // 체력 -2
     }
@@ -1094,13 +1520,19 @@ public class Player_Characteristic : MonoBehaviour
         Overweight.Points = +6;
         Overweight.type = Characteristic_type.Negatives;
         Overweight.Choice = Choice;
+        Overweight.value_list.Add(-1);
+        Overweight.value_list.Add(0.1f);
+        Overweight.value_list.Add(-0.3f);
+        Overweight.value_list.Add(-0.15f);
+        Overweight.value_list.Add(0.1f);
+
         return Overweight;
         // 시작 몸무게: 95kg
         // 몸무게 기준: 85~99kg
         // 체력 -1
         // 넘어질 확률 +10%
-        // 지구력 회복량 - 30%
-        // 높은 담장을 넘을 확률 - 15%
+        // 지구력 회복량 -30%
+        // 높은 담장을 넘을 확률 -15%
         // 낮은 담장을 뛰어넘을 때 넘어지지 않을 확률 +10%
     }
 
@@ -1115,6 +1547,7 @@ public class Player_Characteristic : MonoBehaviour
         High_Thirst.Points = +6;
         High_Thirst.type = Characteristic_type.Negatives;
         High_Thirst.Choice = Choice;
+        High_Thirst.value_list.Add(1f);
         return High_Thirst;
         // 갈증 진행 속도 +100%
         // 비활성화되는 특성: 낮은 갈증
@@ -1146,6 +1579,7 @@ public class Player_Characteristic : MonoBehaviour
         Slow_Learner.Points = +6;
         Slow_Learner.type = Characteristic_type.Negatives;
         Slow_Learner.Choice = Choice;
+        Slow_Learner.value_list.Add(-0.3f);
         return Slow_Learner;
         // 모든 스킬의 경험치 획득량 -30%
         // 비활성화되는 특성: 현자
@@ -1162,8 +1596,10 @@ public class Player_Characteristic : MonoBehaviour
         Restless_Sleeper.Points = +6;
         Restless_Sleeper.type = Characteristic_type.Negatives;
         Restless_Sleeper.Choice = Choice;
+        Restless_Sleeper.value_list.Add(0.7f);
         return Restless_Sleeper;
-        // 최대 수면 시간이 3시간으로 제한됨, 수면으로 경감되는 피로도 감소
+        // 최대 수면 시간이 3시간으로 제한됨 ( 1시간 후에 다시 취침 가능 )
+        // 수면으로 경감되는 피로도 감소 ( 임의설정 -30% )
     }
 
     Characteristic Characteristic_Feeble(Characteristic Feeble, bool Choice)
@@ -1177,6 +1613,7 @@ public class Player_Characteristic : MonoBehaviour
         Feeble.Points = +6;
         Feeble.type = Characteristic_type.Negatives;
         Feeble.Choice = Choice;
+        Feeble.value_list.Add(-2);
         return Feeble;
         // 근력 -2
     }
@@ -1192,11 +1629,15 @@ public class Player_Characteristic : MonoBehaviour
         Underweight.Points = +6;
         Underweight.type = Characteristic_type.Negatives;
         Underweight.Choice = Choice;
+        Underweight.value_list.Add(-1);
+        Underweight.value_list.Add(-0.2f);
+        Underweight.value_list.Add(0.1f);
+        Underweight.value_list.Add(-0.15f);
         return Underweight;
         // 시작 몸무게: 70kg
         // 몸무게 기준: 65~75kg
         // 체력 -1
-        // 근접 대미지 -20%
+        // 근접 데미지 -20%
         // 넘어질 확률 +10%
         // 높은 담장을 넘을 확률 -15%
     }
@@ -1212,6 +1653,7 @@ public class Player_Characteristic : MonoBehaviour
         Illiterate.Points = +8;
         Illiterate.type = Characteristic_type.Negatives;
         Illiterate.Choice = Choice;
+        Illiterate.value_list.Add(0);  // Player_main 의 ability_Read = false 로 변경하기 위함
         return Illiterate;
         // 읽기 비활성화
         // 비활성화되는 특성: 속독, 정독
@@ -1228,6 +1670,9 @@ public class Player_Characteristic : MonoBehaviour
         Thin_skinned.Points = +8;
         Thin_skinned.type = Characteristic_type.Negatives;
         Thin_skinned.Choice = Choice;
+        Thin_skinned.value_list.Add(0.23f);
+        Thin_skinned.value_list.Add(0.3f);
+        Thin_skinned.value_list.Add(0.77f);
         return Thin_skinned;
         // 모든 긁힘, 찢어짐, 물림 확률 +23%
         // 나무를 지나갈 때 부상이 생길 확률 +30%
@@ -1246,10 +1691,17 @@ public class Player_Characteristic : MonoBehaviour
         Obese.Points = +10;
         Obese.type = Characteristic_type.Negatives;
         Obese.Choice = Choice;
+        Obese.value_list.Add(-2);
+        Obese.value_list.Add(-0.3f);
+        Obese.value_list.Add(0.2f);
+        Obese.value_list.Add(0.2f);
+        Obese.value_list.Add(-0.6f);
+        Obese.value_list.Add(-0.25f);
+        Obese.value_list.Add(-0.1f);
         return Obese;
         // 체력 -2
-        // 달리기 속도 감소
-        // 넘어질 확률 +20%, 낙하 대미지 +20%
+        // 달리기 속도 감소 ( 임의설정 -30% )
+        // 넘어질 확률 +20%, 낙하 데미지 +20%
         // 지구력 회복량 -60%
         // 높은 담장을 넘을 확률 -25%
         // 좀비와 부딪칠 때 넘어질 확률 -10%
@@ -1266,6 +1718,7 @@ public class Player_Characteristic : MonoBehaviour
         Unfit.Points = +10;
         Unfit.type = Characteristic_type.Negatives;
         Unfit.Choice = Choice;
+        Unfit.value_list.Add(-4);
         return Unfit;
         // 체력 -4
     }
@@ -1281,13 +1734,18 @@ public class Player_Characteristic : MonoBehaviour
         Very_Underweight.Points = +10;
         Very_Underweight.type = Characteristic_type.Negatives;
         Very_Underweight.Choice = Choice;
+        Very_Underweight.value_list.Add(-2);
+        Very_Underweight.value_list.Add(-0.4f);
+        Very_Underweight.value_list.Add(0.2f);
+        Very_Underweight.value_list.Add(0.1f);
+        Very_Underweight.value_list.Add(-0.25f);
         return Very_Underweight;
         // 시작 몸무게: 60kg
         // 몸무게 기준: 50~64kg
         // 체력 -2
-        // 근접 대미지 -40%
+        // 근접 데미지 -40%
         // 넘어질 확률 +20%
-        // 낙하 대미지 +10%
+        // 낙하 데미지 +10%
         // 높은 담장을 넘을 확률 -25%
     }
 
@@ -1302,12 +1760,19 @@ public class Player_Characteristic : MonoBehaviour
         Emaciated.Points = +0;  // 선택불가
         Emaciated.type = Characteristic_type.Negatives;
         Emaciated.Choice = Choice;
+        Emaciated.value_list.Add(-2);
+        Emaciated.value_list.Add(-0.6f);
+        Emaciated.value_list.Add(0.25f);
+        Emaciated.value_list.Add(0.20f);
+        Emaciated.value_list.Add(-0.25f);
+        Emaciated.value_list.Add(-0.7f);
+        Emaciated.value_list.Add(35);
         return Emaciated;
         // 몸무게 기준: 49kg 이하
         // 체력 -2
-        // 근접 대미지 -60%
+        // 근접 데미지 -60%
         // 넘어질 확률 +25%
-        // 낙하 대미지 +20%
+        // 낙하 데미지 +20%
         // 높은 담장을 넘을 확률 -25%
         // 지구력 회복량 -70%
         // 체중이 35kg 이하로 내려가면 영양실조로 죽게 됨
@@ -1324,6 +1789,8 @@ public class Player_Characteristic : MonoBehaviour
         Weak.Points = +10;
         Weak.type = Characteristic_type.Negatives;
         Weak.Choice = Choice;
+        Weak.value_list.Add(-5);
+        Weak.value_list.Add(6);
         return Weak;
         // 근력 -5, 무게제한 6으로 감소됨
     }
@@ -1339,6 +1806,7 @@ public class Player_Characteristic : MonoBehaviour
         Deaf.Points = +12;
         Deaf.type = Characteristic_type.Negatives;
         Deaf.Choice = Choice;
+        Deaf.value_list.Add(0);  // Player_main 의 ability_Hear = false 로 변경하기 위함
         return Deaf;
         // 소리가 들리지 않는다
         // 비활성화되는 특성: 예민한 청력, 어두운 귀
@@ -1346,101 +1814,4 @@ public class Player_Characteristic : MonoBehaviour
     }
 
 
-    /*
-     직업 전용 특성
-      - 좀도둑
-      - 둔감함
-     */
-
-    // 좀도둑
-    //Characteristic Characteristic_Burglar(Characteristic Burglar, bool Choice)
-    //{
-    //    Burglar.name = "Burglar";
-    //    Burglar.name_kr = "좀도둑";
-    //    Burglar.Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
-    //    Burglar.Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
-    //    Burglar.Characteristic_number = 52;
-    //    Burglar.Sprite = Characteristic_Image[52];
-    //    Burglar.Points = +0;
-    //    Burglar.type = Characteristic_type.Occupation;
-    //    Burglar.Choice = Choice;
-    //    return Burglar;
-    //    // 스킬 제한없이 차량 배선 따기 가능
-    //    // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
-    //}
-
-    //public void Characteristic_Burglar(bool _Choice)
-    //{
-    //    string name = "Burglar";
-    //    string name_kr = "좀도둑";
-    //    string Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
-    //    string Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
-    //    int Characteristic_number = 52;
-    //    Sprite Sprite = Characteristic_Image[52];
-    //    int Points = +0;
-    //    Characteristic_type type = Characteristic_type.Occupation;
-    //    bool Choice = _Choice;
-    //    // 스킬 제한없이 차량 배선 따기 가능
-    //    // 잠긴 창문을 열 때 걸쇠가 걸릴 확률 10% 감소
-    //}
-
-    // 군인
-    //Characteristic Characteristic_Desensitized(Characteristic Desensitized, bool Choice)
-    //{
-    //    Desensitized.name = "Desensitized";
-    //    Desensitized.name_kr = "둔감함";
-    //    Desensitized.Explanation_for_Characteristic = "War... War never changes.";
-    //    Desensitized.Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
-    //    Desensitized.Characteristic_number = 53;
-    //    Desensitized.Sprite = Characteristic_Image[53];
-    //    Desensitized.Points = +0;
-    //    Desensitized.type = Characteristic_type.Occupation;
-    //    Desensitized.Choice = Choice;
-    //    return Desensitized;
-    //    // 긴장 무들에 면역
-    //}
-
-    //public void Characteristic_Desensitized(bool _Choice)
-    //{
-    //    string name = "Desensitized";
-    //    string name_kr = "둔감함";
-    //    string Explanation_for_Characteristic = "War... War never changes.";
-    //    string Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
-    //    int Characteristic_number = 53;
-    //    Sprite Sprite = Characteristic_Image[53];
-    //    int Points = +0;
-    //    Characteristic_type type = Characteristic_type.Occupation;
-    //    bool Choice = _Choice;
-    //    // 긴장 무들에 면역
-    //}
-
-    // 낚시꾼
-    //Characteristic Characteristic_Angler(Characteristic Angler, bool Choice)
-    //{
-    //    Angler.name = "Angler";
-    //    Angler.name_kr = "낚시꾼";
-    //    Angler.Explanation_for_Characteristic = "Knows the basics of fishing.";
-    //    Angler.Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
-    //    Angler.Characteristic_number = 54;
-    //    Angler.Sprite = Characteristic_Image[54];
-    //    Angler.Points = -4;
-    //    Angler.type = Characteristic_type.Occupation;
-    //    Angler.Choice = Choice;
-    //    return Angler;
-    //    // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
-    //}
-
-    //public void Characteristic_Angler(bool _Choice)
-    //{
-    //    string name = "Angler";
-    //    string name_kr = "낚시꾼";
-    //    string Explanation_for_Characteristic = "Knows the basics of fishing.";
-    //    string Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
-    //    int Characteristic_number = 54;
-    //    Sprite Sprite = Characteristic_Image[54];
-    //    int Points = -4;
-    //    Characteristic_type type = Characteristic_type.Occupation;
-    //    bool Choice = _Choice;
-    //    // 낚시 레벨 +1, 미국의 낚시꾼들 Vol.1 내용 습득[2]
-    //}
 }

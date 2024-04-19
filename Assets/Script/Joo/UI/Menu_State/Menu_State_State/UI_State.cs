@@ -56,7 +56,7 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
             tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
             UI_State_detailwindow temp = tempObj.GetComponent<UI_State_detailwindow>();
             Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageCount(true);
-            temp.SetImage(player_damage_SpriteArray[(int)damagetype], position);
+            temp.SetImage(player_damage_SpriteArray[(int)damagetype], position, damagetype);
             UI_DamageImage.UI_Damage_Pre.Damage_Ins(position, temp.position_Damage_Num);
             Damagelist.Add(temp);
         }
@@ -66,8 +66,6 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
             UI_main.ui_main.UI_Damage.SetActive(true);
             UI_main.ui_main.Set_UIDamage();
         }
-
-
     }
 
     public void icon_Destroy(body_point position, int Damage_Num)
