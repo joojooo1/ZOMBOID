@@ -305,7 +305,7 @@ public class CustomClass : MonoBehaviour
             if (Physics.Raycast(ray, out hitInfo))
             {
                 // 충돌한 오브젝트에서 원하는 함수 호출
-                Debug.Log(hitInfo.collider.transform.gameObject);
+                //Debug.Log(hitInfo.collider.transform.gameObject);
                 //hitInfo.collider.gameObject.GetComponent<TileChange>().Click2();
                 //Map.GetComponent<CustomClass>().Creatimg(hitInfo.collider.gameObject);
                 GameObject HitObject = hitInfo.collider.transform.gameObject;
