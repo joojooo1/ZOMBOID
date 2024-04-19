@@ -34,8 +34,10 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     public Transform ParentTransform;
     public short ParentSize;
 
+    public GameObject Putti;
     public GameObject Text;
     public GameObject Image;
+    public GameObject BorderLine;
     public GameObject BackgroundColor;
 
     public void Start()
