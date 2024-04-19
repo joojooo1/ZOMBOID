@@ -10,14 +10,13 @@ using static UnityEngine.GraphicsBuffer;
 public class zom_anime : MonoBehaviour
 {
     public GameObject zomnav;
-    Animator animator;
-    NavMeshAgent nav;
-    zom_pos zompos;
-    zom_targetpos zomtarget;
-    float turnspeed = 1000;
+    public Animator animator;
+    public NavMeshAgent nav;
+    public zom_pos zompos;
+    public zom_targetpos zomtarget;
     public GameObject asd;
-    private Quaternion initialLocalRotation;
-    bool fence= false;
+    public bool fence= false;
+    public zombieHp HP;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +25,7 @@ public class zom_anime : MonoBehaviour
         nav = zomnav.GetComponent<NavMeshAgent>();
         zompos = zomnav.GetComponent<zom_pos>();
         zomtarget = asd.GetComponent<zom_targetpos>();
+        HP = parentTransform.GetComponent<zombieHp>();
         if (nav == null)
         {
             nav = zomnav.GetComponent<NavMeshAgent>();
@@ -79,14 +79,14 @@ public class zom_anime : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == zompos.target)
+        if (collision.gameObject == zompos.target && !atking)
         {
             animatorsetBool("Playeratk",true);
         }
     }
     void idleposset()
     {
-        zomtarget.idlepos();
+        //zomtarget.idlepos();
     }
     public void animatorsetBool(string ANIMA_NAME, bool set)
     {
@@ -100,7 +100,7 @@ public class zom_anime : MonoBehaviour
     {
         animator.SetFloat(ANIMA_NAME, set);
     }
-    float curretspeed;
+    public float curretspeed;
     void fenceup()
     {
         if (fence)
@@ -110,24 +110,59 @@ public class zom_anime : MonoBehaviour
     }
     void up_off()
     {
-        fence = false;
-        nav.speed = curretspeed;
-        animatorsetBool("backdown", false);
-        animatorsetBool("up", false);
+        live();
+        if (!zomtarget.live)
+        {
+            Debug.Log("죽음");
+            zompos.respawn_set();
+        }
+        SET();
     }
-    bool atking = false;
+    public bool atking = false;
     void zom_atk_end()//좀비의 다시 공격하기위한 작업zzzzzzz
     {
         Debug.Log("공격완료");
         //zomnav.GetComponent<NavMeshAgent>().enabled = true;
         animator.SetBool("playeratk", false);
-        zomnav.GetComponent<zom_pos>().zomatkend();
+        zom_speed_set();
         atking = false;
     }
     void zom_atk_try()//좀비의 공격 성공여부(공격 성공여부 판단시 좀비와의 거리가 1이하이면 공격이 성공한다.)zzzzzz
     {
         Debug.Log("공격 시도중");
-        //zomnav.GetComponent<NavMeshAgent>().enabled = false;
+        zom_speed_zero();
         atking = true;
+    }
+    void zom_speed_set()
+    {
+        zomnav.GetComponent<zom_pos>().zomatkend();
+    }
+    void zom_speed_zero()
+    {
+        zomnav.GetComponent<NavMeshAgent>().speed = 0;
+    }
+    void live()
+    {
+        Debug.Log("생존 판단");
+        if(HP.curret_zombie_hp <= 0)
+        {
+            zomtarget.live = false;
+        }
+        else
+        {
+            animatorsetBool("up", true);
+        }
+    }
+    void downanime()
+    {
+        HP.up_down();
+    }
+
+    void SET()
+    {
+        fence = false;
+        nav.speed = curretspeed;
+        animatorsetBool("backdown", false);
+        animatorsetBool("up", false);
     }
 }

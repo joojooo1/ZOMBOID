@@ -6,26 +6,27 @@ using UnityEngine.AI;
 
 public class zom_pos : MonoBehaviour
 {
-    NavMeshAgent nav;
+    public NavMeshAgent nav;
     public GameObject target;
     public Vector3 AUDIOPOS;
-    zom_targetpos zom_Targetpos;
+    public zom_targetpos zom_Targetpos;
     public GameObject zombody;
     public GameObject targetpos;
-    Vector3 Tarpos;
+    public bool re = false;
     public bool audioposget = false;
-    float ramdom;
-    float zomspeed;
+    public float zomspeed;
+    public GameObject[] respawn;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
-        zomspeed = nav.speed;
-        zom_Targetpos = targetpos.GetComponent<zom_targetpos>();
-        zombody = targetpos.transform.parent.gameObject;
-        //nav.updateRotation = false;
-        ramdom = Random.Range(0, 3);
+        zom_Targetpos = zombody.GetComponent<zom_targetpos>();
 
+    }
+    private void Start()
+    {
+        zomspeed = zombody.GetComponent<zombieHp>().curret_speed;
+        zommovespeed(zomspeed);
     }
 
     // Update is called once per frame
@@ -37,7 +38,7 @@ public class zom_pos : MonoBehaviour
             audioposget = false;
 
             nav.SetDestination(new Vector3(target.transform.position.x,target.transform.position.y,0));
-            if (nav.remainingDistance <= nav.stoppingDistance + 0.1f)
+            if (nav.remainingDistance <= nav.stoppingDistance)
             {
                 targetpos.GetComponent<zom_anime>().animatorsetBool("playeratk", true);
                 nav.speed = 0;
@@ -49,24 +50,19 @@ public class zom_pos : MonoBehaviour
             audioposget = false;
             //zom_Targetpos.idlepos();
         }
-        /*if (nav.isOnOffMeshLink)
-        {
-            nav.updateRotation = false;
-        }*/
+        
     }
     public void zomldiepos(Vector3 pos)
     {
-        
-        Tarpos = pos;
         Vector3 direction = (pos - nav.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        //nav.transform.rotation = Quaternion.RotateTowards(nav.transform.rotation, lookRotation, 0);
-        nav.SetDestination(new Vector3(pos.x,pos.y,0));
+        nav.SetDestination(pos);
     }
    
     public void zommovespeed(float zomspeed)
     {
         nav.speed = zomspeed;
+        Debug.Log("이동 재설정" + nav.speed);
     }
     void zomseverrot(Quaternion lookRotation)
     {
@@ -80,16 +76,53 @@ public class zom_pos : MonoBehaviour
     
     public void zomon()
     {
-        zombody.SetActive(true);
-        zom_Targetpos.StartCoroutine("find");
+        targetpos.SetActive(true);
+        //zom_Targetpos.StartCoroutine("find");
     }
     public void zomoff()
     {
-        zom_Targetpos.StopCoroutine("find");
-        zombody.SetActive(false);
+        //zom_Targetpos.StopCoroutine("find");
+        targetpos.SetActive(false);
     }
     public void zomatkend()
     {
         nav.speed = zomspeed;
+    }
+    public void get_zom_spawn_pos(Vector3 pos)
+    {
+        zom_Targetpos.idle_pos_set(pos);
+    }
+    public void respawn_set()
+    {
+        nav.enabled = false;
+        int I = Random.Range(0, respawn.Length);
+        Debug.Log("리스폰 위치로"+ I);
+        targetpos.SetActive(false);
+        transform.position = respawn[I].transform.position;
+        restart();
+    }
+    void restart()
+    {
+        nav.enabled = true;
+        zom_Targetpos.tasd();
+        zom_Targetpos.live = true;
+        zombody.GetComponent<BoxCollider>().enabled = true;
+        asd();
+        Debug.Log("좀비 활동 시작");
+    }
+    public void asd()
+    {
+        zombody.GetComponent<zombieHp>().Restart();
+        zombody.GetComponent<zom_targetpos>().Restart();
+        Restart();
+    }
+    void Restart()
+    {
+        nav = GetComponent<NavMeshAgent>();
+        zom_Targetpos = zombody.GetComponent<zom_targetpos>();
+        Debug.Log("좀비 이동속도 조절" + zomspeed);
+        target = null;
+        audioposget = false;
+        zommovespeed(zomspeed);
     }
 }
