@@ -179,6 +179,7 @@ public class CMainGame : MonoBehaviour
                 {
                     int Location_Info = msg.pop_int32();
                     int Basic_Info = msg.pop_int32();
+                    int Before_Info = msg.pop_int32();
                     Debug.Log("loc" + Location_Info);
                     Debug.Log("Basic" + Basic_Info);
 
@@ -191,6 +192,9 @@ public class CMainGame : MonoBehaviour
                     int Amount = Basic_Info % 1000;
                     int Direction = (Basic_Info % 1000000) / 100000;
 
+                    int Before_X = (Before_Info - 1000) / 100;
+                    int Before_Y = (Before_Info - 1000) % 100;
+
                     //( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
                     Inventory_Library.IL.Inventory_DB[Order][0, (short)XLoc, (short)YLoc] = (short)Type;
                     Inventory_Library.IL.Inventory_DB[Order][1, (short)XLoc, (short)YLoc] = (short)ID;
@@ -201,6 +205,11 @@ public class CMainGame : MonoBehaviour
                     Debug.Log("ID changed to " + ID);
                     Debug.Log("Amount changed to " + Amount);
                     Debug.Log("Direction changed to " + Direction);
+
+                    for(int Depth=0; Depth < 5; Depth++)
+                    {
+                        Inventory_Library.IL.Inventory_DB[Order][Depth, Before_X, Before_Y] = 0;
+                    }
                     //Inventory_Library.IL.Inventory_DB[Order][4, (short)XLoc, (short)YLoc] =;
                     int NSize = 0;
                     if (Inventory_Library.IL.Inventory_DB[Order].GetLength(2) < 10)
@@ -215,6 +224,7 @@ public class CMainGame : MonoBehaviour
                     {
                         switch (NSize)
                         {
+                            
                             case 86:
                                 if (VisualArea.GetComponent<Inventory_8x6>().Storage_Order == Order)
                                 {
