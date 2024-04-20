@@ -82,7 +82,7 @@ public class Player_main : MonoBehaviour
 
     public float Likelihood_of_food_poisoning = 0.2f;  // 식중독에 걸릴 확률
     public float Time_for_food_poisoning = 200f;  // 식중독 유지 시간
-    public float Satiety_value = 0.06f;  // 포만감 감소되는 양
+    public float Satiety_value = 0.25f;  // 포만감 감소되는 양
     public float Panic_value = 0.15f;
 
     float Enemy_Damage = 0;  // 상대유저의 공격력
@@ -130,7 +130,7 @@ public class Player_main : MonoBehaviour
 
         /************************************* Player_Satiety **************************************/
         Satiety_Timer += Time.deltaTime; 
-        if (Satiety_Timer > 1.0f)  // 포만감 2초에 1.5씩 감소
+        if (Satiety_Timer > 1.0f)  // 포만감 1초에 0.25씩 감소
         {
             Satiety -= Satiety_value;  // 포만감 -300 ~ 300
             if (Satiety < -300) { Satiety = -300.0f; }
@@ -512,9 +512,8 @@ public class Player_main : MonoBehaviour
     // 못 밀쳐냈을때
     // 2. 공격받을 신체 위치 확률 계산
 
-    void Calculating_Probability_of_Injury_Location(string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 강도, 후방 여부
+    Player_body_Location Random_Damage_Location(Player_body_Location Attack_point, bool IsBack, bool IsDown)
     {
-        Player_body_Location Attack_point  = new Player_body_Location(0);
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
 
@@ -663,8 +662,44 @@ public class Player_main : MonoBehaviour
                 Attack_point = playerState.Groin;
             }
         }
-        
-        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+
+        return Attack_point;
+    }
+
+    void Calculating_Probability_of_Injury_Location(string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 강도, 후방 여부
+    {
+        Player_body_Location Attack_point = new Player_body_Location(0);
+
+        List<Player_body_Location> Full_Location = new List<Player_body_Location>();
+        for (int i = 0; i < playerState.Player_body_point.Count; i++)
+        {
+            for(int j = 0; j < playerState.Player_body_point[i].Body_Damage_array.Length; j++)
+            {
+                if (playerState.Player_body_point[i].Body_Damage_array[2] != null)
+                {
+                    Full_Location.Add(playerState.Player_body_point[i]);
+                }
+            }
+        }
+
+        Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
+
+        for(int i = 0; i < Full_Location.Count; i++)
+        {
+            if (Full_Location[i] == Attack_point)
+            {
+                Attack_point = body_point.None;
+            }
+        }
+
+        if(Attack_point != body_point.None)
+        {
+            Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+        }
+        else
+        {
+
+        }
     }
 
     // 3. 좀비의 공격 패턴 확률 계산

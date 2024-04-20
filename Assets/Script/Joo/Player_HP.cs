@@ -70,9 +70,9 @@ public class Player_HP : MonoBehaviour
             /************************* Player_Bleeding *************************/
             if (Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_step() > 0)
             {
-                // 출혈 발생 시 2초마다 체력 감소 ( Bleeding step에 따라 감소량 다름 )
+                // 출혈 발생 시 1초마다 체력 감소 ( Bleeding step에 따라 감소량 다름 )
                 Bleeding_Timer += Time.deltaTime;
-                if (Bleeding_Timer > 2.0f)
+                if (Bleeding_Timer > 1.0f)
                 {
                     switch (Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_step())
                     {
@@ -83,13 +83,13 @@ public class Player_HP : MonoBehaviour
                             Player_current_Health -= 2;
                             break;
                         case 2:
-                            Player_current_Health -= 3;
-                            break;
-                        case 3:
                             Player_current_Health -= 5;
                             break;
+                        case 3:
+                            Player_current_Health -= 10;
+                            break;
                         case 4:
-                            Player_current_Health -= 7;
+                            Player_current_Health -= 20;
                             break;
                         default: break;
                     }

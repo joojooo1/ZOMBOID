@@ -9,21 +9,68 @@ using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
+public class Player_body_Location_Damage
+{
+    public body_point Location;
+    public bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
+    public bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
+    public bool _Bleeding = false;
+    public float recovery_Count = 0f;
+
+    public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
+    public bool Get_Is_disinfection() { return _disinfection; }
+
+    public void Set_Is_Bandage(bool Is_Bandage, int Damage_Num)
+    {
+        _Bandage = Is_Bandage;
+        if (_disinfection == true)  // 소독하고
+        {
+            if (_Bandage)  // 붕대를 감은 경우
+            {
+                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
+            }
+            else  // 붕대를 감지 않은 경우
+            {
+                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
+                PlayerState.playerState.Calculating_Infection(20);  // 20% 확률로 감염
+            }
+        }
+        else if (_disinfection == false)  // 소독하지 않고
+        {
+            if (_Bandage)  // 붕대를 감은 경우
+            {
+                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
+                //_Bandage_Count += 0.7f;
+            }
+            else  // 붕대를 감지 않은 경우
+            {
+                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
+                PlayerState.playerState.Calculating_Infection(30);  // 30% 확률로 감염
+            }
+        }
+    }
+    public bool Get_Is_Bandage() { return _Bandage; }
+
+}
+
 public class Player_body_Location
 {
     body_point _Body_Location_Code = new body_point();
     Damage_Pattern _Current_Damagetype;
-    bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
-    bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
-    bool _Bleeding = false; // 출혈.. Moodles
+
+    public bool _Bleeding = false; // 출혈.. Moodles
     int DamageCount = 0;
-    float _Defense = 0f;
+    public Player_body_Location_Damage[] Body_Damage_array = new Player_body_Location_Damage[3];
 
     public Player_body_Location(body_point Body_Code)
     {
         _Body_Location_Code = Body_Code;
     }
 
+    public body_point Get_body_point()
+    {
+        return _Body_Location_Code;
+    }
     public void Set_Body_state(Damage_Pattern Attack_Pattern, string Enemy_Type, bool IsBack)  // 좀비의 공격패턴, 좀비의 강도
     {
         _Current_Damagetype = Attack_Pattern;
@@ -85,7 +132,7 @@ public class Player_body_Location
                         case Damage_Pattern.Scratches:
                             // 긁힘  
 
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(7);  // 7% 확률로 감염
@@ -94,7 +141,7 @@ public class Player_body_Location
                         case Damage_Pattern.Lacerations:  // 깊은상처 (봉합 필요)
                             // 찢김
 
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(25);  // 25% 확률로 감염
@@ -103,7 +150,7 @@ public class Player_body_Location
                         case Damage_Pattern.Bites:
                             // 물림
 
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Set_Is_Infection(true);  // 100% 확률로 감염
@@ -118,22 +165,22 @@ public class Player_body_Location
                     switch (Attack_Pattern)
                     {
                         case Damage_Pattern.Abrasion:
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.bullet:
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.Fracture:
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.Lacerations:
-                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power - Get_Dafense());
+                            Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
                             Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
@@ -141,97 +188,14 @@ public class Player_body_Location
                             break;
                     }
                 }
-
-
             }
         }
-
     }
-
-    public void Set_Defense(int defense)
-    {
-        _Defense = _Defense + defense;
-    }
-
-    public float Get_Dafense() { return _Defense; }
 
     public Damage_Pattern Get_Bodypos_DamageType()
     {
         return _Current_Damagetype;
-    }
-
-    public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
-    public bool Get_Is_disinfection() { return _disinfection; }
-
-    public void Set_Is_Bandage(bool Is_Bandage, int Damage_Num)
-    {
-        _Bandage = Is_Bandage;
-        if (_disinfection == true)  // 소독하고
-        {
-            if (_Bandage)  // 붕대를 감은 경우
-            {
-                Set_Is_Bleeding(false);
-                for (int i = 0; i < UI_State.State_icon_main.Damagelist.Count;)
-                {
-                    if (UI_State.State_icon_main.Damagelist[i].body_position == _Body_Location_Code
-                        && UI_State.State_icon_main.Damagelist[i].position_Damage_Num == Damage_Num)
-                    {
-                        UI_State.State_icon_main.Damagelist[i]._Bandage_Count += 1;
-                        switch (UI_State.State_icon_main.Damagelist[i]._damagetype)
-                        {
-                            case Damage_Pattern.Scratches:
-                            case Damage_Pattern.Glass:
-                            case Damage_Pattern.Abrasion:
-                                if (UI_State.State_icon_main.Damagelist[i]._Bandage_Count >= 2)
-                                {
-                                    Full_recovery(Damage_Num);
-                                }
-                                break;
-                            case Damage_Pattern.Lacerations:
-                            case Damage_Pattern.Infection:
-                            case Damage_Pattern.bullet:
-                                if (UI_State.State_icon_main.Damagelist[i]._Bandage_Count >= 3)
-                                {
-                                    Full_recovery(Damage_Num);
-                                }
-                                break;
-                            case Damage_Pattern.Bites:
-                            case Damage_Pattern.Fracture:
-                            case Damage_Pattern.Burn:
-                                if (UI_State.State_icon_main.Damagelist[i]._Bandage_Count >= 4)
-                                {
-                                    Full_recovery(Damage_Num);
-                                }
-                                break;
-
-                        }
-
-                    }
-                }
-            }
-            else  // 붕대를 감지 않은 경우
-            {
-                Set_Is_Bleeding(true);
-                PlayerState.playerState.Calculating_Infection(20);  // 20% 확률로 감염
-            }
-        }
-        else if (_disinfection == false)  // 소독하지 않고
-        {
-            if (_Bandage)  // 붕대를 감은 경우
-            {
-                Set_Is_Bleeding(false);
-                //_Bandage_Count += 0.7f;
-            }
-            else  // 붕대를 감지 않은 경우
-            {
-                Set_Is_Bleeding(true);
-                PlayerState.playerState.Calculating_Infection(30);  // 30% 확률로 감염
-            }
-        }
-
-
-    }
-    public bool Get_Is_Bandage() { return _Bandage; }
+    }    
 
     public void Set_Is_Bleeding(bool Is_Bleeding)
     {
@@ -250,7 +214,6 @@ public class Player_body_Location
         {
             DamageCount--;
         }
-        Debug.Log(DamageCount);
     }
 
     public int Get_DamageCount() { return DamageCount; }
@@ -377,12 +340,18 @@ public class PlayerState : MonoBehaviour
 
     public float Tired_reduction_for_Sleeping = 1f;  // 수면으로 경감되는 피로도
     public float Tired_value = 0.01f;  // 피로도 증가량
+    public float Thirsty_Speed = 1f;  // 갈증 진행 속도
 
     public float Zombification = 0.0f;
 
+    float DamageCounting_Timer = 0.0f;
     private void Update()
     {
-        if(Zombification == 1)
+        DamageCounting_Timer += Time.deltaTime;
+
+
+
+        if (Zombification == 1)
         {
             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Player_main.player_main.player_HP.Get_Player_HP());
         }
@@ -437,19 +406,19 @@ public class PlayerState : MonoBehaviour
             switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
             {
                 case 0:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.01f);
+                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.01f * Thirsty_Speed);
                     break;
                 case 1:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.011f);
+                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.011f * Thirsty_Speed);
                     break;
                 case 2:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.013f);
+                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.013f * Thirsty_Speed);
                     break;
                 case 3:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.02f);
+                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.02f * Thirsty_Speed);
                     break;
                 case 4:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.04f);
+                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.04f * Thirsty_Speed);
                     break;
             }
             Thirsty_Timer = 0;

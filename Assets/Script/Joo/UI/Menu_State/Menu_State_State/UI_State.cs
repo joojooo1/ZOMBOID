@@ -51,14 +51,21 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
     {
         GameObject tempObj = null;
 
+        for(int i = 0; i < Player_main.player_main.playerState.Player_body_point[(int)position].Body_Damage_array.Length; i++)
+        {
+            if (Player_main.player_main.playerState.Player_body_point[(int)position].Body_Damage_array[i] == null)
+            {
+                tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
+                UI_State_detailwindow temp = tempObj.GetComponent<UI_State_detailwindow>();
+                Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageCount(true);
+                temp.SetImage(player_damage_SpriteArray[(int)damagetype], position, damagetype);
+                UI_DamageImage.UI_Damage_Pre.Damage_Ins(position, temp.position_Damage_Num);
+                Damagelist.Add(temp);
+            }
+        }
         if (Player_main.player_main.playerState.Player_body_point[(int)position].Get_DamageCount() < 3)
         {
-            tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
-            UI_State_detailwindow temp = tempObj.GetComponent<UI_State_detailwindow>();
-            Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageCount(true);
-            temp.SetImage(player_damage_SpriteArray[(int)damagetype], position, damagetype);
-            UI_DamageImage.UI_Damage_Pre.Damage_Ins(position, temp.position_Damage_Num);
-            Damagelist.Add(temp);
+
         }
 
         if(Damagelist.Count == 1)

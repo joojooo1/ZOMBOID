@@ -140,8 +140,7 @@ public class Player_Characteristic : MonoBehaviour
                     
                     break;
                 case 10:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(7);
-                    
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(7);                    
                     break;
                 case 19:
                     Player_main.player_main.Skill.Fitness_Level.Set_P_Level(9);
@@ -206,6 +205,9 @@ public class Player_Characteristic : MonoBehaviour
                 case 8:
                     Player_main.player_main.Panic_value *= characteristics_Player[i].Prefab.value_list[0];
                     break;
+                case 11:
+                    Player_main.player_main.playerState.Thirsty_Speed *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
                 case 33:
                     Prone_to_Illness_Characteristic = true;
 
@@ -215,6 +217,9 @@ public class Player_Characteristic : MonoBehaviour
                     Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= characteristics_Player[i].Prefab.value_list[0];
                     break;
 
+
+
+
                 case 1:
                     // 고양이의 눈 ( 야간 시야 범위 +20% ( 야간 밝기 증가, 손전등, 차량 전조등 등의 광원의 범위 넓혀줌 ) )
                     break;
@@ -222,13 +227,14 @@ public class Player_Characteristic : MonoBehaviour
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling(characteristics_Player[i].Prefab.value_list[0]);
                     // 우아함 ( 움직일 때 발생하는 소음반경 -40%)
                     break;
+                case 12:
+                    // 매의 눈 ( 시야 범위 증가 (임의설정 +30%), 시야 확보 속도 증가 (임의설정 +30%) )
+                    break;
             }
 
         }
     }
 
-    // 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 21, 22, 23, 24, 25, 26, 29,
-    // 31, 32, 33, 34, 35, 38, 39, 40, 44, 45, 49, 51
 
     private void Update()
     {
@@ -759,11 +765,6 @@ public class Player_Characteristic : MonoBehaviour
         {
             characteristics_list.Add(tempObj.GetComponent<UI_Title_Characteristic_prefab>());
         }
-
-        if(value >= 52)
-        {
-            UI_Title_Characteristic_text.Characteristic_text.Open_text(temp.name_kr, temp.Explanation_for_Characteristic_kr, temp.Points);
-        }
     }
 
     /*
@@ -976,7 +977,7 @@ public class Player_Characteristic : MonoBehaviour
         Low_Thirst.Points = -6;
         Low_Thirst.type = Characteristic_type.Positives;
         Low_Thirst.Choice = Choice;
-        Low_Thirst.value_list.Add(-0.5f);
+        Low_Thirst.value_list.Add(0.5f);
         return Low_Thirst;
         // 갈증 진행 속도 -50%
         // 비활성화되는 특성: 높은 갈증
