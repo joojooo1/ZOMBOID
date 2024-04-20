@@ -19,6 +19,7 @@ TagManager:
   - Refrigerator
   - Sit
   - Farm
+  - zom
   layers:
   - Default
   - TransparentFX

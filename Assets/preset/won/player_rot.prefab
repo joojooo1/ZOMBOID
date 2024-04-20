@@ -11500,9 +11500,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07129a934134b145a6300dea58f7a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rot: {fileID: 0}
+  aktob: {fileID: 0}
   audioobject: {fileID: 0}
   animator: {fileID: 0}
+  atk: 0
   test_weapon_type: 0
   Clip: {fileID: 0}
   walkClip: {fileID: 0}
@@ -45292,9 +45293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07129a934134b145a6300dea58f7a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rot: {fileID: 0}
+  aktob: {fileID: 0}
   audioobject: {fileID: 0}
   animator: {fileID: 0}
+  atk: 0
   test_weapon_type: 0
   Clip: {fileID: 0}
   walkClip: {fileID: 0}
@@ -45892,9 +45894,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07129a934134b145a6300dea58f7a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rot: {fileID: 0}
+  aktob: {fileID: 0}
   audioobject: {fileID: 0}
   animator: {fileID: 0}
+  atk: 0
   test_weapon_type: 0
   Clip: {fileID: 0}
   walkClip: {fileID: 0}

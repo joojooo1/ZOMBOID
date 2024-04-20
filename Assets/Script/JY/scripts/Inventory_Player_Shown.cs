@@ -216,7 +216,7 @@ public class Inventory_Player_Shown : MonoBehaviour
 
     }
 
-    public bool Drag_Check_Only()
+    public bool Drag_Check_Only() 
     {
         int Width = FS_Item_Size / 100;
         int Height = FS_Item_Size % 10;
@@ -224,21 +224,31 @@ public class Inventory_Player_Shown : MonoBehaviour
         short[,,] CopyPackage_LS = new short[1, 1, 1];
         switch (FSPSize) // 사이즈 조정 ※
         {
+            case 100:
+                break;
             case 86:
                 CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                break;
+            case 810:
+                CopyPackage_FS = FSParent.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
                 break;
         }
         switch (LSPSize)
         {
+            case 100:
+                break;
             case 86:
                 CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
                 break;
+            case 810:
+                CopyPackage_LS = LSParent.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
+                break;
         }
 
-        return Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage_LS);
+        return Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize, CopyPackage_LS);
     }
 
-    public void SubRequest_Drag_Image()
+    public void SubRequest_Drag_Image() 
     {
         Sprite Image = null;
         short Type = FSItSelf.GetComponent<InventorySlot>().Item_Type;
@@ -248,8 +258,8 @@ public class Inventory_Player_Shown : MonoBehaviour
         int Width = (int)Size / 100;
         int Height = (int)Size % 10;
 
-        int Canvas_Width = SlotSize_Req(Width);
-        int Canvas_Height = SlotSize_Req(Height);
+        int Canvas_Width = SlotSize_Req(Width-2);
+        int Canvas_Height = SlotSize_Req(Height-2);
 
         Image = Item_DataBase.item_database.Requesting_Image(Type, ID);
 
@@ -257,24 +267,47 @@ public class Inventory_Player_Shown : MonoBehaviour
         Drag_Target_Prefeb.GetComponent<Inventry_DragImage>().Change_Image(Image, Width, Height, Canvas_Width, Canvas_Height);
     }
 
-    private int SlotSize_Req(int num) // 사이즈 조정 ※
+    private int SlotSize_Req(int num)
     {
-        //0 , 19 , 37
-        //1,  2,  3
+        //0 , 19 , 37, 56
+        //1,  2,  3, 4
         int Length = 0;
 
         switch (num)
         {
-            case 1:
+            case -1:
                 Length = 0;
                 break;
+            case 0:
+                Length = 18;
+                break;
+            case 1:
+                Length = 18;
+                break;
             case 2:
-                Length = 19;
+                Length = 36;
                 break;
             case 3:
-                Length = 37;
+                Length = 56;
+                break;
+            case 4:
+                Length = 75;
+                break;
+            case 5:
+                Length = 93;
+                break;
+            case 6:
+                Length = 112;
+                break;
+            case 7:
+                Length = 130;
+                break;
+            case 8:
+                Length = 130;
                 break;
         }
+
+
         return Length;
     }
 
@@ -291,6 +324,7 @@ public class Inventory_Player_Shown : MonoBehaviour
         }
         else if (LSPSize == 100) // 들어가서 return 안나옴, 크기검증 없음
         {
+            //보유중 패키지 복사
             switch (FSPSize) // 스위치 조정 ※
             {
                 case 100:
@@ -299,6 +333,10 @@ public class Inventory_Player_Shown : MonoBehaviour
 
                 case 86:
                     CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                    break;
+
+                case 810:
+                    CopyPackage_FS = FSParent.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
                     break;
             }
             switch (LSPSize)
@@ -311,13 +349,18 @@ public class Inventory_Player_Shown : MonoBehaviour
                 case 86:
                     CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
                     break;
-            }
 
+                case 810:
+                    CopyPackage_LS = LSParent.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
+                    break;
+            }
+            //바로 패키지 이동
             for (int i = 0; i < 5; i++)
             {
                 CopyPackage_LS[i, LS_Slot_X, LS_Slot_Y] = CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y];
                 CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y] = 0;
             }
+            //표시
             switch (FSPSize)
             {
                 case 100:
@@ -326,8 +369,12 @@ public class Inventory_Player_Shown : MonoBehaviour
 
                 case 86:
                     FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    //SendServer_Inv_Info(CopyPackage_FS, 38, true); 나중에 킬것 ※
+                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x6>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    break;
 
+                case 810:
+                    FSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_FS);
+                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
             }
             switch (LSPSize)
@@ -338,13 +385,19 @@ public class Inventory_Player_Shown : MonoBehaviour
 
                 case 86:
                     LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, 38, true);
+                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x6>().Storage_Order, true,FS_Slot_X,FS_Slot_Y);
+                    break;
+                case 810:
+                    LSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_LS);
+                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
             }
             return;
         }
-        else // 하위로 진행 크기검증 있음
+        //장비창과 관계없음
+        else // 하위로 진행 크기검증 있음 ----------------------
         {
+            //보유 패키지 복사 대입
             switch (FSPSize) // 스위치 조정 ※
             {
                 case 100:
@@ -352,6 +405,9 @@ public class Inventory_Player_Shown : MonoBehaviour
                     break;
                 case 86:
                     CopyPackage_FS = FSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                    break;
+                case 810:
+                    CopyPackage_FS = FSParent.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
                     break;
             }
             switch (LSPSize)
@@ -362,17 +418,22 @@ public class Inventory_Player_Shown : MonoBehaviour
                 case 86:
                     CopyPackage_LS = LSParent.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
                     break;
+                case 810:
+                    CopyPackage_LS = LSParent.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
+                    break;
             }
         }
 
-        //Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage);
-        if (Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize / 10, (int)LSPSize % 10, CopyPackage_LS))
+        //크기 검증
+        if (Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize,CopyPackage_LS))
         {
+            //바로 이동
             for (int i = 0; i < 5; i++)
             {
                 CopyPackage_LS[i, LS_Slot_X, LS_Slot_Y] = CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y];
                 CopyPackage_FS[i, FS_Slot_X, FS_Slot_Y] = 0;
             }
+            //표시
             switch (FSPSize)
             {
                 case 100:
@@ -380,18 +441,26 @@ public class Inventory_Player_Shown : MonoBehaviour
                     break;
                 case 86:
                     FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    //SendServer_Inv_Info(CopyPackage_FS, 38, true);
-
+                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x6>().Storage_Order, true, FS_Slot_X,FS_Slot_Y);
+                    break;
+                case 810:
+                    FSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_FS);
+                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
             }
             switch (LSPSize)
             {
                 case 100:
                     Refreshing_Equipment_Slots(CopyPackage_LS);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x6>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 86:
                     LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, 38, true);
+                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x6>().Storage_Order, true,FS_Slot_X,FS_Slot_Y);
+                    break;
+                case 810:
+                    LSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_LS);
+                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
             }
 
@@ -447,7 +516,7 @@ public class Inventory_Player_Shown : MonoBehaviour
     }
 
     public bool Checking_Only_Size_For_InCanFit_All(bool IsVirtical, int First_Item_Lengthof_X, int First_Item_Lengthof_Y,
-        short Last_Slot_X_order, short Last_Slot_Y_order, int X_Length_OnStorage, int Y_Length_OnStorage, short[,,] Target_Package)
+        short Last_Slot_X_order, short Last_Slot_Y_order, int LSPSize, short[,,] Target_Package)
     //Length = 1부터, order는 0부터
     {
         
@@ -464,8 +533,20 @@ public class Inventory_Player_Shown : MonoBehaviour
         int sx = Last_Slot_X_order;
         int sy = Last_Slot_Y_order;
 
-        int xl = X_Length_OnStorage;
-        int yl = Y_Length_OnStorage;
+        int xl = 0;
+        int yl = 0;
+        switch (LSPSize)
+        {
+            case 86:
+                xl = 8;
+                yl = 6;
+                break;
+            case 810:
+                xl = 8;
+                yl = 10;
+                break;
+        }
+
 
         if (IsVirtical)
         {
@@ -476,8 +557,10 @@ public class Inventory_Player_Shown : MonoBehaviour
             sx = Last_Slot_X_order;
             sy = Last_Slot_Y_order;
 
-            xl = X_Length_OnStorage;
-            yl = Y_Length_OnStorage;
+            int dump = 0;
+            dump = yl;
+            xl = yl;
+            yl = dump;
         }
 
         if (((x - 1) + sx < xl)) // 배경연산
@@ -513,6 +596,13 @@ public class Inventory_Player_Shown : MonoBehaviour
                                     return Clear;
                                 }
                                 break;
+                            case 810:
+                                if(!LSParent.GetComponent<Inventory_8x10>().Slots[(Xfirst + Last_Slot_X_order) + 8 * (Ysecond + Last_Slot_Y_order)].IsMain)
+                                {
+                                    Clear = false;
+                                    return Clear;
+                                }
+                                break;
                         }
                     }
 
@@ -528,43 +618,47 @@ public class Inventory_Player_Shown : MonoBehaviour
 
 
 
-    public void SendServer_Inv_Info(short[,,] Changed_Package, short Order, bool IsP)
+    public void SendServer_Inv_Info(short[,,] After_Package, short Order, bool IsP, short Before_X, short Before_Y)
     {
-        int x = Changed_Package.GetLength(1);
-        int y = Changed_Package.GetLength(2);
-        int deep = Changed_Package.GetLength(0);
+        int x = After_Package.GetLength(1);
+        int y = After_Package.GetLength(2);
+        int deep = After_Package.GetLength(0);
         for (int YLine = 0; YLine < y; YLine++)
         {
             for (int XLine = 0; XLine < x; XLine++)
             {
-                if (!(Changed_Package[0, XLine, YLine] == 0))
+                if (!(After_Package[0, XLine, YLine] == 0))
                 {
                     int location_Packet = 1000000000;
                     int Info_Packet = 10000000;
+                    int Before_Location = 1000;
 
                     location_Packet += 100000000 * XLine; // 1
                     location_Packet += 1000000 * YLine; // 2
                     location_Packet += 1000 * Order; // 3
                     //(1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
 
+                    Before_Location += Before_X * 100;
+                    Before_Location += Before_Y;
+
                     for (int a = 0; a < deep; a++)
                     {
                         switch (a)
                         {
                             case 0:
-                                Info_Packet += (1000000 * Changed_Package[a, XLine, YLine]); //type 1,1
+                                Info_Packet += (1000000 * After_Package[a, XLine, YLine]); //type 1,1
                                 break;
                             case 1:
-                                Info_Packet += (1000 * Changed_Package[a, XLine, YLine]); //id 3,2
+                                Info_Packet += (1000 * After_Package[a, XLine, YLine]); //id 3,2
                                 break;
                             case 2:
-                                Info_Packet += (1 * Changed_Package[a, XLine, YLine]); //amount 4,3
+                                Info_Packet += (1 * After_Package[a, XLine, YLine]); //amount 4,3
                                 break;
                             case 3:
-                                Info_Packet += (100000 * Changed_Package[a, XLine, YLine]); //dir 2,1
+                                Info_Packet += (100000 * After_Package[a, XLine, YLine]); //dir 2,1
                                 break;
                             case 4:
-                                location_Packet += Changed_Package[a, XLine, YLine];
+                                location_Packet += After_Package[a, XLine, YLine];
                                 break;
                         }
                     }
@@ -573,6 +667,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                     CPacket InvPacket = CPacket.create((int)PROTOCOL.INV_SYNCHRONIZATION);
                     InvPacket.push(location_Packet);
                     InvPacket.push(Info_Packet);
+                    InvPacket.push(Before_Location);
                     CMainGame.current.Inv_Sync(InvPacket);
                 }
             }

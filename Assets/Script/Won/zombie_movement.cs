@@ -10,7 +10,6 @@ public class zombie_movement : MonoBehaviour
     public float speed; //좀비 이동속도
     private Transform zombieTransform;
     public GameObject player; //플레이어 
-    private float targetTime = 0f;//플레이어 감지하는 시간
     public float durationTime = 5f;//플레이어 인지범위 초과시 추적하는 시간
     public float detectionRange = 10f;//플레이어 인지범위
     public float rotationSpeed = 10f;//좀비 회전 속도
@@ -100,7 +99,6 @@ public class zombie_movement : MonoBehaviour
                if (hit.collider.gameObject.tag == "Player")
                {
                     zom_situation();
-                    targetTime = 0f;
                     player = hit.collider.gameObject;
                     StopCoroutine(zommove());
                     StopCoroutine(zomidlemove());

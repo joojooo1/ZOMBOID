@@ -6,19 +6,20 @@ using UnityEngine.AI;
 
 public class player_animation : MonoBehaviour
 {
-    public GameObject rot;
+    public GameObject aktob;
     public GameObject audioobject;
     public Animator animator;
-    bool atk = false;
+    public bool atk = false;
     public float test_weapon_type = 0;
     public AudioClip Clip;
     player_rot audio;
-    Collider collider;
     public AudioClip walkClip;
     public GameObject playernav;
+    player_atk _Atk;
     // Start is called before the first frame update
     void Start()
     {
+        _Atk = aktob.GetComponent<player_atk>();
         audio = audioobject.GetComponent<player_rot>();
         animator = GetComponent<Animator>();
     }
@@ -26,7 +27,7 @@ public class player_animation : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        
         float verticalInput = Input.GetAxisRaw("Vertical");
         verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
         float HorizontalInput = Input.GetAxisRaw("Horizontal");
@@ -51,7 +52,7 @@ public class player_animation : MonoBehaviour
         {
             animatorsetBool("run", false);
             animatorsetBool("Strife", true);
-            Vector3 input = (rot.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
+            Vector3 input = (audioobject.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
             input.Normalize();
 
             animatorsetFloat("x", input.x);
@@ -60,10 +61,9 @@ public class player_animation : MonoBehaviour
             {
                 atk = true;
                 animatersetTrigger("ATK");
-                audio.audioclip(Clip,1);
-                Debug.Log("소리 전송");
+                
             }
-            
+
         }
         else
         {
@@ -85,12 +85,14 @@ public class player_animation : MonoBehaviour
     public void aktEnd()
     {
         atk = false;
+        _Atk.atkset();
+
     }
 
-    public void animatorsetBool(string ANIMA_NAME,bool set)
+    public void animatorsetBool(string ANIMA_NAME, bool set)
     {
-        animator.SetBool (ANIMA_NAME, set);
-        
+        animator.SetBool(ANIMA_NAME, set);
+
     }
     public void animatersetTrigger(string ANIMA_NAME)
     {
@@ -108,12 +110,12 @@ public class player_animation : MonoBehaviour
     public void animatorsetting(float setting)
     {
         animator.SetLayerWeight(1, setting);
-        
+
     }
     void end()
     {
-        
+
 
     }
-
+   
 }

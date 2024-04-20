@@ -47,13 +47,10 @@ public class player_rot : MonoBehaviour
             
             //test
             Collider[] colliders = Physics.OverlapSphere(transform.position, currentVolume*5, layerMask);
-            Debug.Log("충돌체 검색완료");
             foreach (Collider collider in colliders)
             {
-                Debug.Log(collider.name);
                 // 충돌체가 공통된 스크립트를 가지고 있는지 확인합니다.
                 zom_pos zomtarget = collider.GetComponent<zom_pos>();
-                Debug.Log(zomtarget);
                 if (zomtarget != null)
                 {
                     zomtarget.Audioposget(transform.position);
@@ -75,4 +72,5 @@ public class player_rot : MonoBehaviour
     {
         //서버에서 받았을떄 회전값적용transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+    
 }
