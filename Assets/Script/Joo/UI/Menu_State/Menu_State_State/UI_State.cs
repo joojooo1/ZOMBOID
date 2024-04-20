@@ -57,16 +57,13 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
             {
                 tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
                 UI_State_detailwindow temp = tempObj.GetComponent<UI_State_detailwindow>();
-                Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageCount(true);
+                Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageArray(i, true, damagetype, position);
                 temp.SetImage(player_damage_SpriteArray[(int)damagetype], position, damagetype);
                 UI_DamageImage.UI_Damage_Pre.Damage_Ins(position, temp.position_Damage_Num);
                 Damagelist.Add(temp);
             }
         }
-        if (Player_main.player_main.playerState.Player_body_point[(int)position].Get_DamageCount() < 3)
-        {
 
-        }
 
         if(Damagelist.Count == 1)
         {
@@ -75,13 +72,13 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void icon_Destroy(body_point position, int Damage_Num)
+    public void icon_Destroy(body_point position, Damage_Pattern Attack_Pattern, int Damage_Num)
     {
         for(int k = 0; k < Damagelist.Count; k++)
         {
             if (Damagelist[k].position_Damage_Num == Damage_Num && Damagelist[k].body_position == position)
             {
-                Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageCount(false);
+                Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageArray(k, false, Attack_Pattern, position);
 
                 int j = 1;
                 for (int i = 0; i < Damagelist.Count; i++)

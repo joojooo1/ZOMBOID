@@ -684,22 +684,23 @@ public class Player_main : MonoBehaviour
 
         Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
 
-        for(int i = 0; i < Full_Location.Count; i++)
+        for(int i = 0; i < Full_Location.Count;)
         {
             if (Full_Location[i] == Attack_point)
             {
-                Attack_point = body_point.None;
+                Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
+            }
+            else
+            {
+                i++;
+            }
+
+            if(i == Full_Location.Count && Full_Location[i] != Attack_point)
+            {
+                Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
             }
         }
 
-        if(Attack_point != body_point.None)
-        {
-            Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
-        }
-        else
-        {
-
-        }
     }
 
     // 3. 좀비의 공격 패턴 확률 계산

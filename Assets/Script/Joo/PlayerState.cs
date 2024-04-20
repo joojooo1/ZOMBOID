@@ -8,30 +8,54 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using static UnityEditor.FilePathAttribute;
 
 public class Player_body_Location_Damage
 {
     public body_point Location;
+    public Damage_Pattern Attack_Pattern;
+    public int index;
     public bool _Bandage = false;  // ºØ´ë °¨¾Ò´ÂÁö ¿©ºÎ·Î hp ±ðÀÌ´Â ¼Óµµ Á¶Àý
     public bool _disinfection = false;  // ¼Òµ¶ Çß´ÂÁö ¿©ºÎ·Î »óÃ³ ³´´Â ¼Óµµ Á¶Àý
-    public bool _Bleeding = false;
+    public bool _Bleeding = true;
     public float recovery_Count = 0f;
+
+    public Player_body_Location_Damage(body_point Body_Code, Damage_Pattern _Attack_Pattern)
+    {
+        Location = Body_Code;
+        Attack_Pattern = _Attack_Pattern;
+    }
 
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
     public bool Get_Is_disinfection() { return _disinfection; }
 
-    public void Set_Is_Bandage(bool Is_Bandage, int Damage_Num)
+    public void Set_Is_Bandage(bool Is_Bandage)
     {
         _Bandage = Is_Bandage;
+    }
+    public bool Get_Is_Bandage() { return _Bandage; }
+
+    public void Set_Is_Bleeding(bool Is_Bleeding)
+    {
+        _Bleeding = Is_Bleeding;
+    }
+    public bool Get_Is_Bleeding() { return _Bleeding; }
+
+    public void Set_recovery_Count()
+    {
         if (_disinfection == true)  // ¼Òµ¶ÇÏ°í
         {
             if (_Bandage)  // ºØ´ë¸¦ °¨Àº °æ¿ì
             {
-                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
+                recovery_Count += 3;
+                Set_Is_Bleeding(false);
+                // PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
             }
             else  // ºØ´ë¸¦ °¨Áö ¾ÊÀº °æ¿ì
             {
-                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
+                recovery_Count += 2;
+                Set_Is_Bleeding(true);
+                //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
                 PlayerState.playerState.Calculating_Infection(20);  // 20% È®·ü·Î °¨¿°
             }
         }
@@ -39,17 +63,21 @@ public class Player_body_Location_Damage
         {
             if (_Bandage)  // ºØ´ë¸¦ °¨Àº °æ¿ì
             {
-                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
-                //_Bandage_Count += 0.7f;
+                recovery_Count += 1;
+                Set_Is_Bleeding(false);
+                //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
             }
             else  // ºØ´ë¸¦ °¨Áö ¾ÊÀº °æ¿ì
             {
-                PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
+                recovery_Count += 0.5f;
+                Set_Is_Bleeding(true);
+                //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
                 PlayerState.playerState.Calculating_Infection(30);  // 30% È®·ü·Î °¨¿°
             }
         }
+
+
     }
-    public bool Get_Is_Bandage() { return _Bandage; }
 
 }
 
@@ -131,30 +159,21 @@ public class Player_body_Location
                     {
                         case Damage_Pattern.Scratches:
                             // ±ÜÈû  
-
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(7);  // 7% È®·ü·Î °¨¿°
-
                             break;
                         case Damage_Pattern.Lacerations:  // ±íÀº»óÃ³ (ºÀÇÕ ÇÊ¿ä)
                             // Âõ±è
-
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(25);  // 25% È®·ü·Î °¨¿°
-
                             break;
                         case Damage_Pattern.Bites:
                             // ¹°¸²
-
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Set_Is_Infection(true);  // 100% È®·ü·Î °¨¿°
-
                             break;
                         default:
                             break;
@@ -166,22 +185,18 @@ public class Player_body_Location
                     {
                         case Damage_Pattern.Abrasion:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.bullet:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.Fracture:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.Lacerations:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            Set_Is_Bleeding(true);
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         default:
@@ -197,32 +212,51 @@ public class Player_body_Location
         return _Current_Damagetype;
     }    
 
-    public void Set_Is_Bleeding(bool Is_Bleeding)
+    public void Set_Is_Bleeding()
     {
-        _Bleeding = Is_Bleeding;
+        _Bleeding = Get_Is_Bleeding();
         PlayerState.playerState.Bleeding_Count_change();
     }
-    public bool Get_Is_Bleeding() { return _Bleeding; }
+    public bool Get_Is_Bleeding()
+    {
+        for (int i = 0; i < Body_Damage_array.Length; i++)
+        {
+            if (Body_Damage_array[i].Get_Is_Bleeding())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public void Set_DamageCount(bool Add)
+    public void Set_DamageArray(int index, bool Add, Damage_Pattern damagetype, body_point position)
     {
         if (Add)
         {
-            DamageCount++;
+            Body_Damage_array[index] = new Player_body_Location_Damage(position, damagetype);
+            Set_Is_Bleeding();
         }
         else
         {
-            DamageCount--;
+            Body_Damage_array[index] = null;
+            Set_Is_Bleeding();
         }
     }
 
     public int Get_DamageCount() { return DamageCount; }
 
-    public void Full_recovery(int Damage_Num)
+    public void Check_recovery()
     {
-        Set_Is_disinfection(false);
-        Set_Is_Bleeding(false);
-        UI_State.State_icon_main.icon_Destroy(_Body_Location_Code, Damage_Num);
+        for (int j = 0; j < Body_Damage_array.Length; j++)
+        {
+            Body_Damage_array[j].Set_recovery_Count();
+            if (Body_Damage_array[j].recovery_Count > 50)
+            {
+                UI_State.State_icon_main.icon_Destroy(_Body_Location_Code, Body_Damage_array[j].Attack_Pattern, j);
+            }
+        }
+
+
 
     }
 }
@@ -348,7 +382,13 @@ public class PlayerState : MonoBehaviour
     private void Update()
     {
         DamageCounting_Timer += Time.deltaTime;
-
+        if(DamageCounting_Timer > 2)
+        {
+            for(int i = 0; i < Player_body_point.Count; i++)
+            {
+                Player_body_point[i].Check_recovery();
+            }
+        }
 
 
         if (Zombification == 1)
