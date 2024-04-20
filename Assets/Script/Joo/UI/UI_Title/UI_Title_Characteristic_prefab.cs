@@ -195,21 +195,25 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
                             Player_Characteristic.current.Remove_Selected_list(42, false);
                             Player_Characteristic.current.Remove_Selected_list(15, false);
                             Player_Characteristic.current.Remove_Selected_list(20, false);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", -4, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 42:
                             Player_Characteristic.current.Remove_Selected_list(50, false);
                             Player_Characteristic.current.Remove_Selected_list(15, false);
                             Player_Characteristic.current.Remove_Selected_list(20, false);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", -3, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 15:
                             Player_Characteristic.current.Remove_Selected_list(50, false);
                             Player_Characteristic.current.Remove_Selected_list(42, false);
                             Player_Characteristic.current.Remove_Selected_list(20, false);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", 1, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 20:
                             Player_Characteristic.current.Remove_Selected_list(50, false);
                             Player_Characteristic.current.Remove_Selected_list(42, false);
                             Player_Characteristic.current.Remove_Selected_list(15, false);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", 4, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 47:
                             Player_Characteristic.current.Remove_Selected_list(36, false);
@@ -400,41 +404,49 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
                             Player_Characteristic.current.Set_Characteristic(42, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(15, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(20, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", 4, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 42:
                             Player_Characteristic.current.Set_Characteristic(50, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(15, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(20, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", 3, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 15:
                             Player_Characteristic.current.Set_Characteristic(50, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(42, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(20, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", -1, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 20:
                             Player_Characteristic.current.Set_Characteristic(50, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(42, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(15, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Strength", "근력", -4, 0, Player_Job.None, Characteristic_Value_type.Strength);
                             break;
                         case 47:
                             Player_Characteristic.current.Set_Characteristic(36, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(10, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(19, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Fitness", "체력", +4, 0, Player_Job.None, Characteristic_Value_type.Fitness);
                             break;
                         case 36:
                             Player_Characteristic.current.Set_Characteristic(47, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(10, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(19, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Fitness", "체력", +3, 0, Player_Job.None, Characteristic_Value_type.Fitness);
                             break;
                         case 10:
                             Player_Characteristic.current.Set_Characteristic(47, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(36, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(19, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Fitness", "체력", -2, 0, Player_Job.None, Characteristic_Value_type.Fitness);
                             break;
                         case 19:
                             Player_Characteristic.current.Set_Characteristic(47, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(36, false, Obj);
                             Player_Characteristic.current.Set_Characteristic(10, false, Obj);
+                            UI_Title.ui_title.Add_value_list("Fitness", "체력", -4, 0, Player_Job.None, Characteristic_Value_type.Fitness);
                             break;
                         default: break;
                     }

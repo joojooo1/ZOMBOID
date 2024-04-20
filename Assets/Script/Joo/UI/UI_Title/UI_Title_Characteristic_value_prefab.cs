@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.HighDefinition.ScalableSettingLevelParameter;
 
 public class UI_Title_Characteristic_value_prefab : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class UI_Title_Characteristic_value_prefab : MonoBehaviour
     float _level;
     float _add_value;
 
-    public void Create_Totalvalue(string name, string name_kr, float level, Player_Job Job, Characteristic_Value_type type)
+    public void Create_Totalvalue(string name, string name_kr, Player_Job Job, Characteristic_Value_type type)
     {
         switch (Job)
         {
@@ -37,82 +38,110 @@ public class UI_Title_Characteristic_value_prefab : MonoBehaviour
         }
         _name = name;
         _name_kr = name_kr;
-        _level = level;
+        _level = 0;
         _type = type;
         Job_type = Job;
         _add_value = 0;
     }
 
 
-    public void Set_Characteristic_T_value(Characteristic_Value_type type, float value)
+    public void Set_Characteristic_T_value(Characteristic_Value_type type, float level, float value)
     {
         switch (type)
         {
             case Characteristic_Value_type.Fitness:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Strength:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Fishing:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Foraging:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Lightfooted:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Nimble:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Sneaking:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Insensitivity:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Aiming:
+                _level += level;
                 _add_value += value;
                 break;
             case Characteristic_Value_type.Reloading:
+                _level += level;
                 _add_value += value;
                 break;
             default: break;
         }
 
+        UI_Title.ui_title.Remove_value_list(Job_type, _type, _name);
         Set_Language();
-        if (_add_value >= 0)
+
+        if (type == Characteristic_Value_type.Insensitivity)
+            value_totalvalue.text = "";
+        else
         {
-            if (type == Characteristic_Value_type.Insensitivity)
-                value_totalvalue.text = "";
-            else
+            if(_level > 0)
             {
-                if(_level > 0)
+                value_name.color = Color.green;
+                value_totalvalue.color = Color.green;
+
+                if (_add_value > 0)
                 {
-                    if (_add_value > 0)
-                        value_totalvalue.text = "Lv." + _level.ToString() + "(+" + _add_value.ToString() + "%)";
-                    else
-                        value_totalvalue.text = "Lv." + _level.ToString();
+                    value_totalvalue.text = "<color=lime>Lv." + _level.ToString() + "</color>(+" + _add_value.ToString() + "%)";
+                }
+                else if( _add_value == 0)
+                {
+                    value_totalvalue.text = "Lv." + _level.ToString();
                 }
                 else
                 {
-                    if (_add_value > 0)
-                        value_totalvalue.text = _add_value.ToString() + "%";
-                    else
-                        value_totalvalue.text = "";
+                    value_totalvalue.text = "<color=lime>Lv." + _level.ToString() + "</color>(-" + _add_value.ToString() + "%)";
                 }
 
             }
-            value_name.color = Color.green;
-            value_totalvalue.color = Color.green;
+            else   // _level <= 0
+            {
+                value_name.color = Color.red;
+                value_totalvalue.color = Color.red;
+
+                if (_add_value > 0)
+                {
+                    value_totalvalue.text = _add_value.ToString() + "%";
+                }
+                else if(_add_value == 0)
+                {
+                    value_totalvalue.text = "";
+                }
+                else
+                {
+                    value_totalvalue.text = "-" + _add_value.ToString() + "%";
+                }
+
+            }
+
         }
-        else
-        {
-            value_totalvalue.text = "- " + _add_value.ToString();
-            value_name.color = Color.red;
-            value_totalvalue.color = Color.red;
-        }
+
+
+
 
     }
 

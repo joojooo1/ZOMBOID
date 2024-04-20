@@ -48,10 +48,10 @@ public class UI_Title : MonoBehaviour
             GameObject Totalvalue = Instantiate(Value_Prefab, Window_value);
             value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
         }
-        value_List[0].Create_Totalvalue("Fitness", "체력", 5, Player_Job.None,Characteristic_Value_type.Fitness);
-        value_List[0].Set_Characteristic_T_value(Characteristic_Value_type.Fitness, 0);
-        value_List[1].Create_Totalvalue("Strength", "근력", 5, Player_Job.None, Characteristic_Value_type.Strength);
-        value_List[1].Set_Characteristic_T_value(Characteristic_Value_type.Strength, 0);
+        value_List[0].Create_Totalvalue("Fitness", "체력", Player_Job.None, Characteristic_Value_type.Fitness);
+        value_List[0].Set_Characteristic_T_value(Characteristic_Value_type.Fitness, 5, 0);
+        value_List[1].Create_Totalvalue("Strength", "근력", Player_Job.None, Characteristic_Value_type.Strength);
+        value_List[1].Set_Characteristic_T_value(Characteristic_Value_type.Strength, 5, 0);
     }
 
     private void Update()
@@ -164,8 +164,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Fishing", "낚시", 3, Player_Job.fisher, Characteristic_Value_type.Fishing);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Fishing, 125);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Fishing", "낚시", Player_Job.fisher, Characteristic_Value_type.Fishing);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Fishing, 3, 125);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -180,8 +180,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Foraging", "채집", 1, Player_Job.fisher, Characteristic_Value_type.Foraging);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Foraging, 75);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Foraging", "채집", Player_Job.fisher, Characteristic_Value_type.Foraging);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Foraging, 1, 75);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -228,8 +228,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Lightfooted", "조용한 발걸음", 2, Player_Job.Burglar, Characteristic_Value_type.Lightfooted);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Lightfooted, 100);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Lightfooted", "조용한 발걸음", Player_Job.Burglar, Characteristic_Value_type.Lightfooted);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Lightfooted, 2, 100);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -244,8 +244,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Nimble", "조준시 발걸음", 2, Player_Job.Burglar, Characteristic_Value_type.Nimble);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Nimble, 100);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Nimble", "조준시 발걸음", Player_Job.Burglar, Characteristic_Value_type.Nimble);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Nimble, 2, 100);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -260,8 +260,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Sneaking", "은밀한 움직임", 2, Player_Job.Burglar, Characteristic_Value_type.Sneaking);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Sneaking, 100);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Sneaking", "은밀한 움직임", Player_Job.Burglar, Characteristic_Value_type.Sneaking);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Sneaking, 2, 100);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -308,8 +308,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Insensitivity", "둔감함", 1, Player_Job.Veteran, Characteristic_Value_type.Insensitivity);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Insensitivity, 0);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Insensitivity", "둔감함", Player_Job.Veteran, Characteristic_Value_type.Insensitivity);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Insensitivity, 1, 0);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -324,8 +324,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Aiming", "조준", 2, Player_Job.Veteran, Characteristic_Value_type.Aiming);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Aiming, 100);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Aiming", "조준", Player_Job.Veteran, Characteristic_Value_type.Aiming);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Aiming, 2, 100);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -340,8 +340,8 @@ public class UI_Title : MonoBehaviour
                     {
                         GameObject Totalvalue = null;
                         Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Reloading", "재장전", 2, Player_Job.Veteran, Characteristic_Value_type.Reloading);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Reloading, 100);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Reloading", "재장전", Player_Job.Veteran, Characteristic_Value_type.Reloading);
+                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Reloading, 2, 100);
                         value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
                     }
                 }
@@ -358,11 +358,11 @@ public class UI_Title : MonoBehaviour
             {
                 if (level != 0)
                 {
-                    value_List[i].Set_Characteristic_T_value(type, level);
+                    value_List[i].Set_Characteristic_T_value(type, level, 0);
                 }
-                if(add_value != 0)
+                if (add_value != 0)
                 {
-                    value_List[i].Set_Characteristic_T_value(type, add_value);
+                    value_List[i].Set_Characteristic_T_value(type, 0, add_value);
                 }
                 break;
             }
@@ -371,23 +371,24 @@ public class UI_Title : MonoBehaviour
             {
                 GameObject Totalvalue = null;
                 Totalvalue = Instantiate(Value_Prefab, Window_value);
-                Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue(name, name_kr, level, Job, type);
-                Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(type, add_value);
+                Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue(name, name_kr, Job, type);
+                Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(type, level, add_value);
                 value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
             }
         }
 
     }
 
-    public void Remove_value_list(Characteristic_Value_type type, string name)
+    public void Remove_value_list(Player_Job Job, Characteristic_Value_type type, string name)
     {
         for(int i = 0; i < value_List.Count; i++)
         {
-            if (value_List[i].Job_type == Player_Job.None && value_List[i]._type == type && value_List[i].name == name)
+            if (value_List[i].Job_type == Job && value_List[i]._type == type && value_List[i].name == name)
             {
-                switch (type)
+                if (value_List[i].Get_Level() <= 0 && value_List[i].Get_totalvalue() <= 0)
                 {
-
+                    Destroy(value_List[i].gameObject);
+                    value_List.RemoveAt(i);
                 }
             }
         }
