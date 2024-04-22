@@ -107,10 +107,7 @@ public class Player_main : MonoBehaviour
     float Food_Poison_Timer = 0.0f;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Calculate_HitForce(true, "easy", false, false);
-        }
+       
 
         Weight_text.text = Weight.ToString();
         if (!ability_Sleeping) { Is_Sleeping = false; }
@@ -311,24 +308,46 @@ public class Player_main : MonoBehaviour
             speed_forMoodle = Moving_Speed_forMoodle / Speed_rate_for_Pain;
         }
 
-        if(Is_Running)
+       // 달리기 // 조준
+        // 달리기 + 쪼그려
+        // 조준 + 기는
+        // 조준 // 쪼그려
+
+        if (Is_Running)
         {
             Speed *= 1.2f;
+            if (Is_Crouch)
+            {
+                Speed *= 0.8f;
+            }
         }
-        if (Is_Crouch)
-        {
-            Speed *= 0.8f;
-        }
-        if (Is_Crawl)
-        {
-            Speed *= 0.3f;
-        }
-        if (Is_Aiming)
+        else if (Is_Aiming)
         {
             Speed *= playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+            if (Is_Crawl)
+            {
+                Speed *= 0.8f;
+            }
+        }
+        else if (Is_Crouch)
+        {
+            Speed *= 0.8f;
+            if (Is_Running)
+            {
+                Speed *= 1.2f;
+            }
+        }
+        else if (Is_Crawl)
+        {
+            Speed *= 0.3f;
+            if (Is_Aiming)
+            {
+                Speed *= playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+            }
         }
 
-         return Speed * speed_forMoodle;
+
+        return Speed * speed_forMoodle;
     }
 
     float Moving_Speed_forMoodle = 1f;
@@ -447,7 +466,7 @@ public class Player_main : MonoBehaviour
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
-        Debug.Log(Weight);
+        //Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
     }
 
     public void Calculating_Food_Poisoning(float food_value)
@@ -500,7 +519,7 @@ public class Player_main : MonoBehaviour
 
     // 공격받을 때 순서
     // 1. 공격 받으면 밀쳐낼 확률 계산
-    public void Calculate_HitForce(bool Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
+    public void Calculate_HitForce(GameObject zom, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
     {
         Debug.Log("좀비가 공격함 !!");
 
@@ -515,8 +534,8 @@ public class Player_main : MonoBehaviour
         }
         else
         {
+            zom.GetComponent<zom_anime>().animatorsetBool("playeratk", true);
             Debug.Log("Miss !!");
-            // 밀쳐낸 애니메이션
         }
     }
 
@@ -695,23 +714,23 @@ public class Player_main : MonoBehaviour
 
         Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
 
-        for(int i = 0; i < Full_Location.Count;)
-        {
-            if (Full_Location[i] == Attack_point)
-            {
-                Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
-            }
-            else
-            {
-                i++;
-            }
+        //for(int i = 0; i < Full_Location.Count;)
+        //{
+        //    if (Full_Location[i] == Attack_point)
+        //    {
+        //        Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
+        //    }
+        //    else
+        //    {
+        //        i++;
+        //    }
 
-            if(i == Full_Location.Count && Full_Location[i] != Attack_point)
-            {
-                Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
-            }
-        }
-
+        //    if(i == Full_Location.Count && Full_Location[i] != Attack_point)
+        //    {
+        //        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+        //    }
+        //}
+        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
     }
 
     // 3. 좀비의 공격 패턴 확률 계산

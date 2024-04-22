@@ -8,6 +8,7 @@ public class player_rot : MonoBehaviour
     Quaternion targetRotation;
     private AudioSource playerAudioSource;
     public LayerMask layerMask;
+    public GameObject playerpos;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,5 +73,8 @@ public class player_rot : MonoBehaviour
     {
         //서버에서 받았을떄 회전값적용transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
-    
+    public void getzomda(GameObject Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)
+    {
+        playerpos.GetComponent<Player_main>().Calculate_HitForce(Zombie_Attack, Zom_Type, IsBack, IsDown);
+    }
 }
