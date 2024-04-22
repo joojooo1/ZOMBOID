@@ -37,19 +37,23 @@ public class player_animation : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 animatorsetBool("run", true);
+                playernav.GetComponent<player_movement>().playeranimetion("Is_Running", true);
             }
             else
             {
                 animatorsetBool("walk", true);
+                playernav.GetComponent<player_movement>().playeranimetion("Is_Running", false);
             }
         }
         else
         {
+            playernav.GetComponent<player_movement>().playeranimetion("Is_Running", false);
             animatorsetBool("run", false);
             animatorsetBool("walk", false);
         }
         if (Input.GetMouseButton(1))
         {
+            playernav.GetComponent<player_movement>().playeranimetion("Is_Aiming", true);
             animatorsetBool("run", false);
             animatorsetBool("Strife", true);
             Vector3 input = (audioobject.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
@@ -67,6 +71,7 @@ public class player_animation : MonoBehaviour
         }
         else
         {
+            playernav.GetComponent<player_movement>().playeranimetion("Is_Aiming", false);
             animatorsetBool("Strife", false);
         }
         if (Input.GetKeyDown(KeyCode.Q))

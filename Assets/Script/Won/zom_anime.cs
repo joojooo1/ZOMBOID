@@ -75,14 +75,22 @@ public class zom_anime : MonoBehaviour
             animatorsetBool("run", false);
             animatorsetBool("walk", false);
         }
-            
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject == zompos.target && !atking)
+        if (zomtarget.player)
         {
-            animatorsetBool("Playeratk",true);
+            zom_atk();
         }
+    }
+    float atk;
+    public float testatk = 1;
+    void zom_atk()
+    {
+        atk = Vector3.Distance(transform.position, zomtarget.player.transform.position);
+        if (atk < testatk && !atking)
+        {
+            atking = true;
+            animatersetTrigger("playeratk 0");
+        }
+        
     }
     void idleposset()
     {
@@ -121,21 +129,23 @@ public class zom_anime : MonoBehaviour
     public bool atking = false;
     void zom_atk_end()//좀비의 다시 공격하기위한 작업zzzzzzz
     {
-        Debug.Log("공격완료");
-        //zomnav.GetComponent<NavMeshAgent>().enabled = true;
-        animator.SetBool("playeratk", false);
-        zom_speed_set();
         atking = false;
+        if (atk < testatk)
+        {
+            zom_player_atk();
+        }
+        else
+            zom_speed_set();
     }
     void zom_atk_try()//좀비의 공격 성공여부(공격 성공여부 판단시 좀비와의 거리가 1이하이면 공격이 성공한다.)zzzzzz
     {
         Debug.Log("공격 시도중");
         zom_speed_zero();
-        atking = true;
     }
     void zom_speed_set()
     {
         zomnav.GetComponent<zom_pos>().zomatkend();
+        animatorsetBool("playeratk", false);
     }
     void zom_speed_zero()
     {
@@ -164,5 +174,29 @@ public class zom_anime : MonoBehaviour
         nav.speed = curretspeed;
         animatorsetBool("backdown", false);
         animatorsetBool("up", false);
+    }
+    void zom_player_atk()
+    {
+        float damege = Vector3.Distance(transform.position, zomtarget.player.transform.position);
+        if (damege < 1) 
+        {
+            float yRotationDifference = Mathf.Abs(zomtarget.player.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y);
+            if (yRotationDifference <= 15f || yRotationDifference >= 345f)
+            {
+                zomtarget.player.GetComponent<player_rot>().getzomda(this.gameObject, asd.GetComponent<zombieHp>().zomTypetest, true,asd.GetComponent<zombieHp>().zom_crawl);
+                Debug.Log("뒤에서 공격");
+            }
+            else
+            {
+                zomtarget.player.GetComponent<player_rot>().getzomda(this.gameObject, asd.GetComponent<zombieHp>().zomTypetest, false, asd.GetComponent<zombieHp>().zom_crawl);
+                Debug.Log("앞에서 공격");
+            }
+            
+        }
+
+    }
+    void asdf()
+    {
+        animatorsetBool("playeratk", false);
     }
 }

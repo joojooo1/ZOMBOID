@@ -101,7 +101,7 @@ public class Player_body_Location
     }
     public void Set_Body_state(Damage_Pattern Attack_Pattern, string Enemy_Type, bool IsBack)  // 좀비의 공격패턴, 좀비의 강도
     {
-        Debug.Log("좀비가 공격시작 !!");
+        Debug.Log("좀비가 공격시작 !!"+ Enemy_Type);
         _Current_Damagetype = Attack_Pattern;
 
         float Attack_power = 0.0f;
@@ -126,34 +126,39 @@ public class Player_body_Location
             // 유저로부터 받은 타격이면 데미지 가져와야 함
         }
 
-
+        Debug.Log("좀비가 공격시작asdasdas !!");
 
         System.Random rand = new System.Random();
         int rand_Block = rand.Next(100);
 
+        Debug.Log("aaaaaaa"+Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance());
+        Debug.Log("ddddddd"+Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack());
+
         bool Is_Block = false;
         if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
         {
-            if (rand_Block / 100 < (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack()))
+            if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack()))
             {
                 Is_Block = true;
             }
         }
         else
         {
-            if (rand_Block / 100 < Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
+            if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
             {
                 Is_Block = true;
             }
         }
-
+        Debug.Log("좀비가 qewqwr !!");
         if (!Is_Block)
         {
             System.Random Rerand = new System.Random();
             int rand_Evasion = rand.Next(100);
-
-            if (rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
+            Debug.Log("ssssss"+ Player_main.player_main.Get_Evasion());
+            Debug.Log("회피" + rand_Evasion);
+            if ((float)rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
             {
+                Debug.Log("qqqqq" + Enemy_Type);
                 if (Enemy_Type != "User")
                 {
                     Debug.Log("좀비가 데미지 입힘 !!");
@@ -183,6 +188,7 @@ public class Player_body_Location
                 }
                 else  // User 공격: 감염x, 일반적인 상처, 총상, 골절, 찢김(감염x)
                 {
+                    
                     switch (Attack_Pattern)
                     {
                         case Damage_Pattern.Abrasion:
