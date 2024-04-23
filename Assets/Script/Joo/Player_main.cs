@@ -112,6 +112,11 @@ public class Player_main : MonoBehaviour
             Calculate_HitForce(true, "easy", false, false);
         }
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Set_Weight(10);
+        }
+
         Weight_text.text = Weight.ToString();
         if (!ability_Sleeping) { Is_Sleeping = false; }
         else { Is_Sleeping = true; }
@@ -311,24 +316,46 @@ public class Player_main : MonoBehaviour
             speed_forMoodle = Moving_Speed_forMoodle / Speed_rate_for_Pain;
         }
 
-        if(Is_Running)
+        // 달리기 // 조준
+        // 달리기 + 쪼그려
+        // 조준 + 기는
+        // 조준 // 쪼그려
+
+        if (Is_Running)
         {
             Speed *= 1.2f;
+            if (Is_Crouch)
+            {
+                Speed *= 0.8f;
+            }
         }
-        if (Is_Crouch)
-        {
-            Speed *= 0.8f;
-        }
-        if (Is_Crawl)
-        {
-            Speed *= 0.3f;
-        }
-        if (Is_Aiming)
+        else if (Is_Aiming)
         {
             Speed *= playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+            if (Is_Crawl)
+            {
+                Speed *= 0.8f;
+            }
+        }
+        else if (Is_Crouch)
+        {
+            Speed *= 0.8f;
+            if (Is_Running)
+            {
+                Speed *= 1.2f;
+            }
+        }
+        else if (Is_Crawl)
+        {
+            Speed *= 0.3f;
+            if (Is_Aiming)
+            {
+                Speed *= playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+            }
         }
 
-         return Speed * speed_forMoodle;
+
+        return Speed * speed_forMoodle;
     }
 
     float Moving_Speed_forMoodle = 1f;
@@ -447,7 +474,7 @@ public class Player_main : MonoBehaviour
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
-        Debug.Log(Weight);
+        Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
     }
 
     public void Calculating_Food_Poisoning(float food_value)

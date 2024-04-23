@@ -236,306 +236,422 @@ public class Player_Characteristic : MonoBehaviour
     }
 
 
-    private void Update()
+    public void Set_Characteristic_for_Weight(float weight)
     {
-        if (UI_main.ui_main.Playing)
+        if (weight >= 100)  // Characteristic_number = 46
         {
-            if (Player_main.player_main.Get_Weight() >= 100)  // Characteristic_number = 46
+            for (int i = 0; i < characteristics_Player.Count;)
             {
-                for (int i = 0; i < characteristics_Player.Count;)
+                if (characteristics_Player[i].Prefab.Characteristic_number == 37
+                    || characteristics_Player[i].Prefab.Characteristic_number == 43
+                    || characteristics_Player[i].Prefab.Characteristic_number == 48
+                    || characteristics_Player[i].Prefab.Characteristic_number == 49)
                 {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 37
-                        || characteristics_Player[i].Prefab.Characteristic_number == 43
-                        || characteristics_Player[i].Prefab.Characteristic_number == 48
-                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
                 }
-
-                GameObject tempObj = null;
-                Set_Characteristic(46, true, tempObj);
-            }
-            else if(Player_main.player_main.Get_Weight() >= 85 && Player_main.player_main.Get_Weight() < 100)  // Characteristic_number = 37
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
-                        || characteristics_Player[i].Prefab.Characteristic_number == 43
-                        || characteristics_Player[i].Prefab.Characteristic_number == 48
-                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-
-                GameObject tempObj = null;
-                Set_Characteristic(37, true, tempObj);
-            }
-            else if (Player_main.player_main.Get_Weight() >= 76 && Player_main.player_main.Get_Weight() < 85)  // 정상
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
-                        || characteristics_Player[i].Prefab.Characteristic_number == 37
-                        || characteristics_Player[i].Prefab.Characteristic_number == 43
-                        || characteristics_Player[i].Prefab.Characteristic_number == 48
-                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-            }
-            else if (Player_main.player_main.Get_Weight() >= 66 && Player_main.player_main.Get_Weight() < 76)  // Characteristic_number = 43
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
-                        || characteristics_Player[i].Prefab.Characteristic_number == 37
-                        || characteristics_Player[i].Prefab.Characteristic_number == 48
-                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-
-                GameObject tempObj = null;
-                Set_Characteristic(43, true, tempObj);
-            }
-            else if (Player_main.player_main.Get_Weight() >= 51 && Player_main.player_main.Get_Weight() < 66)  // Characteristic_number = 48
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
-                        || characteristics_Player[i].Prefab.Characteristic_number == 37
-                        || characteristics_Player[i].Prefab.Characteristic_number == 43
-                        || characteristics_Player[i].Prefab.Characteristic_number == 49)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-
-                GameObject tempObj = null;
-                Set_Characteristic(48, true, tempObj);
-            }
-            else if (Player_main.player_main.Get_Weight() < 51)  // Characteristic_number = 49
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 46
-                        || characteristics_Player[i].Prefab.Characteristic_number == 37
-                        || characteristics_Player[i].Prefab.Characteristic_number == 43
-                        || characteristics_Player[i].Prefab.Characteristic_number == 48)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-
-                GameObject tempObj = null;
-                Set_Characteristic(49, true, tempObj);
+                else
+                    i++;
             }
 
-
-            if(Player_main.player_main.Skill.Strength_Level.Get_P_Level() < 2) // Characteristic_number = 50
+            for (int i = 0; i < characteristics_Player.Count; i++)
             {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 42
-                        || characteristics_Player[i].Prefab.Characteristic_number == 15
-                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
+                if (characteristics_Player[i].Prefab.Characteristic_number == 45)
+                    break;
 
-                GameObject tempObj = null;
-                Set_Characteristic(50, true, tempObj);
-            }
-            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() >= 2 && Player_main.player_main.Skill.Strength_Level.Get_P_Level() < 5) // Characteristic_number = 42
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
+                if (i == characteristics_Player.Count - 1)
                 {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
-                        || characteristics_Player[i].Prefab.Characteristic_number == 15
-                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-
-                GameObject tempObj = null;
-                Set_Characteristic(42, true, tempObj);
-            }
-            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() == 5)  // 정상
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
-                        || characteristics_Player[i].Prefab.Characteristic_number == 42
-                        || characteristics_Player[i].Prefab.Characteristic_number == 15
-                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
+                    GameObject tempObj = null;
+                    Set_Characteristic(46, true, tempObj);
                 }
             }
-            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() >= 6 && Player_main.player_main.Skill.Strength_Level.Get_P_Level() < 9) // Characteristic_number = 15
+        }
+        else if (weight >= 85 && weight < 100)  // Characteristic_number = 37
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
             {
-                for (int i = 0; i < characteristics_Player.Count;)
+                if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                    || characteristics_Player[i].Prefab.Characteristic_number == 43
+                    || characteristics_Player[i].Prefab.Characteristic_number == 48
+                    || characteristics_Player[i].Prefab.Characteristic_number == 49)
                 {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
-                        || characteristics_Player[i].Prefab.Characteristic_number == 42
-                        || characteristics_Player[i].Prefab.Characteristic_number == 20)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
                 }
-
-                GameObject tempObj = null;
-                Set_Characteristic(15, true, tempObj);
-            }
-            else if (Player_main.player_main.Skill.Strength_Level.Get_P_Level() >= 9) // Characteristic_number = 20
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 50
-                        || characteristics_Player[i].Prefab.Characteristic_number == 42
-                        || characteristics_Player[i].Prefab.Characteristic_number == 15)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-
-                GameObject tempObj = null;
-                Set_Characteristic(20, true, tempObj);
+                else
+                    i++;
             }
 
-
-            if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() < 2) // Characteristic_number = 47
+            for (int i = 0; i < characteristics_Player.Count; i++)
             {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 36
-                        || characteristics_Player[i].Prefab.Characteristic_number == 10
-                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
+                if (characteristics_Player[i].Prefab.Characteristic_number == 37)
+                    break;
 
-                GameObject tempObj = null;
-                Set_Characteristic(47, true, tempObj);
-            }
-            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() >= 2 && Player_main.player_main.Skill.Fitness_Level.Get_P_Level() < 5) // Characteristic_number = 36
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 37)
                 {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
-                        || characteristics_Player[i].Prefab.Characteristic_number == 10
-                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
-                }
-
-                GameObject tempObj = null;
-                Set_Characteristic(36, true, tempObj);
-            }
-            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() == 5) // 정상
-            {
-                for (int i = 0; i < characteristics_Player.Count;)
-                {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
-                        || characteristics_Player[i].Prefab.Characteristic_number == 36
-                        || characteristics_Player[i].Prefab.Characteristic_number == 10
-                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
+                    GameObject tempObj = null;
+                    Set_Characteristic(37, true, tempObj);
                 }
             }
-            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() >= 6 && Player_main.player_main.Skill.Fitness_Level.Get_P_Level() < 9) // Characteristic_number = 10
+        }
+        else if (weight >= 76 && weight < 85)  // 정상
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
             {
-                for (int i = 0; i < characteristics_Player.Count;)
+                if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                    || characteristics_Player[i].Prefab.Characteristic_number == 37
+                    || characteristics_Player[i].Prefab.Characteristic_number == 43
+                    || characteristics_Player[i].Prefab.Characteristic_number == 48
+                    || characteristics_Player[i].Prefab.Characteristic_number == 49)
                 {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
-                        || characteristics_Player[i].Prefab.Characteristic_number == 36
-                        || characteristics_Player[i].Prefab.Characteristic_number == 19)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
                 }
-
-                GameObject tempObj = null;
-                Set_Characteristic(10, true, tempObj);
+                else
+                    i++;
             }
-            else if (Player_main.player_main.Skill.Fitness_Level.Get_P_Level() >= 9) // Characteristic_number = 19
+        }
+        else if (weight >= 66 && weight < 76)  // Characteristic_number = 43
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
             {
-                for (int i = 0; i < characteristics_Player.Count;)
+                if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                    || characteristics_Player[i].Prefab.Characteristic_number == 37
+                    || characteristics_Player[i].Prefab.Characteristic_number == 48
+                    || characteristics_Player[i].Prefab.Characteristic_number == 49)
                 {
-                    if (characteristics_Player[i].Prefab.Characteristic_number == 47
-                        || characteristics_Player[i].Prefab.Characteristic_number == 36
-                        || characteristics_Player[i].Prefab.Characteristic_number == 10)
-                    {
-                        Destroy(characteristics_Player[i].gameObject);
-                        characteristics_Player.RemoveAt(i);
-                    }
-                    else
-                        i++;
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
                 }
+                else
+                    i++;
+            }
 
-                GameObject tempObj = null;
-                Set_Characteristic(19, true, tempObj);
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 43)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 43)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(43, true, tempObj);
+                }
+            }
+        }
+        else if (weight >= 51 && weight < 66)  // Characteristic_number = 48
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                    || characteristics_Player[i].Prefab.Characteristic_number == 37
+                    || characteristics_Player[i].Prefab.Characteristic_number == 43
+                    || characteristics_Player[i].Prefab.Characteristic_number == 49)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 48)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 48)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(48, true, tempObj);
+                }
+            }
+        }
+        else if (weight < 51)  // Characteristic_number = 49
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 46
+                    || characteristics_Player[i].Prefab.Characteristic_number == 37
+                    || characteristics_Player[i].Prefab.Characteristic_number == 43
+                    || characteristics_Player[i].Prefab.Characteristic_number == 48)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 49)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 49)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(49, true, tempObj);
+                }
             }
         }
     }
 
-    
+    public void Set_Characteristic_for_Strength(float level)
+    {
+        if (level < 2) // Characteristic_number = 50
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 42
+                    || characteristics_Player[i].Prefab.Characteristic_number == 15
+                    || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 50)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 50)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(50, true, tempObj);
+                }
+            }
+        }
+        else if (level >= 2 && level < 5) // Characteristic_number = 42
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                    || characteristics_Player[i].Prefab.Characteristic_number == 15
+                    || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 42)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 42)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(42, true, tempObj);
+                }
+            }
+        }
+        else if (level == 5)  // 정상
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                    || characteristics_Player[i].Prefab.Characteristic_number == 42
+                    || characteristics_Player[i].Prefab.Characteristic_number == 15
+                    || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+        }
+        else if (level >= 6 && level < 9) // Characteristic_number = 15
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                    || characteristics_Player[i].Prefab.Characteristic_number == 42
+                    || characteristics_Player[i].Prefab.Characteristic_number == 20)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 15)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 15)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(15, true, tempObj);
+                }
+            }
+        }
+        else if (level >= 9) // Characteristic_number = 20
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 50
+                    || characteristics_Player[i].Prefab.Characteristic_number == 42
+                    || characteristics_Player[i].Prefab.Characteristic_number == 15)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 20)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 20)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(20, true, tempObj);
+                }
+            }
+        }
+    }
+
+    public void Set_Characteristic_for_Fitness(float level)
+    {
+        if (level < 2) // Characteristic_number = 47
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 36
+                    || characteristics_Player[i].Prefab.Characteristic_number == 10
+                    || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 47)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 47)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(47, true, tempObj);
+                }
+            }
+        }
+        else if (level >= 2 && level < 5) // Characteristic_number = 36
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                    || characteristics_Player[i].Prefab.Characteristic_number == 10
+                    || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 36)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 36)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(36, true, tempObj);
+                }
+            }
+        }
+        else if (level == 5) // 정상
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                    || characteristics_Player[i].Prefab.Characteristic_number == 36
+                    || characteristics_Player[i].Prefab.Characteristic_number == 10
+                    || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+        }
+        else if (level >= 6 && level < 9) // Characteristic_number = 10
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                    || characteristics_Player[i].Prefab.Characteristic_number == 36
+                    || characteristics_Player[i].Prefab.Characteristic_number == 19)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 10)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 10)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(10, true, tempObj);
+                }
+            }
+        }
+        else if (level >= 9) // Characteristic_number = 19
+        {
+            for (int i = 0; i < characteristics_Player.Count;)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 47
+                    || characteristics_Player[i].Prefab.Characteristic_number == 36
+                    || characteristics_Player[i].Prefab.Characteristic_number == 10)
+                {
+                    Destroy(characteristics_Player[i].gameObject);
+                    characteristics_Player.RemoveAt(i);
+                }
+                else
+                    i++;
+            }
+
+            for (int i = 0; i < characteristics_Player.Count; i++)
+            {
+                if (characteristics_Player[i].Prefab.Characteristic_number == 19)
+                    break;
+
+                if (i == characteristics_Player.Count - 1 && characteristics_Player[i].Prefab.Characteristic_number != 19)
+                {
+                    GameObject tempObj = null;
+                    Set_Characteristic(19, true, tempObj);
+                }
+            }
+        }
+    }
 
     public List<UI_Title_Characteristic_prefab> characteristics_list = new List<UI_Title_Characteristic_prefab>();
     public List<UI_Title_Characteristic_prefab> characteristics_Player = new List<UI_Title_Characteristic_prefab>();
