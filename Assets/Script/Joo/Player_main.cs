@@ -313,11 +313,8 @@ public class Player_main : MonoBehaviour
             speed_forMoodle = Moving_Speed_forMoodle / Speed_rate_for_Pain;
         }
 
-<<<<<<< HEAD
+
         // 달리기 // 조준
-=======
-       // 달리기 // 조준
->>>>>>> ba6f279ec1160a560b616c9e0e828687224ac31e
         // 달리기 + 쪼그려
         // 조준 + 기는
         // 조준 // 쪼그려
@@ -475,11 +472,8 @@ public class Player_main : MonoBehaviour
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
-<<<<<<< HEAD
         Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
-=======
         //Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
->>>>>>> ba6f279ec1160a560b616c9e0e828687224ac31e
     }
 
     public void Calculating_Food_Poisoning(float food_value)
