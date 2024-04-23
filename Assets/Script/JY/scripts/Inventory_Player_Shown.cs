@@ -118,14 +118,20 @@ public class Inventory_Player_Shown : MonoBehaviour
             Equipment[Count].GetComponent<InventorySlot>().ParentTransform = this.transform;
             Equipment[Count].GetComponent<InventorySlot>().ParentSize = 100;//¿”¿«∑Œ 100
             //Equipment[Count].GetComponent<InventorySlot>().Image = Equipment[Count].GetComponentInChildren<Image>().gameObject;
-            //Image[] Kids = Equipment[Count].GetComponentsInChildren<Image>();
-            //foreach (Image InKids in Kids)
-            //{
-            //    if (!InKids.gameObject == Equipment[Count].GetComponent<InventorySlot>().Image)
-            //    {
-            //        Equipment[Count].GetComponent<InventorySlot>().BackgroundColor = InKids.gameObject;
-            //    }
-            //}
+            int NumCount = 0;
+            foreach (Transform inkids in Equipment[Count].GetComponentsInChildren<Transform>())
+            {
+                if (Equipment[Count].GetComponent<InventorySlot>().BackgroundColor==null&&NumCount>0)
+                {
+                    Equipment[Count].GetComponent<InventorySlot>().BackgroundColor = inkids.gameObject;
+                }
+                else if(NumCount > 0)
+                {
+                    Equipment[Count].GetComponent<InventorySlot>().Image = inkids.gameObject;
+                }
+
+                NumCount++;
+            }
             short Size = Item_DataBase.item_database.Requesting_Size(Equipment_Package_Notbe_Synchronized[0, Count, 0], Equipment_Package_Notbe_Synchronized[1, Count, 0]);
             Equipment[Count].GetComponent<InventorySlot>().Size = Size;
         }

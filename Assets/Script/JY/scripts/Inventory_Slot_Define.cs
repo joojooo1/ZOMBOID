@@ -157,7 +157,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
             Inventory_Player_Shown.InvPS.FS_Is_Virtical = Is_Virtical_While_Moving;
             //UPDATE
         }
-        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(Input.mousePosition.x + 10, Input.mousePosition.y - 10, 0);
+        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(Input.mousePosition.x-10, Input.mousePosition.y-30, 0);
         //Inventory_Player_Shown.InvPS.
     }
 
