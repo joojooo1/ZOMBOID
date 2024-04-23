@@ -110,6 +110,4 @@ public class GameManager : MonoBehaviour
     }
 
     public float Get_Current_Temperature() { return (float)Current_Temperature; }
-
-
 }

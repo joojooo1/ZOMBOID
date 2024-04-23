@@ -12,6 +12,7 @@ public class UI_Starting : MonoBehaviour
     Animator anim;
 
     public bool Map_Setting_complete = false;
+    bool Canvas_finish = false;
 
     private void Awake()
     {
@@ -20,15 +21,10 @@ public class UI_Starting : MonoBehaviour
 
     void Update()
     {
-        if (Map_Setting_complete)
-        {
-            UI_main.ui_main.Playing = true;
-        }
-
         if (i < 4)
             Timer += Time.deltaTime;
 
-        if(Timer > 13f)
+        if(Timer > 9f)
         {
             if(i == 0)
             {
@@ -42,7 +38,7 @@ public class UI_Starting : MonoBehaviour
                 i++;
                 Timer = 0;
             }
-            else
+            else if(Timer > 10f)
             {
                 i++;
                 if (Map_Setting_complete && !start_button.activeSelf)

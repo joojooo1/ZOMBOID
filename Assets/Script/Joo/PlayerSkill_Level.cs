@@ -86,6 +86,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
             if (P_SkillName == "Fitness")
             {
+                Player_Characteristic.current.Set_Characteristic_for_Fitness(Get_P_Level());
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
@@ -100,6 +101,7 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             }
             else if (P_SkillName == "Strength")
             {
+                Player_Characteristic.current.Set_Characteristic_for_Strength(Get_P_Level());
                 Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
                 Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
