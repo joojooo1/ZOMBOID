@@ -36,12 +36,23 @@ public class player_movement : MonoBehaviour
     Vector3 Fence;
     Vector3 inputpos;
     public float test =0;
+    bool run_set = false;
+    bool Strife_set = false;
+    bool hasBeenCalled = false;
     private void Update()
     {
         navMeshAgent.speed = this.GetComponent<Player_main>().Get_Moving_Speed();
         inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") +(UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
         inputpos.Normalize();
         inputpos *= Time.fixedDeltaTime * (navMeshAgent.speed);
+        if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
+        {
+            if (!hasBeenCalled)
+            {
+                
+            }
+
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -274,9 +285,11 @@ public class player_movement : MonoBehaviour
         {
             case "Is_Aiming":
                 this.GetComponent<Player_main>().Is_Aiming = action;
+                animeset("Strife", action);
                 break;
             case "Is_Running":
                 this.GetComponent<Player_main>().Is_Running = action;
+                animeset("run", action);
                 break;
             case "Is_Crouch":
                 this.GetComponent<Player_main>().Is_Crouch = action;
@@ -284,6 +297,16 @@ public class player_movement : MonoBehaviour
             case "Is_Crawl":
                 this.GetComponent<Player_main>().Is_Crawl = action;
                 break;
+        }
+    }
+    void animeset(string anime_name, bool set)
+    {
+        for (int i = 0; i < playeranime.Length; i++)
+        {
+            if (playeraimeobject[i].activeSelf)
+            {
+                playeranime[i].animatorsetBool(anime_name, set);
+            }
         }
     }
 }
