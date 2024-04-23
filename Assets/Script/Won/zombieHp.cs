@@ -75,6 +75,7 @@ public class zombieHp : MonoBehaviour
         Normal,
         Hard
     }
+    public string zomTypetest;
     public ZombieType zomType;
     public void zom_stet()//좀비의 강함에 따라 스텟결정
     {
@@ -94,16 +95,19 @@ public class zombieHp : MonoBehaviour
                 curret_speed = easy_speed;
                 curret_zombie_hp = easy_max_hp;
                 zom_nav.GetComponent<zom_pos>().zomspeed = curret_speed;
+                zomTypetest = "easy";
                 break;
             case ZombieType.Normal:
                 curret_speed = normal_speed;
                 curret_zombie_hp = normal_max_hp;
                 zom_nav.GetComponent<zom_pos>().zomspeed = curret_speed;
+                zomTypetest = "normal";
                 break;
             case ZombieType.Hard:
                 curret_speed = hard_speed;
                 curret_zombie_hp = hard_max_hp;
                 zom_nav.GetComponent<zom_pos>().zomspeed = curret_speed;
+                zomTypetest = "hard";
                 break;
             default:
                 curret_speed = easy_speed;

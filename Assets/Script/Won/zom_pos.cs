@@ -38,11 +38,7 @@ public class zom_pos : MonoBehaviour
             audioposget = false;
 
             nav.SetDestination(new Vector3(target.transform.position.x,target.transform.position.y,0));
-            if (nav.remainingDistance <= nav.stoppingDistance)
-            {
-                targetpos.GetComponent<zom_anime>().animatorsetBool("playeratk", true);
-                nav.speed = 0;
-            }
+            
         }
         
         if(nav.remainingDistance <= nav.stoppingDistance +0.1f && audioposget)
@@ -87,6 +83,7 @@ public class zom_pos : MonoBehaviour
     public void zomatkend()
     {
         nav.speed = zomspeed;
+        Debug.Log("이속 정상화");
     }
     public void get_zom_spawn_pos(Vector3 pos)
     {
