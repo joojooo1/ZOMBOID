@@ -111,7 +111,8 @@ public class Player_main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Set_Weight(10);
+            GameObject jj = null;
+            Calculate_HitForce(jj, "easy", false, false);
         }
 
         Weight_text.text = Weight.ToString();
@@ -313,11 +314,8 @@ public class Player_main : MonoBehaviour
             speed_forMoodle = Moving_Speed_forMoodle / Speed_rate_for_Pain;
         }
 
-<<<<<<< HEAD
-        // 달리기 // 조준
-=======
+
        // 달리기 // 조준
->>>>>>> ba6f279ec1160a560b616c9e0e828687224ac31e
         // 달리기 + 쪼그려
         // 조준 + 기는
         // 조준 // 쪼그려
@@ -475,11 +473,8 @@ public class Player_main : MonoBehaviour
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
-<<<<<<< HEAD
+
         Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
-=======
-        //Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
->>>>>>> ba6f279ec1160a560b616c9e0e828687224ac31e
     }
 
     public void Calculating_Food_Poisoning(float food_value)
@@ -547,7 +542,7 @@ public class Player_main : MonoBehaviour
         }
         else
         {
-            zom.GetComponent<zom_anime>().animatorsetBool("playeratk", true);
+            //zom.GetComponent<zom_anime>().animatorsetBool("playeratk", true);
             Debug.Log("Miss !!");
         }
     }
@@ -726,24 +721,26 @@ public class Player_main : MonoBehaviour
         }
 
         Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
+        Debug.Log(Attack_point);
+        Debug.Log(Attack_point.Get_DamageCount());
 
-        //for(int i = 0; i < Full_Location.Count;)
-        //{
-        //    if (Full_Location[i] == Attack_point)
-        //    {
-        //        Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
-        //    }
-        //    else
-        //    {
-        //        i++;
-        //    }
+        for (int i = 0; i < Full_Location.Count;)
+        {
+            if (Full_Location[i] == Attack_point)
+            {
+                Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
+                i = 0;
+            }
+            else
+            {
+                i++;
+            }
 
-        //    if(i == Full_Location.Count && Full_Location[i] != Attack_point)
-        //    {
-        //        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
-        //    }
-        //}
-        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+            if (i == Full_Location.Count && Full_Location[i] != Attack_point)
+            {
+                Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+            }
+        }
     }
 
     // 3. 좀비의 공격 패턴 확률 계산
