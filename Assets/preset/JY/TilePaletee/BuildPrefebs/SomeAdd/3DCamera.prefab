@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 5235888559976071129}
   - component: {fileID: 4082784304880155573}
   - component: {fileID: 2171019431642230721}
-  m_Layer: 0
+  - component: {fileID: 224744609856189104}
+  - component: {fileID: 7470380994626878758}
+  m_Layer: 1
   m_Name: 3DCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,3 +153,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+--- !u!65 &224744609856189104
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8288626007386482029}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 22.674515, y: 12.727913, z: 4.7689667}
+  m_Center: {x: -0.11449051, y: -0.2570045, z: 1.8844833}
+--- !u!114 &7470380994626878758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8288626007386482029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6270e2b5bc1c2134783db0a546aa09fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
