@@ -167,6 +167,7 @@ public class Inventory_8x6 : MonoBehaviour
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                    Slots[(YLine * X_Length + XLine) + Length_Of_X].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                     if (Height > 1)
                                     {
                                         for(int Length_Of_Y = 1; Length_Of_Y < Height; Length_Of_Y++)
@@ -178,6 +179,7 @@ public class Inventory_8x6 : MonoBehaviour
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                            Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                         }
                                     }
                                 }
@@ -193,6 +195,7 @@ public class Inventory_8x6 : MonoBehaviour
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                    Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                     if (Width > 1)
                                     {
                                         for (int Length_Of_X = 1; Length_Of_X < Height; Length_Of_X++)
@@ -204,6 +207,7 @@ public class Inventory_8x6 : MonoBehaviour
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                            Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                         }
                                     }
                                 }
@@ -266,6 +270,7 @@ public class Inventory_8x6 : MonoBehaviour
                         Slots[YLine * X_Length + XLine].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 1);
                         Slots[YLine * X_Length + XLine].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 1);
                         Slots[YLine * X_Length + XLine].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+                        Slots[YLine * X_Length + XLine].Text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
 
                         Slots[YLine * X_Length + XLine].Image.GetComponent<Image>().sprite = null;
                         Slots[YLine * X_Length + XLine].Image.GetComponent<Image>().color = new Color(0, 0, 0, 0);
@@ -342,6 +347,7 @@ public class Inventory_8x6 : MonoBehaviour
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                    Slots[(YLine * X_Length + XLine) + Length_Of_X].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                     if (Height > 1)
                                     {
                                         for (int Length_Of_Y = 1; Length_Of_Y < Height; Length_Of_Y++)
@@ -353,6 +359,7 @@ public class Inventory_8x6 : MonoBehaviour
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                            Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                         }
                                     }
                                 }
@@ -368,6 +375,7 @@ public class Inventory_8x6 : MonoBehaviour
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                    Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                     if (Width > 1)
                                     {
                                         for (int Length_Of_X = 1; Length_Of_X < Height; Length_Of_X++)
@@ -379,6 +387,7 @@ public class Inventory_8x6 : MonoBehaviour
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0);
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                                            Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
                                         }
                                     }
                                 }
@@ -441,6 +450,8 @@ public class Inventory_8x6 : MonoBehaviour
                         Slots[YLine * X_Length + XLine].BackgroundColor.GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 1);
                         Slots[YLine * X_Length + XLine].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 1);
                         Slots[YLine * X_Length + XLine].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+                        Slots[YLine * X_Length + XLine].Text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
+
 
                         Slots[YLine * X_Length + XLine].Image.GetComponent<Image>().sprite = null;
                         Slots[YLine * X_Length + XLine].Image.GetComponent<Image>().color = new Color(0, 0, 0, 0);

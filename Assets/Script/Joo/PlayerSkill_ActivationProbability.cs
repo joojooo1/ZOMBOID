@@ -894,37 +894,37 @@ public class PlayerSkill_ActivationProbability
         switch (SkillLevel)
         {
             case 0:
-                Movement_Speed_while_Aiming = 1.00f;
+                Movement_Speed_while_Aiming = 0.79f;
                 break;
             case 1:
-                Movement_Speed_while_Aiming = 1.10f;
+                Movement_Speed_while_Aiming = 0.85f;
                 break;
             case 2:
-                Movement_Speed_while_Aiming = 1.14f;
+                Movement_Speed_while_Aiming = 0.9f;
                 break;
             case 3:
-                Movement_Speed_while_Aiming = 1.18f;
+                Movement_Speed_while_Aiming = 1.00f;
                 break;
             case 4:
-                Movement_Speed_while_Aiming = 1.22f;
+                Movement_Speed_while_Aiming = 1.10f;
                 break;
             case 5:
-                Movement_Speed_while_Aiming = 1.26f;
+                Movement_Speed_while_Aiming = 1.14f;
                 break;
             case 6:
-                Movement_Speed_while_Aiming = 1.30f;
+                Movement_Speed_while_Aiming = 1.18f;
                 break;
             case 7:
-                Movement_Speed_while_Aiming = 1.34f;
+                Movement_Speed_while_Aiming = 1.22f;
                 break;
             case 8:
-                Movement_Speed_while_Aiming = 1.38f;
+                Movement_Speed_while_Aiming = 1.26f;
                 break;
             case 9:
-                Movement_Speed_while_Aiming = 1.42f;
+                Movement_Speed_while_Aiming = 1.30f;
                 break;
             case 10:
-                Movement_Speed_while_Aiming = 1.50f;
+                Movement_Speed_while_Aiming = 1.34f;
                 break;
             default:
                 break;

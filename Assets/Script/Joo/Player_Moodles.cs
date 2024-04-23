@@ -138,7 +138,7 @@ public class Player_Moodles : MonoBehaviour
                                 지구력 회복 중지 및 적당한 비율로 감소, 체력 75% 될 떄까지 감소, 걷는 상태에서 지구력 감소
                                 좀비의 정면공격을 막아낼 확률 -8%
          */
-        Moodle_Endurance = new Moodles_state(Moodles_private_code.Endurance, 25f, 50f, 75f, 91f);
+        Moodle_Endurance = new Moodles_state(Moodles_private_code.Endurance, 91f, 75f, 50f, 25f);
         /*
          75% 이하: 근접데미지 -50%, 공격속도 -7%, 낮은 울타리 넘을때/달리기/파워워크 때 넘어질 확률 +10%,
                    높은 울타리를 오를 확률 -5%, 걷기/달리기/파워워크 속도 -19%,
@@ -876,9 +876,9 @@ public class Moodles_state
                     /*걷는 상태에서 지구력 감소 ( 미구현 사항 )*/
                 }
                 break;     /* 24.02.26 */
-            case Moodles_private_code.Endurance:  //  25f, 50f, 75f, 91f  // PlayerState_Update
-                _Moodle_current_value = 100 - current_value;
-                if (_Moodle_current_value < _First_state)
+            case Moodles_private_code.Endurance:  //  91f, 75f, 50f, 25f  // PlayerState_Update
+                _Moodle_current_value = current_value;
+                if (_Moodle_current_value > _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
@@ -894,7 +894,7 @@ public class Moodles_state
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
+                else if (_Moodle_current_value <= _First_state && _Moodle_current_value > _Second_state)  // 1단계
                 {
                     _current_state_to_string_KR = "약간 지침";
                     _current_detail_state_to_string_KR = "조금만 쉬십시오.";
@@ -910,7 +910,7 @@ public class Moodles_state
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.02f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
+                else if (_Moodle_current_value <= _Second_state && _Moodle_current_value > _Third_state)  // 2단계
                 {
                     _current_state_to_string_KR = "많이 지침";
                     _current_detail_state_to_string_KR = "달리기도 힘듦.";
@@ -926,7 +926,7 @@ public class Moodles_state
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.04f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
+                else if (_Moodle_current_value <= _Third_state && _Moodle_current_value > _Fourth_state)  // 3단계
                 {
                     _current_state_to_string_KR = "매우 지침";
                     _current_detail_state_to_string_KR = "걷는 것도 힘듦.";
@@ -942,7 +942,7 @@ public class Moodles_state
                     Player_main.player_main.playerSkill_ActivationProbability.Set_Chance_of_Blocking_zombie_frontal_attack_forMoodle(_Moodle_Code, 0.06f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (_Moodle_current_value >= _Fourth_state)  // 4단계
+                else if (_Moodle_current_value <= _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "기진맥진";
                     _current_detail_state_to_string_KR = "움직이기도 힘듦.";
