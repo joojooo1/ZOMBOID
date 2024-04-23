@@ -493,8 +493,4 @@ public class UI_Title_Characteristic_prefab : MonoBehaviour, IPointerEnterHandle
  16 <-> 40
  17 <-> 45
  18 <-> 22, 28, 30
-
-
-
-
  */

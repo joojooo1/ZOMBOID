@@ -33,6 +33,18 @@ public class UI_main : MonoBehaviour
         ui_main = this;
     }
 
+    public void Set_Playing() 
+    {
+        if (Playing)
+        {
+            Playing = false;
+        }
+        else
+        {
+            Playing = true;
+        }
+    }
+
     public void Set_Gender(int value)
     {
         if(value == 0)
