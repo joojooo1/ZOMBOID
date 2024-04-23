@@ -101,6 +101,7 @@ public class Player_body_Location
     }
     public void Set_Body_state(Damage_Pattern Attack_Pattern, string Enemy_Type, bool IsBack)  // 좀비의 공격패턴, 좀비의 강도
     {
+        Debug.Log("좀비가 공격시작 !!"+ Enemy_Type);
         _Current_Damagetype = Attack_Pattern;
 
         float Attack_power = 0.0f;
@@ -125,36 +126,42 @@ public class Player_body_Location
             // 유저로부터 받은 타격이면 데미지 가져와야 함
         }
 
-
+        Debug.Log("좀비가 공격시작asdasdas !!");
 
         System.Random rand = new System.Random();
         int rand_Block = rand.Next(100);
 
+        Debug.Log("aaaaaaa"+Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance());
+        Debug.Log("ddddddd"+Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack());
+
         bool Is_Block = false;
         if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
         {
-            if (rand_Block / 100 < (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack()))
+            if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack()))
             {
                 Is_Block = true;
             }
         }
         else
         {
-            if (rand_Block / 100 < Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
+            if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
             {
                 Is_Block = true;
             }
         }
-
+        Debug.Log("좀비가 qewqwr !!");
         if (!Is_Block)
         {
             System.Random Rerand = new System.Random();
             int rand_Evasion = rand.Next(100);
-
-            if (rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
+            Debug.Log("ssssss"+ Player_main.player_main.Get_Evasion());
+            Debug.Log("회피" + rand_Evasion);
+            if ((float)rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
             {
+                Debug.Log("qqqqq" + Enemy_Type);
                 if (Enemy_Type != "User")
                 {
+                    Debug.Log("좀비가 데미지 입힘 !!");
                     switch (Attack_Pattern)
                     {
                         case Damage_Pattern.Scratches:
@@ -181,6 +188,7 @@ public class Player_body_Location
                 }
                 else  // User 공격: 감염x, 일반적인 상처, 총상, 골절, 찢김(감염x)
                 {
+                    
                     switch (Attack_Pattern)
                     {
                         case Damage_Pattern.Abrasion:
@@ -249,15 +257,15 @@ public class Player_body_Location
     {
         for (int j = 0; j < Body_Damage_array.Length; j++)
         {
-            Body_Damage_array[j].Set_recovery_Count();
-            if (Body_Damage_array[j].recovery_Count > 50)
+            if (Body_Damage_array[j] != null)
             {
-                UI_State.State_icon_main.icon_Destroy(_Body_Location_Code, Body_Damage_array[j].Attack_Pattern, j);
+                Body_Damage_array[j].Set_recovery_Count();
+                if (Body_Damage_array[j].recovery_Count > 50)
+                {
+                    UI_State.State_icon_main.icon_Destroy(_Body_Location_Code, Body_Damage_array[j].Attack_Pattern, j);
+                }
             }
         }
-
-
-
     }
 }
 
@@ -381,35 +389,146 @@ public class PlayerState : MonoBehaviour
     float DamageCounting_Timer = 0.0f;
     private void Update()
     {
-        DamageCounting_Timer += Time.deltaTime;
-        if(DamageCounting_Timer > 2)
-        {
-            for(int i = 0; i < Player_body_point.Count; i++)
-            {
-                Player_body_point[i].Check_recovery();
-            }
-        }
-
-
         if (Zombification == 1)
         {
             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Player_main.player_main.player_HP.Get_Player_HP());
         }
 
-        /****************** Player_Has_a_Cold ******************/
-        if (Player_main.player_main.Is_Cold == false)
+        if (UI_main.ui_main.Playing)
         {
-            Is_Cold_Timer += Time.deltaTime;
-            if (Is_Cold_Timer > 30f)   // 30초마다 감기걸렸는지 확인
+            DamageCounting_Timer += Time.deltaTime;
+            if (DamageCounting_Timer > 2)
             {
-                System.Random rand = new System.Random();
-                int temp = rand.Next(0, 100);
-
-                if (Get_Probability_of_Catching_a_cold() * 100 > temp)
+                for (int i = 0; i < Player_body_point.Count; i++)
                 {
-                    Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Set_Moodles_state(0.1f);
+                    Player_body_point[i].Check_recovery();
                 }
-                Is_Cold_Timer = 0;
+            }
+
+            /****************** Player_Has_a_Cold ******************/
+            if (Player_main.player_main.Is_Cold == false)
+            {
+                Is_Cold_Timer += Time.deltaTime;
+                if (Is_Cold_Timer > 30f)   // 30초마다 감기걸렸는지 확인
+                {
+                    System.Random rand = new System.Random();
+                    int temp = rand.Next(0, 100);
+
+                    if (Get_Probability_of_Catching_a_cold() * 100 > temp)
+                    {
+                        Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Set_Moodles_state(0.1f);
+                    }
+                    Is_Cold_Timer = 0;
+                }
+            }
+
+            /****************** Player_Thirsty ******************/
+            Thirsty_Timer += Time.deltaTime;
+            if (Thirsty_Timer > 1f)
+            {
+                switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
+                {
+                    case 0:
+                        Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.01f * Thirsty_Speed);
+                        break;
+                    case 1:
+                        Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.011f * Thirsty_Speed);
+                        break;
+                    case 2:
+                        Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.013f * Thirsty_Speed);
+                        break;
+                    case 3:
+                        Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.02f * Thirsty_Speed);
+                        break;
+                    case 4:
+                        Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.04f * Thirsty_Speed);
+                        break;
+                }
+                Thirsty_Timer = 0;
+            }
+
+            /****************** Player_Tired ******************/
+            if (Player_main.player_main.Is_Sleeping == false)
+            {
+                Tired_Timer += Time.deltaTime;
+                if (Tired_Timer > 3f)
+                {
+                    int Endurance_level;  // 지구력 상태에 비례해서 오름
+                    if (Player_main.player_main.playerMoodles.Moodle_Endurance.Get_Moodle_current_step() > 2)
+                    {
+                        Endurance_level = Player_main.player_main.playerMoodles.Moodle_Endurance.Get_Moodle_current_step() - 1;
+                    }
+                    else
+                    {
+                        Endurance_level = 1;
+                    }
+
+                    float intoxication = 1f;  // 취한 상태에 비례해서 오름
+                    switch (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step())
+                    {
+                        case 0:
+                            intoxication = 1;
+                            break;
+                        case 1:
+                            intoxication = 1.05f;
+                            break;
+                        case 2:
+                            intoxication = 1.25f;
+                            break;
+                        case 3:
+                            intoxication = 1.5f;
+                            break;
+                        case 4:
+                            intoxication = 1.75f;
+                            break;
+
+                    }
+
+                    switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
+                    {
+                        case 0:
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
+                            break;
+                        case 1:
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
+                            break;
+                        case 2:
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication);
+                            break;
+                        case 3:
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication);
+                            break;
+                        case 4:
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication);
+                            break;
+                    }
+
+                    Tired_Timer = 0;
+                }
+            }
+            else
+            {
+                Tired_Timer += Time.deltaTime;
+                if (Tired_Timer > 3f)
+                {
+                    Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(-0.5f * Tired_reduction_for_Sleeping);
+                    Tired_Timer = 0;
+                }
+            }
+
+            /************************************* Player_Hot/Cold **************************************/
+            if (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_value() < 0)
+            {
+                float temp = Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_value();
+                Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Set_Moodles_state(-temp);  // Hot -> Cold 로 무들 변경
+                Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(-temp);  // Hot의 current_value 0으로 초기화
+            }
+
+            if (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Get_Moodle_current_value() < 0)
+            {
+                float temp = Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Get_Moodle_current_value();
+                Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(-temp);  // Cold -> Hot 로 무들 변경
+                Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Set_Moodles_state(-temp);  // Cold의 current_value 0으로 초기화
             }
         }
 
@@ -417,7 +536,7 @@ public class PlayerState : MonoBehaviour
         if (Player_main.player_main.Is_Running)
         {
             Endurance_Timer += Time.deltaTime;
-            if(Endurance_Timer > 0.3f)
+            if (Endurance_Timer > 0.3f)
             {
                 float Temp = 2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate();
                 Player_main.player_main.Set_Endurance(-Temp);
@@ -427,7 +546,7 @@ public class PlayerState : MonoBehaviour
         else
         {
             Endurance_Timer = 0.0f;
-            if(Player_main.player_main.playerMoodles.Moodle_Tired.Get_Moodle_current_step() < 4)
+            if (Player_main.player_main.playerMoodles.Moodle_Tired.Get_Moodle_current_step() < 4)
             {
                 Endurance_Timer += Time.deltaTime;
                 if (Endurance_Timer > 0.5f)
@@ -439,127 +558,18 @@ public class PlayerState : MonoBehaviour
             }
         }
 
-        /****************** Player_Thirsty ******************/
-        Thirsty_Timer += Time.deltaTime;
-        if(Thirsty_Timer > 1f)
-        {
-            switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
-            {
-                case 0:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.01f * Thirsty_Speed);
-                    break;
-                case 1:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.011f * Thirsty_Speed);
-                    break;
-                case 2:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.013f * Thirsty_Speed);
-                    break;
-                case 3:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.02f * Thirsty_Speed);
-                    break;
-                case 4:
-                    Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(0.04f * Thirsty_Speed);
-                    break;
-            }
-            Thirsty_Timer = 0;
-        }
-
         /****************** Player_Stressed (Unhappy) ******************/
         if (Player_main.player_main.playerMoodles.Moodle_Stressed.Get_Moodle_current_step() > 2)
         {
             Unhappy_Timer += Time.deltaTime;
-            if(Unhappy_Timer > 3f)
+            if (Unhappy_Timer > 3f)
             {
                 Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(0.015f);
             }
         }
 
-        /****************** Player_Tired ******************/
-        if(Player_main.player_main.Is_Sleeping == false)
-        {
-            Tired_Timer += Time.deltaTime;
-            if (Tired_Timer > 3f)
-            {
-                int Endurance_level;  // 지구력 상태에 비례해서 오름
-                if (Player_main.player_main.playerMoodles.Moodle_Endurance.Get_Moodle_current_step() > 2)
-                {
-                    Endurance_level = Player_main.player_main.playerMoodles.Moodle_Endurance.Get_Moodle_current_step() - 1;
-                }
-                else
-                {
-                    Endurance_level = 1;
-                }
-
-                float intoxication = 1f;  // 취한 상태에 비례해서 오름
-                switch (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step())
-                {
-                    case 0:
-                        intoxication = 1;
-                        break;
-                    case 1:
-                        intoxication = 1.05f;
-                        break;
-                    case 2:
-                        intoxication = 1.25f;
-                        break;
-                    case 3:
-                        intoxication = 1.5f;
-                        break;
-                    case 4:
-                        intoxication = 1.75f; 
-                        break;
-
-                }
-
-                switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
-                {
-                    case 0:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
-                        break;
-                    case 1:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
-                        break;
-                    case 2:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication);
-                        break;
-                    case 3:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication);
-                        break;
-                    case 4:
-                        Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication);
-                        break;
-                }
-
-                Tired_Timer = 0;
-            }
-        }
-        else
-        {
-            Tired_Timer += Time.deltaTime;
-            if(Tired_Timer > 3f )
-            {
-                Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(-0.5f * Tired_reduction_for_Sleeping);
-                Tired_Timer = 0;
-            }
-        }
-
-        /************************************* Player_Hot/Cold **************************************/
-        if (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_value() < 0)
-        {
-            float temp = Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_value();
-            Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Set_Moodles_state(-temp);  // Hot -> Cold 로 무들 변경
-            Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(-temp);  // Hot의 current_value 0으로 초기화
-        }
-
-        if (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Get_Moodle_current_value() < 0)
-        {
-            float temp = Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Get_Moodle_current_value();
-            Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(-temp);  // Cold -> Hot 로 무들 변경
-            Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Set_Moodles_state(-temp);  // Cold의 current_value 0으로 초기화
-        }
-
         /****************** Player_Has_a_Cold ******************/
-        if(Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() > 0)
+        if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() > 0)
         {
             if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() <= 1)
             {
@@ -577,10 +587,10 @@ public class PlayerState : MonoBehaviour
         }
 
         /****************** Player_Drunk (Unhappy) ******************/
-        if(Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+        if (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
         {
             Drunk_Timer += Time.deltaTime;
-            if(Drunk_Timer > 1.5f)
+            if (Drunk_Timer > 1.5f)
             {
                 Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(-0.05f);
                 Drunk_Timer = 0;
@@ -591,11 +601,10 @@ public class PlayerState : MonoBehaviour
             Drunk_Timer = 0;
         }
 
-
         if (Get_Is_Infection())  // 감염된 경우
         {
             Infection_Timer += Time.deltaTime;
-            if(Infection_Timer > 5f)
+            if (Infection_Timer > 5f)
             {
                 if (Player_Characteristic.current.Resilient_Characteristic)
                 {
@@ -607,7 +616,6 @@ public class PlayerState : MonoBehaviour
                 Infection_Timer = 0;
             }
         }
-
 
     }
 

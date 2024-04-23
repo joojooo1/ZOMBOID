@@ -107,9 +107,149 @@ public class Player_main : MonoBehaviour
     float Food_Poison_Timer = 0.0f;
     void Update()
     {
+       
+
         Weight_text.text = Weight.ToString();
         if (!ability_Sleeping) { Is_Sleeping = false; }
         else { Is_Sleeping = true; }
+
+        if (UI_main.ui_main.Playing)
+        {
+            /************************************* Player_Satiety **************************************/
+            Satiety_Timer += Time.deltaTime;
+            if (Satiety_Timer > 1.0f)  // 포만감 1초에 0.25씩 감소
+            {
+                Satiety -= Satiety_value;  // 포만감 -300 ~ 300
+                if (Satiety < -300) { Satiety = -300.0f; }
+                else if (Satiety > 300) { Satiety = 300.0f; }
+
+                if (Satiety >= 0)
+                {
+                    playerMoodles.Moodle_Stuffed.Set_Moodles_state(Satiety);
+                }
+                else
+                {
+                    playerMoodles.Moodle_Hungry.Set_Moodles_state(-Satiety);
+                }
+                Satiety_Timer = 0.0f;
+            }
+            // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
+
+
+            /************************************* Player_Calories **************************************/
+
+            Calories_Timer += Time.deltaTime;  // 칼로리 -2200 ~ 3700 
+            if (Calories_Timer > 1f)
+            {
+                if (Is_Running)
+                {
+                    Set_Calories(-1f);
+                }
+                else
+                {
+                    Set_Calories(-0.5f);
+                }
+                Calories_Timer = 0;
+            }
+
+            /************************************* Player_Panic **************************************/
+            if (Player_Characteristic.current.Agoraphobic_characteristics)
+            {
+                if (Is_Outdoor)
+                {
+                    Panic_Timer_for_Agoraphobic += Time.deltaTime;
+                    if (Panic_Timer > 1f)
+                    {
+                        playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
+                        Panic_Timer_for_Agoraphobic = 0;
+                    }
+                }
+            }
+            else if (Player_Characteristic.current.Claustrophobic_characteristics)
+            {
+                if (!Is_Outdoor)
+                {
+                    Panic_Timer_for_Agoraphobic += Time.deltaTime;
+                    if (Panic_Timer > 1f)
+                    {
+                        playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
+                        Panic_Timer_for_Agoraphobic = 0;
+                    }
+                }
+            }
+
+            if (Is_Resting)
+            {
+                Panic_Timer += Time.deltaTime;
+                if (Panic_Timer > 1.0f)  // 휴식중에 Panic 수치 down
+                {
+                    if (Is_drunk == false)
+                    {
+                        playerMoodles.Moodle_Panic.Set_Moodles_state(-0.05f);
+                    }
+                    else
+                    {
+                        playerMoodles.Moodle_Panic.Set_Moodles_state(-0.08f);
+                    }
+                    Panic_Timer = 0.0f;
+                }
+            }
+
+            /************************************* Player_Stressed **************************************/
+            if (Player_Characteristic.current.Smoker_characteristics)
+            {
+                Smoker_Timer += Time.deltaTime;
+                if (Is_Smoking)
+                {
+                    Smoker_Timer = 0f;
+                    Is_Smoking = false;
+                    playerMoodles.Moodle_Stressed.Set_Moodles_state(-1);
+                    playerMoodles.Moodle_Unhappy.Set_Moodles_state(-0.1f);
+                }
+                else
+                {
+                    if (Smoker_Timer > 5f)
+                    {
+                        Smoker_Timer = 0f;
+                        if (playerMoodles.Moodle_Stressed.Get_Moodle_current_step() <= 2)
+                        {
+                            playerMoodles.Moodle_Stressed.Set_Moodles_state(0.03f);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (Is_Smoking)
+                {
+                    Is_Smoking = false;
+                    playerMoodles.Moodle_Stressed.Set_Moodles_state(-0.05f);
+                }
+            }
+
+            /************************************* Player_Sleep **************************************/
+            if (Player_Characteristic.current.Restless_Sleeper_characteristics)
+            {
+                if (Is_Sleeping)
+                {
+                    Sleeping_Timer += Time.deltaTime;
+                    if (Sleeping_Timer > 144)
+                    {
+                        ability_Sleeping = false;
+                        Sleeping_Timer = 0f;
+                    }
+                }
+                else
+                {
+                    Sleeping_Timer += Time.deltaTime;
+                    if (Sleeping_Timer > 48)
+                    {
+                        ability_Sleeping = true;
+                        Sleeping_Timer = 0f;
+                    }
+                }
+            }
+        }
 
         /* -------------------------- Is_Eating -------------------------- */
         // 음식먹을 때 Calculating_Food_Poisoning 호출
@@ -117,101 +257,20 @@ public class Player_main : MonoBehaviour
         if (Is_food_poisoning)
         {
             Food_Poison_Timer += Time.deltaTime;
-            if(Food_Poison_Timer > Time_for_food_poisoning)
+            if (Food_Poison_Timer > Time_for_food_poisoning)
             {
                 Food_Poison_Timer = 0;
                 Is_food_poisoning = false;
             }
-            else if(Food_Poison_Timer > 0 && Food_Poison_Timer < 200)
+            else if (Food_Poison_Timer > 0 && Food_Poison_Timer < 200)
             {
                 playerMoodles.Moodle_Sick.Set_Moodles_state(0.03f);
             }
         }
 
-        /************************************* Player_Satiety **************************************/
-        Satiety_Timer += Time.deltaTime; 
-        if (Satiety_Timer > 1.0f)  // 포만감 1초에 0.25씩 감소
-        {
-            Satiety -= Satiety_value;  // 포만감 -300 ~ 300
-            if (Satiety < -300) { Satiety = -300.0f; }
-            else if (Satiety > 300) { Satiety = 300.0f; }
-
-            if (Satiety >= 0)
-            {
-                playerMoodles.Moodle_Stuffed.Set_Moodles_state(Satiety);
-            }
-            else
-            {
-                playerMoodles.Moodle_Hungry.Set_Moodles_state(-Satiety);
-            }
-            Satiety_Timer = 0.0f;
-        }
-        // 대식가: 150% (초당 -0.09)  일반: 100% (초당 -0.06)  소식가: 0.75% (초당 -0.045)
-
-
-        /************************************* Player_Calories **************************************/
-
-        Calories_Timer += Time.deltaTime;  // 칼로리 -2200 ~ 3700 
-        if (Calories_Timer > 1f)
-        {
-            if (Is_Running)
-            {
-                Set_Calories(-1f);
-            }
-            else
-            {
-                Set_Calories(-0.5f);
-            }
-            Calories_Timer = 0;
-        }
-
         /************************************* Player_Heavy_Load **************************************/
         if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
             Is_Running = false;
-
-        /************************************* Player_Panic **************************************/
-        if (Player_Characteristic.current.Agoraphobic_characteristics)
-        {
-            if (Is_Outdoor)
-            {
-                Panic_Timer_for_Agoraphobic += Time.deltaTime;
-                if (Panic_Timer > 1f) 
-                { 
-                    playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
-                    Panic_Timer_for_Agoraphobic = 0;
-                }                
-            }
-        }
-        else if (Player_Characteristic.current.Claustrophobic_characteristics)
-        {
-            if (!Is_Outdoor)
-            {
-                Panic_Timer_for_Agoraphobic += Time.deltaTime;
-                if (Panic_Timer > 1f)
-                {
-                    playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
-                    Panic_Timer_for_Agoraphobic = 0;
-                }
-            }
-        }
-
-        if (Is_Resting)
-        {
-            Panic_Timer += Time.deltaTime;
-            if (Panic_Timer > 1.0f)  // 휴식중에 Panic 수치 down
-            {
-                if (Is_drunk == false)
-                {
-                    playerMoodles.Moodle_Panic.Set_Moodles_state(-0.05f);
-                }
-                else
-                {
-                    playerMoodles.Moodle_Panic.Set_Moodles_state(-0.08f);
-                }
-                Panic_Timer = 0.0f;
-            }
-        }
-
 
         /****************** Player_Has_a_Cold ******************/
         if (Is_Cold)
@@ -223,60 +282,6 @@ public class Player_main : MonoBehaviour
             }
         }
 
-        /************************************* Player_Stressed **************************************/
-        if (Player_Characteristic.current.Smoker_characteristics)
-        {
-            Smoker_Timer += Time.deltaTime;
-            if (Is_Smoking)
-            {
-                Smoker_Timer = 0f;
-                Is_Smoking = false;
-                playerMoodles.Moodle_Stressed.Set_Moodles_state(-1);
-                playerMoodles.Moodle_Unhappy.Set_Moodles_state(-0.1f);
-            }
-            else
-            {
-                if(Smoker_Timer > 5f)
-                {
-                    Smoker_Timer = 0f;
-                    if(playerMoodles.Moodle_Stressed.Get_Moodle_current_step() <= 2)
-                    {
-                        playerMoodles.Moodle_Stressed.Set_Moodles_state(0.03f);
-                    }                    
-                }
-            }
-        }
-        else
-        {
-            if (Is_Smoking)
-            {
-                Is_Smoking = false;
-                playerMoodles.Moodle_Stressed.Set_Moodles_state(-0.05f);
-            }
-        }
-
-        /************************************* Player_Sleep **************************************/
-        if (Player_Characteristic.current.Restless_Sleeper_characteristics)
-        {
-            if (Is_Sleeping)
-            {
-                Sleeping_Timer += Time.deltaTime;
-                if (Sleeping_Timer > 144)
-                {
-                    ability_Sleeping = false;
-                    Sleeping_Timer = 0f;
-                }
-            }
-            else
-            {
-                Sleeping_Timer += Time.deltaTime;
-                if (Sleeping_Timer > 48)
-                {
-                    ability_Sleeping = true;
-                    Sleeping_Timer = 0f;
-                }
-            }
-        }
 
 
     }
@@ -303,24 +308,46 @@ public class Player_main : MonoBehaviour
             speed_forMoodle = Moving_Speed_forMoodle / Speed_rate_for_Pain;
         }
 
-        if(Is_Running)
+       // 달리기 // 조준
+        // 달리기 + 쪼그려
+        // 조준 + 기는
+        // 조준 // 쪼그려
+
+        if (Is_Running)
         {
             Speed *= 1.2f;
+            if (Is_Crouch)
+            {
+                Speed *= 0.8f;
+            }
         }
-        if (Is_Crouch)
-        {
-            Speed *= 0.8f;
-        }
-        if (Is_Crawl)
-        {
-            Speed *= 0.3f;
-        }
-        if (Is_Aiming)
+        else if (Is_Aiming)
         {
             Speed *= playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+            if (Is_Crawl)
+            {
+                Speed *= 0.8f;
+            }
+        }
+        else if (Is_Crouch)
+        {
+            Speed *= 0.8f;
+            if (Is_Running)
+            {
+                Speed *= 1.2f;
+            }
+        }
+        else if (Is_Crawl)
+        {
+            Speed *= 0.3f;
+            if (Is_Aiming)
+            {
+                Speed *= playerSkill_ActivationProbability.Get_Movement_Speed_while_Aiming();
+            }
         }
 
-         return Speed * speed_forMoodle;
+
+        return Speed * speed_forMoodle;
     }
 
     float Moving_Speed_forMoodle = 1f;
@@ -439,7 +466,7 @@ public class Player_main : MonoBehaviour
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
-        Debug.Log(Weight);
+        //Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
     }
 
     public void Calculating_Food_Poisoning(float food_value)
@@ -492,8 +519,10 @@ public class Player_main : MonoBehaviour
 
     // 공격받을 때 순서
     // 1. 공격 받으면 밀쳐낼 확률 계산
-    public void Calculate_HitForce(bool Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
+    public void Calculate_HitForce(GameObject zom, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
     {
+        Debug.Log("좀비가 공격함 !!");
+
         playerMoodles.Moodle_Panic.Set_Moodles_state(0.01f);  /* 마주친 좀비의 수 확인가능하면 받아서   0.01 x 좀비수  로 수정*/
         System.Random rand = new System.Random();
         int randomNumber = rand.Next(100);
@@ -501,11 +530,12 @@ public class Player_main : MonoBehaviour
         if (((float)randomNumber / 100) > playerSkill_ActivationProbability.Get_HitForce())
         {
             Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
+            Debug.Log("성공 !!");
         }
         else
         {
+            zom.GetComponent<zom_anime>().animatorsetBool("playeratk", true);
             Debug.Log("Miss !!");
-            // 밀쳐낸 애니메이션
         }
     }
 
@@ -684,23 +714,23 @@ public class Player_main : MonoBehaviour
 
         Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
 
-        for(int i = 0; i < Full_Location.Count;)
-        {
-            if (Full_Location[i] == Attack_point)
-            {
-                Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
-            }
-            else
-            {
-                i++;
-            }
+        //for(int i = 0; i < Full_Location.Count;)
+        //{
+        //    if (Full_Location[i] == Attack_point)
+        //    {
+        //        Calculating_Probability_of_Injury_Location(Zom_Type, IsBack, IsDown);
+        //    }
+        //    else
+        //    {
+        //        i++;
+        //    }
 
-            if(i == Full_Location.Count && Full_Location[i] != Attack_point)
-            {
-                Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
-            }
-        }
-
+        //    if(i == Full_Location.Count && Full_Location[i] != Attack_point)
+        //    {
+        //        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+        //    }
+        //}
+        Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
     }
 
     // 3. 좀비의 공격 패턴 확률 계산
@@ -713,6 +743,7 @@ public class Player_main : MonoBehaviour
 
         if (!IsBack)  // 앞에서 공격 당하는 경우
         {
+            Debug.Log(IsBack);
             if (Rand_pattern >= 0 && Rand_pattern < 33)  // 33%
             {
                 Attack_point.Set_Body_state(Damage_Pattern.Scratches, Zom_Type, IsBack);
@@ -728,6 +759,7 @@ public class Player_main : MonoBehaviour
         }
         else  // 뒤에서 공격 당하는 경우
         {
+            Debug.Log(IsBack);
             if (Rand_pattern >= 0 && Rand_pattern < 70)  // 70%
             {
                 Attack_point.Set_Body_state(Damage_Pattern.Bites, Zom_Type, IsBack);

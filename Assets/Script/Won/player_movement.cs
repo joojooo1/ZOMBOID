@@ -268,4 +268,22 @@ public class player_movement : MonoBehaviour
                 break;
         }
     }
+    public void playeranimetion(string anim,bool action) 
+    {
+        switch (anim)
+        {
+            case "Is_Aiming":
+                this.GetComponent<Player_main>().Is_Aiming = action;
+                break;
+            case "Is_Running":
+                this.GetComponent<Player_main>().Is_Running = action;
+                break;
+            case "Is_Crouch":
+                this.GetComponent<Player_main>().Is_Crouch = action;
+                break;
+            case "Is_Crawl":
+                this.GetComponent<Player_main>().Is_Crawl = action;
+                break;
+        }
+    }
 }
