@@ -88,6 +88,7 @@ public class Player_body_Location
 
     public bool _Bleeding = false; // ÃâÇ÷.. Moodles
     int DamageCount = 0;
+    public int recovery_damagecount = 50;
     public Player_body_Location_Damage[] Body_Damage_array = new Player_body_Location_Damage[3];
 
     public Player_body_Location(body_point Body_Code)
@@ -260,7 +261,7 @@ public class Player_body_Location
             if (Body_Damage_array[j] != null)
             {
                 Body_Damage_array[j].Set_recovery_Count();
-                if (Body_Damage_array[j].recovery_Count > 50)
+                if (Body_Damage_array[j].recovery_Count > recovery_damagecount)
                 {
                     UI_State.State_icon_main.icon_Destroy(_Body_Location_Code, Body_Damage_array[j].Attack_Pattern, j);
                 }
