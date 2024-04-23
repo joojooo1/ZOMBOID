@@ -8,6 +8,7 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using UnityEngine.Windows;
+using static System.Collections.Specialized.BitVector32;
 
 public class player_movement : MonoBehaviour
 {
@@ -36,12 +37,29 @@ public class player_movement : MonoBehaviour
     Vector3 Fence;
     Vector3 inputpos;
     public float test =0;
+    bool run_set = false;
+    bool Strife_set = false;
     private void Update()
     {
         navMeshAgent.speed = this.GetComponent<Player_main>().Get_Moving_Speed();
         inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") +(UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
         inputpos.Normalize();
         inputpos *= Time.fixedDeltaTime * (navMeshAgent.speed);
+        if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
+        {
+            run_set =true;
+           playeranimetion("Is_Running", run_set);
+        }
+        else if (UnityEngine.Input.GetMouseButton(1))
+        {
+            Strife_set = true;
+            playeranimetion("Is_Aiming", Strife_set);
+        }
+        else
+        {
+            Strife_set = false;
+            run_set = false;
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -286,4 +304,5 @@ public class player_movement : MonoBehaviour
                 break;
         }
     }
+    
 }
