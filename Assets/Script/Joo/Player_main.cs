@@ -97,6 +97,8 @@ public class Player_main : MonoBehaviour
 
     }
 
+    public Sprite aaa;
+
     float Calories_Timer = 0.0f;
     float Satiety_Timer = 0.0f;
     float Panic_Timer = 0.0f;
@@ -111,8 +113,9 @@ public class Player_main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            GameObject jj = null;
-            Calculate_HitForce(jj, "easy", false, false);
+            UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 0, Crafting_type.Crafting_General, aaa, "name_temp", "이름_temp");
+            UI_Craft.UI_Craft_main.Crafting_General_list[0].Add_Ingredients(aaa, "ing", "재료");
+            
         }
 
         Weight_text.text = Weight.ToString();
