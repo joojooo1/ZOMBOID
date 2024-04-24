@@ -315,7 +315,11 @@ public class Player_main : MonoBehaviour
         }
 
 
+<<<<<<< HEAD
+        // 달리기 // 조준
+=======
        // 달리기 // 조준
+>>>>>>> 928cf33b84253e808a6720be40295212de15c658
         // 달리기 + 쪼그려
         // 조준 + 기는
         // 조준 // 쪼그려
@@ -473,8 +477,13 @@ public class Player_main : MonoBehaviour
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
+<<<<<<< HEAD
+        Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
+        //Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
+=======
 
         Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
+>>>>>>> 928cf33b84253e808a6720be40295212de15c658
     }
 
     public void Calculating_Food_Poisoning(float food_value)
