@@ -61,15 +61,16 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
                 temp.SetImage(player_damage_SpriteArray[(int)damagetype], position, damagetype);
                 UI_DamageImage.UI_Damage_Pre.Damage_Ins(position, temp.position_Damage_Num);
                 Damagelist.Add(temp);
+                break;
             }
         }
 
 
-        if(Damagelist.Count == 1)
-        {
-            UI_main.ui_main.UI_Damage.SetActive(true);
-            UI_main.ui_main.Set_UIDamage();
-        }
+        //if(Damagelist.Count == 1)
+        //{
+        //    UI_main.ui_main.UI_Damage.SetActive(true);
+        //    UI_main.ui_main.Set_UIDamage();
+        //}
     }
 
     public void icon_Destroy(body_point position, Damage_Pattern Attack_Pattern, int Damage_Num)

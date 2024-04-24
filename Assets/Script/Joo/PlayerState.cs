@@ -20,10 +20,11 @@ public class Player_body_Location_Damage
     public bool _Bleeding = true;
     public float recovery_Count = 0f;
 
-    public Player_body_Location_Damage(body_point Body_Code, Damage_Pattern _Attack_Pattern)
+    public Player_body_Location_Damage(body_point Body_Code, Damage_Pattern _Attack_Pattern, int _index)
     {
         Location = Body_Code;
         Attack_Pattern = _Attack_Pattern;
+        index = _index;
     }
 
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
@@ -160,6 +161,8 @@ public class Player_body_Location
             if ((float)rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
             {
                 Debug.Log("qqqqq" + Enemy_Type);
+                if (UI_main.ui_main.UI_Damage.activeSelf == false) { UI_main.ui_main.UI_Damage.SetActive(true); }
+
                 if (Enemy_Type != "User")
                 {
                     Debug.Log("좀비가 데미지 입힘 !!");
@@ -228,31 +231,56 @@ public class Player_body_Location
     }
     public bool Get_Is_Bleeding()
     {
+        bool bleed = false;
         for (int i = 0; i < Body_Damage_array.Length; i++)
         {
-            if (Body_Damage_array[i].Get_Is_Bleeding())
+            if (Body_Damage_array[i] != null)
             {
-                return true;
+                if (Body_Damage_array[i].Get_Is_Bleeding() == true)
+                {
+                    bleed = true;
+                }
             }
         }
-        return false;
+        
+        return bleed;
+
     }
 
     public void Set_DamageArray(int index, bool Add, Damage_Pattern damagetype, body_point position)
     {
         if (Add)
         {
-            Body_Damage_array[index] = new Player_body_Location_Damage(position, damagetype);
+            DamageCount++;
+            Body_Damage_array[index] = new Player_body_Location_Damage(position, damagetype, DamageCount);
             Set_Is_Bleeding();
         }
         else
         {
-            Body_Damage_array[index] = null;
+            DamageCount--;
+            Body_Damage_array = Set_new_Array(Body_Damage_array, index);
             Set_Is_Bleeding();
         }
     }
 
-    public int Get_DamageCount() { return DamageCount; }
+    Player_body_Location_Damage[] Set_new_Array(Player_body_Location_Damage[] Origin, int index)
+    {
+        Player_body_Location_Damage[] newArray = new Player_body_Location_Damage[3];
+        for(int i = 0; i < Origin.Length; i++)
+        {
+            if (Origin[i] != null && i != index)
+            {
+                newArray[i] = Origin[i];
+            }
+        }
+
+        return newArray;
+    }
+
+    public int Get_DamageCount()
+    {
+        return DamageCount;
+    }
 
     public void Check_recovery()
     {
