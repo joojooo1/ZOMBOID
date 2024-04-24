@@ -1152,21 +1152,6 @@ public class Player_Characteristic : MonoBehaviour
         // 비활성화되는 특성: 어두운 귀, 청각 장애
     }
 
-    //Characteristic Characteristic_Organized(Characteristic Organized)
-    //{
-    //    Organized.name = "Organized";
-    //    Organized.name_kr = "정리쟁이";
-    //    Organized.Explanation_for_Characteristic = "Increased container inventory capacity.";
-    //    Organized.Explanation_for_Characteristic_kr = "보관함에 물건을 넣을 수 있는 양이 증가합니다.";
-    //    Organized.Sprite = Characteristic_Image[18];
-    //    Organized.Points = -6;
-    //    Organized.type = Characteristic_type.Positives;
-    //    Organized.Choice = false;
-    //    return Organized;
-    //    // 인벤토리를 제외한 모든 보관함(가방, 냉장고, 상자, 서랍, 차량 트렁크 등)의 용량 +30% (최소 +1)
-    //    // 비활성화되는 특성: 비체계적인
-    //}
-
     Characteristic Characteristic_Stout(Characteristic Stout, bool Choice)
     {
         Stout.name = "Stout";

@@ -315,11 +315,7 @@ public class Player_main : MonoBehaviour
         }
 
 
-<<<<<<< HEAD
-        // 달리기 // 조준
-=======
        // 달리기 // 조준
->>>>>>> 928cf33b84253e808a6720be40295212de15c658
         // 달리기 + 쪼그려
         // 조준 + 기는
         // 조준 // 쪼그려
@@ -477,13 +473,8 @@ public class Player_main : MonoBehaviour
         Weight += value;
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
-<<<<<<< HEAD
-        Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
-        //Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
-=======
 
         Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
->>>>>>> 928cf33b84253e808a6720be40295212de15c658
     }
 
     public void Calculating_Food_Poisoning(float food_value)
@@ -720,36 +711,48 @@ public class Player_main : MonoBehaviour
         List<Player_body_Location> Full_Location = new List<Player_body_Location>();
         for (int i = 0; i < playerState.Player_body_point.Count; i++)
         {
-            for(int j = 0; j < playerState.Player_body_point[i].Body_Damage_array.Length; j++)
+            int damage_fullcount = 0;
+            for (int j = 0; j < playerState.Player_body_point[i].Body_Damage_array.Length; j++)
             {
-                if (playerState.Player_body_point[i].Body_Damage_array[2] != null)
-                {
-                    Full_Location.Add(playerState.Player_body_point[i]);
-                }
+                if (playerState.Player_body_point[i].Body_Damage_array[j] != null)
+                    damage_fullcount++;
             }
+
+            if(damage_fullcount == 3)
+                Full_Location.Add(playerState.Player_body_point[i]);
         }
 
         Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
-        Debug.Log(Attack_point);
+        Debug.Log(Attack_point.Get_body_point().ToString());
         Debug.Log(Attack_point.Get_DamageCount());
 
-        for (int i = 0; i < Full_Location.Count;)
+        if(Full_Location.Count != 0)
         {
-            if (Full_Location[i] == Attack_point)
+            for (int i = 0; i < Full_Location.Count;)
             {
-                Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
-                i = 0;
-            }
-            else
-            {
-                i++;
-            }
+                if (Full_Location[i].Get_body_point() == Attack_point.Get_body_point())
+                {
+                    Attack_point = Random_Damage_Location(Attack_point, IsBack, IsDown);
+                    i = 0;
+                    Debug.Log("3개 초과로 부상위치 다시 계산");
+                }
+                else
+                {
+                    i++;
+                }
 
-            if (i == Full_Location.Count && Full_Location[i] != Attack_point)
-            {
-                Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+                // i == Full_Location.Count && Full_Location[i].Get_body_point() != Attack_point.Get_body_point()
+                if (i == Full_Location.Count)
+                {
+                    Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+                }
             }
         }
+        else
+        {
+            Calculating_the_Probability_of_Zombie_Attack_Pattern(Attack_point, Zom_Type, IsBack);
+        }
+
     }
 
     // 3. 좀비의 공격 패턴 확률 계산
