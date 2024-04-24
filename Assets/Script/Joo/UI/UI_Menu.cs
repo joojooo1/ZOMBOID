@@ -13,7 +13,7 @@ public class UI_Menu : MonoBehaviour, IPointerClickHandler
     {
         if(eventData.button == PointerEventData.InputButton.Left)
         {
-            currentmenu_window.SetActive(true);
+            // currentmenu_window.SetActive(true);
         }
     }
 
