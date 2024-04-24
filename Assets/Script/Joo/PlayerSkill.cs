@@ -54,10 +54,10 @@ public class PlayerSkill : MonoBehaviour
         Fitness_Level = new PlayerPassiveSkill_Level(5.0f, "Fitness", "체력");
         Strength_Level = new PlayerPassiveSkill_Level(5.0f, "Strength", "근력");
 
-        Hunting_Level = new PlayerSurvivalSkill_Level(0f, "Hunting", "사냥");
-        Fishing_Level = new PlayerSurvivalSkill_Level(0f, "Fishing", "낚시");
-        Foraging_Level = new PlayerSurvivalSkill_Level(0f, "Foraging", "채집");
-        Riding_Level = new PlayerSurvivalSkill_Level(0f, "Riding", "승마");
+        Hunting_Level = new PlayerSurvivalSkill_Level(0f, "Hunting", "사냥");  // 덪 도구 제작, 레벨: 획득량 
+        Fishing_Level = new PlayerSurvivalSkill_Level(0f, "Fishing", "낚시");  // 레벨: 획득량, 성공 확률  낚시대는 도구 제작
+        Foraging_Level = new PlayerSurvivalSkill_Level(0f, "Foraging", "채집");  // 우클릭으로 채집(약초), 레벨: 획득량에 관련
+        Riding_Level = new PlayerSurvivalSkill_Level(0f, "Riding", "승마");  // 레벨에 따라서 탈수있는지, 속도   ( 후순위 )
 
         Sprinting_Level = new PlayerGeneralSkill_Level(0f, "Sprinting", "능숙한 달리기");
         Lightfooted_Level = new PlayerGeneralSkill_Level(0f, "Lightfooted", "조용한 발걸음");
@@ -70,18 +70,23 @@ public class PlayerSkill : MonoBehaviour
         LongBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.LongBlade, "LongBlade", "장검");
         ShortBlade_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.ShortBlade, "ShortBlade", "단검");
         Spear_Level = new PlayerWeaponSkill_Level(0f, Weapon_type.Spear, "Spear", "창");
+        // 무기: 도구로 제작
 
         Maintenance_Level = new PlayerMaintenanceSkill_Level(0f, "Maintenance", "물건관리");
 
         Aiming_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Aiming", "조준");
         Reloading_Level = new PlayerGunSkill_Level(0f, Weapon_type.Gun, "Reloading", "재장전");
 
-        Carpentry_Level = new PlayerCraftingSkill_Level(0f, "Carpentry", "목공");
-        Cooking_Level = new PlayerCraftingSkill_Level(0f, "Cooking", "요리");
-        Farming_Level = new PlayerCraftingSkill_Level(0f, "Farming", "농사");
-        FirstAid_Level = new PlayerCraftingSkill_Level(0f, "FirstAid", "의료");
-        Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical", "전기공학");
+        Carpentry_Level = new PlayerCraftingSkill_Level(0f, "Carpentry", "목공");  // 가구, 울타리, 벽  // 레벨: 제작종류 증가
+        Cooking_Level = new PlayerCraftingSkill_Level(0f, "Cooking", "요리");  // 레시피  // 레벨: 요리의 효능 증가
+        Farming_Level = new PlayerCraftingSkill_Level(0f, "Farming", "농사");  // 레벨: 수확량 증가, 행동속도 감소
+        FirstAid_Level = new PlayerCraftingSkill_Level(0f, "FirstAid", "의료");  // 의료도구 제작  // 레벨: 치료속도
+        Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical", "전기공학");   // 레벨: 자동차 수리, 분해가능한 전자제품 종류 증가
        
+        // 일반, 도구, 의료도구
+        // 요리
+        // 가구
+
 
     }
 

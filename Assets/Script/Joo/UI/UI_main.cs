@@ -61,13 +61,13 @@ public class UI_main : MonoBehaviour
     {
         if (Is_Female)
         {
-            UI_DamageImage.sprite = player_gender[3];
-            UI_DamageImage_base.sprite = player_gender[1];
+            UI_DamageImage.sprite = player_gender[2];
+            UI_DamageImage_base.sprite = player_gender[0];
         }
         else
         {
-            UI_DamageImage.sprite = player_gender[2];
-            UI_DamageImage_base.sprite = player_gender[0];
+            UI_DamageImage.sprite = player_gender[3];
+            UI_DamageImage_base.sprite = player_gender[1];
         }
         UI_Damage.SetActive(false);
     }
@@ -105,6 +105,6 @@ public class UI_main : MonoBehaviour
 
     public void Set_UIDamage()
     {
-        
+       
     }
 }

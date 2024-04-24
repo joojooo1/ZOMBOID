@@ -22,9 +22,17 @@ public class UI_DamageImage : MonoBehaviour
 
     public void Damage_Ins(body_point position, int totalCount)
     {
-        //if()
         GameObject tempObj = null;
-        int point = (int)position * 3;
+        int point = 0;
+        if (position == 0)
+        {
+            point = (int)position;
+        }
+        else
+        {
+            point = (int)position * 3;
+        }
+        
 
         tempObj = Instantiate(Image_prefab, Pre_ins);
         UI_DamagePref temp = tempObj.GetComponent<UI_DamagePref>();
