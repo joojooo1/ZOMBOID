@@ -228,7 +228,15 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
 
     public void SetEXP(float exp)
     {
-        G_EXP += exp;
+        if(Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            G_EXP += (exp * 1.3f);
+        }
+        else
+        {
+            G_EXP += exp;
+        }
+
         if (G_Level < G_Max_Level && G_EXP >= G_expRequirements[(int)G_Level][0])
         {
             G_EXP -= G_expRequirements[(int)G_Level][0];
@@ -348,6 +356,16 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
     {
         if (W_Level < 5)
             W_EXP += exp;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            W_EXP += (exp * 1.3f);
+        }
+        else
+        {
+            W_EXP += exp;
+        }
+
 
         if (W_Level < W_Max_Level && W_EXP >= W_expRequirements[(int)W_Level][0])
         {
@@ -708,9 +726,11 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
     public bool Change_Multiplier = true;
     float C_Additional_points_through_Books = 1f;
+    int C_BookLevel_Multiplier = -1;
 
     float C_EXP = 0f;
     List<float>[] C_expRequirements;
+    
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
@@ -799,6 +819,8 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
 
         }
+
+
     }
 
     public float Get_C_Level()
@@ -846,60 +868,71 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         return C_Additional_points_through_Books;
     }
 
-    public void Set_C_Books_Point(Item_Literature Book)  // skillbook 일때 호출
+    public void Set_C_Books_Point(int Book_level)  // skillbook 일때 호출
     {
-        switch (Book.Literature_Level)
+        int skill_num = -1;
+        if (C_SkillName == "Carpentry")
         {
-            case 0:
-                break;
-            case 1:
-                if (C_Level == 1 || C_Level == 2)
-                    C_Additional_points_through_Books = 3f;
-                else
-                    AboutBooks(true);
-                break;
-            case 2:
-                if (C_Level == 3 || C_Level == 4)
-                    C_Additional_points_through_Books = 5f;
-                else if (C_Level < 3)
-                    AboutBooks(false);
-                else
-                    AboutBooks(true);
-                break;
-            case 3:
-                if (C_Level == 5 || C_Level == 6)
-                    C_Additional_points_through_Books = 8f;
-                else if (C_Level < 5)
-                    AboutBooks(false);
-                else
-                    AboutBooks(true);
-                break;
-            case 4:
-                if (C_Level == 7 || C_Level == 8)
-                    C_Additional_points_through_Books = 12f;
-                else if (C_Level < 7)
-                    AboutBooks(false);
-                else
-                    AboutBooks(true);
-                break;
-            case 5:
-                if (C_Level == 9 || C_Level == 10)
-                    C_Additional_points_through_Books = 16f;
-                else
-                    AboutBooks(false);
-                break;
-            default: break;
+            skill_num = 4;
+        }
+        else if (C_SkillName == "Cooking")
+        {
+            skill_num = 5;
+        }
+        else if (C_SkillName == "Farming")
+        {
+            skill_num = 6;
+        }
+        else if (C_SkillName == "FirstAid")
+        {
+            skill_num = 7;
+        }
+        else if (C_SkillName == "Electrical")
+        {
+            skill_num = 8;
         }
 
+        if(Book_level == C_Level || (Book_level == C_Level+1 && Book_level%2 == 1))
+        {
+            switch (Book_level)
+            {
+                case 0:
+                case 1:
+                    C_Additional_points_through_Books = 3f;
+                    break;
+                case 3:
+                    C_Additional_points_through_Books = 5f;
+                    break;
+                case 5:
+                    C_Additional_points_through_Books = 8f;
+                    break;
+                case 7:
+                    C_Additional_points_through_Books = 12f;
+                    break;
+                case 9:
+                    C_Additional_points_through_Books = 16f;
+                    break;
+                default: break;
+            }
+            C_BookLevel_Multiplier = Book_level;
+            UI_State_Skill.state_skill_info.Open_Multiplier_icon(skill_num);
+        }
+        else if (Book_level > C_Level)
+        {
+            C_Additional_points_through_Books = 1f;
+            Debug.Log("어려워서 읽지 못함");
+            // 책 못 읽음
+        }
+        else if (Book_level < C_Level)
+        {
+            C_Additional_points_through_Books = 1f;
+            Debug.Log("이미 다 아는 내용임");
+            // 책을 읽긴하지만 아무 변화 없음
+        }
     }
 
-    public void AboutBooks(bool over)
-    {
-        if(over)
-            Debug.Log("어려워서 읽지 못함");  // 책 못 읽음
-        else
-            Debug.Log("이미 다 아는 내용임");  // 책을 읽긴하지만 아무 변화 없음
-    }
+
+
 
     /*  Magazine  
     12. Good Cooking Magazine Vol. 1 : 케이크 반죽, 파이 반죽, 초콜릿칩쿠키 반죽, 초콜릿쿠키 반죽, 오트밀쿠키 반죽, 쇼트브레드쿠키 반죽, 설탕쿠키 반죽 만들기
@@ -944,6 +977,7 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public bool Change_Multiplier = true;
     float S_Additional_points_through_Books = 1f;
+    int S_BookLevel_Multiplier = -1;
 
     float S_EXP = 0f;
     public float S_Exp_characteristic = 1f;
@@ -1028,6 +1062,15 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
 
         }
+
+        if (S_BookLevel_Multiplier == S_Level || S_BookLevel_Multiplier == S_Level + 1)
+        {
+            
+        }
+        else
+        {
+            //UI_State_Skill.state_skill_info.Close_Multiplier_icon()
+        }
     }
 
     public float Get_S_Level()
@@ -1077,7 +1120,52 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public void Set_S_Books_Point(int Book_level)
     {
-        if (Book_level > S_Level)
+        int Skill_num = -1;
+
+        if (S_SkillName == "Hunting")
+        {
+            Skill_num = 1;
+        }
+        else if (S_SkillName == "Fishing")
+        {
+            Skill_num = 0;
+        }
+        else if (S_SkillName == "Foraging")
+        {
+            Skill_num = 2;
+        }
+        else if (S_SkillName == "Riding")
+        {
+            Skill_num = 3;
+        }
+
+
+        if (Book_level == S_Level || (Book_level == S_Level + 1 && Book_level % 2 == 1))
+        {
+            switch (Book_level)
+            {
+                case 0:
+                case 1:
+                    S_Additional_points_through_Books = 3f;
+                    break;
+                case 3:
+                    S_Additional_points_through_Books = 5f;
+                    break;
+                case 5:
+                    S_Additional_points_through_Books = 8f;
+                    break;
+                case 7:
+                    S_Additional_points_through_Books = 12f;
+                    break;
+                case 9:
+                    S_Additional_points_through_Books = 16f;
+                    break;
+                default: break;
+            }
+            S_BookLevel_Multiplier = Book_level;
+            UI_State_Skill.state_skill_info.Open_Multiplier_icon(Skill_num);
+        }
+        else if (Book_level > S_Level)
         {
             S_Additional_points_through_Books = 1f;
             Debug.Log("어려워서 읽지 못함");
@@ -1088,30 +1176,6 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
             S_Additional_points_through_Books = 1f;
             Debug.Log("이미 다 아는 내용임");
             // 책을 읽긴하지만 아무 변화 없음
-        }
-        else
-        {
-            switch (Book_level)
-            {
-                case 0:
-                    break;
-                case 1:
-                    S_Additional_points_through_Books = 3f;
-                    break;
-                case 2:
-                    S_Additional_points_through_Books = 5f;
-                    break;
-                case 3:
-                    S_Additional_points_through_Books = 8f;
-                    break;
-                case 4:
-                    S_Additional_points_through_Books = 12f;
-                    break;
-                case 5:
-                    S_Additional_points_through_Books = 16f;
-                    break;
-                default: break;
-            }
         }
 
     }

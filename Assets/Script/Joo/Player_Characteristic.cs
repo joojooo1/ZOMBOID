@@ -53,6 +53,8 @@ public class Player_Characteristic : MonoBehaviour
     public bool Restless_Sleeper_characteristics = false;
     public bool Resilient_Characteristic = false;
     public bool Prone_to_Illness_Characteristic = false;
+    public bool Fast_Healer_Characteristic = false;
+    public bool Fast_Learner_Characteristic = false;
 
     public static Player_Characteristic current = null;
     private void Awake()
@@ -163,6 +165,12 @@ public class Player_Characteristic : MonoBehaviour
                 case 6:
                     Resilient_Characteristic = true;
                     break;
+                case 13:
+                    Fast_Healer_Characteristic = true;
+                    break;
+                case 16:
+                    Fast_Learner_Characteristic = true;
+                    break;
 
 
 
@@ -229,6 +237,9 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 12:
                     // 매의 눈 ( 시야 범위 증가 (임의설정 +30%), 시야 확보 속도 증가 (임의설정 +30%) )
+                    break;
+                case 14:
+                    // 예민한 청력 ( 소리 인지 반경 +100%(200%), 주변 시야 범위 증가 (임의설정 +30%) )
                     break;
             }
 
@@ -1166,7 +1177,8 @@ public class Player_Characteristic : MonoBehaviour
         Stout.value_list.Add(2);
         Stout.value_list.Add(0.25f);
         return Stout;
-        // 근력 +2, 밀쳐내기 확률 25% 증가
+        // 근력 +2
+        // 밀쳐내기 확률 25% 증가 ( 미구현사항. 근력 증가로 인해 증가하는 밀쳐낼 확률만 구현 )
     }
 
     Characteristic Characteristic_Fast_Learner(Characteristic Fast_Learner, bool Choice)

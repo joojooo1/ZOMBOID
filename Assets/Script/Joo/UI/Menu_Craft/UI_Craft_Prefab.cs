@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public UnityEngine.UI.Image item_Image;
+    public UnityEngine.UI.Text item_Value;
     public Transform item_Transform;
     public bool Choice;
     public bool Is_Ingredients;
@@ -26,7 +27,11 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
     {
         if (Is_Ingredients)
         {
-            UI_Craft_window.ui_Craft_Window.Open_name_window(item_Transform, item_Info.Get_Ingredients_name(Ingredients_index));
+            if(item_Info != null)
+            {
+                UI_Craft_window.ui_Craft_Window.Open_name_window(item_Transform, item_Info.Get_Ingredients_name(Ingredients_index));
+            }
+            
         }
         else
         {
@@ -55,6 +60,14 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
         Ingredients_index = index;
         item_Image.sprite = item_info.Get_Ingredients_Image(index);
         item_Info = item_info;
+        item_Value.text = item_info.Get_Ingredients_value(index).ToString();
+    }
+
+    public void Set_Ingredients_Box(int index)
+    {
+        Choice = false;
+        Is_Ingredients = true;
+        Ingredients_index = index;
     }
 
 }
