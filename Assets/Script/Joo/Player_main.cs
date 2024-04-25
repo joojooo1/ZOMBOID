@@ -116,13 +116,18 @@ public class Player_main : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 0, Crafting_type.Crafting_General, aaa, "name_aaa", "이름_aaa");
-            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(aaa, "ing", "재료");
+            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(bbb, "ing1", "재료1", 3);
 
             UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 3, Crafting_type.Crafting_General, bbb, "name_bbb", "이름_bbb");
-            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(bbb, "ing", "재료");
+            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(ccc, "ing2", "재료2", 5);
 
             UI_Craft.UI_Craft_main.Add_Crafting_list(Type.food, 0, Crafting_type.Crafting_Cook, ccc, "name_ccc", "이름_ccc");
-            UI_Craft.UI_Craft_main.Crafting_Cook_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook)].Add_Ingredients(ccc, "ing", "재료");
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            UI_Craft.UI_Craft_main.Crafting_Cook_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook)].Add_Ingredients(aaa, "ing", "재료", 1);
 
         }
 

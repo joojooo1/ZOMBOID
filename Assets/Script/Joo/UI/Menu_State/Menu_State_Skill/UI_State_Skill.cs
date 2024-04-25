@@ -9,12 +9,23 @@ public class UI_State_Skill : MonoBehaviour
     public UnityEngine.UI.Text Name_text;
     public UnityEngine.UI.Text Level_text;
     public UnityEngine.UI.Text Exp_text;
-    public GameObject Multiplier;
+    public GameObject Multiplier_value;
     public UnityEngine.UI.Text Multiplier_text;
+    public GameObject[] Multiplier_icon;
 
     public void Start()
     {
         state_skill_info = this;
+    }
+
+    public void Open_Multiplier_icon(int index)
+    {
+        Multiplier_icon[index].SetActive(true);
+    }
+
+    public void Close_Multiplier_icon(int index)
+    {
+        Multiplier_icon[index].SetActive(false);
     }
 
     public void Set_InfoWindow(int num)
@@ -27,10 +38,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Fitness_Level.Get_P_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Fitness_Level.Get_P_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 1:
@@ -39,10 +50,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Strength_Level.Get_P_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Strength_Level.Get_P_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 2:
@@ -51,10 +62,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Sprinting_Level.Get_G_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Sprinting_Level.Get_G_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 3:
@@ -63,10 +74,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Lightfooted_Level.Get_G_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Lightfooted_Level.Get_G_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 4:
@@ -75,10 +86,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Nimble_Level.Get_G_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Nimble_Level.Get_G_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 5:
@@ -87,10 +98,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Sneaking_Level.Get_G_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Sneaking_Level.Get_G_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 6:
@@ -99,10 +110,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Axe_Level.Get_W_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Axe_Level.Get_W_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 7:
@@ -111,10 +122,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.LongBlunt_Level.Get_W_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.LongBlunt_Level.Get_W_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 8:
@@ -123,10 +134,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.ShortBlunt_Level.Get_W_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.ShortBlunt_Level.Get_W_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 9:
@@ -135,10 +146,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.LongBlade_Level.Get_W_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.LongBlade_Level.Get_W_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 10:
@@ -147,10 +158,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.ShortBlade_Level.Get_W_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.ShortBlade_Level.Get_W_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 11:
@@ -159,10 +170,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Spear_Level.Get_W_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Spear_Level.Get_W_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 12:
@@ -171,10 +182,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Maintenance_Level.Get_M_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Maintenance_Level.Get_M_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 13:
@@ -183,10 +194,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Aiming_Level.Get_Gun_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Aiming_Level.Get_Gun_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 14:
@@ -195,10 +206,10 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Reloading_Level.Get_Gun_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Reloading_Level.Get_Gun_TotalEXP();
 
-                if (Multiplier.activeSelf)
+                if (Multiplier_value.activeSelf)
                 {
                     Multiplier_text.text = "";
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                 }
                 break;
             case 15:
@@ -208,12 +219,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Hunting_Level.Get_S_TotalEXP();
                 if (Player_main.player_main.Skill.Hunting_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Hunting_Level.Get_S_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -224,12 +235,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Fishing_Level.Get_S_TotalEXP();
                 if (Player_main.player_main.Skill.Fishing_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Fishing_Level.Get_S_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -240,12 +251,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Foraging_Level.Get_S_TotalEXP();
                 if (Player_main.player_main.Skill.Foraging_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Foraging_Level.Get_S_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -256,12 +267,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Riding_Level.Get_S_TotalEXP();
                 if (Player_main.player_main.Skill.Riding_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Riding_Level.Get_S_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -272,12 +283,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Carpentry_Level.Get_C_TotalEXP();
                 if (Player_main.player_main.Skill.Carpentry_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Carpentry_Level.Get_C_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -288,12 +299,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Cooking_Level.Get_C_TotalEXP();
                 if (Player_main.player_main.Skill.Cooking_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Cooking_Level.Get_C_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -304,12 +315,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Farming_Level.Get_C_TotalEXP();
                 if (Player_main.player_main.Skill.Farming_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Farming_Level.Get_C_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -320,12 +331,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.FirstAid_Level.Get_C_TotalEXP();
                 if (Player_main.player_main.Skill.FirstAid_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.FirstAid_Level.Get_C_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;
@@ -336,12 +347,12 @@ public class UI_State_Skill : MonoBehaviour
                     Player_main.player_main.Skill.Electrical_Level.Get_C_TotalEXP();
                 if (Player_main.player_main.Skill.Electrical_Level.Change_Multiplier)
                 {
-                    Multiplier.SetActive(true);
+                    Multiplier_value.SetActive(true);
                     Multiplier_text.text = "( x " + Player_main.player_main.Skill.Electrical_Level.Get_C_Multiplier() + " 적용중 )";
                 }
                 else
                 {
-                    Multiplier.SetActive(false);
+                    Multiplier_value.SetActive(false);
                     Multiplier_text.text = "";
                 }
                 break;

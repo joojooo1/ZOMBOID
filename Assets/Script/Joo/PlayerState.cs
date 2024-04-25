@@ -19,12 +19,32 @@ public class Player_body_Location_Damage
     public bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     public bool _Bleeding = true;
     public float recovery_Count = 0f;
+    public float Characteristic_recovery_Count = 1f;
 
     public Player_body_Location_Damage(body_point Body_Code, Damage_Pattern _Attack_Pattern, int _index)
     {
         Location = Body_Code;
         Attack_Pattern = _Attack_Pattern;
         index = _index;
+        if (Player_Characteristic.current.Fast_Healer_Characteristic == true)
+        {
+            switch (Attack_Pattern)
+            {
+                case Damage_Pattern.Scratches:
+                case Damage_Pattern.Lacerations:
+                case Damage_Pattern.Bites:
+                case Damage_Pattern.Burn:
+                    Characteristic_recovery_Count = 0.8f;
+                    break;
+                case Damage_Pattern.Abrasion:
+                case Damage_Pattern.Infection:
+                case Damage_Pattern.bullet:
+                case Damage_Pattern.Glass:
+                case Damage_Pattern.Fracture:
+                    Characteristic_recovery_Count = 1f;
+                    break;
+            }
+        }        
     }
 
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
@@ -48,13 +68,13 @@ public class Player_body_Location_Damage
         {
             if (_Bandage)  // 붕대를 감은 경우
             {
-                recovery_Count += 3;
+                recovery_Count += (3 * Characteristic_recovery_Count);
                 Set_Is_Bleeding(false);
                 // PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
             }
             else  // 붕대를 감지 않은 경우
             {
-                recovery_Count += 2;
+                recovery_Count += (2 * Characteristic_recovery_Count);
                 Set_Is_Bleeding(true);
                 //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
                 PlayerState.playerState.Calculating_Infection(20);  // 20% 확률로 감염
@@ -64,13 +84,13 @@ public class Player_body_Location_Damage
         {
             if (_Bandage)  // 붕대를 감은 경우
             {
-                recovery_Count += 1;
+                recovery_Count += (1 * Characteristic_recovery_Count);
                 Set_Is_Bleeding(false);
                 //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
             }
             else  // 붕대를 감지 않은 경우
             {
-                recovery_Count += 0.5f;
+                recovery_Count += (0.5f * Characteristic_recovery_Count);
                 Set_Is_Bleeding(true);
                 //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
                 PlayerState.playerState.Calculating_Infection(30);  // 30% 확률로 감염

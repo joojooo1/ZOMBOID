@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum Crafting_type
 {
@@ -44,9 +45,9 @@ public class Crafting_item
             return name;
         }
     }
-    public void Add_Ingredients(Sprite image, string name, string name_kr)
+    public void Add_Ingredients(Sprite image, string name, string name_kr, int value)
     {
-        Crafting_Ingredients Ingredients = new Crafting_Ingredients(image, name, name_kr);
+        Crafting_Ingredients Ingredients = new Crafting_Ingredients(image, name, name_kr, value);
         Ingredients_list.Add(Ingredients);
     }
 
@@ -64,8 +65,22 @@ public class Crafting_item
         else
         {
             return Ingredients_list[index].Ingredients_name;
+        }        
+    }
+
+    public bool Get_Ingredients_required(int index, int currentValue)
+    {
+        if(Ingredients_list[index].Value <= currentValue)
+        {
+            Ingredients_list[index].fulfill = true;
         }
-        
+
+        return Ingredients_list[index].fulfill;
+    }
+
+    public int Get_Ingredients_value(int index)
+    {
+        return Ingredients_list[index].Value;
     }
 }
 
@@ -74,13 +89,16 @@ public class Crafting_Ingredients
     public Sprite Ingredients_Image;
     public string Ingredients_name;
     public string Ingredients_name_kr;
-    public int value;  // ÇÊ¿äÇÑ °¹¼ö
+    public int Value;  // ÇÊ¿äÇÑ °¹¼ö
+    public bool fulfill;
 
-    public Crafting_Ingredients(Sprite ingredients_Image, string ingredients_name, string ingredients_name_kr)
+    public Crafting_Ingredients(Sprite ingredients_Image, string ingredients_name, string ingredients_name_kr, int value)
     {
         Ingredients_Image = ingredients_Image;
         Ingredients_name = ingredients_name;
         Ingredients_name_kr = ingredients_name_kr;
+        Value = value;
+        fulfill = false;
     }
 }
 

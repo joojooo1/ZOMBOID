@@ -167,15 +167,31 @@ public class UI_Craft_window : MonoBehaviour
 
     public void Ins_Ingredients_Window(UI_Craft_Prefab _item)
     {
-        for (int i = 0; i < _item.item_Info.Ingredients_list.Count;)
+        if(_item.item_Info.item_type != Crafting_type.Crafting_Cook)
         {
-            GameObject obj = null;
-            obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
-            UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-            item.Set_Ingredients(_item.item_Info, i);
-            Crafting_Ingredients_Prefab_list.Add(item);
-            i++;
+            for (int i = 0; i < _item.item_Info.Ingredients_list.Count;)
+            {
+                GameObject obj = null;
+                obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+                UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                item.Set_Ingredients(_item.item_Info, i);
+                Crafting_Ingredients_Prefab_list.Add(item);
+                i++;
+            }
         }
+        else
+        {
+            for (int i = 0; i < 4;)
+            {
+                GameObject obj = null;
+                obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+                UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                item.Set_Ingredients_Box(i);                
+                Crafting_Ingredients_Prefab_list.Add(item);
+                i++;
+            }
+        }
+
     }
 
     public void Clear_Ingredients_Window()
@@ -203,7 +219,7 @@ public class UI_Craft_window : MonoBehaviour
 
         if (Selected_item != null && check == false)
         {
-            if (type != Crafting_type.Crafting_Furniture)
+            if (type != Crafting_type.Crafting_Furniture)   // 재료가 있는지 확인하고 있으면 생성하도록 구현해야함
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ins_item, Crafting_Ins_Window);
