@@ -25,7 +25,7 @@ MonoBehaviour:
   LiteratureName_Kr: "\uC0AC\uB0E5 Vol. 3"
   LiteratureWeight: 0.8
   Literature_Image: {fileID: 21300000, guid: 68f19b1e67a1be8419bbbeefa2c4d16d, type: 3}
-  Literature_Level: 3
+  Literature_Level: 5
   Literature_Page: 300
   Literature_Multiplier: 8
   L_Unhappiness: 0
