@@ -136,7 +136,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
             case Crafting_type.Crafting_Tool:
                 Crafting_Tool_list.Add(item);
                 break;
-            case Crafting_type.Crafting_Cook:
+            case Crafting_type.Crafting_Cook:  // 인벤토리에 조리도구 들어오면 추가, 없어지면 삭제
                 Crafting_Cook_list.Add(item);
                 break;
             case Crafting_type.Crafting_Medical:
@@ -146,7 +146,23 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                 Crafting_Furniture_list.Add(item);
                 break;
         }
+    }
 
-        //UI_Craft_window.ui_Craft_Window.list_ins();
+    public int Get_Crafting_list_index(Crafting_type item_type)
+    {
+        switch (item_type)
+        {
+            case Crafting_type.Crafting_General:
+                return Crafting_General_list.Count - 1;
+            case Crafting_type.Crafting_Tool:
+                return Crafting_Tool_list.Count - 1;
+            case Crafting_type.Crafting_Cook:
+                return Crafting_Cook_list.Count - 1;
+            case Crafting_type.Crafting_Medical:
+                return Crafting_Medical_list.Count - 1;
+            case Crafting_type.Crafting_Furniture:
+                return Crafting_Furniture_list.Count - 1;
+            default: return 0;
+        }
     }
 }
