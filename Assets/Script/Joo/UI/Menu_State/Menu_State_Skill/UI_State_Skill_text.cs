@@ -88,11 +88,11 @@ public class UI_State_Skill_text : MonoBehaviour, IPointerEnterHandler, IPointer
                 sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Reloading_Level.Get_Gun_EXP(),
                     (int)Player_main.player_main.Skill.Reloading_Level.Get_Gun_Level());
                 break;
-            case 15:
+            case 16:
                 sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Hunting_Level.Get_S_EXP(),
                     (int)Player_main.player_main.Skill.Hunting_Level.Get_S_Level());
                 break;
-            case 16:
+            case 15:
                 sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Fishing_Level.Get_S_EXP(),
                     (int)Player_main.player_main.Skill.Fishing_Level.Get_S_Level());
                 break;
