@@ -37,7 +37,16 @@ public class Inventory_Player_Shown : MonoBehaviour
     public List<short> Backpacks_List; // 장비, 가방 리스트
     public List<short> Storage_List; // 접근중인 저장소 리스트
 
-    public List<short> Storage_Presets_List; // 초기 생성 
+    public Transform PlayerBackPacks_Shown; // 가방에 할당된 아이콘이 보이는곳
+    public GameObject[] PBP_S_Ordering_Array; // 아이콘 순서 정리 배열
+    public Transform Out_Location;
+    public Transform The_Basic_BPIcon_NeverMove;
+
+    public GameObject BackPack_Public_Prefeb; // v
+    [SerializeField]
+    GameObject[] Inventory_Form_Prefebs;
+    public Transform Inventory_Form_Location;
+
     public List<short[,,]> Packages_Player;
     public List<short[,,]> Packages_Storage;// 장비, 가방에 대응하는 아이템 배열( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
 
@@ -113,22 +122,47 @@ public class Inventory_Player_Shown : MonoBehaviour
             Equipment[Count].GetComponent<InventorySlot>().Item_Amount = Equipment_Package_Notbe_Synchronized[2, Count, 0];
             Equipment[Count].GetComponent<InventorySlot>().Equipment = true;
             Equipment[Count].GetComponent<InventorySlot>().EquipPosition = Count;
-            //투,안,마 3.재킷,조끼 5.시,글,벨,신,바,다리보호구 11.다리,허리,허리,등 가방 15.외티 내티 속옷
+            //0.투,안,마 3.재킷,조끼 5.시,글,벨,신,바,다리보호구 11.다리,허리,허리,등 가방 15.외티 내티 속옷
             Equipment[Count].GetComponent<InventorySlot>().IsMain = true;
             Equipment[Count].GetComponent<InventorySlot>().ParentTransform = this.transform;
             Equipment[Count].GetComponent<InventorySlot>().ParentSize = 100;//임의로 100
             //Equipment[Count].GetComponent<InventorySlot>().Image = Equipment[Count].GetComponentInChildren<Image>().gameObject;
-            //Image[] Kids = Equipment[Count].GetComponentsInChildren<Image>();
-            //foreach (Image InKids in Kids)
-            //{
-            //    if (!InKids.gameObject == Equipment[Count].GetComponent<InventorySlot>().Image)
-            //    {
-            //        Equipment[Count].GetComponent<InventorySlot>().BackgroundColor = InKids.gameObject;
-            //    }
-            //}
+            int Num = 0;
+            foreach (Image Kids in Equipment[Count].GetComponentsInChildren<Image>())
+            {
+                
+                if (Num == 1)
+                {
+                    Equipment[Count].GetComponent<InventorySlot>().BackgroundColor = Kids.transform.gameObject;
+                }
+                if (Num == 2)
+                {
+                    Equipment[Count].GetComponent<InventorySlot>().Image = Kids.transform.gameObject;
+                }
+
+                Num++;
+                if (Num > 2)
+                {
+                    break;
+                }
+            }
+           
             short Size = Item_DataBase.item_database.Requesting_Size(Equipment_Package_Notbe_Synchronized[0, Count, 0], Equipment_Package_Notbe_Synchronized[1, Count, 0]);
             Equipment[Count].GetComponent<InventorySlot>().Size = Size;
+            
+            
         }
+        // 0424 1차 라이브러리 테스팅 ============================================================================================
+        Inventory_Form_Location.gameObject.GetComponentInChildren<Inventory_8x6>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[0], 0);
+        //0426 초기 가방 테스팅=================================================
+        Equipment_Package_Notbe_Synchronized[0, 14, 0] = 8;
+        Equipment_Package_Notbe_Synchronized[4, 14, 0] = 1;
+        Refreshing_Equipment_Slots(Equipment_Package_Notbe_Synchronized);
+
+        Resetting_BPICons_Order();
+        //======================================================================
+
+
     }
 
     public void SetAnim(bool open)
@@ -214,6 +248,52 @@ public class Inventory_Player_Shown : MonoBehaviour
         Backpacks_List.Add(Backpack_ID);
         //Packages.Add(Exiest_Packages);
 
+    }
+
+    public void Resetting_BPICons_Order()
+    {
+        List<GameObject> Bag_Icons = new List<GameObject>();
+        foreach (Toggle Kids in PlayerBackPacks_Shown.GetComponentsInChildren<Toggle>())
+        {
+            Bag_Icons.Add(Kids.transform.gameObject);
+        }
+        PBP_S_Ordering_Array = Bag_Icons.ToArray();
+        short Dumy_Num = 0;
+        foreach(GameObject Objects in PBP_S_Ordering_Array)
+        {
+            Objects.GetComponent<BPIcon_SimpleAct>().Its_Own_Order = Dumy_Num;
+            Dumy_Num++;
+            if (Objects.transform == The_Basic_BPIcon_NeverMove)
+            {
+                Objects.GetComponent<BPIcon_SimpleAct>().IsBasic = true;
+            }
+        }
+    }
+
+    public void When_Selected_BPIcons(short Its_Own_Order)
+    {
+        foreach(GameObject Bag_Icons in PBP_S_Ordering_Array)
+        {
+            if (Bag_Icons.GetComponent<BPIcon_SimpleAct>().Its_Own_Order != Its_Own_Order) // 다르면 outl로 이동
+            {
+                Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Out_Location);
+                Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.localPosition = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Inventory_Form_Location);
+            }
+        }
+    }
+
+    public void Return_Basic_BPIcons()
+    {
+        foreach(GameObject Kids in PBP_S_Ordering_Array)
+        {
+            Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Out_Location);
+            Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.localPosition = new Vector3(0, 0, 0);
+            Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Inventory_Form_Location);
+        }
     }
 
     public bool Drag_Check_Only() 
@@ -344,9 +424,17 @@ public class Inventory_Player_Shown : MonoBehaviour
     public void Move_Request()
     {
         int Width = FS_Item_Size / 100;
-        int Height = FS_Item_Size % 10;
+        int Height = FS_Item_Size % 100;
         short[,,] CopyPackage_FS = new short[1, 1, 1];
         short[,,] CopyPackage_LS = new short[1, 1, 1];
+
+        if (FSItSelf.GetComponent<InventorySlot>().This_Own_Form_IFDE_D != null) // 자기 안에 가방 금지
+        {
+            if (FSItSelf.GetComponent<InventorySlot>().This_Own_Form_IFDE_D == LSParent)
+            {
+                return;
+            }
+        }
 
         if (FSPSize == 100&&LSPSize == 100)
         {
@@ -657,11 +745,66 @@ public class Inventory_Player_Shown : MonoBehaviour
 
                 Equipment[XLine].GetComponent<InventorySlot>().What_Main = null;
                 Equipment[XLine].GetComponent<InventorySlot>().IsMain = true;
+                if (XLine > 10 && XLine < 15)// 11,12,13,14 가방라인
+                {
+                    if (Equipment[XLine].GetComponent<InventorySlot>().IsShown_OnPlayer == false)
+                    {
+                        Equipment[XLine].GetComponent<InventorySlot>().BP_Array_Num_Starting0 = XLine;
+                        GameObject New_BP_Image = Instantiate(BackPack_Public_Prefeb, new Vector3(0f, 0f, 0f), Quaternion.identity);
+                        Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete = New_BP_Image.transform;
+                        New_BP_Image.transform.SetParent(PlayerBackPacks_Shown);
+                        
 
+                        //prefeb.transform.localScale = Vector3.one;
+                        
+                        New_BP_Image.GetComponent<Image>().sprite = Item_DataBase.item_database.Requesting_Image(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
+
+                        RectTransform canvasRectTransform = New_BP_Image.GetComponent<RectTransform>();
+                        canvasRectTransform.anchorMin = new Vector2(0f, 1f);
+                        canvasRectTransform.anchorMax = new Vector2(0f, 1f);
+                        canvasRectTransform.localPosition = Vector3.zero;
+                        canvasRectTransform.localScale = new Vector3(0.8f, 0.8f, 1);
+
+                        int BP_RealSize = Item_DataBase.item_database.Requesting_Size(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
+                        switch (BP_RealSize)
+                        {
+                            case 405:
+                                GameObject New_Bp_Tabs = Instantiate(Inventory_Form_Prefebs[5], new Vector3(0f,0f,0f), Quaternion.identity);
+                                Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D = New_Bp_Tabs.transform;
+                                New_Bp_Tabs.transform.SetParent(Inventory_Form_Location);
+                                RectTransform Bp_Rect = New_Bp_Tabs.GetComponent<RectTransform>();
+                                Bp_Rect.anchorMin = new Vector2(0f, 1f);
+                                Bp_Rect.anchorMax = new Vector2(0f, 1f);
+                                Bp_Rect.localPosition = Vector3.zero;
+                                //0426
+                                New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs.transform;
+
+                                New_Bp_Tabs.GetComponent<Inventory_8x10>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]], Equipment_Package_Notbe_Synchronized[4, XLine, 0]);
+                                break;
+                        }
+                        
+                    }
+                }
                 //Equipment[XLine].GetComponent<InventorySlot>().Is_Changed--;
             }
             else // 빔
             {
+                if (XLine > 10 && XLine < 15&&!(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete==null))// 11,12,13,14 가방라인
+                {
+                    Destroy(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete.gameObject);
+                    Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete = null;
+                    Equipment[XLine].GetComponent<InventorySlot>().BP_Array_Num_Starting0 = 500;
+                    Equipment[XLine].GetComponent<InventorySlot>().IsShown_OnPlayer = false;
+
+                    switch (Equipment[XLine].GetComponent<InventorySlot>().Size*2) // 확인필요 사라지지않음.
+                    {
+                        case 810:
+                            Inventory_Library.IL.Inventory_DB[Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject.GetComponent<Inventory_8x10>().Storage_Order]= Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
+                            break;
+                    }
+                    Destroy(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject);
+                    Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D = null;
+                }
                 Equipment[XLine].GetComponent<InventorySlot>().Image.GetComponent<Image>().sprite = Equipment_Sample_Array[XLine];
                 Equipment[XLine].GetComponent<InventorySlot>().BackgroundColor.GetComponent<Image>().color = new Color(0.6f, 0.6f, 0.6f, 1f); // ?
                 Equipment[XLine].GetComponent<InventorySlot>().Item_Type = 0;
@@ -756,6 +899,15 @@ public class Inventory_Player_Shown : MonoBehaviour
             else return Clear;
         }
         else return Clear;
+
+        if (FSItSelf.GetComponent<InventorySlot>().This_Own_Form_IFDE_D != null) // 자기 안에 가방 금지
+        {
+            if (FSItSelf.GetComponent<InventorySlot>().This_Own_Form_IFDE_D == LSParent)
+            {
+                Clear = false;
+                return Clear;
+            }
+        }
 
         if (true)
         {
