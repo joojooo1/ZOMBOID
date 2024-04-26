@@ -83,11 +83,20 @@ public class Item_DataBase : MonoBehaviour
                 num1 += (short)0;
                 num1 += (short)(food_Ins[ID].Height);
                 return num1;
-            case 8:
+            case 8: //∝ 啊规率 抗寇贸府
                 short num8 = 0;
-                num8 += (short)(Container_Ins[ID].Width * 100);
-                num8 += (short)0;
-                num8 += (short)(Container_Ins[ID].Height);
+                if (ID < 8)
+                {
+                    num8 += (short)(((int)((Container_Ins[ID].Width) / 2)) * 100);
+                    num8 += (short)0;
+                    num8 += (short)((int)((Container_Ins[ID].Height) / 2));
+                }
+                else
+                {
+                    num8 += (short)((Container_Ins[ID].Width) * 100);
+                    num8 += (short)0;
+                    num8 += (short)(Container_Ins[ID].Height);
+                }
                 return num8;
             default:
                 return 0;
