@@ -21,6 +21,9 @@ public class UI_inventory_Using : MonoBehaviour
             case Type.food:
                 Check_item_Food(item_ID);
                 break;
+            case Type.weapon:
+                //
+                break;
         }
 
         // 사용할 때 호출하는 함수
@@ -285,7 +288,10 @@ public class UI_inventory_Using : MonoBehaviour
                     default : break;
                 }
                 
-                break;                
+                break;
+            case Type.weapon:
+                Player_main.player_main.Current_equipping_Weapon = Item_DataBase.item_database.weapons_Ins[item_ID];
+                break;
         }
     }
 
