@@ -78,7 +78,13 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
     public void SetEXP(float exp)
     {
-        P_EXP = P_EXP + exp;
+        float SlowLearner_Char = 1f;
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
+        P_EXP = P_EXP + (exp * SlowLearner_Char);
         if (P_Level < P_Max_Level && P_EXP >= P_expRequirements[(int)P_Level][0])
         {
             P_EXP -= P_expRequirements[(int)P_Level][0];
@@ -228,14 +234,20 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
 
     public void SetEXP(float exp)
     {
-        if(Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        float FastLearner_Char = 1f;
+        float SlowLearner_Char = 1f;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
         {
-            G_EXP += (exp * 1.3f);
+            FastLearner_Char = 1.3f;
         }
-        else
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
         {
-            G_EXP += exp;
+            SlowLearner_Char = 0.7f;
         }
+
+        G_EXP += exp * FastLearner_Char * SlowLearner_Char;
 
         if (G_Level < G_Max_Level && G_EXP >= G_expRequirements[(int)G_Level][0])
         {
@@ -354,21 +366,29 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
 
     public void SetEXP(float exp)
     {
-        //if (W_Level < 5)
-        //    W_EXP += exp;
+        float FastLearner_Char = 1f;
+        float Pacifist_Char = 1f;
+        float SlowLearner_Char = 1f;
 
         if (Player_Characteristic.current.Fast_Learner_Characteristic)
         {
-            W_EXP += (exp * 1.3f);
+            FastLearner_Char = 1.3f;
         }
-        else if (Player_Characteristic.current.Pacifist_Characteristic)
+        
+        if (Player_Characteristic.current.Pacifist_Characteristic)
         {
-            W_EXP += (exp * 0.75f);
+            Pacifist_Char = 0.75f;
         }
-        else
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
         {
-            W_EXP += exp;
+            SlowLearner_Char = 0.7f;
         }
+
+        if (W_Level < 5)
+            W_EXP += exp * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
+        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
+            W_EXP += exp * 0.37f * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
 
         if (W_Level < W_Max_Level && W_EXP >= W_expRequirements[(int)W_Level][0])
         {
@@ -519,19 +539,27 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
 
     public void SetEXP(float exp)
     {
-        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        float FastLearner_Char = 1f;
+        float Pacifist_Char = 1f;
+        float SlowLearner_Char = 1f;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
         {
-            M_EXP += (exp * 1.3f);
+            FastLearner_Char = 1.3f;
         }
-        else if (Player_Characteristic.current.Pacifist_Characteristic)
+
+        if (Player_Characteristic.current.Pacifist_Characteristic)
         {
-            M_EXP += (exp * 0.75f);
+            Pacifist_Char = 0.75f;
         }
-        else
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
         {
-            M_EXP += exp;
+            SlowLearner_Char = 0.7f;
         }
-        
+
+        M_EXP += exp * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
+
         if (M_Level < M_Max_Level && M_EXP >= M_expRequirements[(int)M_Level][0])
         {
             M_EXP -= M_expRequirements[(int)M_Level][0];
@@ -654,24 +682,29 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
 
     public void SetEXP(float exp)
     {
-        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        float FastLearner_Char = 1f;
+        float Pacifist_Char = 1f;
+        float SlowLearner_Char = 1f;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
         {
-            if (Gun_Level < 5)
-                Gun_EXP += exp * 1.3f;
-            else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
-                Gun_EXP += exp * 0.37f * 1.3f;
+            FastLearner_Char = 1.3f;
         }
-        else if (Player_Characteristic.current.Pacifist_Characteristic)
+
+        if (Player_Characteristic.current.Pacifist_Characteristic)
         {
-           // M_EXP += (exp * 0.75f);
+            Pacifist_Char = 0.75f;
         }
-        else
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
         {
-            if (Gun_Level < 5)
-                Gun_EXP += exp;
-            else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
-                Gun_EXP += exp * 0.37f;
+            SlowLearner_Char = 0.7f;
         }
+
+        if (Gun_Level < 5)
+            Gun_EXP += exp * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
+        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
+            Gun_EXP += exp * 0.37f * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
 
         if (Gun_Level < Gun_Max_Level && Gun_EXP >= Gun_expRequirements[(int)Gun_Level][0])
         {
@@ -837,13 +870,19 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
     public void SetEXP(float exp)
     {
+        float SlowLearner_Char = 1f;
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
         if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
         {
-            C_EXP = C_EXP + (exp * 1.3f * C_BookLevel_points * C_BookLevel_reading_Step / 3);
+            C_EXP = C_EXP + (exp * 1.3f * C_BookLevel_points * C_BookLevel_reading_Step / 3 * SlowLearner_Char);
         }
         else
         {
-            C_EXP = C_EXP + (exp * C_BookLevel_points * C_BookLevel_reading_Step / 3);
+            C_EXP = C_EXP + (exp * C_BookLevel_points * C_BookLevel_reading_Step / 3 * SlowLearner_Char);
         }
 
         if (C_Level < C_Max_Level && C_EXP >= C_expRequirements[(int)C_Level][0])
@@ -1240,13 +1279,19 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public void SetEXP(float exp)
     {
+        float SlowLearner_Char = 1f;
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
         if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
         {
-            S_EXP = S_EXP + (exp * 1.3f * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3);
+            S_EXP = S_EXP + (exp * 1.3f * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3 * SlowLearner_Char);
         }
         else
         {
-            S_EXP = S_EXP + (exp * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3);
+            S_EXP = S_EXP + (exp * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3 * SlowLearner_Char);
         }
         
         if (S_Level < S_Max_Level && S_EXP >= S_expRequirements[(int)S_Level][0])

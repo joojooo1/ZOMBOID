@@ -34,17 +34,37 @@ public class Player_body_Location_Damage
                 case Damage_Pattern.Lacerations:
                 case Damage_Pattern.Bites:
                 case Damage_Pattern.Burn:
-                    Characteristic_recovery_Count = 0.8f;
+                    Characteristic_recovery_Count *= 0.8f;
                     break;
                 case Damage_Pattern.Abrasion:
                 case Damage_Pattern.Infection:
                 case Damage_Pattern.bullet:
                 case Damage_Pattern.Glass:
                 case Damage_Pattern.Fracture:
-                    Characteristic_recovery_Count = 1f;
+                    Characteristic_recovery_Count *= 1f;
                     break;
             }
-        }        
+        }
+
+        if (Player_Characteristic.current.Slow_Healer_Characteristic == true)
+        {
+            switch (Attack_Pattern)
+            {
+                case Damage_Pattern.Scratches:
+                case Damage_Pattern.Lacerations:
+                case Damage_Pattern.Bites:
+                case Damage_Pattern.Burn:
+                    Characteristic_recovery_Count *= 1.2f;
+                    break;
+                case Damage_Pattern.Abrasion:
+                case Damage_Pattern.Infection:
+                case Damage_Pattern.bullet:
+                case Damage_Pattern.Glass:
+                case Damage_Pattern.Fracture:
+                    Characteristic_recovery_Count *= 1f;
+                    break;
+            }
+        }
     }
 
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
@@ -438,6 +458,7 @@ public class PlayerState : MonoBehaviour
     public float Tired_reduction_for_Sleeping = 1f;  // 수면으로 경감되는 피로도
     public float Tired_value = 0.01f;  // 피로도 증가량
     public float Thirsty_Speed = 1f;  // 갈증 진행 속도
+    public float Thirsty_speed = 1f;
 
     public float Zombification = 0.0f;
 
@@ -479,7 +500,7 @@ public class PlayerState : MonoBehaviour
 
             /****************** Player_Thirsty ******************/
             Thirsty_Timer += Time.deltaTime;
-            if (Thirsty_Timer > 1f)
+            if (Thirsty_Timer > Thirsty_speed)
             {
                 switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                 {

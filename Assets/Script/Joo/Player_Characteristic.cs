@@ -60,6 +60,8 @@ public class Player_Characteristic : MonoBehaviour
     public bool Thin_skinned_Characteristic = false;
     public bool Adrenaline_Junkie_Characteristic = false;
     public bool Pacifist_Characteristic = false;
+    public bool Slow_Healer_Characteristic = false;
+    public bool Slow_Learner_Characteristic = false;
 
     public static Player_Characteristic current = null;
     private void Awake()
@@ -112,47 +114,56 @@ public class Player_Characteristic : MonoBehaviour
                 // 체중
                 case 46:
                     Player_main.player_main.Set_Weight(22);
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() - 2);
                     break;
                 case 37:
-                    Player_main.player_main.Set_Weight(12);
+                    Player_main.player_main.Set_Weight(12);                    
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() - 1);
+                    Player_main.player_main.playerSkill_ActivationProbability.Probability_of_Falling_Overweight *= characteristics_Player[i].Prefab.value_list[0];
+                    Player_main.player_main.playerSkill_ActivationProbability.Endurance_Recovery_Rate_Overweight *= characteristics_Player[i].Prefab.value_list[1];
+                    Player_main.player_main.playerSkill_ActivationProbability.Probability_of_Crossing_a_High_Wall_Overweight *= characteristics_Player[i].Prefab.value_list[2];
                     break;
                 case 43:
                     Player_main.player_main.Set_Weight(-13);
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() - 1);
+                    Player_main.player_main.playerSkill_ActivationProbability.Melee_Attack_Power_Ratio_Underweight *= characteristics_Player[i].Prefab.value_list[0];
+                    Player_main.player_main.playerSkill_ActivationProbability.Probability_of_Falling_Underweight *= characteristics_Player[i].Prefab.value_list[1];
+                    Player_main.player_main.playerSkill_ActivationProbability.Probability_of_Crossing_a_High_Wall_Underweight *= characteristics_Player[i].Prefab.value_list[2];
                     break;
                 case 48:
                     Player_main.player_main.Set_Weight(-23);
                     break;
 
                 // 근력
-                case 50:
-                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(1);
+                case 50:                    
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() - 4);
                     break;
                 case 42:
-                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(2);
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() -2);
                     break;
                 case 15:
-                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(6);
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() + 1);
                     break;
                 case 20:
-                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(9);
+                    Player_main.player_main.Skill.Strength_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() +4);
                     Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Strong = true;
                     break;
 
                 // 체력
                 case 47:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(1);
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() -4);
                     
                     break;
                 case 36:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(2);
-                    
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() -3);                    
                     break;
                 case 10:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(7);                    
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() +2);                    
                     break;
                 case 19:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(9);
-                    Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Athletic = true;
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() +4);
+                    Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Athletic = 1.2f;
+                    Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Athletic_Endurance = 0.8f;
                     break;
 
                 // Bool type
@@ -188,6 +199,12 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 34:
                     Pacifist_Characteristic = true;
+                    break;
+                case 39:
+                    Slow_Healer_Characteristic = true;
+                    break;
+                case 40:
+                    Slow_Learner_Characteristic = true;
                     break;
 
 
@@ -256,6 +273,16 @@ public class Player_Characteristic : MonoBehaviour
                 case 32:
                     Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Sleepyhead = true;
                     Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 35:
+                    Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Asthmatic = characteristics_Player[i].Prefab.value_list[0];
+                    Player_main.player_main.Characteristic_Asthmatic_for_Weapon = characteristics_Player[i].Prefab.value_list[1];
+                    break;
+                case 38:
+                    Player_main.player_main.playerState.Thirsty_Speed /= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 44:
+                    Player_main.player_main.ability_Read = false;
                     break;
 
 
@@ -346,6 +373,11 @@ public class Player_Characteristic : MonoBehaviour
                     Set_Characteristic(37, true, tempObj);
                 }
             }
+
+            Player_main.player_main.Skill.Fitness_Level.Set_P_Level(Player_main.player_main.Skill.Fitness_Level.Get_P_Level() - 1);
+            Player_main.player_main.playerSkill_ActivationProbability.Probability_of_Falling_Overweight *= 1.1f;
+            Player_main.player_main.playerSkill_ActivationProbability.Endurance_Recovery_Rate_Overweight *= 0.7f;
+            Player_main.player_main.playerSkill_ActivationProbability.Probability_of_Crossing_a_High_Wall_Overweight *= 0.85f;
         }
         else if (weight >= 76 && weight < 85)  // 정상
         {
@@ -1564,8 +1596,8 @@ public class Player_Characteristic : MonoBehaviour
         Asthmatic.Points = +5;
         Asthmatic.type = Characteristic_type.Negatives;
         Asthmatic.Choice = Choice;
-        Asthmatic.value_list.Add(0.4f);
-        Asthmatic.value_list.Add(0.3f);
+        Asthmatic.value_list.Add(1.4f);
+        Asthmatic.value_list.Add(1.3f);
         return Asthmatic;
         // 달리기와 질주의 지구력 소모량 +40%, 도구와 무기 사용의 지구력 소모량 +30%
     }
@@ -1597,11 +1629,9 @@ public class Player_Characteristic : MonoBehaviour
         Overweight.Points = +6;
         Overweight.type = Characteristic_type.Negatives;
         Overweight.Choice = Choice;
-        Overweight.value_list.Add(-1);
-        Overweight.value_list.Add(0.1f);
-        Overweight.value_list.Add(-0.3f);
-        Overweight.value_list.Add(-0.15f);
-        Overweight.value_list.Add(0.1f);
+        Overweight.value_list.Add(1.1f);
+        Overweight.value_list.Add(0.7f);
+        Overweight.value_list.Add(0.85f);
 
         return Overweight;
         // 시작 몸무게: 95kg
@@ -1610,7 +1640,6 @@ public class Player_Characteristic : MonoBehaviour
         // 넘어질 확률 +10%
         // 지구력 회복량 -30%
         // 높은 담장을 넘을 확률 -15%
-        // 낮은 담장을 뛰어넘을 때 넘어지지 않을 확률 +10%
     }
 
     Characteristic Characteristic_High_Thirst(Characteristic High_Thirst, bool Choice)
@@ -1624,7 +1653,7 @@ public class Player_Characteristic : MonoBehaviour
         High_Thirst.Points = +6;
         High_Thirst.type = Characteristic_type.Negatives;
         High_Thirst.Choice = Choice;
-        High_Thirst.value_list.Add(1f);
+        High_Thirst.value_list.Add(2f);
         return High_Thirst;
         // 갈증 진행 속도 +100%
         // 비활성화되는 특성: 낮은 갈증
@@ -1656,7 +1685,6 @@ public class Player_Characteristic : MonoBehaviour
         Slow_Learner.Points = +6;
         Slow_Learner.type = Characteristic_type.Negatives;
         Slow_Learner.Choice = Choice;
-        Slow_Learner.value_list.Add(-0.3f);
         return Slow_Learner;
         // 모든 스킬의 경험치 획득량 -30%
         // 비활성화되는 특성: 현자
@@ -1690,7 +1718,6 @@ public class Player_Characteristic : MonoBehaviour
         Feeble.Points = +6;
         Feeble.type = Characteristic_type.Negatives;
         Feeble.Choice = Choice;
-        Feeble.value_list.Add(-2);
         return Feeble;
         // 근력 -2
     }
@@ -1706,10 +1733,9 @@ public class Player_Characteristic : MonoBehaviour
         Underweight.Points = +6;
         Underweight.type = Characteristic_type.Negatives;
         Underweight.Choice = Choice;
-        Underweight.value_list.Add(-1);
-        Underweight.value_list.Add(-0.2f);
-        Underweight.value_list.Add(0.1f);
-        Underweight.value_list.Add(-0.15f);
+        Underweight.value_list.Add(0.8f);
+        Underweight.value_list.Add(1.1f);
+        Underweight.value_list.Add(0.85f);
         return Underweight;
         // 시작 몸무게: 70kg
         // 몸무게 기준: 65~75kg
@@ -1730,7 +1756,6 @@ public class Player_Characteristic : MonoBehaviour
         Illiterate.Points = +8;
         Illiterate.type = Characteristic_type.Negatives;
         Illiterate.Choice = Choice;
-        Illiterate.value_list.Add(0);  // Player_main 의 ability_Read = false 로 변경하기 위함
         return Illiterate;
         // 읽기 비활성화
         // 비활성화되는 특성: 속독, 정독
@@ -1747,9 +1772,7 @@ public class Player_Characteristic : MonoBehaviour
         Thin_skinned.Points = +8;
         Thin_skinned.type = Characteristic_type.Negatives;
         Thin_skinned.Choice = Choice;
-        Thin_skinned.value_list.Add(0.23f);
         Thin_skinned.value_list.Add(0.3f);
-        Thin_skinned.value_list.Add(0.77f);
         return Thin_skinned;
         // 모든 긁힘, 찢어짐, 물림 확률 +23%
         // 회피율 : 15 + (무기 숙련도에 따른 수치 -5% ~ 7%) * {1.3(두꺼운 피부) or 0.77(얇은 피부)}
@@ -1768,8 +1791,7 @@ public class Player_Characteristic : MonoBehaviour
         Obese.Points = +10;
         Obese.type = Characteristic_type.Negatives;
         Obese.Choice = Choice;
-        Obese.value_list.Add(-2);
-        Obese.value_list.Add(-0.3f);
+        Obese.value_list.Add(0.7f);
         Obese.value_list.Add(0.2f);
         Obese.value_list.Add(0.2f);
         Obese.value_list.Add(-0.6f);

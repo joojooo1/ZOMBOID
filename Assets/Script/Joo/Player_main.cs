@@ -142,6 +142,8 @@ public class Player_main : MonoBehaviour
 
         Weight_text.text = Weight.ToString();
         if (!ability_Sleeping) { Is_Sleeping = false; }
+        if (!ability_Eat) { Is_Eating = false; }
+        if (!ability_Read) { Is_Reading = false; }
 
         if (UI_main.ui_main.Playing)
         {
@@ -479,7 +481,7 @@ public class Player_main : MonoBehaviour
 
         if (Is_Running)
         {
-            Speed *= 1.2f;
+            Speed *= playerSkill_ActivationProbability.Get_Running_Speed();
             if (Is_Crouch)
             {
                 Speed *= 0.8f;
@@ -707,11 +709,12 @@ public class Player_main : MonoBehaviour
                 Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.Gun:
+                Skill.Aiming_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                Skill.Reloading_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             default:
                 break;
         }
-
     }
 
 
@@ -989,6 +992,7 @@ public class Player_main : MonoBehaviour
 
     }
 
+    public float Characteristic_Asthmatic_for_Weapon = 1f;
     public float Calculate_damage_to_Zombie()  // Player -> Zombie АјАн
     {
         System.Random rand_Damage = new System.Random();
@@ -1012,7 +1016,8 @@ public class Player_main : MonoBehaviour
             Total_Damage *= 1.2f;
         }
 
-
+        float temp = 3.0f * playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate() * Characteristic_Asthmatic_for_Weapon;
+        Set_Endurance(-temp);
 
 
         return Total_Damage;
