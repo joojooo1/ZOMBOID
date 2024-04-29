@@ -659,17 +659,35 @@ public class PlayerState : MonoBehaviour
         if (Get_Is_Infection())  // °¨¿°µÈ °æ¿ì
         {
             Infection_Timer += Time.deltaTime;
-            if (Infection_Timer > 5f)
+            if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
             {
-                if (Player_Characteristic.current.Resilient_Characteristic)
+                if (Infection_Timer > 3.75f)
                 {
-                    Zombification += (0.07f * 0.25f);
-                }
-                else
-                    Zombification += 0.07f;
+                    if (Player_Characteristic.current.Resilient_Characteristic)
+                    {
+                        Zombification += (0.07f * 0.25f);
+                    }
+                    else
+                        Zombification += 0.07f;
 
-                Infection_Timer = 0;
+                    Infection_Timer = 0;
+                }
             }
+            else
+            {
+                if (Infection_Timer > 5f)
+                {
+                    if (Player_Characteristic.current.Resilient_Characteristic)
+                    {
+                        Zombification += (0.07f * 0.25f);
+                    }
+                    else
+                        Zombification += 0.07f;
+
+                    Infection_Timer = 0;
+                }
+            }
+
         }
 
     }
@@ -752,7 +770,7 @@ public class PlayerState : MonoBehaviour
     float Apparent_Temperature_forMoodle = 0f;
 
     public float Get_Apparent_Temperature()
-    {
+    {        
         return Apparent_Temperature + Apparent_Temperature_forMoodle;
     }
 
@@ -764,7 +782,14 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            Apparent_Temperature += value;
+            if(Player_Characteristic.current.Prone_to_Illness_Characteristic && value < 0)
+            {
+                Apparent_Temperature += value * 0.8f;
+            }
+            else
+            {
+                Apparent_Temperature += value;
+            }            
         }
         if((Get_Apparent_Temperature()) >= 36f)
         {

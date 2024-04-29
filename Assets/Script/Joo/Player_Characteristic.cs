@@ -59,6 +59,7 @@ public class Player_Characteristic : MonoBehaviour
     public bool Thick_Skinned_Characteristic = false;
     public bool Thin_skinned_Characteristic = false;
     public bool Adrenaline_Junkie_Characteristic = false;
+    public bool Pacifist_Characteristic = false;
 
     public static Player_Characteristic current = null;
     private void Awake()
@@ -185,6 +186,9 @@ public class Player_Characteristic : MonoBehaviour
                 case 18:
                     Adrenaline_Junkie_Characteristic = true;
                     break;
+                case 34:
+                    Pacifist_Characteristic = true;
+                    break;
 
 
 
@@ -231,7 +235,6 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 33:
                     Prone_to_Illness_Characteristic = true;
-
                     break;
                 case 41:
                     Restless_Sleeper_characteristics = true;
@@ -1512,7 +1515,6 @@ public class Player_Characteristic : MonoBehaviour
         Sleepyhead.Points = +4;
         Sleepyhead.type = Characteristic_type.Negatives;
         Sleepyhead.Choice = Choice;
-        Sleepyhead.value_list.Add(0.9f);
         return Sleepyhead;
         // 피로도 상승률 +30%, 수면 효율 -10%
         // 비활성화되는 특성: 잠이 없는
@@ -1529,12 +1531,10 @@ public class Player_Characteristic : MonoBehaviour
         Prone_to_Illness.Points = +4;
         Prone_to_Illness.type = Characteristic_type.Negatives;
         Prone_to_Illness.Choice = Choice;
-        Prone_to_Illness.value_list.Add(0.7f);
-        Prone_to_Illness.value_list.Add(-0.2f);
         Prone_to_Illness.value_list.Add(0.5f);
-        Prone_to_Illness.value_list.Add(0.25f);
         return Prone_to_Illness;
-        // 감기에 걸릴 확률 +70%, 추위 내성 -20%, 추위 진행 속도 +50%, 좀비화 속도 +25%
+        // 감기에 걸릴 확률 +70%, 추위 내성 -20%, 좀비화 속도 +25%
+        // 추위 진행 속도 +50% ( 미구현 사항 )
         // 비활성화되는 특성: 강한 회복력
     }
 
@@ -1549,7 +1549,6 @@ public class Player_Characteristic : MonoBehaviour
         Pacifist.Points = +4;
         Pacifist.type = Characteristic_type.Negatives;
         Pacifist.Choice = Choice;
-        Pacifist.value_list.Add(-0.25f);
         return Pacifist;
         // 모든 무기, 물건관리, 조준 스킬의 경험치 습득률 -25%
     }

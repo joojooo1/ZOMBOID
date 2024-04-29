@@ -357,9 +357,13 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
         //if (W_Level < 5)
         //    W_EXP += exp;
 
-        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
         {
             W_EXP += (exp * 1.3f);
+        }
+        else if (Player_Characteristic.current.Pacifist_Characteristic)
+        {
+            W_EXP += (exp * 0.75f);
         }
         else
         {
@@ -519,6 +523,10 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
         {
             M_EXP += (exp * 1.3f);
         }
+        else if (Player_Characteristic.current.Pacifist_Characteristic)
+        {
+            M_EXP += (exp * 0.75f);
+        }
         else
         {
             M_EXP += exp;
@@ -652,6 +660,10 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
                 Gun_EXP += exp * 1.3f;
             else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
                 Gun_EXP += exp * 0.37f * 1.3f;
+        }
+        else if (Player_Characteristic.current.Pacifist_Characteristic)
+        {
+           // M_EXP += (exp * 0.75f);
         }
         else
         {
