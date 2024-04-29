@@ -22,16 +22,6 @@ public class Item_Literature : ScriptableObject
     public Sprite Literature_Image;
 
     public int Literature_Level;
-    public int Literature_Page;
-    // 게임시간 10분에 5페이지 ( 실제시간 25초에 5페이지 )
-    /*
-        skillbook level 1:  220 page  1100초 ( 18분20초 )
-        skillbook level 2:  260 page  1300초 ( 21분40초 )
-        skillbook level 3:  300 page  1500초 ( 25분 )
-        skillbook level 4:  340 page  1700초 ( 28분20초 )
-        skillbook level 5:  380 page  1900초 ( 31분40초 )
-     */
-    public int Literature_Multiplier;
 
     public float L_Unhappiness;
     public float L_Stress;

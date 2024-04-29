@@ -21,18 +21,22 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
     public bool Is_Virtical_While_Moving;
     public int Size;
 
-    public bool Equipment;
-    public int EquipPosition;
+    public bool Equipment; //v
+    public int EquipPosition; //v
+    public bool IsShown_OnPlayer;
+    public int BP_Array_Num_Starting0;
+    public Transform This_Own_Image_IfDoesntExiest_Delete;
+    public Transform This_Own_Form_IFDE_D;
 
 
     bool First_Con = false;
 
     public bool IsMain; // v false= 종속(빈칸이 아님)
     public Transform What_Main; // v
-    public int Is_Changed;
+    public int Is_Changed; // v
 
-    public Transform ParentTransform;
-    public short ParentSize;
+    public Transform ParentTransform; //v
+    public short ParentSize; //v
 
     public GameObject Putti;
     public GameObject Text;
@@ -42,6 +46,9 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
 
     public void Start()
     {
+        IsShown_OnPlayer = false;
+        BP_Array_Num_Starting0 = 500;
+        //게임 시작시 착용한 장비에서 문제발생가능 시작시 장비창 동기화진행
         //count, image 연동 DB연동
     }
     public void On_F()
@@ -157,7 +164,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
             Inventory_Player_Shown.InvPS.FS_Is_Virtical = Is_Virtical_While_Moving;
             //UPDATE
         }
-        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(Input.mousePosition.x + 10, Input.mousePosition.y - 10, 0);
+        Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.transform.position = new Vector3(Input.mousePosition.x -25, Input.mousePosition.y -50, 0);
         //Inventory_Player_Shown.InvPS.
     }
 
