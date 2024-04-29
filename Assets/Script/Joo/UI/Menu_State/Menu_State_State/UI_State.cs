@@ -81,7 +81,7 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
             {
                 Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageArray(k, false, Attack_Pattern, position);
 
-                int j = 1;
+                int j = 0;
                 for (int i = 0; i < Damagelist.Count; i++)
                 {
                     if (Damagelist[i].body_position == position)

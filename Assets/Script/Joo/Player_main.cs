@@ -126,23 +126,22 @@ public class Player_main : MonoBehaviour
             //Skill.Fishing_Level.Set_S_Books_Point(3);
 
             UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 0, Crafting_type.Crafting_General, aaa, "제작_General_1", "제작_General_1_kr");
-            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(bbb, "ing", "재료", 1);
+            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(Type.literature, 0, bbb, "ing", "재료", 1);
 
             UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 3, Crafting_type.Crafting_General, bbb, "제작_General_2", "제작_General_2_kr");
-            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(ccc, "ing", "재료", 4);
+            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(Type.literature, 3, ccc, "ing", "재료", 4);
 
             UI_Craft.UI_Craft_main.Add_Crafting_list(Type.food, 2, Crafting_type.Crafting_Cook, ccc, "제작_Cook_1", "제작_Cook_1_kr");
         }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            UI_Craft.UI_Craft_main.Crafting_Cook_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook)].Add_Ingredients(aaa, "ing", "재료", 1);
+            //UI_Craft.UI_Craft_main.Crafting_Cook_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook)].Add_Ingredients(aaa, "ing", "재료", 1);
             Skill.Fishing_Level.SetEXP(700);
         }
 
         Weight_text.text = Weight.ToString();
         if (!ability_Sleeping) { Is_Sleeping = false; }
-        else { Is_Sleeping = true; }
 
         if (UI_main.ui_main.Playing)
         {
@@ -150,7 +149,7 @@ public class Player_main : MonoBehaviour
             Satiety_Timer += Time.deltaTime;
             if (Satiety_Timer > 1.0f)  // 포만감 1초에 0.25씩 감소
             {
-                Satiety -= Satiety_value;  // 포만감 -300 ~ 300
+                Satiety -= (Satiety_value * Rate_of_Hunger_increase );  // 포만감 -300 ~ 300
                 if (Satiety < -300) { Satiety = -300.0f; }
                 else if (Satiety > 300) { Satiety = 300.0f; }
 
@@ -319,15 +318,48 @@ public class Player_main : MonoBehaviour
             Read_Timer += Time.deltaTime;
             if(Read_Timer >= 5f)
             {
+                switch (current_SkillBook_type)
+                {
+                    case Skill_Type.Fishing:
+                        Skillbook_Readpage = Skill.Fishing_Level.Get_S_reading_page();
+                        break;
+                    case Skill_Type.Hunting:
+                        Skillbook_Readpage = Skill.Hunting_Level.Get_S_reading_page();
+                        break;
+                    case Skill_Type.Foraging:
+                        Skillbook_Readpage = Skill.Foraging_Level.Get_S_reading_page();
+                        break;
+                    case Skill_Type.Riding:
+                        Skillbook_Readpage = Skill.Riding_Level.Get_S_reading_page();
+                        break;
+                    case Skill_Type.Carpentry:
+                        Skillbook_Readpage = Skill.Carpentry_Level.Get_C_reading_page();
+                        break;
+                    case Skill_Type.Cooking:
+                        Skillbook_Readpage = Skill.Cooking_Level.Get_C_reading_page();
+                        break;
+                    case Skill_Type.Farming:
+                        Skillbook_Readpage = Skill.Farming_Level.Get_C_reading_page();
+                        break;
+                    case Skill_Type.FirstAid:
+                        Skillbook_Readpage = Skill.FirstAid_Level.Get_C_reading_page();
+                        break;
+                    case Skill_Type.Electrical:
+                        Skillbook_Readpage = Skill.Electrical_Level.Get_C_reading_page();
+                        break;
+                }
+
                 Skillbook_Readpage++;
                 Read_Timer = 0;
-                switch (current_SkillBook_type)
+
+                switch (current_SkillBook_type)   // 다 읽으면 멈춤
                 {
                     case Skill_Type.Fishing:
                         Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
                         if (Skill.Fishing_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -336,6 +368,7 @@ public class Player_main : MonoBehaviour
                         if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -344,6 +377,7 @@ public class Player_main : MonoBehaviour
                         if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -352,6 +386,7 @@ public class Player_main : MonoBehaviour
                         if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;                    
@@ -360,6 +395,7 @@ public class Player_main : MonoBehaviour
                         if(Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -368,6 +404,7 @@ public class Player_main : MonoBehaviour
                         if (Skill.Cooking_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -376,6 +413,7 @@ public class Player_main : MonoBehaviour
                         if (Skill.Farming_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -384,6 +422,7 @@ public class Player_main : MonoBehaviour
                         if (Skill.FirstAid_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -392,6 +431,7 @@ public class Player_main : MonoBehaviour
                         if (Skill.Electrical_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
+                            current_SKillBook_level = -1;
                             Skillbook_Readpage = 0;
                         }
                         break;
@@ -400,7 +440,12 @@ public class Player_main : MonoBehaviour
         }
         else
         {
-            Read_Timer = 0;
+            if(Skillbook_Readpage > 0)
+            {
+                Read_Timer = 0;
+                current_SKillBook_level = -1;
+                Skillbook_Readpage = 0;
+            }
         }
     }
 
@@ -502,7 +547,13 @@ public class Player_main : MonoBehaviour
                 Speed_rate_for_Unhappy = (1 - Speed_rate/100);
                 break;
         }
+
         Moving_Speed_forMoodle = Speed_rate_for_Endurance * Speed_rate_for_Has_a_Cold * Speed_rate_for_Heavy_Load * Speed_rate_for_Pain * Speed_rate_for_Hyperthermia_Hot * Speed_rate_for_Hyperthermia_Cold * Speed_rate_for_Unhappy;
+        if (Player_Characteristic.current.Adrenaline_Junkie_Characteristic)
+        {
+            if (playerMoodles.Moodle_Panic.Get_Moodle_current_step() == 3) Moving_Speed_forMoodle += 0.2f;
+            else if(playerMoodles.Moodle_Panic.Get_Moodle_current_step() == 4) Moving_Speed_forMoodle += 0.25f;
+        }
     }
 
     // Player 행동속도
@@ -522,7 +573,7 @@ public class Player_main : MonoBehaviour
         return Driving_Speed * Driving_control;
     }
 
-    float Driving_Speed = 1f;
+    public float Driving_Speed = 1f;
     public void Set_Driving_Speed(float value)
     {
         float speed = Driving_Speed_min;
@@ -558,7 +609,19 @@ public class Player_main : MonoBehaviour
 
     public float Get_Evasion()
     {
-        return Evasion + playerSkill_ActivationProbability.Get_Injury_chance();
+        if (Player_Characteristic.current.Thick_Skinned_Characteristic)
+        {
+            return Evasion + playerSkill_ActivationProbability.Get_Injury_chance() * 1.3f;
+        }
+        else if (Player_Characteristic.current.Thin_skinned_Characteristic)
+        {
+            return Evasion + playerSkill_ActivationProbability.Get_Injury_chance() * 0.77f;
+        }
+        else
+        {
+            return Evasion + playerSkill_ActivationProbability.Get_Injury_chance();
+        }
+        
     }
 
     public float Get_Calories()
@@ -586,6 +649,22 @@ public class Player_main : MonoBehaviour
         else if (Weight > 150) { Weight = 150.0f; }
 
         Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
+    }
+
+    public void Set_Satiety(float value)
+    {
+        Satiety += value;
+        if (Satiety < -300) { Satiety = -300.0f; }
+        else if (Satiety > 300) { Satiety = 300.0f; }
+
+        if (Satiety >= 0)
+        {
+            playerMoodles.Moodle_Stuffed.Set_Moodles_state(Satiety);
+        }
+        else
+        {
+            playerMoodles.Moodle_Hungry.Set_Moodles_state(-Satiety);
+        }
     }
 
     public void Calculating_Food_Poisoning(float food_value)
