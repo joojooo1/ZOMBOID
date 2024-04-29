@@ -8,6 +8,7 @@ public class PlayerSkill_ActivationProbability
 
     // 피로도 생성 비율 ( * )  // Fitness
     float Fatigue_Generation_Rate = 1.00f;
+    public bool Characteristic_Sleepyhead = false;
     public float Get_Fatigue_Generation_Rate() { return Fatigue_Generation_Rate; }
 
     public void Set_Fatigue_Generation_Rate_forSkill(float SkillLevel)
@@ -50,6 +51,12 @@ public class PlayerSkill_ActivationProbability
             default:
                 break;
         }
+
+        if (Characteristic_Sleepyhead)
+        {
+            Fatigue_Generation_Rate *= 1.3f;
+        }
+        
     }
 
     // 지구력 회복 비율 ( * )  // Fitness
@@ -100,7 +107,18 @@ public class PlayerSkill_ActivationProbability
 
     // 지구력 소모 비율 ( * )  // Fitness
     float Endurance_Depletion_Rate = 0.9f;
-    public float Get_Endurance_Depletion_Rate() { return Endurance_Depletion_Rate; }
+    public float Get_Endurance_Depletion_Rate() 
+    {
+        if (Characteristic_Athletic)
+        {
+            return Endurance_Depletion_Rate * 0.8f;
+        }
+        else
+        {
+            return Endurance_Depletion_Rate;
+        }
+            
+    }
 
     public void Set_Endurance_Depletion_Rate_forSkill(float SkillLevel)
     {
@@ -360,6 +378,7 @@ public class PlayerSkill_ActivationProbability
 
 
     // 넘어질 확률 ( - )  // Fitness  // Moodle_Heavy_Load, Moodle_Pain
+    // 달리거나 전력 질주를 하는 도중 낮은 울타리를 넘거나 좀비와 부딫힐 때 넘어질 확률
     float Probability_of_Falling = 0.2f;
     float Probability_of_Falling_forSkill = 0f;
     float Probability_of_Falling_forMoodle = 0f;
@@ -519,7 +538,18 @@ public class PlayerSkill_ActivationProbability
 
     // 밀쳐낼 확률 ( * )   // Strength
     float HitForce = 0.45f;
-    public float Get_HitForce() { return HitForce; }
+    public bool Characteristic_Strong = false;
+    public float Get_HitForce() 
+    {
+        if (Characteristic_Strong)
+        {
+            return HitForce * 1.4f;
+        }
+        else
+        {
+            return HitForce;
+        }
+    }
 
     public void Set_HitForce_forSkill(float SkillLevel)
     {
@@ -832,11 +862,20 @@ public class PlayerSkill_ActivationProbability
 
     // 달리기 속도 ( * )  // Sprinting
     float Running_Speed = 1.0f;
+    public bool Characteristic_Athletic = false;
     public float Get_Running_Speed() { return Running_Speed; }
 
     public void Set_Running_Speed_forSkill(float SkillLevel)
     {
-        Running_Speed = 1.0f + 0.05f * SkillLevel;
+        if (Characteristic_Athletic)
+        {
+            Running_Speed = (1.0f + 0.05f * SkillLevel) * 1.2f;
+        }
+        else
+        {
+            Running_Speed = 1.0f + 0.05f * SkillLevel;
+        }
+        
     }
 
     // 발소리 반경 ( * )  // Lightfooted

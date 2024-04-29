@@ -143,6 +143,21 @@ public class UI_inventory_Using : MonoBehaviour
 
     public void Check_item_Food(int item_ID)
     {
+        if (Item_DataBase.item_database.food_Ins[item_ID].FoodType == Food_Type.Canned_food)
+        {
+            if(Item_DataBase.item_database.food_Ins[item_ID].Is_Canned == false
+                && Player_main.player_main.ability_Eat && !Player_main.player_main.Is_Eating)
+            {
+                Possibility = true;
+            }
+        }
+        else
+        {
+            if (Player_main.player_main.ability_Eat && !Player_main.player_main.Is_Eating)
+            {
+                Possibility = true;
+            }
+        }
 
     }
 
@@ -152,10 +167,125 @@ public class UI_inventory_Using : MonoBehaviour
         {
             case Type.literature:
                 Player_main.player_main.Is_Reading = true;
+                switch (Item_DataBase.item_database.literature_Ins[item_ID].LiteratureType)
+                {
+                    case Book_Type.Leisure:
+                        Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.literature_Ins[item_ID].L_Unhappiness);
+                        Player_main.player_main.playerMoodles.Moodle_Stressed.Set_Moodles_state(Item_DataBase.item_database.literature_Ins[item_ID].L_Stress);
+                        Player_main.player_main.playerMoodles.Moodle_Bored.Set_Moodles_state(Item_DataBase.item_database.literature_Ins[item_ID].L_Boredom);
+                        break;
+                    case Book_Type.SkillBook:
+                        Player_main.player_main.current_SkillBook_type = Item_DataBase.item_database.literature_Ins[item_ID].LiteratureSkillType;
+                        Player_main.player_main.current_SKillBook_level = Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level;
+                        break;
+                    case Book_Type.Magazine:
+                        // 해당 레시피 제작가능하게 값 변경
+                        break;
+                    default: break;
+                }
                 break;
             case Type.food:
                 Player_main.player_main.Is_Eating = true;
-                break;
+                switch (Item_DataBase.item_database.food_Ins[item_ID].FoodType)
+                {
+                    case Food_Type.Spice:
+                        Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                        Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[0]);
+                        Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[0]);
+                        break;
+                    case Food_Type.Canned_food:
+                    case Food_Type.Vegetable:
+                    case Food_Type.Fruit:
+                    case Food_Type.Grain:
+                    case Food_Type.Fish:
+                    case Food_Type.Meat:
+                    case Food_Type.Cooking:
+                        if (Item_DataBase.item_database.food_Ins[item_ID].Is_Perishable)
+                        {
+                            if(Item_DataBase.item_database.food_Ins[item_ID].Freshness == Freshness_Level.rotten)
+                            {
+                                Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                                Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Thirst);
+                                Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[0]);
+                                Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[0]);
+                                Player_main.player_main.playerMoodles.Moodle_Bored.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Boredom[0]);
+                                Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                            }
+                            else
+                            {
+                                Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                                Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Thirst);
+                                Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                                Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                                Player_main.player_main.playerMoodles.Moodle_Bored.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Boredom[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                                Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                            }
+
+                        }
+                        else
+                        {
+                            Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                            Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Thirst);
+                            Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                            Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[0]);
+                            Player_main.player_main.playerMoodles.Moodle_Bored.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Boredom[0]);
+                            Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                        }
+                        break;                    
+                    case Food_Type.Sweet:
+                        if (Item_DataBase.item_database.food_Ins[item_ID].Is_Perishable)
+                        {
+                            Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                            Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                            Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                            Player_main.player_main.playerMoodles.Moodle_Bored.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Boredom[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                            Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                        }
+                        else
+                        {
+                            Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                            Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[0]);
+                            Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[0]);
+                            Player_main.player_main.playerMoodles.Moodle_Bored.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Boredom[0]);
+                            Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                        }
+                        break;
+                    case Food_Type.Drink:
+                    case Food_Type.Water:
+                        if (Item_DataBase.item_database.food_Ins[item_ID].Is_Perishable)
+                        {
+                            Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                            Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Thirst);
+                            Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[0]);
+                            Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                            Player_main.player_main.playerMoodles.Moodle_Bored.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Boredom[(int)Item_DataBase.item_database.food_Ins[item_ID].Freshness]);
+                            Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                        }
+                        else
+                        {
+                            if (Item_DataBase.item_database.food_Ins[item_ID].Is_Alcoholic)
+                            {
+                                Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                                Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Thirst);
+                                Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[0]);
+                                Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[0]);
+                                Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                            }
+                            else
+                            {
+                                Player_main.player_main.Set_Calories(Item_DataBase.item_database.food_Ins[item_ID].F_Calories);
+                                Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Thirst);
+                                Player_main.player_main.Set_Satiety(Item_DataBase.item_database.food_Ins[item_ID].F_Satiety[0]);
+                                Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Unhappiness[0]);
+                                Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Item_DataBase.item_database.food_Ins[item_ID].F_Fatigue[0]);
+                                Player_main.player_main.Calculating_Food_Poisoning(Item_DataBase.item_database.food_Ins[item_ID].Probability_of_poisoning);
+                            }
+                        }
+                        break;
+                    default : break;
+                }
+                
+                break;                
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -55,6 +56,9 @@ public class Player_Characteristic : MonoBehaviour
     public bool Prone_to_Illness_Characteristic = false;
     public bool Fast_Healer_Characteristic = false;
     public bool Fast_Learner_Characteristic = false;
+    public bool Thick_Skinned_Characteristic = false;
+    public bool Thin_skinned_Characteristic = false;
+    public bool Adrenaline_Junkie_Characteristic = false;
 
     public static Player_Characteristic current = null;
     private void Awake()
@@ -130,6 +134,7 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 20:
                     Player_main.player_main.Skill.Strength_Level.Set_P_Level(9);
+                    Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Strong = true;
                     break;
 
                 // 체력
@@ -146,7 +151,7 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 19:
                     Player_main.player_main.Skill.Fitness_Level.Set_P_Level(9);
-                    
+                    Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Athletic = true;
                     break;
 
                 // Bool type
@@ -171,7 +176,15 @@ public class Player_Characteristic : MonoBehaviour
                 case 16:
                     Fast_Learner_Characteristic = true;
                     break;
-
+                case 17:
+                    Thick_Skinned_Characteristic = true;
+                    break;
+                case 45:
+                    Thin_skinned_Characteristic = true;
+                    break;
+                case 18:
+                    Adrenaline_Junkie_Characteristic = true;
+                    break;
 
 
 
@@ -224,7 +237,23 @@ public class Player_Characteristic : MonoBehaviour
                     Restless_Sleeper_characteristics = true;
                     Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= characteristics_Player[i].Prefab.value_list[0];
                     break;
-
+                case 21:
+                    Player_main.player_main.Driving_Speed *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 22:
+                    Player_main.player_main.Panic_value *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 24:
+                    Player_main.player_main.Read_Speed *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
+                case 26:
+                    Player_main.player_main.Likelihood_of_food_poisoning *= characteristics_Player[i].Prefab.value_list[0];
+                    Player_main.player_main.Time_for_food_poisoning *= characteristics_Player[i].Prefab.value_list[1];
+                    break;
+                case 32:
+                    Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Sleepyhead = true;
+                    Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= characteristics_Player[i].Prefab.value_list[0];
+                    break;
 
 
 
@@ -240,6 +269,16 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 14:
                     // 예민한 청력 ( 소리 인지 반경 +100%(200%), 주변 시야 범위 증가 (임의설정 +30%) )
+                    break;
+                case 23:
+                    Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling(characteristics_Player[i].Prefab.value_list[0]);
+                    // 덤벙댐 ( 움직일 때 발생하는 소음반경 +20% )
+                    break;
+                case 25:
+                    // 짧은 시야 ( 시야 확보 속도 감소 ( 임의설정 -20% ) )
+                    break;
+                case 31:
+                    // 어두운 귀 ( 소리 인지 범위 감소 ( 임의설정 -30% ) , 소리가 먹먹하게 들림, 주변 밝기 감소 ( 임의설정 -30% ) )
                     break;
             }
 
@@ -1139,7 +1178,6 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Healer.Points = -6;
         Fast_Healer.type = Characteristic_type.Positives;
         Fast_Healer.Choice = Choice;
-        Fast_Healer.value_list.Add(-0.2f);
         return Fast_Healer;
         // 긁힘, 찢어짐, 물림, 깊은 상처, 화상 상처 심각도 -20%
         // 비활성화되는 특성: 느린 치유
@@ -1174,7 +1212,6 @@ public class Player_Characteristic : MonoBehaviour
         Stout.Points = -6;
         Stout.type = Characteristic_type.Positives;
         Stout.Choice = Choice;
-        Stout.value_list.Add(2);
         Stout.value_list.Add(0.25f);
         return Stout;
         // 근력 +2
@@ -1192,7 +1229,6 @@ public class Player_Characteristic : MonoBehaviour
         Fast_Learner.Points = -6;
         Fast_Learner.type = Characteristic_type.Positives;
         Fast_Learner.Choice = Choice;
-        Fast_Learner.value_list.Add(0.3f);
         return Fast_Learner;
         // 신체 능력(근력, 체력)을 제외한 모든 스킬의 경험치 획득량 +30%
         // 비활성화되는 특성: 느린 학습
@@ -1209,8 +1245,6 @@ public class Player_Characteristic : MonoBehaviour
         Thick_Skinned.Points = -8;
         Thick_Skinned.type = Characteristic_type.Positives;
         Thick_Skinned.Choice = Choice;
-        Thick_Skinned.value_list.Add(-0.3f);
-        Thick_Skinned.value_list.Add(1.3f);
         return Thick_Skinned;
         // 긁힘, 찢어짐, 물림 확률 -30%
         // 회피율 : 15 + (무기 숙련도에 따른 수치 -5% ~ 7%) * {1.3(두꺼운 피부) or 0.77(얇은 피부)}
@@ -1228,8 +1262,6 @@ public class Player_Characteristic : MonoBehaviour
         Adrenaline_Junkie.Points = -8;
         Adrenaline_Junkie.type = Characteristic_type.Positives;
         Adrenaline_Junkie.Choice = Choice;
-        Adrenaline_Junkie.value_list.Add(0.2f);
-        Adrenaline_Junkie.value_list.Add(0.25f);
         return Adrenaline_Junkie;
         // 3단계 긴장이면 0.2, 4단계 긴장이면 0.25의 추가 이동속도를 얻는다.
         // 비활성화되는 특성: 겁쟁이, 광장공포증, 밀실공포증
@@ -1246,9 +1278,6 @@ public class Player_Characteristic : MonoBehaviour
         Athletic.Points = -10;
         Athletic.type = Characteristic_type.Positives;
         Athletic.Choice = Choice;
-        Athletic.value_list.Add(4);
-        Athletic.value_list.Add(0.2f);
-        Athletic.value_list.Add(-0.2f);
         return Athletic;
         // 체력 +4, 달리기 속도 +20%, 이동으로 인한 지구력 소모율 -20%
     }
@@ -1264,8 +1293,6 @@ public class Player_Characteristic : MonoBehaviour
         Strong.Points = -10;
         Strong.type = Characteristic_type.Positives;
         Strong.Choice = Choice;
-        Strong.value_list.Add(4);
-        Strong.value_list.Add(0.4f);
         return Strong;
         // 근력 +4, 밀쳐낼 확률 +40%
     }
@@ -1292,7 +1319,7 @@ public class Player_Characteristic : MonoBehaviour
         Sunday_driver.Points = +1;
         Sunday_driver.type = Characteristic_type.Negatives;
         Sunday_driver.Choice = Choice;
-        Sunday_driver.value_list.Add(-0.4f);
+        Sunday_driver.value_list.Add(0.6f);
         return Sunday_driver;
         // 차량 가속력 -40%
         // 최대 속도가 30mph[= 48km]로 제한, 최대 속도로 주행중 기름이 추가로 소모됨   ( 미구현사항 )
@@ -1310,7 +1337,7 @@ public class Player_Characteristic : MonoBehaviour
         Cowardly.Points = +2;
         Cowardly.type = Characteristic_type.Negatives;
         Cowardly.Choice = Choice;
-        Cowardly.value_list.Add(1f);
+        Cowardly.value_list.Add(2f);
         return Cowardly;
         // 긴장 상승률 +100%
         // 비활성화되는 특성: 용감함, 아드레날린 중독
@@ -1327,29 +1354,13 @@ public class Player_Characteristic : MonoBehaviour
         Clumsy.Points = +2;
         Clumsy.type = Characteristic_type.Negatives;
         Clumsy.Choice = Choice;
+        Clumsy.value_list.Add(0.1f);
         Clumsy.value_list.Add(0.2f);
-        Clumsy.value_list.Add(0.1f);
-        Clumsy.value_list.Add(0.1f);
         return Clumsy;
-        // 움직일 때 발생하는 소음반경 +20%, 넘어질 확률 +10%
-        // 달리거나 전력 질주를 하는 도중 낮은 울타리를 넘거나 좀비와 부딫힐 때 넘어질 확률이 추가로 10% 증가
+        // 넘어질 확률 +10%
+        // 움직일 때 발생하는 소음반경 +20%
         // 비활성화되는 특성: 우아함
     }
-
-    //Characteristic Characteristic_All_Thumbs(Characteristic All_Thumbs)
-    //{
-    //    All_Thumbs.name = "All Thumbs";
-    //    All_Thumbs.name_kr = "서투름";
-    //    All_Thumbs.Explanation_for_Characteristic = "Transfers inventory items slowly";
-    //    All_Thumbs.Explanation_for_Characteristic_kr = "소지품창에 물건을 넣고 뺄때 속도가 느려집니다.";
-    //    All_Thumbs.Sprite = Characteristic_Image[3];
-    //    All_Thumbs.Points = 2;
-    //    All_Thumbs.type = Characteristic_type.Negatives;
-    //    All_Thumbs.Choice = false;
-    //    return All_Thumbs;
-    //    // 물품을 옮기는 시간 400% (줍기와 버리기 속도만)
-    //    // 비활성화되는 특성: 민첩한
-    //}
 
     Characteristic Characteristic_Slow_Reader(Characteristic Slow_Reader, bool Choice)
     {
@@ -1397,8 +1408,8 @@ public class Player_Characteristic : MonoBehaviour
         Weak_Stomach.Points = +3;
         Weak_Stomach.type = Characteristic_type.Negatives;
         Weak_Stomach.Choice = Choice;
-        Weak_Stomach.value_list.Add(1f);
-        Weak_Stomach.value_list.Add(0.3f);
+        Weak_Stomach.value_list.Add(2f);
+        Weak_Stomach.value_list.Add(1.3f);
         return Weak_Stomach;
         // 식중독에 걸릴 확률 +100%, 식중독 유지 시간 증가  ( 임의설정 30% )
         // 비활성화되는 특성: 강철 위장
@@ -1472,37 +1483,6 @@ public class Player_Characteristic : MonoBehaviour
         // 비활성화되는 특성: 용감함, 아드레날린 중독, 광장공포증
     }
 
-    //Characteristic Characteristic_Unlucky(Characteristic Unlucky)
-    //{
-    //    Unlucky.name = "Unlucky";
-    //    Unlucky.name_kr = "불운";
-    //    Unlucky.Explanation_for_Characteristic = "What could go wrong for you, often does.";
-    //    Unlucky.Explanation_for_Characteristic_kr = "알 수 없지만 뭔가 자꾸 손해를 보는 것 같습니다.";
-    //    Unlucky.Sprite = Characteristic_Image[12];
-    //    Unlucky.Points = 4;
-    //    Unlucky.type = Characteristic_type.Negatives;
-    //    Unlucky.Choice = false;
-    //    return Unlucky;
-    //    // 희귀한 아이템 발견 확률 -10%, 무기 수리 성공률 -5%, 수색 반경 -1
-    //    // 멀티플레이에서는 사용할 수 없습니다.
-    //    // 비활성화되는 특성: 행운
-    //}
-
-    //Characteristic Characteristic_Disorganized(Characteristic Disorganized)
-    //{
-    //    Disorganized.name = "Disorganized";
-    //    Disorganized.name_kr = "비체계적인";
-    //    Disorganized.Explanation_for_Characteristic = "Decreased container inventory capacity";
-    //    Disorganized.Explanation_for_Characteristic_kr = "가방류 아이템에 물건을 넣을 수 있는 양이 감소합니다.";
-    //    Disorganized.Sprite = Characteristic_Image[13];
-    //    Disorganized.Points = 4;
-    //    Disorganized.type = Characteristic_type.Negatives;
-    //    Disorganized.Choice = false;
-    //    return Disorganized;
-    //    // 인벤토리를 제외한 모든 보관함의 용량 -30% (소수점 아래 버림, 최소 1)
-    //    // 비활성화되는 특성: 정리쟁이
-    //}
-
     Characteristic Characteristic_Hard_of_Hearing(Characteristic Hard_of_Hearing, bool Choice)
     {
         Hard_of_Hearing.name = "Hard of Hearing";
@@ -1532,8 +1512,7 @@ public class Player_Characteristic : MonoBehaviour
         Sleepyhead.Points = +4;
         Sleepyhead.type = Characteristic_type.Negatives;
         Sleepyhead.Choice = Choice;
-        Sleepyhead.value_list.Add(0.3f);
-        Sleepyhead.value_list.Add(-0.1f);
+        Sleepyhead.value_list.Add(0.9f);
         return Sleepyhead;
         // 피로도 상승률 +30%, 수면 효율 -10%
         // 비활성화되는 특성: 잠이 없는
@@ -1591,21 +1570,6 @@ public class Player_Characteristic : MonoBehaviour
         return Asthmatic;
         // 달리기와 질주의 지구력 소모량 +40%, 도구와 무기 사용의 지구력 소모량 +30%
     }
-
-    //Characteristic Characteristic_Fear_of_Blood(Characteristic Fear_of_Blood)
-    //{
-    //    Fear_of_Blood.name = "Fear of Blood";
-    //    Fear_of_Blood.name_kr = "피 공포증";
-    //    Fear_of_Blood.Explanation_for_Characteristic = "Panic when performing first aid on self, cannot perform first aid on others, gets stressed when bloody";
-    //    Fear_of_Blood.Explanation_for_Characteristic_kr = "피범벅이 되거나 자신에게 응급처치 시 공황상태에 빠집니다.";
-    //    Fear_of_Blood.Sprite = Characteristic_Image[19];
-    //    Fear_of_Blood.Points = 5;
-    //    Fear_of_Blood.type = Characteristic_type.Negatives;
-    //    Fear_of_Blood.Choice = false;
-    //    return Fear_of_Blood;
-    //    // 착용 의류의 '피투성이' 수치에 비례하여 스트레스 증가
-    //    // 출혈 상태의 상처를 치료하면 공황무들 발생
-    //}
 
     Characteristic Characteristic_Out_of_Shape(Characteristic Out_of_Shape, bool Choice)
     {
@@ -1789,8 +1753,8 @@ public class Player_Characteristic : MonoBehaviour
         Thin_skinned.value_list.Add(0.77f);
         return Thin_skinned;
         // 모든 긁힘, 찢어짐, 물림 확률 +23%
-        // 나무를 지나갈 때 부상이 생길 확률 +30%
         // 회피율 : 15 + (무기 숙련도에 따른 수치 -5% ~ 7%) * {1.3(두꺼운 피부) or 0.77(얇은 피부)}
+        // 나무를 지나갈 때 부상이 생길 확률 +30%  ( 미구현 사항 )
         // 비활성화되는 특성: 두꺼운 피부
     }
 

@@ -354,8 +354,8 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
 
     public void SetEXP(float exp)
     {
-        if (W_Level < 5)
-            W_EXP += exp;
+        //if (W_Level < 5)
+        //    W_EXP += exp;
 
         if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
         {
@@ -365,7 +365,6 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
         {
             W_EXP += exp;
         }
-
 
         if (W_Level < W_Max_Level && W_EXP >= W_expRequirements[(int)W_Level][0])
         {
@@ -516,7 +515,15 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
 
     public void SetEXP(float exp)
     {
-        M_EXP += exp;
+        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            M_EXP += (exp * 1.3f);
+        }
+        else
+        {
+            M_EXP += exp;
+        }
+        
         if (M_Level < M_Max_Level && M_EXP >= M_expRequirements[(int)M_Level][0])
         {
             M_EXP -= M_expRequirements[(int)M_Level][0];
@@ -639,10 +646,20 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
 
     public void SetEXP(float exp)
     {
-        if (Gun_Level < 5)
-            Gun_EXP += exp;
-        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
-            Gun_EXP += exp * 0.37f;
+        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            if (Gun_Level < 5)
+                Gun_EXP += exp * 1.3f;
+            else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
+                Gun_EXP += exp * 0.37f * 1.3f;
+        }
+        else
+        {
+            if (Gun_Level < 5)
+                Gun_EXP += exp;
+            else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
+                Gun_EXP += exp * 0.37f;
+        }
 
         if (Gun_Level < Gun_Max_Level && Gun_EXP >= Gun_expRequirements[(int)Gun_Level][0])
         {
@@ -808,7 +825,15 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
     public void SetEXP(float exp)
     {
-        C_EXP = C_EXP + (exp * C_BookLevel_points * C_BookLevel_reading_Step / 3);
+        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            C_EXP = C_EXP + (exp * 1.3f * C_BookLevel_points * C_BookLevel_reading_Step / 3);
+        }
+        else
+        {
+            C_EXP = C_EXP + (exp * C_BookLevel_points * C_BookLevel_reading_Step / 3);
+        }
+
         if (C_Level < C_Max_Level && C_EXP >= C_expRequirements[(int)C_Level][0])
         {
             C_EXP -= C_expRequirements[(int)C_Level][0];
@@ -889,6 +914,11 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         {
             return C_SkillName;
         }
+    }
+
+    public float Get_C_reading_page()
+    {
+        return C_BookLevel_reading_page;
     }
 
     public float Check_C_Book_Reading_finish(int booklevel, float page)
@@ -1123,7 +1153,6 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
     int S_BookLevel = -1;
     float S_BookLevel_points = 1f;
     float S_BookLevel_reading_page = 0f;
-    float S_BookLevel_reading_value = 0f;
     int S_BookLevel_reading_Step = 0;
 
     float[] S_BookLevel_Totalpage = new float[5];
@@ -1199,7 +1228,15 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public void SetEXP(float exp)
     {
-        S_EXP = S_EXP + (exp * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3);
+        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            S_EXP = S_EXP + (exp * 1.3f * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3);
+        }
+        else
+        {
+            S_EXP = S_EXP + (exp * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3);
+        }
+        
         if (S_Level < S_Max_Level && S_EXP >= S_expRequirements[(int)S_Level][0])
         {
             S_EXP -= S_expRequirements[(int)S_Level][0];
@@ -1287,6 +1324,10 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
         return S_BookLevel_points;
     }
 
+    public float Get_S_reading_page()
+    {
+        return S_BookLevel_reading_page;
+    }
     public float Check_S_Book_Reading_finish(int booklevel, float page)
     {
         return S_BookLevel_reading_page / S_BookLevel_Totalpage[booklevel - 1];

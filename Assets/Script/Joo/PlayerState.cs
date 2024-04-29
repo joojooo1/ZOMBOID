@@ -141,6 +141,10 @@ public class Player_body_Location
             {
                 Attack_power = 5.0f * 1.5f;  // 7.5
             }
+            else if(Enemy_Type == "Glass")
+            {
+                Attack_power = 2.0f;
+            }
         }
         else
         {
@@ -206,6 +210,8 @@ public class Player_body_Location
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Set_Is_Infection(true);  // 100% È®·ü·Î °¨¿°
                             break;
+                        case Damage_Pattern.Glass:
+
                         default:
                             break;
                     }
@@ -782,4 +788,17 @@ public class PlayerState : MonoBehaviour
     }
 
     public int Get_Frequency_of_Coughing() { return  Frequency_of_Coughing; }
+
+    public void Damage_glass(bool Is_hand)
+    {
+        //if(Is_hand) // ¼Õ
+        //{
+        //    Player_body_point[body_point.Left_hand].Body_Damage_array
+        //}
+        //else  // ¹ß
+        //{
+
+        //}
+    }
+
 }
