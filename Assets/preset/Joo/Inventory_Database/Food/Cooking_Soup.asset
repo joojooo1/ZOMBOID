@@ -45,5 +45,5 @@ MonoBehaviour:
   - 0
   F_Fatigue:
   - 0
-  Probability_of_poisoning: 0
+  Probability_of_poisoning: 0.1
   Sterilize_Power: 0
