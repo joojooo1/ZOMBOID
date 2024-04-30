@@ -12,9 +12,9 @@ public class zombieHp : MonoBehaviour
     public float easy_max_hp = 50;//약한 좀비의 최대 체력
     public float normal_max_hp = 70;//보통 좀비의 최대 체력
     public float hard_max_hp = 100;//강한 좀비의 최대 체력
-    public float easy_speed = 1;//약한 좀비의 이동 속도
+    public float easy_speed = 0.8f;//약한 좀비의 이동 속도
     public float normal_speed = 1;//보통 좀비의 이동 속도
-    public float hard_speed = 1;//강한 좀비의 이동 속도
+    public float hard_speed = 1.3f;//강한 좀비의 이동 속도
     public bool zom_crawl;//좀비가 넘어져 있는가
     public GameObject zom_target;//좀비가 추격하는 목표
     public zom_targetpos _Movement;
@@ -79,7 +79,6 @@ public class zombieHp : MonoBehaviour
     public ZombieType zomType;
     public void zom_stet()//좀비의 강함에 따라 스텟결정
     {
-        Debug.Log("좀비 스텟 재설정");
         zom_target = null;
         int zomType_probability = Random.Range(0, 10);
         if (zomType_probability > 9)

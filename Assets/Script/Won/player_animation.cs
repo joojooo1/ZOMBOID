@@ -83,6 +83,10 @@ public class player_animation : MonoBehaviour
                 test_weapon_type = 0;
             animatorsetFloat("weapon_type", test_weapon_type);
         }
+        if (playernav.GetComponent<player_movement>().aser)
+        {
+            animatorsetBool("walk", true);
+        }
     }
 
 

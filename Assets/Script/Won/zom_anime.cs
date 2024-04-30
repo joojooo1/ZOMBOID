@@ -170,10 +170,17 @@ public class zom_anime : MonoBehaviour
 
     void SET()
     {
-        fence = false;
-        nav.speed = curretspeed;
-        animatorsetBool("backdown", false);
-        animatorsetBool("up", false);
+        if (fence)
+        {
+            fence = false;
+            nav.speed = curretspeed;
+            animatorsetBool("backdown", false);
+            animatorsetBool("up", false);
+        }
+        else
+        {
+            //int 
+        }
     }
     void zom_player_atk()
     {

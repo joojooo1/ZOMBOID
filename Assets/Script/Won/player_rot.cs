@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 //using static UnityEditor.PlayerSettings;
 
 public class player_rot : MonoBehaviour
@@ -40,7 +43,32 @@ public class player_rot : MonoBehaviour
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
             //gosever(targetRotation);
         }
-
+        if (playerpos.GetComponent<player_movement>().aser)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(playerpos.GetComponent <NavMeshAgent>().velocity.normalized);
+            Vector3 euler = targetRotation.eulerAngles;
+            Debug.Log(euler.y+"ASd"+euler.x);
+            if(euler.y < 180)
+            {
+                euler.y = euler.x + 90;
+            }
+            else
+            { euler.y = euler.x-45; 
+                if (euler.x < 50)
+                {
+                    euler.y = euler.x-180;
+                    Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaa");
+                }
+                else if (euler.x < 90) 
+                {
+                    euler.y = euler.x + 90;
+                } 
+            }
+            euler.x = 0f;
+            euler.z = 0f;
+            targetRotation = Quaternion.Euler(euler);
+            transform.localRotation = targetRotation;
+        }
 
         float currentVolume = playerAudioSource.volume;
         if (currentVolume > 0.5)

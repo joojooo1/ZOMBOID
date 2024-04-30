@@ -20,6 +20,9 @@ TagManager:
   - Sit
   - Farm
   - zom
+  - bulb
+  - appliances
+  - turret
   layers:
   - Default
   - TransparentFX
