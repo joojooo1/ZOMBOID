@@ -39,8 +39,10 @@ MonoBehaviour:
   F_Thirst: 0
   F_Satiety:
   - 15
-  F_Unhappiness: []
-  F_Boredom: []
+  F_Unhappiness:
+  - 0
+  F_Boredom:
+  - 0
   F_Fatigue: []
   Probability_of_poisoning: 0
   Sterilize_Power: 0
