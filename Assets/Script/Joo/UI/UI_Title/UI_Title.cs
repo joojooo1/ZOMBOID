@@ -402,10 +402,10 @@ public class UI_Title : MonoBehaviour
             switch(value_List[i]._type)
             {
                 case Characteristic_Value_type.Fitness:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(value_List[i].Get_Level());
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Start_Level(value_List[i].Get_Level());
                     break;
                 case Characteristic_Value_type.Strength:
-                    Player_main.player_main.Skill.Fitness_Level.Set_P_Level(value_List[i].Get_Level());
+                    Player_main.player_main.Skill.Fitness_Level.Set_P_Start_Level(value_List[i].Get_Level());
                     break;
                 case Characteristic_Value_type.Fishing:
                     Player_main.player_main.Skill.Fishing_Level.Set_S_Level(value_List[i].Get_Level());

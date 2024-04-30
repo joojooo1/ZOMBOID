@@ -62,7 +62,44 @@ public class PlayerSkill_ActivationProbability
     // Áö±¸·Â È¸º¹ ºñÀ² ( * )  // Fitness
     float Endurance_Recovery_Rate = 0.7f;
     public float Endurance_Recovery_Rate_Overweight = 1f;
-    public float Get_Endurance_Recovery_Rate() { return Endurance_Recovery_Rate * Endurance_Recovery_Rate_Overweight; }
+    public float Endurance_Recovery_Rate_Obese = 1f;
+    public float Endurance_Recovery_Rate_Emaciated = 1f;
+    public float Get_Endurance_Recovery_Rate() 
+    {
+        return Endurance_Recovery_Rate * Set_Endurance_Recovery_Rate_forChar(); 
+    }
+
+    public float Set_Endurance_Recovery_Rate_forChar()
+    {
+        if (Player_Characteristic.current.Overweight_Characteristic)
+        {
+            Endurance_Recovery_Rate_Overweight = 0.7f;
+        }
+        else
+        {
+            Endurance_Recovery_Rate_Overweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Obese_Characteristic)
+        {
+            Endurance_Recovery_Rate_Obese = 0.4f;
+        }
+        else
+        {
+            Endurance_Recovery_Rate_Obese = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Endurance_Recovery_Rate_Emaciated = 0.3f;
+        }
+        else
+        {
+            Endurance_Recovery_Rate_Emaciated = 1f;
+        }
+
+        return Endurance_Recovery_Rate_Overweight * Endurance_Recovery_Rate_Obese * Endurance_Recovery_Rate_Emaciated;
+    }
 
     public void Set_Endurance_Recovery_Rate_forSkill(float SkillLevel)
     {
@@ -289,7 +326,44 @@ public class PlayerSkill_ActivationProbability
     float Melee_Attack_Power_Ratio = 0.75f;
     float Melee_Attack_Power_Ratio_forMoodle = 1f;
     public float Melee_Attack_Power_Ratio_Underweight = 1f;
-    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio * Melee_Attack_Power_Ratio_forMoodle * Melee_Attack_Power_Ratio_Underweight; }
+    public float Melee_Attack_Power_Ratio_VeryUnderweight = 1f;
+    public float Melee_Attack_Power_Ratio_Emaciated = 1f;
+    public float Get_Melee_Attack_Power_Ratio() 
+    {
+        return Melee_Attack_Power_Ratio * Melee_Attack_Power_Ratio_forMoodle * Set_Melee_Attack_Power_Ratio_forChar(); 
+    }
+
+    public float Set_Melee_Attack_Power_Ratio_forChar()
+    {
+        if (Player_Characteristic.current.Underweight_Characteristic)
+        {
+            Melee_Attack_Power_Ratio_Underweight = 0.8f;
+        }
+        else
+        {
+            Melee_Attack_Power_Ratio_Underweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Very_Underweight_Characteristic)
+        {
+            Melee_Attack_Power_Ratio_VeryUnderweight = 0.6f;
+        }
+        else
+        {
+            Melee_Attack_Power_Ratio_VeryUnderweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Melee_Attack_Power_Ratio_Emaciated = 0.4f;
+        }
+        else
+        {
+            Melee_Attack_Power_Ratio_Emaciated = 1f;
+        }
+
+        return Melee_Attack_Power_Ratio_Underweight * Melee_Attack_Power_Ratio_VeryUnderweight * Melee_Attack_Power_Ratio_Emaciated;
+    }
 
     public void Set_Melee_Attack_Power_Ratio_forSkill(float SkillLevel)
     {
@@ -402,16 +476,77 @@ public class PlayerSkill_ActivationProbability
     float Probability_of_Falling_forMoodle = 0f;
     public float Probability_of_Falling_Overweight = 1f;
     public float Probability_of_Falling_Underweight = 1f;
-    public float Get_Probability_of_Falling() 
-    { 
-        if(Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+    public float Probability_of_Falling_Obese = 1f;
+    public float Probability_of_Falling_VeryUnderweight = 1f;
+    public float Probability_of_Falling_Emaciated = 1f;
+
+    public float Get_Probability_of_Falling(bool Is_Zombie) 
+    {
+        if (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
         {
-            return (Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain) * Probability_of_Falling_Overweight * Probability_of_Falling_Underweight;
+            return (Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain) * Set_Probability_of_Falling_forChar(Is_Zombie);
         }
         else
         {
-            return (Probability_of_Falling + Probability_of_Falling_forMoodle) * Probability_of_Falling_Overweight * Probability_of_Falling_Underweight;
+            return (Probability_of_Falling + Probability_of_Falling_forMoodle) * Set_Probability_of_Falling_forChar(Is_Zombie);
         }
+    }
+
+    public float Set_Probability_of_Falling_forChar(bool Is_Zombie)
+    {
+        if (Player_Characteristic.current.Overweight_Characteristic)
+        {
+            Probability_of_Falling_Overweight = 1.1f;
+        }
+        else
+        {
+            Probability_of_Falling_Overweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Underweight_Characteristic)
+        {
+            Probability_of_Falling_Underweight = 1.1f;
+        }
+        else
+        {
+            Probability_of_Falling_Underweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Obese_Characteristic)   // ºñ¸¸)  ³Ñ¾îÁú È®·ü: +20%, Á»ºñ¶û ºÎµúÈú¶§ ³Ñ¾îÁú È®·ü: -10%
+        {
+            if (Is_Zombie)
+            {
+                Probability_of_Falling_Obese = 0.9f;
+            }
+            else
+            {
+                Probability_of_Falling_Obese = 1.2f;
+            }
+        }
+        else
+        {
+            Probability_of_Falling_Obese = 1f;
+        }
+
+        if (Player_Characteristic.current.Very_Underweight_Characteristic)
+        {
+            Probability_of_Falling_VeryUnderweight = 1.2f;
+        }
+        else
+        {
+            Probability_of_Falling_VeryUnderweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Probability_of_Falling_Emaciated = 1.25f;
+        }
+        else
+        {
+            Probability_of_Falling_Emaciated = 1f;
+        }
+
+        return Probability_of_Falling_Overweight * Probability_of_Falling_Underweight * Probability_of_Falling_Obese * Probability_of_Falling_VeryUnderweight * Probability_of_Falling_Emaciated;
     }
 
     public void Set_Probability_of_Falling(float value)
@@ -458,10 +593,64 @@ public class PlayerSkill_ActivationProbability
     float Probability_of_Crossing_a_High_Wall_forMoodle = 0f;
     public float Probability_of_Crossing_a_High_Wall_Overweight = 1f;
     public float Probability_of_Crossing_a_High_Wall_Underweight = 1f;
+    public float Probability_of_Crossing_a_High_Wall_Obese = 1f;
+    public float Probability_of_Crossing_a_High_Wall_VeryUnderweight = 1f;
+    public float Probability_of_Crossing_a_High_Wall_Emaciated = 1f;
     public float Get_Probability_of_Crossing_a_High_Wall() 
-    { 
-        return (Probability_of_Crossing_a_High_Wall + Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle) 
-            * Probability_of_Crossing_a_High_Wall_Overweight * Probability_of_Crossing_a_High_Wall_Underweight;
+    {
+
+
+        return (Probability_of_Crossing_a_High_Wall + Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle) * Set_Probability_of_Crossing_a_High_Wall_forChar();
+    }
+
+    public float Set_Probability_of_Crossing_a_High_Wall_forChar()
+    {
+        if (Player_Characteristic.current.Overweight_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Overweight = 0.85f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Overweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Underweight_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Underweight = 0.85f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Underweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Obese_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Obese = 0.75f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Obese = 1f;
+        }
+
+        if (Player_Characteristic.current.Very_Underweight_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_VeryUnderweight = 0.75f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_VeryUnderweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Emaciated = 0.75f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Emaciated = 1f;
+        }
+
+        return Probability_of_Crossing_a_High_Wall_Overweight * Probability_of_Crossing_a_High_Wall_Underweight * Probability_of_Crossing_a_High_Wall_Obese * Probability_of_Crossing_a_High_Wall_VeryUnderweight * Probability_of_Crossing_a_High_Wall_Emaciated;
     }
 
     public void Set_Probability_of_Crossing_a_High_Wall_forSkill(float SkillLevel)
@@ -890,7 +1079,19 @@ public class PlayerSkill_ActivationProbability
     float Running_Speed = 1.2f;
     public float Characteristic_Athletic = 1f;
     public float Characteristic_Obese = 1f;
-    public float Get_Running_Speed() { return Running_Speed * Characteristic_Athletic; }
+    public float Get_Running_Speed() 
+    {
+        if (Player_Characteristic.current.Obese_Characteristic)
+        {
+            Characteristic_Obese = 0.7f;
+        }
+        else
+        {
+            Characteristic_Obese = 1f;
+        }
+
+        return Running_Speed * Characteristic_Athletic * Characteristic_Obese; 
+    }
 
     public void Set_Running_Speed_forSkill(float SkillLevel)
     {
