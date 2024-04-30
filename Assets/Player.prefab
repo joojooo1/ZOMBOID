@@ -1135,10 +1135,18 @@ MonoBehaviour:
   Is_Driving: 0
   Is_Eating: 0
   Is_food_poisoning: 0
+  Is_Reading: 0
   Likelihood_of_food_poisoning: 0.2
   Time_for_food_poisoning: 200
   Satiety_value: 0.06
   Panic_value: 0.15
+  current_SkillBook_type: 9
+  current_SKillBook_level: -1
+  aaa: {fileID: 21300000, guid: 5f28b23d707b4e249a88e9840249d136, type: 3}
+  bbb: {fileID: 21300000, guid: 8691d7cd3bfbf2f4088fd1e9bcac88d2, type: 3}
+  ccc: {fileID: 21300000, guid: dea4fa31bb32fc8459e1d969edd7dc20, type: 3}
+  Driving_Speed: 1
+  Characteristic_Asthmatic_for_Weapon: 1
 --- !u!114 &6656421304549569139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1153,6 +1161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Tired_reduction_for_Sleeping: 1
   Tired_value: 0.01
+  Thirsty_Speed: 1
+  Thirsty_speed: 1
   Zombification: 0
   Bleeding_total_count: 0
   _Infection: 0

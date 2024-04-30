@@ -453,6 +453,7 @@ public class Player_main : MonoBehaviour
                 current_SKillBook_level = -1;
                 Skillbook_Readpage = 0;
             }
+
         }
     }
 
