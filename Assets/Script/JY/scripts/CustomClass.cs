@@ -438,7 +438,7 @@ public class CustomClass : MonoBehaviour
                                             int LengthOfX_Limit = MapLoader.ML.LengthofX;
                                             OffMeshLink OML = Instans.AddComponent<OffMeshLink>();
                                             OML.startTransform = MapLoader.ML.Tiles[(Y - 1) * LengthOfX_Limit + X].transform;
-                                            OML.endTransform = MapLoader.ML.Tiles[(Y + 1) * LengthOfX_Limit + X].transform;
+                                            OML.endTransform = MapLoader.ML.Tiles[(Y) * LengthOfX_Limit + X].transform;
                                             //0429 테스팅 ==============================================================================
                                             break;
                                         case 15: // 우하로 향하는 펜스
