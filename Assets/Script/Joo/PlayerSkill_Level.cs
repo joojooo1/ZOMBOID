@@ -1395,6 +1395,7 @@ public class PlayerSurvivalSkill_Level  // »ç³É, ³¬½Ã, Ã¤Áý, ½Â¸¶
 
     public float Get_S_reading_page()
     {
+        Debug.Log("S_BookLevel_reading_page :" + S_BookLevel_reading_page);
         return S_BookLevel_reading_page;
     }
     public float Check_S_Book_Reading_finish(int booklevel, float page)
@@ -1424,6 +1425,9 @@ public class PlayerSurvivalSkill_Level  // »ç³É, ³¬½Ã, Ã¤Áý, ½Â¸¶
     {
         S_BookLevel = Book_level;
         S_BookLevel_reading_page = page;
+
+        Debug.Log("S_BookLevel :" + S_BookLevel);
+        Debug.Log("S_BookLevel_reading_page :" + S_BookLevel_reading_page);
 
         switch (Book_level)
         {
