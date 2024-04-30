@@ -90,38 +90,43 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
             P_EXP -= P_expRequirements[(int)P_Level][0];
             P_Level++;
 
-            if (P_SkillName == "Fitness")
-            {
-                Player_Characteristic.current.Set_Characteristic_for_Fitness(Get_P_Level());
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
-                /*
-                 미반영사항: 특성
-                   (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
-                 */
-            }
-            else if (P_SkillName == "Strength")
-            {
-                Player_Characteristic.current.Set_Characteristic_for_Strength(Get_P_Level());
-                Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
-                /*
-                 미반영사항: 특성
-                   (0~1: 약함, 2~4: 연약함, 5: -, 6~8: 통통함, 9~10: 튼튼함)
-                 */
-            }
+            Set_forSkill();
         }
         /*
          미반영사항: 운동을 통해 Fitness/Strength 레벨 상승하는 함수
          */
+    }
+
+    void Set_forSkill()
+    {
+        if (P_SkillName == "Fitness")
+        {
+            Player_Characteristic.current.Set_Characteristic_for_Fitness(Get_P_Level());
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+            /*
+             미반영사항: 특성
+               (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
+             */
+        }
+        else if (P_SkillName == "Strength")
+        {
+            Player_Characteristic.current.Set_Characteristic_for_Strength(Get_P_Level());
+            Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+            /*
+             미반영사항: 특성
+               (0~1: 약함, 2~4: 연약함, 5: -, 6~8: 통통함, 9~10: 튼튼함)
+             */
+        }
     }
 
     public float Get_P_Level()
@@ -129,9 +134,16 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
         return P_Level;
     }
 
-    public void Set_P_Level(float Start_Level)
+    public void Set_P_Start_Level(float Start_Level)
     {
         P_Level = Start_Level;
+    }
+
+    public void Set_P_Playing_Level(float level)
+    {
+        P_Level += level;
+
+        Set_forSkill();
     }
 
     public float Get_P_CurrentEXP()

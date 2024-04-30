@@ -650,7 +650,10 @@ public class Player_main : MonoBehaviour
         if (Weight < 0) { Weight = 0.0f; }
         else if (Weight > 150) { Weight = 150.0f; }
 
-        Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
+        if (UI_main.ui_main.Playing)
+        {
+            Player_Characteristic.current.Set_Characteristic_for_Weight(Get_Weight());
+        }        
     }
 
     public void Set_Satiety(float value)
