@@ -9,7 +9,6 @@ public class UI_inventory : MonoBehaviour, IPointerClickHandler
     public static UI_inventory Inventory_UI_main;
 
     public GameObject UI_window;  // 열리는 인벤토리
-    public GameObject Storage_Object;
     public Sprite[] UI_window_Image;  // 인벤토리 여는 버튼 이미지(On, Off)
     public UnityEngine.UI.Image Image;  // 인벤토리 여는 버튼 이미지(현재상태)
 

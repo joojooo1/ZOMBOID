@@ -142,7 +142,8 @@ public enum Weapon_type
     ShortBlade = 4,
     Spear = 5,
     Gun = 6,
-    tool = 7
+    tool = 7,
+    None = 8
 }
 
 public enum Container_Type
