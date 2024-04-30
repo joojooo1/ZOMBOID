@@ -41,7 +41,8 @@ MonoBehaviour:
   - 60
   F_Unhappiness:
   - 40
-  F_Boredom: []
+  F_Boredom:
+  - 0
   F_Fatigue: []
   Probability_of_poisoning: 0
   Sterilize_Power: 0

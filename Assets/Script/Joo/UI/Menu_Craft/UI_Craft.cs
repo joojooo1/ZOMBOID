@@ -22,6 +22,15 @@ public class Crafting_item
     public Sprite item_Image;
     public string name;
     public string name_kr;
+
+    public float F_Calories;  // 칼로리
+    public float F_Thirst;  // 갈증
+
+    public float[] F_Satiety;  // 포만감
+    public float[] F_Unhappiness;  // 불행
+    public float[] F_Boredom;  // 지루함
+    public float[] F_Fatigue;  // 피로
+
     public List<Crafting_Ingredients> Ingredients_list = new List<Crafting_Ingredients>();
 
     public Crafting_item(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr)
@@ -32,6 +41,54 @@ public class Crafting_item
         this.item_Image = item_Image;
         this.name = name;
         this.name_kr = name_kr;
+
+        if(item_DB_type == Type.food)
+        {
+            if(Item_DataBase.item_database.food_Ins[item_DB_ID].FoodType == Food_Type.Cooking)
+            {
+                for(int j = 0; j < Ingredients_list.Count; j++)
+                {
+                    F_Calories += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Calories;
+                    F_Thirst += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Thirst;
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        F_Satiety[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Satiety[i];
+                        F_Unhappiness[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Unhappiness[i];
+                        F_Boredom[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Boredom[i];
+                        F_Fatigue[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Fatigue[i];
+                    }
+                }
+            }
+            else
+            {
+                F_Calories = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Calories;
+                F_Thirst = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Thirst;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    F_Satiety[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety[i];
+                    F_Unhappiness[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness[i];
+                    F_Boredom[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom[i];
+                    F_Fatigue[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue[i];
+                }
+            }
+        }
+        else
+        {
+            F_Calories = 0;
+            F_Thirst = 0;
+
+            for(int i = 0; i < 3; i++)
+            {
+                F_Satiety[i] = 0;
+                F_Unhappiness[i] = 0;
+                F_Boredom[i] = 0;
+                F_Fatigue[i] = 0;
+            }
+
+        }
+
     }
 
     public string Get_name()
@@ -45,9 +102,9 @@ public class Crafting_item
             return name;
         }
     }
-    public void Add_Ingredients(Sprite image, string name, string name_kr, int value)
+    public void Add_Ingredients(Type _DB_type, int _DB_ID, Sprite image, string name, string name_kr, int value)
     {
-        Crafting_Ingredients Ingredients = new Crafting_Ingredients(image, name, name_kr, value);
+        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, image, name, name_kr, value);
         Ingredients_list.Add(Ingredients);
     }
 
@@ -86,14 +143,18 @@ public class Crafting_item
 
 public class Crafting_Ingredients
 {
+    public Type Ingredients_DB_type;
+    public int Ingredients_DB_ID;
     public Sprite Ingredients_Image;
     public string Ingredients_name;
     public string Ingredients_name_kr;
     public int Value;  // 필요한 갯수
     public bool fulfill;
 
-    public Crafting_Ingredients(Sprite ingredients_Image, string ingredients_name, string ingredients_name_kr, int value)
+    public Crafting_Ingredients(Type _DB_type, int _DB_ID, Sprite ingredients_Image, string ingredients_name, string ingredients_name_kr, int value)
     {
+        Ingredients_DB_type = _DB_type;
+        Ingredients_DB_ID = _DB_ID;
         Ingredients_Image = ingredients_Image;
         Ingredients_name = ingredients_name;
         Ingredients_name_kr = ingredients_name_kr;

@@ -24,11 +24,16 @@ public class UI_Craft_window : MonoBehaviour
     public Transform Crafting_Ingredients_Window;
     public GameObject Crafting_Ins_item;
     public Transform Crafting_Ins_Window;
+
+    public GameObject delete_button;
+
     public Crafting_type type;
 
     private void OnEnable()
     {
         ui_Craft_Window = this;
+
+        delete_button.SetActive(false);
 
         Origin_list = new List<Crafting_item>();
         Crafting_item_Prefab_list = new List<UI_Craft_Prefab>();
@@ -225,6 +230,7 @@ public class UI_Craft_window : MonoBehaviour
                 obj = Instantiate(Crafting_Ins_item, Crafting_Ins_Window);
                 UI_Craft_Ins_Prefab item = obj.GetComponent<UI_Craft_Ins_Prefab>();
                 item.Set_Info(Selected_item.item_Info);
+                delete_button.SetActive(true);
             }
             else
             {
@@ -234,5 +240,14 @@ public class UI_Craft_window : MonoBehaviour
 
         }
 
+    }
+
+    public void Destroy_item()
+    {
+        foreach (Transform child in Crafting_Ins_Window)
+        {
+            Destroy(child.gameObject);
+        }
+        delete_button.SetActive(false);
     }
 }

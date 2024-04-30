@@ -34,17 +34,37 @@ public class Player_body_Location_Damage
                 case Damage_Pattern.Lacerations:
                 case Damage_Pattern.Bites:
                 case Damage_Pattern.Burn:
-                    Characteristic_recovery_Count = 0.8f;
+                    Characteristic_recovery_Count *= 0.8f;
                     break;
                 case Damage_Pattern.Abrasion:
                 case Damage_Pattern.Infection:
                 case Damage_Pattern.bullet:
                 case Damage_Pattern.Glass:
                 case Damage_Pattern.Fracture:
-                    Characteristic_recovery_Count = 1f;
+                    Characteristic_recovery_Count *= 1f;
                     break;
             }
-        }        
+        }
+
+        if (Player_Characteristic.current.Slow_Healer_Characteristic == true)
+        {
+            switch (Attack_Pattern)
+            {
+                case Damage_Pattern.Scratches:
+                case Damage_Pattern.Lacerations:
+                case Damage_Pattern.Bites:
+                case Damage_Pattern.Burn:
+                    Characteristic_recovery_Count *= 1.2f;
+                    break;
+                case Damage_Pattern.Abrasion:
+                case Damage_Pattern.Infection:
+                case Damage_Pattern.bullet:
+                case Damage_Pattern.Glass:
+                case Damage_Pattern.Fracture:
+                    Characteristic_recovery_Count *= 1f;
+                    break;
+            }
+        }
     }
 
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
@@ -141,6 +161,10 @@ public class Player_body_Location
             {
                 Attack_power = 5.0f * 1.5f;  // 7.5
             }
+            else if(Enemy_Type == "Glass")
+            {
+                Attack_power = 2.0f;
+            }
         }
         else
         {
@@ -206,6 +230,8 @@ public class Player_body_Location
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Set_Is_Infection(true);  // 100% 확률로 감염
                             break;
+                        case Damage_Pattern.Glass:
+
                         default:
                             break;
                     }
@@ -432,6 +458,7 @@ public class PlayerState : MonoBehaviour
     public float Tired_reduction_for_Sleeping = 1f;  // 수면으로 경감되는 피로도
     public float Tired_value = 0.01f;  // 피로도 증가량
     public float Thirsty_Speed = 1f;  // 갈증 진행 속도
+    public float Thirsty_speed = 1f;
 
     public float Zombification = 0.0f;
 
@@ -473,7 +500,7 @@ public class PlayerState : MonoBehaviour
 
             /****************** Player_Thirsty ******************/
             Thirsty_Timer += Time.deltaTime;
-            if (Thirsty_Timer > 1f)
+            if (Thirsty_Timer > Thirsty_speed)
             {
                 switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                 {
@@ -653,17 +680,35 @@ public class PlayerState : MonoBehaviour
         if (Get_Is_Infection())  // 감염된 경우
         {
             Infection_Timer += Time.deltaTime;
-            if (Infection_Timer > 5f)
+            if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
             {
-                if (Player_Characteristic.current.Resilient_Characteristic)
+                if (Infection_Timer > 3.75f)
                 {
-                    Zombification += (0.07f * 0.25f);
-                }
-                else
-                    Zombification += 0.07f;
+                    if (Player_Characteristic.current.Resilient_Characteristic)
+                    {
+                        Zombification += (0.07f * 0.25f);
+                    }
+                    else
+                        Zombification += 0.07f;
 
-                Infection_Timer = 0;
+                    Infection_Timer = 0;
+                }
             }
+            else
+            {
+                if (Infection_Timer > 5f)
+                {
+                    if (Player_Characteristic.current.Resilient_Characteristic)
+                    {
+                        Zombification += (0.07f * 0.25f);
+                    }
+                    else
+                        Zombification += 0.07f;
+
+                    Infection_Timer = 0;
+                }
+            }
+
         }
 
     }
@@ -746,7 +791,7 @@ public class PlayerState : MonoBehaviour
     float Apparent_Temperature_forMoodle = 0f;
 
     public float Get_Apparent_Temperature()
-    {
+    {        
         return Apparent_Temperature + Apparent_Temperature_forMoodle;
     }
 
@@ -758,7 +803,14 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            Apparent_Temperature += value;
+            if(Player_Characteristic.current.Prone_to_Illness_Characteristic && value < 0)
+            {
+                Apparent_Temperature += value * 0.8f;
+            }
+            else
+            {
+                Apparent_Temperature += value;
+            }            
         }
         if((Get_Apparent_Temperature()) >= 36f)
         {
@@ -782,4 +834,17 @@ public class PlayerState : MonoBehaviour
     }
 
     public int Get_Frequency_of_Coughing() { return  Frequency_of_Coughing; }
+
+    public void Damage_glass(bool Is_hand)
+    {
+        //if(Is_hand) // 손
+        //{
+        //    Player_body_point[body_point.Left_hand].Body_Damage_array
+        //}
+        //else  // 발
+        //{
+
+        //}
+    }
+
 }
