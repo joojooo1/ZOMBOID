@@ -10,6 +10,7 @@ public class UI_inventory_Open : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData)
     {
         UI_inventory_window.inven_detail_Window.SetAnim(true);
+        UI_inventory_window2.inven_detail_Window2.SetAnim(true);
         UI_inventory_Equip.inven_Equip_Window.SetAnim(true);
     }
 
@@ -23,6 +24,16 @@ public class UI_inventory_Open : MonoBehaviour, IPointerEnterHandler, IPointerEx
         else
         {
             UI_inventory_window.inven_detail_Window.SetAnim(false);
+            UI_inventory_Equip.inven_Equip_Window.SetAnim(false);
+        }
+
+        if (UI_inventory_window2.inven_detail_Window2.Pin_fixed)
+        {
+            UI_inventory_window2.inven_detail_Window2.SetAnim(true);
+        }
+        else
+        {
+            UI_inventory_window2.inven_detail_Window2.SetAnim(false);
             UI_inventory_Equip.inven_Equip_Window.SetAnim(false);
         }
        

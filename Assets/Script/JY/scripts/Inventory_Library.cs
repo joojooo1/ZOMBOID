@@ -11,7 +11,7 @@ public class Inventory_Library : MonoBehaviour
     public List<short[,,]> Inventory_DB;
 
     short[,,] packageExample_8x6 =
-{
+    {
         {
             {0,8,0,0,0,0},
             {0,0,0,0,0,0},
@@ -63,7 +63,6 @@ public class Inventory_Library : MonoBehaviour
             {0,0,0,0,0,0}
         }
     };
-
 
     short[,,] packageExample_8x10 =
     {
@@ -119,6 +118,74 @@ public class Inventory_Library : MonoBehaviour
         }
     };
 
+    short[,,] packageExample_2x4 =
+    {
+        {
+            {0,0},
+            {0,0},
+            {0,0},
+            {0,0}
+        },
+        {
+            {0,0},
+            {0,0},
+            {0,0},
+            {0,0}
+        },
+        {
+            {0,0},
+            {0,0},
+            {0,0},
+            {0,0}
+        },
+        {
+            {0,0},
+            {0,0},
+            {0,0},
+            {0,0}
+        },
+        {
+            {0,0},
+            {0,0},
+            {0,0},
+            {0,0}
+        }
+    };
+
+    short[,,] packageExample_4x3 =
+    {
+        {
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+
+        },
+        {
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+        },
+        {
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+        },
+        {
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+        },
+        {
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
+        }
+    };
     private void Awake()
     {
         IL = this;
@@ -127,6 +194,8 @@ public class Inventory_Library : MonoBehaviour
         Debug.Log("invenlibrary adding example86" + Inventory_DB.Count);
         Inventory_DB.Add(packageExample_8x10);
         Debug.Log("LB 810 num = " + Inventory_DB.Count);
+        Inventory_DB.Add(packageExample_2x4);
+        Inventory_DB.Add(packageExample_4x3);
     }
     private void Start()
     {

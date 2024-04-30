@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Inventory_8x10 : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Inventory_8x10 : MonoBehaviour
     public short Storage_Order;
     public bool IsPlayers;
     public short[,,] Recent_Recieved_Package; // v
+
+    public Transform Slot_Image;
+    public Transform Slot_Weight;
 
     public GameObject SlotPrefeb; // v
 
@@ -25,6 +29,8 @@ public class Inventory_8x10 : MonoBehaviour
         //Generating_Slots_First(packageExample1);
         //Ex_Add();
         //IsPlayers = true;
+        Slot_Image.gameObject.GetComponent<Image>().sprite = ThisID.Container_Image;
+        Slot_Weight.gameObject.GetComponent<TextMeshProUGUI>().text = "..";
     }
 
     //public void Ex_Add() // 서버 테스팅후 지울것
