@@ -7,6 +7,8 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
 {
     public static UI_State State_icon_main;
 
+    public UI_State_Skill ui_state_skill;
+
     public GameObject UI_window;
     public Sprite[] UI_window_Image;
     public UnityEngine.UI.Image Image;
