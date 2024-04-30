@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 53842294319493380}
   - component: {fileID: 3675519880144189937}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Door_Right_Coll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ MonoBehaviour:
   - {x: 0.3032863, y: -0.49505126, z: 0}
   m_ShapePathHash: -144171436
   m_Mesh: {fileID: 0}
-  m_InstanceId: -7466
+  m_InstanceId: 1602116
   m_LocalBounds:
     m_Center: {x: 0.14160895, y: -0.3627532, z: 0}
     m_Extent: {x: 0.16286197, y: 0.13229805, z: 0}
