@@ -2804,7 +2804,7 @@ GameObject:
   - component: {fileID: 3317124353509034425}
   - component: {fileID: 1073124300023278509}
   m_Layer: 5
-  m_Name: Text (Legacy) (9)
+  m_Name: Text_Sneaking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5402,7 +5402,7 @@ MonoBehaviour:
   Name_text: {fileID: 6931223183480533582}
   Level_text: {fileID: 7079979502937597865}
   Exp_text: {fileID: 4813069105934430644}
-  Multiplier_value: {fileID: 0}
+  Multiplier_value: {fileID: 6294419184730924934}
   Multiplier_text: {fileID: 2518241678984778566}
   Multiplier_icon:
   - {fileID: 7500512299817912973}
@@ -6573,7 +6573,7 @@ GameObject:
   - component: {fileID: 8527350031666760904}
   - component: {fileID: 507862864963804142}
   m_Layer: 5
-  m_Name: Text (Legacy) (1)
+  m_Name: Text_General
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8640,7 +8640,7 @@ GameObject:
   - component: {fileID: 5630741636299062895}
   - component: {fileID: 2315293634288925968}
   m_Layer: 5
-  m_Name: Text (Legacy) (5)
+  m_Name: Text_Crafting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13088,7 +13088,7 @@ GameObject:
   - component: {fileID: 2029549637044246483}
   - component: {fileID: 3117159896906073455}
   m_Layer: 5
-  m_Name: Text (Legacy) (14)
+  m_Name: Text_Maintenance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18174,7 +18174,7 @@ GameObject:
   - component: {fileID: 244602295946521364}
   - component: {fileID: 5201802931281040262}
   m_Layer: 0
-  m_Name: Text (Legacy) (6)
+  m_Name: Text_Fitness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18948,7 +18948,7 @@ GameObject:
   - component: {fileID: 6635549308194642808}
   - component: {fileID: 798693105155417295}
   m_Layer: 5
-  m_Name: Text (Legacy) (11)
+  m_Name: Text_LongBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19659,7 +19659,7 @@ GameObject:
   - component: {fileID: 1587513661766855739}
   - component: {fileID: 33001903283707259}
   m_Layer: 5
-  m_Name: Text (Legacy) (10)
+  m_Name: Text_ShortBlunt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20822,7 +20822,7 @@ GameObject:
   - component: {fileID: 3854613283631630507}
   - component: {fileID: 7343373277986181230}
   m_Layer: 5
-  m_Name: Text (Legacy) (13)
+  m_Name: Text_Electrical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23083,7 +23083,7 @@ GameObject:
   - component: {fileID: 2432158822671034016}
   - component: {fileID: 4057733125960394377}
   m_Layer: 5
-  m_Name: Text (Legacy) (4)
+  m_Name: Text_Survival
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25398,7 +25398,7 @@ GameObject:
   - component: {fileID: 2915769932209835553}
   - component: {fileID: 6639551943929360244}
   m_Layer: 5
-  m_Name: Text (Legacy) (7)
+  m_Name: Text_Lightfooted
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26181,7 +26181,7 @@ GameObject:
   - component: {fileID: 2421075567001245162}
   - component: {fileID: 8150805236882793554}
   m_Layer: 5
-  m_Name: Text (Legacy) (6)
+  m_Name: Text_Sprinting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32396,7 +32396,7 @@ GameObject:
   - component: {fileID: 922789301894562786}
   - component: {fileID: 2860764135223836629}
   m_Layer: 5
-  m_Name: Text (Legacy) (8)
+  m_Name: Text_Aiming
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33515,7 +33515,7 @@ GameObject:
   - component: {fileID: 6837549343068933488}
   - component: {fileID: 8334690239265106047}
   m_Layer: 5
-  m_Name: Text (Legacy) (8)
+  m_Name: Text_Nimble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35577,7 +35577,7 @@ GameObject:
   - component: {fileID: 4330799250202053731}
   - component: {fileID: 3101387569222416550}
   m_Layer: 5
-  m_Name: Text (Legacy) (12)
+  m_Name: Text_Riding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38477,7 +38477,7 @@ GameObject:
   - component: {fileID: 5527275568665713998}
   - component: {fileID: 3614636787576331759}
   m_Layer: 5
-  m_Name: Text (Legacy) (10)
+  m_Name: Text_Cooking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38660,7 +38660,7 @@ GameObject:
   - component: {fileID: 4619082201439541889}
   - component: {fileID: 1343595906678656068}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Text_Passive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40564,7 +40564,7 @@ GameObject:
   - component: {fileID: 1367006321533781867}
   - component: {fileID: 3846573884549243465}
   m_Layer: 5
-  m_Name: Text (Legacy) (10)
+  m_Name: Text_Hunting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41939,7 +41939,7 @@ GameObject:
   - component: {fileID: 8003212511832450834}
   - component: {fileID: 6471073408158963505}
   m_Layer: 5
-  m_Name: Text (Legacy) (8)
+  m_Name: Text_Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47307,7 +47307,7 @@ GameObject:
   - component: {fileID: 2331729089873615933}
   - component: {fileID: 1994149858251358885}
   m_Layer: 5
-  m_Name: Text (Legacy) (3)
+  m_Name: Text_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49168,7 +49168,7 @@ GameObject:
   - component: {fileID: 8320699300990486532}
   - component: {fileID: 3338483739179627094}
   m_Layer: 5
-  m_Name: Text (Legacy) (9)
+  m_Name: Text_Carpentry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54649,7 +54649,7 @@ GameObject:
   - component: {fileID: 1717510677536741195}
   - component: {fileID: 9215539902913976655}
   m_Layer: 5
-  m_Name: Text (Legacy) (9)
+  m_Name: Text_Reloading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56954,7 +56954,7 @@ GameObject:
   - component: {fileID: 524311782162794519}
   - component: {fileID: 8746731083977068582}
   m_Layer: 5
-  m_Name: Text (Legacy) (9)
+  m_Name: Text_Fishing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62319,7 +62319,7 @@ GameObject:
   - component: {fileID: 8233322407226425728}
   - component: {fileID: 6058196260196248082}
   m_Layer: 5
-  m_Name: Text (Legacy) (13)
+  m_Name: Text_Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64402,7 +64402,7 @@ GameObject:
   - component: {fileID: 2556091239454081145}
   - component: {fileID: 3476132741092769362}
   m_Layer: 5
-  m_Name: Text (Legacy) (11)
+  m_Name: Text_Foraging
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65522,7 +65522,7 @@ GameObject:
   - component: {fileID: 4777425106739172602}
   - component: {fileID: 7559641682555552504}
   m_Layer: 5
-  m_Name: Text (Legacy) (2)
+  m_Name: Text_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68084,7 +68084,7 @@ GameObject:
   - component: {fileID: 7944635917525255846}
   - component: {fileID: 2663522752097647354}
   m_Layer: 5
-  m_Name: Text (Legacy) (11)
+  m_Name: Text_Farming
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72253,7 +72253,7 @@ GameObject:
   - component: {fileID: 1669693822202594661}
   - component: {fileID: 1718550979638784074}
   m_Layer: 5
-  m_Name: Text (Legacy) (12)
+  m_Name: Text_FirstAid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72409,7 +72409,7 @@ GameObject:
   - component: {fileID: 348046555382971392}
   - component: {fileID: 206131184721339616}
   m_Layer: 5
-  m_Name: Text (Legacy) (9)
+  m_Name: Text_LongBlunt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75504,7 +75504,7 @@ GameObject:
   - component: {fileID: 5900584030855131516}
   - component: {fileID: 6637226678315584075}
   m_Layer: 5
-  m_Name: Text (Legacy) (7)
+  m_Name: Text_Strength
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76364,7 +76364,7 @@ GameObject:
   - component: {fileID: 4921560642865239439}
   - component: {fileID: 7424704458791716516}
   m_Layer: 5
-  m_Name: Text (Legacy) (12)
+  m_Name: Text_ShortBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

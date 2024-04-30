@@ -85,15 +85,23 @@ public class Inventory_Player_Shown : MonoBehaviour
     public bool LS_Is_Player;
 
     Animator Anim;
+    Animator SubAnim;
+    public GameObject Storage_s;
     public bool inven_open; // v
 
     private void Awake()
     {
         InvPS = this;
         Anim = GetComponent<Animator>();
+        SubAnim = Storage_s.GetComponent<Animator>();
         inven_open = false;
+    }
 
-
+    public void SetAnim(bool open)
+    {
+        inven_open = open;
+        Anim.SetBool("Open", inven_open);
+        SubAnim.SetBool("Open", inven_open);
     }
 
     private void Start()
@@ -165,11 +173,7 @@ public class Inventory_Player_Shown : MonoBehaviour
 
     }
 
-    public void SetAnim(bool open)
-    {
-        inven_open = open;
-        Anim.SetBool("Open", inven_open);
-    }
+
 
     private void Generating_Acting_Inventory(short Backpack_ID, short[,,] Exiest_Packages, short Order)
     {
