@@ -95,6 +95,7 @@ public class MapLoader : MonoBehaviour
                 inst.GetComponent<TileItsInfo>().Floor = 1;
                 inst.GetComponent<TileItsInfo>().Y_line = o;
                 inst.GetComponent<TileItsInfo>().Counts = i;
+                inst.GetComponent<TileItsInfo>().Storage_Order = i + (o * LengthofX);
                 obj.Add(inst);
                 TilesList.Add(inst);
             }

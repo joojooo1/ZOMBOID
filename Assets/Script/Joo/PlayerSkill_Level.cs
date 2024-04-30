@@ -78,44 +78,55 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
 
     public void SetEXP(float exp)
     {
-        P_EXP = P_EXP + exp;
+        float SlowLearner_Char = 1f;
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
+        P_EXP = P_EXP + (exp * SlowLearner_Char);
         if (P_Level < P_Max_Level && P_EXP >= P_expRequirements[(int)P_Level][0])
         {
             P_EXP -= P_expRequirements[(int)P_Level][0];
             P_Level++;
 
-            if (P_SkillName == "Fitness")
-            {
-                Player_Characteristic.current.Set_Characteristic_for_Fitness(Get_P_Level());
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
-                /*
-                 미반영사항: 특성
-                   (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
-                 */
-            }
-            else if (P_SkillName == "Strength")
-            {
-                Player_Characteristic.current.Set_Characteristic_for_Strength(Get_P_Level());
-                Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
-                Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
-                /*
-                 미반영사항: 특성
-                   (0~1: 약함, 2~4: 연약함, 5: -, 6~8: 통통함, 9~10: 튼튼함)
-                 */
-            }
+            Set_forSkill();
         }
         /*
          미반영사항: 운동을 통해 Fitness/Strength 레벨 상승하는 함수
          */
+    }
+
+    void Set_forSkill()
+    {
+        if (P_SkillName == "Fitness")
+        {
+            Player_Characteristic.current.Set_Characteristic_for_Fitness(Get_P_Level());
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Fatigue_Generation_Rate_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Recovery_Rate_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Endurance_Depletion_Rate_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Attack_Speed_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Falling_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Fitness", P_Level, Player_main.player_main.Is_Equipping_Weapons);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+            /*
+             미반영사항: 특성
+               (0~1: 비실함, 2~4: 건강 이상, 5: -, 6~8: 건강함, 9~10: 육상선수)
+             */
+        }
+        else if (P_SkillName == "Strength")
+        {
+            Player_Characteristic.current.Set_Characteristic_for_Strength(Get_P_Level());
+            Player_main.player_main.Inven_main.Inventory_Weight.Set_MaxWeight_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Melee_Attack_Power_Ratio_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_HitForce_forSkill(P_Level);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Block_chance_forSkill("Strength", P_Level, Player_main.player_main.Is_Equipping_Weapons);
+            Player_main.player_main.playerSkill_ActivationProbability.Set_Probability_of_Crossing_a_High_Wall_forSkill(P_Level);
+            /*
+             미반영사항: 특성
+               (0~1: 약함, 2~4: 연약함, 5: -, 6~8: 통통함, 9~10: 튼튼함)
+             */
+        }
     }
 
     public float Get_P_Level()
@@ -123,9 +134,16 @@ public class PlayerPassiveSkill_Level  // 체력, 근력
         return P_Level;
     }
 
-    public void Set_P_Level(float Start_Level)
+    public void Set_P_Start_Level(float Start_Level)
     {
         P_Level = Start_Level;
+    }
+
+    public void Set_P_Playing_Level(float level)
+    {
+        P_Level += level;
+
+        Set_forSkill();
     }
 
     public float Get_P_CurrentEXP()
@@ -228,7 +246,21 @@ public class PlayerGeneralSkill_Level  // 능숙한 달리기, 조용한 발걸음, 전투시 �
 
     public void SetEXP(float exp)
     {
-        G_EXP += exp;
+        float FastLearner_Char = 1f;
+        float SlowLearner_Char = 1f;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
+        {
+            FastLearner_Char = 1.3f;
+        }
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
+        G_EXP += exp * FastLearner_Char * SlowLearner_Char;
+
         if (G_Level < G_Max_Level && G_EXP >= G_expRequirements[(int)G_Level][0])
         {
             G_EXP -= G_expRequirements[(int)G_Level][0];
@@ -346,8 +378,29 @@ public class PlayerWeaponSkill_Level  // 도끼, 긴 둔기, 짧은 둔기, 장검, 단검, �
 
     public void SetEXP(float exp)
     {
+        float FastLearner_Char = 1f;
+        float Pacifist_Char = 1f;
+        float SlowLearner_Char = 1f;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
+        {
+            FastLearner_Char = 1.3f;
+        }
+        
+        if (Player_Characteristic.current.Pacifist_Characteristic)
+        {
+            Pacifist_Char = 0.75f;
+        }
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
         if (W_Level < 5)
-            W_EXP += exp;
+            W_EXP += exp * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
+        else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
+            W_EXP += exp * 0.37f * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
 
         if (W_Level < W_Max_Level && W_EXP >= W_expRequirements[(int)W_Level][0])
         {
@@ -498,7 +551,27 @@ public class PlayerMaintenanceSkill_Level  // 물건관리
 
     public void SetEXP(float exp)
     {
-        M_EXP += exp;
+        float FastLearner_Char = 1f;
+        float Pacifist_Char = 1f;
+        float SlowLearner_Char = 1f;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
+        {
+            FastLearner_Char = 1.3f;
+        }
+
+        if (Player_Characteristic.current.Pacifist_Characteristic)
+        {
+            Pacifist_Char = 0.75f;
+        }
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
+        M_EXP += exp * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
+
         if (M_Level < M_Max_Level && M_EXP >= M_expRequirements[(int)M_Level][0])
         {
             M_EXP -= M_expRequirements[(int)M_Level][0];
@@ -621,10 +694,29 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
 
     public void SetEXP(float exp)
     {
+        float FastLearner_Char = 1f;
+        float Pacifist_Char = 1f;
+        float SlowLearner_Char = 1f;
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic)
+        {
+            FastLearner_Char = 1.3f;
+        }
+
+        if (Player_Characteristic.current.Pacifist_Characteristic)
+        {
+            Pacifist_Char = 0.75f;
+        }
+
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
         if (Gun_Level < 5)
-            Gun_EXP += exp;
+            Gun_EXP += exp * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
         else  // 레벨 5 이상에서는 경험치 획득량 약 37%로 감소
-            Gun_EXP += exp * 0.37f;
+            Gun_EXP += exp * 0.37f * FastLearner_Char * Pacifist_Char * SlowLearner_Char;
 
         if (Gun_Level < Gun_Max_Level && Gun_EXP >= Gun_expRequirements[(int)Gun_Level][0])
         {
@@ -706,11 +798,27 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
     float C_Min_Level = 0f;
     float C_Max_Level = 10f;
 
-    public bool Change_Multiplier = true;
-    float C_Additional_points_through_Books = 1f;
+    int C_Multiplier_Number = -1;
+
+    int C_BookLevel = -1;
+    float C_BookLevel_points = 1f;
+    float C_BookLevel_reading_page = 0f;
+    float C_BookLevel_reading_value = 0f;
+    int C_BookLevel_reading_Step = 0;
+
+    int [] C_BookLevel_Totalpage = new int[5];
+    /*
+    게임시간 10분에 5페이지 읽음(실제시간 25초에 5페이지 )
+    BookLevel_1_page = 220f;  // 1100초 ( 18분20초 )
+    BookLevel_2_page = 260f;  // 1300초 ( 21분40초 )
+    BookLevel_3_page = 300f;  // 1500초 ( 25분 )
+    BookLevel_4_page = 340f;  // 1700초 ( 28분20초 )
+    BookLevel_5_page = 380f;  // 1900초 ( 31분40초 )
+    */
 
     float C_EXP = 0f;
     List<float>[] C_expRequirements;
+    
     // 레벨 0 ~ 10
     // 레벨별 필요 경험치
 
@@ -725,25 +833,29 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
             if (C_SkillName == "Carpentry")
             {
-
+                C_Multiplier_Number = 4;
             }
             else if (C_SkillName == "Cooking")
             {
-
+                C_Multiplier_Number = 5;
             }
             else if (C_SkillName == "Farming")
             {
-
+                C_Multiplier_Number = 6;
             }
             else if (C_SkillName == "FirstAid")
             {
-
+                C_Multiplier_Number = 7;
             }
             else if (C_SkillName == "Electrical")
             {
-
+                C_Multiplier_Number = 8;
             }
 
+            for(int i = 0; i < C_BookLevel_Totalpage.Length; i++)
+            {
+                C_BookLevel_Totalpage[i] = 220 + i * 40;
+            }
         }
     }
 
@@ -770,7 +882,21 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
     public void SetEXP(float exp)
     {
-        C_EXP = C_EXP + (exp * C_Additional_points_through_Books);
+        float SlowLearner_Char = 1f;
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            C_EXP = C_EXP + (exp * 1.3f * C_BookLevel_points * C_BookLevel_reading_Step / 3 * SlowLearner_Char);
+        }
+        else
+        {
+            C_EXP = C_EXP + (exp * C_BookLevel_points * C_BookLevel_reading_Step / 3 * SlowLearner_Char);
+        }
+
         if (C_Level < C_Max_Level && C_EXP >= C_expRequirements[(int)C_Level][0])
         {
             C_EXP -= C_expRequirements[(int)C_Level][0];
@@ -797,8 +923,20 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
 
             }
 
+            if ((C_BookLevel == 1 && C_Level > 2)   // Level: 1, 2
+                || (C_BookLevel == 2 && C_Level <= 2 && C_Level > 4)   // Level: 3, 4
+                || (C_BookLevel == 3 && C_Level <= 4 && C_Level > 6)   // Level: 5, 6
+                || (C_BookLevel == 4 && C_Level <= 6 && C_Level > 8)   // Level: 7, 8
+                || (C_BookLevel == 5 && C_Level <= 8))   // Level: 9, 10
+            {
+                UI_State_Skill.state_skill_info.Close_Multiplier_icon(C_Multiplier_Number);
+                C_BookLevel = -1;
+            }
 
         }
+
+        
+
     }
 
     public float Get_C_Level()
@@ -841,65 +979,196 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         }
     }
 
-    public float Get_C_Multiplier()
+    public float Get_C_reading_page()
     {
-        return C_Additional_points_through_Books;
+        return C_BookLevel_reading_page;
     }
 
-    public void Set_C_Books_Point(Item_Literature Book)  // skillbook 일때 호출
+    public float Check_C_Book_Reading_finish(int booklevel, float page)
     {
-        switch (Book.Literature_Level)
+        return C_BookLevel_reading_page / C_BookLevel_Totalpage[booklevel - 1];
+    }
+
+    public void Set_C_Book_Reading_Step()
+    {
+        if (C_BookLevel_reading_page / C_BookLevel_Totalpage[C_BookLevel - 1] < 0.33f)
         {
-            case 0:
-                break;
+            C_BookLevel_reading_Step = 1;
+        }
+        else if (C_BookLevel_reading_page / C_BookLevel_Totalpage[C_BookLevel - 1] >= 0.33f && C_BookLevel_reading_page / C_BookLevel_Totalpage[C_BookLevel - 1] < 0.66f)
+        {
+            C_BookLevel_reading_Step = 2;
+        }
+        else
+        {
+            C_BookLevel_reading_Step = 3;
+        }
+
+        UI_State_Skill.state_skill_info.Set_anim(C_Multiplier_Number, C_BookLevel_reading_Step);
+    }
+
+    public void Set_C_Books_Point(int Book_level, float page)  // skillbook 일때 호출   // 스킬북 읽기 시작할때 호출
+    {
+        C_BookLevel = Book_level;
+        C_BookLevel_reading_page = page;
+
+        switch (Book_level)
+        {
             case 1:
-                if (C_Level == 1 || C_Level == 2)
-                    C_Additional_points_through_Books = 3f;
-                else
-                    AboutBooks(true);
+                switch (C_Level)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        C_BookLevel_points = 3f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(C_Multiplier_Number);
+                        Set_C_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
                 break;
             case 2:
-                if (C_Level == 3 || C_Level == 4)
-                    C_Additional_points_through_Books = 5f;
-                else if (C_Level < 3)
-                    AboutBooks(false);
-                else
-                    AboutBooks(true);
+                switch (C_Level)
+                {
+                    case 3:
+                    case 4:
+                        C_BookLevel_points = 5f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(C_Multiplier_Number);
+                        Set_C_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }                
                 break;
             case 3:
-                if (C_Level == 5 || C_Level == 6)
-                    C_Additional_points_through_Books = 8f;
-                else if (C_Level < 5)
-                    AboutBooks(false);
-                else
-                    AboutBooks(true);
+                switch (C_Level)
+                {
+                    case 5:
+                    case 6:
+                        C_BookLevel_points = 8f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(C_Multiplier_Number);
+                        Set_C_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
                 break;
             case 4:
-                if (C_Level == 7 || C_Level == 8)
-                    C_Additional_points_through_Books = 12f;
-                else if (C_Level < 7)
-                    AboutBooks(false);
-                else
-                    AboutBooks(true);
+                switch (C_Level)
+                {
+                    case 7:
+                    case 8:
+                        C_BookLevel_points = 12f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(C_Multiplier_Number);
+                        Set_C_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
                 break;
             case 5:
-                if (C_Level == 9 || C_Level == 10)
-                    C_Additional_points_through_Books = 16f;
-                else
-                    AboutBooks(false);
+                switch (C_Level)
+                {
+                    case 9:
+                    case 10:
+                        C_BookLevel_points = 16f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(C_Multiplier_Number);
+                        Set_C_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
                 break;
             default: break;
         }
-
     }
 
-    public void AboutBooks(bool over)
+    public void Get_failed_Read()
     {
-        if(over)
-            Debug.Log("어려워서 읽지 못함");  // 책 못 읽음
-        else
-            Debug.Log("이미 다 아는 내용임");  // 책을 읽긴하지만 아무 변화 없음
+        C_BookLevel_points = 1f;
+
+        if (C_BookLevel > C_Level)
+        {
+            Debug.Log("어려워서 읽지 못함");
+            // 책 못 읽음
+        }
+        else if (C_BookLevel < C_Level)
+        {
+            Debug.Log("이미 다 아는 내용임");
+            // 책을 읽긴하지만 아무 변화 없음
+        }
     }
+
+    public bool Check_reading(int item_level)
+    {
+        if (item_level == C_BookLevel)
+        {
+            return false;
+        }
+        else
+        {
+            switch (item_level)
+            {
+                case 1:
+                    switch (C_Level)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 2:
+                    switch (C_Level)
+                    {
+                        case 3:
+                        case 4:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 3:
+                    switch (C_Level)
+                    {
+                        case 5:
+                        case 6:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 4:
+                    switch (C_Level)
+                    {
+                        case 7:
+                        case 8:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 5:
+                    switch (C_Level)
+                    {
+                        case 9:
+                        case 10:
+                            return true;
+                        default:
+                            return false;
+                    }
+                default: return false;
+            }
+        }
+
+
+
+    }
+
 
     /*  Magazine  
     12. Good Cooking Magazine Vol. 1 : 케이크 반죽, 파이 반죽, 초콜릿칩쿠키 반죽, 초콜릿쿠키 반죽, 오트밀쿠키 반죽, 쇼트브레드쿠키 반죽, 설탕쿠키 반죽 만들기
@@ -942,8 +1211,22 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
     float S_Min_Level = 0f;
     float S_Max_Level = 10f;
 
-    public bool Change_Multiplier = true;
-    float S_Additional_points_through_Books = 1f;
+    int S_Multiplier_Number = -1;
+
+    int S_BookLevel = -1;
+    float S_BookLevel_points = 1f;
+    float S_BookLevel_reading_page = 0f;
+    int S_BookLevel_reading_Step = 0;
+
+    float[] S_BookLevel_Totalpage = new float[5];
+    /*
+    게임시간 10분에 5페이지 읽음(실제시간 25초에 5페이지 )
+    BookLevel_1_page = 220f;  // 1100초 ( 18분20초 )
+    BookLevel_2_page = 260f;  // 1300초 ( 21분40초 )
+    BookLevel_3_page = 300f;  // 1500초 ( 25분 )
+    BookLevel_4_page = 340f;  // 1700초 ( 28분20초 )
+    BookLevel_5_page = 380f;  // 1900초 ( 31분40초 )
+    */
 
     float S_EXP = 0f;
     public float S_Exp_characteristic = 1f;
@@ -962,21 +1245,26 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
             if (S_SkillName == "Hunting")
             {
-
+                S_Multiplier_Number = 1;
             }
             else if (S_SkillName == "Fishing")
             {
-
+                S_Multiplier_Number = 0;
             }
             else if (S_SkillName == "Foraging")
             {
-
+                S_Multiplier_Number = 2;
             }
             else if (S_SkillName == "Riding")
             {
-
+                S_Multiplier_Number = 3;
             }
 
+
+            for (int i = 0; i < S_BookLevel_Totalpage.Length; i++)
+            {
+                S_BookLevel_Totalpage[i] = 220 + i * 40;
+            }
         }
     }
 
@@ -1003,7 +1291,21 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public void SetEXP(float exp)
     {
-        S_EXP = S_EXP + (exp * S_Additional_points_through_Books * S_Exp_characteristic);
+        float SlowLearner_Char = 1f;
+        if (Player_Characteristic.current.Slow_Learner_Characteristic)
+        {
+            SlowLearner_Char = 0.7f;
+        }
+
+        if (Player_Characteristic.current.Fast_Learner_Characteristic == true)
+        {
+            S_EXP = S_EXP + (exp * 1.3f * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3 * SlowLearner_Char);
+        }
+        else
+        {
+            S_EXP = S_EXP + (exp * S_BookLevel_points * S_Exp_characteristic * S_BookLevel_reading_Step / 3 * SlowLearner_Char);
+        }
+        
         if (S_Level < S_Max_Level && S_EXP >= S_expRequirements[(int)S_Level][0])
         {
             S_EXP -= S_expRequirements[(int)S_Level][0];
@@ -1026,8 +1328,24 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
             }
 
+            if (S_BookLevel != S_Level && S_BookLevel != S_Level + 1)
+            {
+                UI_State_Skill.state_skill_info.Close_Multiplier_icon(S_Multiplier_Number);
+                S_BookLevel = -1;
+            }
 
+            if ((S_BookLevel == 1 && S_Level > 2)   // Level: 1, 2
+                || (S_BookLevel == 2 && S_Level <= 2 && S_Level > 4)   // Level: 3, 4
+                || (S_BookLevel == 3 && S_Level <= 4 && S_Level > 6)   // Level: 5, 6
+                || (S_BookLevel == 4 && S_Level <= 6 && S_Level > 8)   // Level: 7, 8
+                || (S_BookLevel == 5 && S_Level <= 8))   // Level: 9, 10
+            {
+                UI_State_Skill.state_skill_info.Close_Multiplier_icon(S_Multiplier_Number);
+                S_BookLevel = -1;
+            }
         }
+
+
     }
 
     public float Get_S_Level()
@@ -1070,49 +1388,203 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
         }
     }
 
-    public float Get_S_Multiplier()
+    public float Get_S_BookLevel_points()
     {
-        return S_Additional_points_through_Books;
+        return S_BookLevel_points;
     }
 
-    public void Set_S_Books_Point(int Book_level)
+    public float Get_S_reading_page()
     {
-        if (Book_level > S_Level)
+        Debug.Log("S_BookLevel_reading_page :" + S_BookLevel_reading_page);
+        return S_BookLevel_reading_page;
+    }
+    public float Check_S_Book_Reading_finish(int booklevel, float page)
+    {
+        return S_BookLevel_reading_page / S_BookLevel_Totalpage[booklevel - 1];
+    }
+
+    public void Set_S_Book_Reading_Step()
+    {
+        if (S_BookLevel_reading_page / S_BookLevel_Totalpage[S_BookLevel - 1] < 0.33f)
         {
-            S_Additional_points_through_Books = 1f;
-            Debug.Log("어려워서 읽지 못함");
-            // 책 못 읽음
+            S_BookLevel_reading_Step = 1;
         }
-        else if (Book_level < S_Level)
+        else if (S_BookLevel_reading_page / S_BookLevel_Totalpage[S_BookLevel - 1] >= 0.33f && S_BookLevel_reading_page / S_BookLevel_Totalpage[S_BookLevel - 1] < 0.66f)
         {
-            S_Additional_points_through_Books = 1f;
-            Debug.Log("이미 다 아는 내용임");
-            // 책을 읽긴하지만 아무 변화 없음
+            S_BookLevel_reading_Step = 2;
         }
         else
         {
-            switch (Book_level)
-            {
-                case 0:
-                    break;
-                case 1:
-                    S_Additional_points_through_Books = 3f;
-                    break;
-                case 2:
-                    S_Additional_points_through_Books = 5f;
-                    break;
-                case 3:
-                    S_Additional_points_through_Books = 8f;
-                    break;
-                case 4:
-                    S_Additional_points_through_Books = 12f;
-                    break;
-                case 5:
-                    S_Additional_points_through_Books = 16f;
-                    break;
-                default: break;
-            }
+            S_BookLevel_reading_Step = 3;
+        }
+
+        UI_State_Skill.state_skill_info.Set_anim(S_Multiplier_Number, S_BookLevel_reading_Step);
+    }
+
+    public void Set_S_Books_Point(int Book_level, float page)  // skillbook 일때 호출   // 스킬북 읽기 시작할때 호출
+    {
+        S_BookLevel = Book_level;
+        S_BookLevel_reading_page = page;
+
+        Debug.Log("S_BookLevel :" + S_BookLevel);
+        Debug.Log("S_BookLevel_reading_page :" + S_BookLevel_reading_page);
+
+        switch (Book_level)
+        {
+            case 1:
+                switch (S_Level)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        S_BookLevel_points = 3f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(S_Multiplier_Number);
+                        Set_S_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
+                break;
+            case 2:
+                switch (S_Level)
+                {
+                    case 3:
+                    case 4:
+                        S_BookLevel_points = 5f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(S_Multiplier_Number);
+                        Set_S_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
+                break;
+            case 3:
+                switch (S_Level)
+                {
+                    case 5:
+                    case 6:
+                        S_BookLevel_points = 8f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(S_Multiplier_Number);
+                        Set_S_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
+                break;
+            case 4:
+                switch (S_Level)
+                {
+                    case 7:
+                    case 8:
+                        S_BookLevel_points = 12f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(S_Multiplier_Number);
+                        Set_S_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
+                break;
+            case 5:
+                switch (S_Level)
+                {
+                    case 9:
+                    case 10:
+                        S_BookLevel_points = 16f;
+                        UI_State_Skill.state_skill_info.Open_Multiplier_icon(S_Multiplier_Number);
+                        Set_S_Book_Reading_Step();
+                        break;
+                    default:
+                        Get_failed_Read();
+                        break;
+                }
+                break;
+            default: break;
         }
 
     }
+
+    public void Get_failed_Read()
+    {
+        S_BookLevel_points = 1f;
+
+        if (S_BookLevel > S_Level)
+        {
+            Debug.Log("어려워서 읽지 못함");
+            // 책 못 읽음
+        }
+        else if (S_BookLevel < S_Level)
+        {
+            Debug.Log("이미 다 아는 내용임");
+            // 책을 읽긴하지만 아무 변화 없음
+        }
+    }
+
+    public bool Check_reading(int item_level)
+    {
+        if(item_level == S_BookLevel)
+        {
+            return false;
+        }
+        else
+        {
+            switch (item_level)
+            {
+                case 1:
+                    switch (S_Level)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 2:
+                    switch (S_Level)
+                    {
+                        case 3:
+                        case 4:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 3:
+                    switch (S_Level)
+                    {
+                        case 5:
+                        case 6:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 4:
+                    switch (S_Level)
+                    {
+                        case 7:
+                        case 8:
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 5:
+                    switch (S_Level)
+                    {
+                        case 9:
+                        case 10:
+                            return true;
+                        default:
+                            return false;
+                    }
+                default: return false;
+            }
+        }
+
+
+        
+    }
+
 }

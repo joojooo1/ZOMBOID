@@ -8,6 +8,7 @@ public class PlayerSkill_ActivationProbability
 
     // 피로도 생성 비율 ( * )  // Fitness
     float Fatigue_Generation_Rate = 1.00f;
+    public bool Characteristic_Sleepyhead = false;
     public float Get_Fatigue_Generation_Rate() { return Fatigue_Generation_Rate; }
 
     public void Set_Fatigue_Generation_Rate_forSkill(float SkillLevel)
@@ -50,11 +51,55 @@ public class PlayerSkill_ActivationProbability
             default:
                 break;
         }
+
+        if (Characteristic_Sleepyhead)
+        {
+            Fatigue_Generation_Rate *= 1.3f;
+        }
+        
     }
 
     // 지구력 회복 비율 ( * )  // Fitness
     float Endurance_Recovery_Rate = 0.7f;
-    public float Get_Endurance_Recovery_Rate() { return Endurance_Recovery_Rate; }
+    public float Endurance_Recovery_Rate_Overweight = 1f;
+    public float Endurance_Recovery_Rate_Obese = 1f;
+    public float Endurance_Recovery_Rate_Emaciated = 1f;
+    public float Get_Endurance_Recovery_Rate() 
+    {
+        return Endurance_Recovery_Rate * Set_Endurance_Recovery_Rate_forChar(); 
+    }
+
+    public float Set_Endurance_Recovery_Rate_forChar()
+    {
+        if (Player_Characteristic.current.Overweight_Characteristic)
+        {
+            Endurance_Recovery_Rate_Overweight = 0.7f;
+        }
+        else
+        {
+            Endurance_Recovery_Rate_Overweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Obese_Characteristic)
+        {
+            Endurance_Recovery_Rate_Obese = 0.4f;
+        }
+        else
+        {
+            Endurance_Recovery_Rate_Obese = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Endurance_Recovery_Rate_Emaciated = 0.3f;
+        }
+        else
+        {
+            Endurance_Recovery_Rate_Emaciated = 1f;
+        }
+
+        return Endurance_Recovery_Rate_Overweight * Endurance_Recovery_Rate_Obese * Endurance_Recovery_Rate_Emaciated;
+    }
 
     public void Set_Endurance_Recovery_Rate_forSkill(float SkillLevel)
     {
@@ -100,7 +145,20 @@ public class PlayerSkill_ActivationProbability
 
     // 지구력 소모 비율 ( * )  // Fitness
     float Endurance_Depletion_Rate = 0.9f;
-    public float Get_Endurance_Depletion_Rate() { return Endurance_Depletion_Rate; }
+    public float Characteristic_Asthmatic = 1f;
+    public float Characteristic_Athletic_Endurance = 1f;
+    public float Get_Endurance_Depletion_Rate() 
+    {
+        if (Player_main.player_main.Is_Running)
+        {
+            return Endurance_Depletion_Rate * Characteristic_Athletic_Endurance * Characteristic_Asthmatic;
+        }
+        else
+        {
+            return Endurance_Depletion_Rate * Characteristic_Athletic_Endurance;
+        }
+
+    }
 
     public void Set_Endurance_Depletion_Rate_forSkill(float SkillLevel)
     {
@@ -161,6 +219,17 @@ public class PlayerSkill_ActivationProbability
                 return 0;
             }
         }
+        else if(current_weapon.WeaponType == Weapon_type.None)
+        {
+            if ((Basic_Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle) > 0)
+            {
+                return Basic_Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         else
         {
             if((Increase_in_Attack_Power - Increase_in_Attack_Power_forMoodle) > 0)
@@ -215,6 +284,9 @@ public class PlayerSkill_ActivationProbability
             case Weapon_type.Gun:
 
                 break;
+            case Weapon_type.None:
+                Increase_in_Attack_Power = Basic_Increase_in_Attack_Power;
+                break;
             default:
                 break;
         }
@@ -253,7 +325,45 @@ public class PlayerSkill_ActivationProbability
     // 근접 공격력 비율 ( * )  // Strength
     float Melee_Attack_Power_Ratio = 0.75f;
     float Melee_Attack_Power_Ratio_forMoodle = 1f;
-    public float Get_Melee_Attack_Power_Ratio() { return Melee_Attack_Power_Ratio * Melee_Attack_Power_Ratio_forMoodle; }
+    public float Melee_Attack_Power_Ratio_Underweight = 1f;
+    public float Melee_Attack_Power_Ratio_VeryUnderweight = 1f;
+    public float Melee_Attack_Power_Ratio_Emaciated = 1f;
+    public float Get_Melee_Attack_Power_Ratio() 
+    {
+        return Melee_Attack_Power_Ratio * Melee_Attack_Power_Ratio_forMoodle * Set_Melee_Attack_Power_Ratio_forChar(); 
+    }
+
+    public float Set_Melee_Attack_Power_Ratio_forChar()
+    {
+        if (Player_Characteristic.current.Underweight_Characteristic)
+        {
+            Melee_Attack_Power_Ratio_Underweight = 0.8f;
+        }
+        else
+        {
+            Melee_Attack_Power_Ratio_Underweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Very_Underweight_Characteristic)
+        {
+            Melee_Attack_Power_Ratio_VeryUnderweight = 0.6f;
+        }
+        else
+        {
+            Melee_Attack_Power_Ratio_VeryUnderweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Melee_Attack_Power_Ratio_Emaciated = 0.4f;
+        }
+        else
+        {
+            Melee_Attack_Power_Ratio_Emaciated = 1f;
+        }
+
+        return Melee_Attack_Power_Ratio_Underweight * Melee_Attack_Power_Ratio_VeryUnderweight * Melee_Attack_Power_Ratio_Emaciated;
+    }
 
     public void Set_Melee_Attack_Power_Ratio_forSkill(float SkillLevel)
     {
@@ -360,19 +470,83 @@ public class PlayerSkill_ActivationProbability
 
 
     // 넘어질 확률 ( - )  // Fitness  // Moodle_Heavy_Load, Moodle_Pain
+    // 달리거나 전력 질주를 하는 도중 낮은 울타리를 넘거나 좀비와 부딫힐 때 넘어질 확률
     float Probability_of_Falling = 0.2f;
     float Probability_of_Falling_forSkill = 0f;
     float Probability_of_Falling_forMoodle = 0f;
-    public float Get_Probability_of_Falling() 
-    { 
-        if(Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+    public float Probability_of_Falling_Overweight = 1f;
+    public float Probability_of_Falling_Underweight = 1f;
+    public float Probability_of_Falling_Obese = 1f;
+    public float Probability_of_Falling_VeryUnderweight = 1f;
+    public float Probability_of_Falling_Emaciated = 1f;
+
+    public float Get_Probability_of_Falling(bool Is_Zombie) 
+    {
+        if (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
         {
-            return Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain;
+            return (Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain) * Set_Probability_of_Falling_forChar(Is_Zombie);
         }
         else
         {
-            return Probability_of_Falling + Probability_of_Falling_forMoodle;
+            return (Probability_of_Falling + Probability_of_Falling_forMoodle) * Set_Probability_of_Falling_forChar(Is_Zombie);
         }
+    }
+
+    public float Set_Probability_of_Falling_forChar(bool Is_Zombie)
+    {
+        if (Player_Characteristic.current.Overweight_Characteristic)
+        {
+            Probability_of_Falling_Overweight = 1.1f;
+        }
+        else
+        {
+            Probability_of_Falling_Overweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Underweight_Characteristic)
+        {
+            Probability_of_Falling_Underweight = 1.1f;
+        }
+        else
+        {
+            Probability_of_Falling_Underweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Obese_Characteristic)   // 비만)  넘어질 확률: +20%, 좀비랑 부딪힐때 넘어질 확률: -10%
+        {
+            if (Is_Zombie)
+            {
+                Probability_of_Falling_Obese = 0.9f;
+            }
+            else
+            {
+                Probability_of_Falling_Obese = 1.2f;
+            }
+        }
+        else
+        {
+            Probability_of_Falling_Obese = 1f;
+        }
+
+        if (Player_Characteristic.current.Very_Underweight_Characteristic)
+        {
+            Probability_of_Falling_VeryUnderweight = 1.2f;
+        }
+        else
+        {
+            Probability_of_Falling_VeryUnderweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Probability_of_Falling_Emaciated = 1.25f;
+        }
+        else
+        {
+            Probability_of_Falling_Emaciated = 1f;
+        }
+
+        return Probability_of_Falling_Overweight * Probability_of_Falling_Underweight * Probability_of_Falling_Obese * Probability_of_Falling_VeryUnderweight * Probability_of_Falling_Emaciated;
     }
 
     public void Set_Probability_of_Falling(float value)
@@ -417,7 +591,67 @@ public class PlayerSkill_ActivationProbability
     float Probability_of_Crossing_a_High_Wall = 0.5f;
     float Probability_of_Crossing_a_High_Wall_forSkill = 0f;
     float Probability_of_Crossing_a_High_Wall_forMoodle = 0f;
-    public float Get_Probability_of_Crossing_a_High_Wall() { return Probability_of_Crossing_a_High_Wall + Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle; }
+    public float Probability_of_Crossing_a_High_Wall_Overweight = 1f;
+    public float Probability_of_Crossing_a_High_Wall_Underweight = 1f;
+    public float Probability_of_Crossing_a_High_Wall_Obese = 1f;
+    public float Probability_of_Crossing_a_High_Wall_VeryUnderweight = 1f;
+    public float Probability_of_Crossing_a_High_Wall_Emaciated = 1f;
+    public float Get_Probability_of_Crossing_a_High_Wall() 
+    {
+
+
+        return (Probability_of_Crossing_a_High_Wall + Probability_of_Crossing_a_High_Wall_forSkill - Probability_of_Crossing_a_High_Wall_forMoodle) * Set_Probability_of_Crossing_a_High_Wall_forChar();
+    }
+
+    public float Set_Probability_of_Crossing_a_High_Wall_forChar()
+    {
+        if (Player_Characteristic.current.Overweight_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Overweight = 0.85f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Overweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Underweight_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Underweight = 0.85f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Underweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Obese_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Obese = 0.75f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Obese = 1f;
+        }
+
+        if (Player_Characteristic.current.Very_Underweight_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_VeryUnderweight = 0.75f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_VeryUnderweight = 1f;
+        }
+
+        if (Player_Characteristic.current.Emaciated_Characteristic)
+        {
+            Probability_of_Crossing_a_High_Wall_Emaciated = 0.75f;
+        }
+        else
+        {
+            Probability_of_Crossing_a_High_Wall_Emaciated = 1f;
+        }
+
+        return Probability_of_Crossing_a_High_Wall_Overweight * Probability_of_Crossing_a_High_Wall_Underweight * Probability_of_Crossing_a_High_Wall_Obese * Probability_of_Crossing_a_High_Wall_VeryUnderweight * Probability_of_Crossing_a_High_Wall_Emaciated;
+    }
 
     public void Set_Probability_of_Crossing_a_High_Wall_forSkill(float SkillLevel)
     {
@@ -519,7 +753,18 @@ public class PlayerSkill_ActivationProbability
 
     // 밀쳐낼 확률 ( * )   // Strength
     float HitForce = 0.45f;
-    public float Get_HitForce() { return HitForce; }
+    public bool Characteristic_Strong = false;
+    public float Get_HitForce() 
+    {
+        if (Characteristic_Strong)
+        {
+            return HitForce * 1.4f;
+        }
+        else
+        {
+            return HitForce;
+        }
+    }
 
     public void Set_HitForce_forSkill(float SkillLevel)
     {
@@ -831,12 +1076,26 @@ public class PlayerSkill_ActivationProbability
     
 
     // 달리기 속도 ( * )  // Sprinting
-    float Running_Speed = 1.0f;
-    public float Get_Running_Speed() { return Running_Speed; }
+    float Running_Speed = 1.2f;
+    public float Characteristic_Athletic = 1f;
+    public float Characteristic_Obese = 1f;
+    public float Get_Running_Speed() 
+    {
+        if (Player_Characteristic.current.Obese_Characteristic)
+        {
+            Characteristic_Obese = 0.7f;
+        }
+        else
+        {
+            Characteristic_Obese = 1f;
+        }
+
+        return Running_Speed * Characteristic_Athletic * Characteristic_Obese; 
+    }
 
     public void Set_Running_Speed_forSkill(float SkillLevel)
     {
-        Running_Speed = 1.0f + 0.05f * SkillLevel;
+        Running_Speed = (1.2f + 0.05f * SkillLevel);
     }
 
     // 발소리 반경 ( * )  // Lightfooted

@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Map: {fileID: 0}
   Player: {fileID: 0}
-  speed: 3
+  smoothSpeed: 0.125
 --- !u!114 &8789949914993133443
 MonoBehaviour:
   m_ObjectHideFlags: 0

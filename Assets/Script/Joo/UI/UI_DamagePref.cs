@@ -12,6 +12,9 @@ public class UI_DamagePref : MonoBehaviour
     public void ChangeColor(body_point position, int totalCount)
     {
         current_step = totalCount;
+        if(current_step > 3)
+            current_step = 3;
+
         if (UI_main.ui_main.Is_Female)
         {
             Image.sprite = UI_DamageImage.UI_Damage_Pre.Female_Image[startNum + (current_step - 1)];

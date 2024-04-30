@@ -10,6 +10,7 @@ public class Item_Container : ScriptableObject
     public Using_Type Usingtype;
     public CanBeEquipped_Bag Bag_EquipType;
     public Bag_Type bag_Type;
+    public Clothing_Type ClothingType;
 
     public int Container_ID;
 

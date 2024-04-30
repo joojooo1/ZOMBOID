@@ -26,8 +26,6 @@ MonoBehaviour:
   LiteratureWeight: 0.8
   Literature_Image: {fileID: 21300000, guid: ecebb76a9b96d324ea3d63e7d488b4f5, type: 3}
   Literature_Level: 5
-  Literature_Page: 380
-  Literature_Multiplier: 16
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0

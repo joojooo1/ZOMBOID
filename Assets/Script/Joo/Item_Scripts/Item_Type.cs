@@ -142,7 +142,8 @@ public enum Weapon_type
     ShortBlade = 4,
     Spear = 5,
     Gun = 6,
-    tool = 7
+    tool = 7,
+    None = 8
 }
 
 public enum Container_Type
@@ -208,7 +209,24 @@ public enum Bag_Type
     MilitaryBackpack = 6     // 군용 배낭 8 x 12
 }
 
-public enum Appliances
+public enum Clothing_Type
 {
-    
+    Hat = 0,
+    Glasses = 1,
+    Mask = 2,
+    Jacket = 3,
+    Vest = 4,
+    Watch = 5,
+    Gloves = 6,
+    Belt = 7,
+    Shoes = 8,
+    Bottoms = 9,
+    protectiveGear = 10,
+    subBottoms = 11,  // 정강이보호대
+    miniBag = 12,
+    Bag = 13,
+    Shirt = 14,
+    T_shirt = 15,
+    Underwear = 16,
+    None = 17
 }

@@ -19,11 +19,52 @@ public class Player_body_Location_Damage
     public bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     public bool _Bleeding = true;
     public float recovery_Count = 0f;
+    public float Characteristic_recovery_Count = 1f;
 
-    public Player_body_Location_Damage(body_point Body_Code, Damage_Pattern _Attack_Pattern)
+    public Player_body_Location_Damage(body_point Body_Code, Damage_Pattern _Attack_Pattern, int _index)
     {
         Location = Body_Code;
         Attack_Pattern = _Attack_Pattern;
+        index = _index;
+        if (Player_Characteristic.current.Fast_Healer_Characteristic == true)
+        {
+            switch (Attack_Pattern)
+            {
+                case Damage_Pattern.Scratches:
+                case Damage_Pattern.Lacerations:
+                case Damage_Pattern.Bites:
+                case Damage_Pattern.Burn:
+                    Characteristic_recovery_Count *= 0.8f;
+                    break;
+                case Damage_Pattern.Abrasion:
+                case Damage_Pattern.Infection:
+                case Damage_Pattern.bullet:
+                case Damage_Pattern.Glass:
+                case Damage_Pattern.Fracture:
+                    Characteristic_recovery_Count *= 1f;
+                    break;
+            }
+        }
+
+        if (Player_Characteristic.current.Slow_Healer_Characteristic == true)
+        {
+            switch (Attack_Pattern)
+            {
+                case Damage_Pattern.Scratches:
+                case Damage_Pattern.Lacerations:
+                case Damage_Pattern.Bites:
+                case Damage_Pattern.Burn:
+                    Characteristic_recovery_Count *= 1.2f;
+                    break;
+                case Damage_Pattern.Abrasion:
+                case Damage_Pattern.Infection:
+                case Damage_Pattern.bullet:
+                case Damage_Pattern.Glass:
+                case Damage_Pattern.Fracture:
+                    Characteristic_recovery_Count *= 1f;
+                    break;
+            }
+        }
     }
 
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
@@ -47,13 +88,13 @@ public class Player_body_Location_Damage
         {
             if (_Bandage)  // 붕대를 감은 경우
             {
-                recovery_Count += 3;
+                recovery_Count += (3 * Characteristic_recovery_Count);
                 Set_Is_Bleeding(false);
                 // PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
             }
             else  // 붕대를 감지 않은 경우
             {
-                recovery_Count += 2;
+                recovery_Count += (2 * Characteristic_recovery_Count);
                 Set_Is_Bleeding(true);
                 //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
                 PlayerState.playerState.Calculating_Infection(20);  // 20% 확률로 감염
@@ -63,13 +104,13 @@ public class Player_body_Location_Damage
         {
             if (_Bandage)  // 붕대를 감은 경우
             {
-                recovery_Count += 1;
+                recovery_Count += (1 * Characteristic_recovery_Count);
                 Set_Is_Bleeding(false);
                 //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
             }
             else  // 붕대를 감지 않은 경우
             {
-                recovery_Count += 0.5f;
+                recovery_Count += (0.5f * Characteristic_recovery_Count);
                 Set_Is_Bleeding(true);
                 //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
                 PlayerState.playerState.Calculating_Infection(30);  // 30% 확률로 감염
@@ -120,6 +161,10 @@ public class Player_body_Location
             {
                 Attack_power = 5.0f * 1.5f;  // 7.5
             }
+            else if(Enemy_Type == "Glass")
+            {
+                Attack_power = 2.0f;
+            }
         }
         else
         {
@@ -160,6 +205,8 @@ public class Player_body_Location
             if ((float)rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
             {
                 Debug.Log("qqqqq" + Enemy_Type);
+                if (UI_main.ui_main.UI_Damage.activeSelf == false) { UI_main.ui_main.UI_Damage.SetActive(true); }
+
                 if (Enemy_Type != "User")
                 {
                     Debug.Log("좀비가 데미지 입힘 !!");
@@ -183,6 +230,8 @@ public class Player_body_Location
                             UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Set_Is_Infection(true);  // 100% 확률로 감염
                             break;
+                        case Damage_Pattern.Glass:
+
                         default:
                             break;
                     }
@@ -228,31 +277,56 @@ public class Player_body_Location
     }
     public bool Get_Is_Bleeding()
     {
+        bool bleed = false;
         for (int i = 0; i < Body_Damage_array.Length; i++)
         {
-            if (Body_Damage_array[i].Get_Is_Bleeding())
+            if (Body_Damage_array[i] != null)
             {
-                return true;
+                if (Body_Damage_array[i].Get_Is_Bleeding() == true)
+                {
+                    bleed = true;
+                }
             }
         }
-        return false;
+        
+        return bleed;
+
     }
 
     public void Set_DamageArray(int index, bool Add, Damage_Pattern damagetype, body_point position)
     {
         if (Add)
         {
-            Body_Damage_array[index] = new Player_body_Location_Damage(position, damagetype);
+            DamageCount++;
+            Body_Damage_array[index] = new Player_body_Location_Damage(position, damagetype, DamageCount);
             Set_Is_Bleeding();
         }
         else
         {
-            Body_Damage_array[index] = null;
+            DamageCount--;
+            Body_Damage_array = Set_new_Array(Body_Damage_array, index);
             Set_Is_Bleeding();
         }
     }
 
-    public int Get_DamageCount() { return DamageCount; }
+    Player_body_Location_Damage[] Set_new_Array(Player_body_Location_Damage[] Origin, int index)
+    {
+        Player_body_Location_Damage[] newArray = new Player_body_Location_Damage[3];
+        for(int i = 0; i < Origin.Length; i++)
+        {
+            if (Origin[i] != null && i != index)
+            {
+                newArray[i] = Origin[i];
+            }
+        }
+
+        return newArray;
+    }
+
+    public int Get_DamageCount()
+    {
+        return DamageCount;
+    }
 
     public void Check_recovery()
     {
@@ -384,6 +458,7 @@ public class PlayerState : MonoBehaviour
     public float Tired_reduction_for_Sleeping = 1f;  // 수면으로 경감되는 피로도
     public float Tired_value = 0.01f;  // 피로도 증가량
     public float Thirsty_Speed = 1f;  // 갈증 진행 속도
+    public float Thirsty_speed = 1f;
 
     public float Zombification = 0.0f;
 
@@ -425,7 +500,7 @@ public class PlayerState : MonoBehaviour
 
             /****************** Player_Thirsty ******************/
             Thirsty_Timer += Time.deltaTime;
-            if (Thirsty_Timer > 1f)
+            if (Thirsty_Timer > Thirsty_speed)
             {
                 switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                 {
@@ -605,17 +680,35 @@ public class PlayerState : MonoBehaviour
         if (Get_Is_Infection())  // 감염된 경우
         {
             Infection_Timer += Time.deltaTime;
-            if (Infection_Timer > 5f)
+            if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
             {
-                if (Player_Characteristic.current.Resilient_Characteristic)
+                if (Infection_Timer > 3.75f)
                 {
-                    Zombification += (0.07f * 0.25f);
-                }
-                else
-                    Zombification += 0.07f;
+                    if (Player_Characteristic.current.Resilient_Characteristic)
+                    {
+                        Zombification += (0.07f * 0.25f);
+                    }
+                    else
+                        Zombification += 0.07f;
 
-                Infection_Timer = 0;
+                    Infection_Timer = 0;
+                }
             }
+            else
+            {
+                if (Infection_Timer > 5f)
+                {
+                    if (Player_Characteristic.current.Resilient_Characteristic)
+                    {
+                        Zombification += (0.07f * 0.25f);
+                    }
+                    else
+                        Zombification += 0.07f;
+
+                    Infection_Timer = 0;
+                }
+            }
+
         }
 
     }
@@ -698,7 +791,7 @@ public class PlayerState : MonoBehaviour
     float Apparent_Temperature_forMoodle = 0f;
 
     public float Get_Apparent_Temperature()
-    {
+    {        
         return Apparent_Temperature + Apparent_Temperature_forMoodle;
     }
 
@@ -710,7 +803,14 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            Apparent_Temperature += value;
+            if(Player_Characteristic.current.Prone_to_Illness_Characteristic && value < 0)
+            {
+                Apparent_Temperature += value * 0.8f;
+            }
+            else
+            {
+                Apparent_Temperature += value;
+            }            
         }
         if((Get_Apparent_Temperature()) >= 36f)
         {
@@ -734,4 +834,17 @@ public class PlayerState : MonoBehaviour
     }
 
     public int Get_Frequency_of_Coughing() { return  Frequency_of_Coughing; }
+
+    public void Damage_glass(bool Is_hand)
+    {
+        //if(Is_hand) // 손
+        //{
+        //    Player_body_point[body_point.Left_hand].Body_Damage_array
+        //}
+        //else  // 발
+        //{
+
+        //}
+    }
+
 }
