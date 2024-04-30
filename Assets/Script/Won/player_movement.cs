@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using UnityEngine.Windows;
 using static System.Collections.Specialized.BitVector32;
+using static UnityEngine.GraphicsBuffer;
 
 public class player_movement : MonoBehaviour
 {
@@ -42,13 +43,32 @@ public class player_movement : MonoBehaviour
     private void Update()
     {
         navMeshAgent.speed = this.GetComponent<Player_main>().Get_Moving_Speed();
-        inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") +(UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
-        inputpos.Normalize();
-        inputpos *= Time.fixedDeltaTime * (navMeshAgent.speed);
+        if (!aser)
+        {
+            inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") + (UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
+            inputpos.Normalize();
+            inputpos *= Time.fixedDeltaTime * (navMeshAgent.speed);
+        }
+        else
+        {
+            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
+            {
+                Debug.Log("멈춤");
+                aser = false;
+                navMeshAgent.ResetPath();
+                for (int i = 0; i < playeranime.Length; i++)
+                {
+                    if (playeraimeobject[i].activeSelf)
+                    {
+                        playeranime[i].animatersetTrigger(anim);
+                    }
+                }
+            }
+        }
         if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
         {
             run_set =true;
-           playeranimetion("Is_Running", run_set);
+            playeranimetion("Is_Running", run_set);
         }
         else if (UnityEngine.Input.GetMouseButton(1))
         {
@@ -59,17 +79,25 @@ public class player_movement : MonoBehaviour
         {
             Strife_set = false;
             run_set = false;
+            playeranimetion("Is_Running", run_set);
+            playeranimetion("Is_Aiming", Strife_set);
         }
     }
+    public bool aser = false;
     // Update is called once per frame
     void FixedUpdate()
     {
 
-        if (navMeshAgent.enabled)
+        if (navMeshAgent.enabled && UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
         {
+            if (aser)
+            {
+                navMeshAgent.ResetPath();
+                aser = false;
+            }
             navMeshAgent.Move(inputpos);
-        } 
-        if (!navMeshAgent.enabled&& !low_Fen)
+        }
+        if (!navMeshAgent.enabled && !low_Fen)
         {
             if (UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
             {
@@ -78,7 +106,7 @@ public class player_movement : MonoBehaviour
                 {
                     if (playeraimeobject[i].activeSelf)
                     {
-                        
+
                         playeranime[i].animatorsetBool(anima_name, false);
 
                         playeranime[i].animatorsetting(0.7f);
@@ -87,12 +115,12 @@ public class player_movement : MonoBehaviour
                 navMeshAgent.enabled = true;
             }
         }
-        
+
         if (low_Fen)
         {
 
             transform.position = Vector3.Lerp(transform.position, Fence, Time.deltaTime * 3);
-            if (Vector3.Distance(transform.position, Fence) <0.1)
+            if (Vector3.Distance(transform.position, Fence) < 0.1)
             {
                 low_Fen = false;
                 for (int i = 0; i < playeranime.Length; i++)
@@ -106,6 +134,10 @@ public class player_movement : MonoBehaviour
                 }
                 navMeshAgent.enabled = true;
             }
+        }
+        if (UnityEngine.Input.GetKeyDown(KeyCode.F11))
+        {
+            animepos(new Vector3(0, 0, 0), "smoking");
         }
     }
     void playergoseverpos(Vector3 playergoseverpos)
@@ -304,5 +336,12 @@ public class player_movement : MonoBehaviour
                 break;
         }
     }
-    
+    string anim;
+    public void animepos(Vector3 pos, string animname)
+    {
+        anim = animname;
+        aser = true;
+        navMeshAgent.destination = pos;
+        navMeshAgent.Move(navMeshAgent.destination);
+    }
 }
