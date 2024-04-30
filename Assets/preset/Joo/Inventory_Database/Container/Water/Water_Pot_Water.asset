@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 0
   Bag_EquipType: 0
   bag_Type: 0
+  ClothingType: 17
   Container_ID: 14
   ContainerName: Cooking Pot
   ContainerName_Kr: "\uB0C4\uBE44"

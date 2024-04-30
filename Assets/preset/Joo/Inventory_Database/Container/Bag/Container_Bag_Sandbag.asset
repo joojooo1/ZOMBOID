@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 3
   bag_Type: 2
+  ClothingType: 17
   Container_ID: 6
   ContainerName: "\uD3EC\uB300 \uC790\uB8E8"
   ContainerName_Kr: Sandbag

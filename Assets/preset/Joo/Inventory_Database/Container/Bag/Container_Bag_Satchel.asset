@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 1
   bag_Type: 3
+  ClothingType: 13
   Container_ID: 7
   ContainerName: "\uCC45\uAC00\uBC29"
   ContainerName_Kr: Satchel

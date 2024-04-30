@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 3
   bag_Type: 2
+  ClothingType: 17
   Container_ID: 4
   ContainerName: "\uC4F0\uB808\uAE30 \uBD09\uD22C"
   ContainerName_Kr: Garbagebag

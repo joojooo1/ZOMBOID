@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 0
   Bag_EquipType: 0
   bag_Type: 0
+  ClothingType: 17
   Container_ID: 15
   ContainerName: Saucepan
   ContainerName_Kr: "\uC18C\uC2A4 \uB0C4\uBE44"

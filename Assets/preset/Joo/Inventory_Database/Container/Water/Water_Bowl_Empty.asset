@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 0
   Bag_EquipType: 0
   bag_Type: 0
+  ClothingType: 17
   Container_ID: 8
   ContainerName: Bowl
   ContainerName_Kr: "\uADF8\uB987"
