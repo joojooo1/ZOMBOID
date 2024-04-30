@@ -86,7 +86,7 @@ public class Player_main : MonoBehaviour
     public float Satiety_value = 0.25f;  // 포만감 감소되는 양
     public float Panic_value = 0.15f;
 
-    public Skill_Type current_SkillBook_type;
+    public Skill_Type current_SkillBook_type = Skill_Type.None;
     public int current_SKillBook_level = -1;
     float Skillbook_Readpage = 0;
 
@@ -114,30 +114,35 @@ public class Player_main : MonoBehaviour
     float Smoker_Timer = 0.0f;
     float Sleeping_Timer = 0.0f;
     float Food_Poison_Timer = 0.0f;
-    float Read_Timer = 0.0f;
+    float Read_Timer = 5.0f;
     void Update()
     {      
-        if (Input.GetKeyDown(KeyCode.P))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.P))
         {
-            //Skill.Fishing_Level.Set_S_Level(3);
-            //Skill.Fishing_Level.Set_S_Books_Point(3);
+            Debug.Log("Read book");
+            Is_Reading = true;
+            current_SkillBook_type = Skill_Type.Fishing;
+            current_SKillBook_level = 1;
+            Skillbook_Readpage = 3;
+            Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
 
             //Skill.Fishing_Level.Set_S_Level(3);
             //Skill.Fishing_Level.Set_S_Books_Point(3);
 
-            UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 0, Crafting_type.Crafting_General, aaa, "제작_General_1", "제작_General_1_kr");
-            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(Type.literature, 0, bbb, "ing", "재료", 1);
+            //UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 0, Crafting_type.Crafting_General, aaa, "제작_General_1", "제작_General_1_kr");
+            //UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(Type.literature, 0, bbb, "ing", "재료", 1);
 
-            UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 3, Crafting_type.Crafting_General, bbb, "제작_General_2", "제작_General_2_kr");
-            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(Type.literature, 3, ccc, "ing", "재료", 4);
+            //UI_Craft.UI_Craft_main.Add_Crafting_list(Type.literature, 3, Crafting_type.Crafting_General, bbb, "제작_General_2", "제작_General_2_kr");
+            //UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(Type.literature, 3, ccc, "ing", "재료", 4);
 
-            UI_Craft.UI_Craft_main.Add_Crafting_list(Type.food, 2, Crafting_type.Crafting_Cook, ccc, "제작_Cook_1", "제작_Cook_1_kr");
+            //UI_Craft.UI_Craft_main.Add_Crafting_list(Type.food, 2, Crafting_type.Crafting_Cook, ccc, "제작_Cook_1", "제작_Cook_1_kr");
         }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
             //UI_Craft.UI_Craft_main.Crafting_Cook_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook)].Add_Ingredients(aaa, "ing", "재료", 1);
-            Skill.Fishing_Level.SetEXP(700);
+            //Skill.Fishing_Level.SetEXP(700);
+            Is_Reading = false;
         }
 
         Weight_text.text = Weight.ToString();

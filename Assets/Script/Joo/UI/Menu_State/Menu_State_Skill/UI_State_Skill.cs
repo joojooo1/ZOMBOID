@@ -126,13 +126,13 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Reloading_Level.Get_Gun_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Reloading_Level.Get_Gun_TotalEXP();
                 break;
-            case 15:
+            case 16:
                 Name_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_SkillName();
                 Level_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_Level().ToString();
                 Exp_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Hunting_Level.Get_S_TotalEXP();
                 break;
-            case 16:
+            case 15:
                 Name_text.text = Player_main.player_main.Skill.Fishing_Level.Get_S_SkillName();
                 Level_text.text = Player_main.player_main.Skill.Fishing_Level.Get_S_Level().ToString();
                 Exp_text.text = Player_main.player_main.Skill.Fishing_Level.Get_S_CurrentEXP() + " / " +
