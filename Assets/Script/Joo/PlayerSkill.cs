@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 //using TMPro.EditorUtilities;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using UnityEngine.UIElements;
+using System.Reflection;
+using Unity.Mathematics;
+using UnityEngine.Rendering;
+using System.Security.Principal;
+using System.Threading;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class PlayerSkill : MonoBehaviour
 {
@@ -81,13 +90,11 @@ public class PlayerSkill : MonoBehaviour
         Cooking_Level = new PlayerCraftingSkill_Level(0f, "Cooking", "요리");  // 레시피  // 레벨: 요리의 효능 증가
         Farming_Level = new PlayerCraftingSkill_Level(0f, "Farming", "농사");  // 레벨: 수확량 증가, 행동속도 감소
         FirstAid_Level = new PlayerCraftingSkill_Level(0f, "FirstAid", "의료");  // 의료도구 제작  // 레벨: 치료속도
-        Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical", "전기공학");   // 레벨: 자동차 수리, 분해가능한 전자제품 종류 증가
-       
+        Electrical_Level = new PlayerCraftingSkill_Level(0f, "Electrical", "전기공학");   // 레벨: 자동차 수리, 분해가능한 전자제품 종류 증가   ( 후순위 )
+
         // 일반, 도구, 의료도구
         // 요리
         // 가구
-
-
     }
 
 }

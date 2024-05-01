@@ -35,7 +35,8 @@ public class Player_main : MonoBehaviour
     public PlayerState playerState;
     public Player_HP player_HP;
     public Player_Moodles playerMoodles;
-   
+    public UI_inventory_Using ui_inven_using;
+    public Player_Crafting crafting_recipe;
 
     [SerializeField] UnityEngine.UI.Text Weight_text;
 
@@ -61,7 +62,7 @@ public class Player_main : MonoBehaviour
 
     public bool ability_Sleeping = true;
     public bool ability_Eat = true;
-    public bool ability_Read = true;
+    public bool ability_Read = false;
     public bool ability_Hear = true;
 
     public bool Is_Equipping_Weapons = false;
@@ -88,7 +89,7 @@ public class Player_main : MonoBehaviour
 
     public Skill_Type current_SkillBook_type = Skill_Type.None;
     public int current_SKillBook_level = -1;
-    float Skillbook_Readpage = 0;
+    public float Skillbook_Readpage = -1;
 
     float Enemy_Damage = 0;  // 상대유저의 공격력
     /* --------------------------------------------------------------------------------- */
@@ -115,16 +116,17 @@ public class Player_main : MonoBehaviour
     float Sleeping_Timer = 0.0f;
     float Food_Poison_Timer = 0.0f;
     float Read_Timer = 5.0f;
+
     void Update()
     {      
         if (UnityEngine.Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("Read book");
-            Is_Reading = true;
-            current_SkillBook_type = Skill_Type.Fishing;
-            current_SKillBook_level = 1;
-            Skillbook_Readpage = 3;
-            Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+            //Debug.Log("Read book");
+            //Is_Reading = true;
+            //current_SkillBook_type = Skill_Type.Fishing;
+            //current_SKillBook_level = 1;
+            //Skillbook_Readpage = 150;
+            //Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
 
             //Skill.Fishing_Level.Set_S_Level(3);
             //Skill.Fishing_Level.Set_S_Books_Point(3);
@@ -136,13 +138,35 @@ public class Player_main : MonoBehaviour
             //UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].Add_Ingredients(Type.literature, 3, ccc, "ing", "재료", 4);
 
             //UI_Craft.UI_Craft_main.Add_Crafting_list(Type.food, 2, Crafting_type.Crafting_Cook, ccc, "제작_Cook_1", "제작_Cook_1_kr");
+
+            //temp.itemtype = Type.literature;
+            //temp.item_ID = 52;
+
+            //temp.Check_item_Literature(temp.item_ID);
         }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
             //UI_Craft.UI_Craft_main.Crafting_Cook_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook)].Add_Ingredients(aaa, "ing", "재료", 1);
             //Skill.Fishing_Level.SetEXP(700);
-            Is_Reading = false;
+            //Debug.Log("current_SkillBook_type :" + current_SkillBook_type);
+            //Debug.Log("current_SKillBook_level :" + current_SKillBook_level);
+            //Debug.Log("Skillbook_Readpage :" + Skillbook_Readpage);
+            //Is_Reading = false;
+
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            //Debug.Log("Read book");
+            //Is_Reading = true;
+            //current_SkillBook_type = Skill_Type.Hunting;
+            //current_SKillBook_level = 1;
+            //Skillbook_Readpage = 0;
+            //Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+
+
         }
 
         Weight_text.text = Weight.ToString();
@@ -325,37 +349,6 @@ public class Player_main : MonoBehaviour
             Read_Timer += Time.deltaTime;
             if(Read_Timer >= 5f)
             {
-                switch (current_SkillBook_type)
-                {
-                    case Skill_Type.Fishing:
-                        Skillbook_Readpage = Skill.Fishing_Level.Get_S_reading_page();
-                        break;
-                    case Skill_Type.Hunting:
-                        Skillbook_Readpage = Skill.Hunting_Level.Get_S_reading_page();
-                        break;
-                    case Skill_Type.Foraging:
-                        Skillbook_Readpage = Skill.Foraging_Level.Get_S_reading_page();
-                        break;
-                    case Skill_Type.Riding:
-                        Skillbook_Readpage = Skill.Riding_Level.Get_S_reading_page();
-                        break;
-                    case Skill_Type.Carpentry:
-                        Skillbook_Readpage = Skill.Carpentry_Level.Get_C_reading_page();
-                        break;
-                    case Skill_Type.Cooking:
-                        Skillbook_Readpage = Skill.Cooking_Level.Get_C_reading_page();
-                        break;
-                    case Skill_Type.Farming:
-                        Skillbook_Readpage = Skill.Farming_Level.Get_C_reading_page();
-                        break;
-                    case Skill_Type.FirstAid:
-                        Skillbook_Readpage = Skill.FirstAid_Level.Get_C_reading_page();
-                        break;
-                    case Skill_Type.Electrical:
-                        Skillbook_Readpage = Skill.Electrical_Level.Get_C_reading_page();
-                        break;
-                }
-
                 Skillbook_Readpage++;
                 Read_Timer = 0;
 
@@ -366,8 +359,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.Fishing_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                     case Skill_Type.Hunting:
@@ -375,8 +366,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                     case Skill_Type.Foraging:
@@ -384,8 +373,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                     case Skill_Type.Riding:
@@ -393,8 +380,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;                    
                     case Skill_Type.Carpentry:
@@ -402,8 +387,6 @@ public class Player_main : MonoBehaviour
                         if(Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                     case Skill_Type.Cooking:
@@ -411,8 +394,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.Cooking_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                     case Skill_Type.Farming:
@@ -420,8 +401,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.Farming_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                     case Skill_Type.FirstAid:
@@ -429,8 +408,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.FirstAid_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                     case Skill_Type.Electrical:
@@ -438,8 +415,6 @@ public class Player_main : MonoBehaviour
                         if (Skill.Electrical_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
                         {
                             Is_Reading = false;
-                            current_SKillBook_level = -1;
-                            Skillbook_Readpage = 0;
                         }
                         break;
                 }
@@ -447,13 +422,10 @@ public class Player_main : MonoBehaviour
         }
         else
         {
-            if(Skillbook_Readpage > 0)
-            {
-                Read_Timer = 0;
-                current_SKillBook_level = -1;
-                Skillbook_Readpage = 0;
-            }
-
+            Read_Timer = 0;
+            current_SKillBook_level = -1;
+            Skillbook_Readpage = -1;
+            current_SkillBook_type = Skill_Type.None;
         }
     }
 

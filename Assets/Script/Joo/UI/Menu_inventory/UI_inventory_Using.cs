@@ -38,6 +38,7 @@ public class UI_inventory_Using : MonoBehaviour
             case Book_Type.SkillBook:
                 if (Player_main.player_main.ability_Read)
                 {
+                    UI_main.ui_main.ui_text.text_window_playing("글을 읽을 줄 모름");
                     switch (Item_DataBase.item_database.literature_Ins[item_ID].LiteratureSkillType)
                     {
                         case Skill_Type.Fishing:
@@ -180,6 +181,36 @@ public class UI_inventory_Using : MonoBehaviour
                     case Book_Type.SkillBook:
                         Player_main.player_main.current_SkillBook_type = Item_DataBase.item_database.literature_Ins[item_ID].LiteratureSkillType;
                         Player_main.player_main.current_SKillBook_level = Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level;
+                        switch (Player_main.player_main.current_SkillBook_type)
+                        {
+                            case Skill_Type.Fishing:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Fishing_Level.Get_S_reading_page();
+                                break;
+                            case Skill_Type.Hunting:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Hunting_Level.Get_S_reading_page();
+                                break;
+                            case Skill_Type.Foraging:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Foraging_Level.Get_S_reading_page();
+                                break;
+                            case Skill_Type.Riding:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Riding_Level.Get_S_reading_page();
+                                break;
+                            case Skill_Type.Carpentry:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Carpentry_Level.Get_C_reading_page();
+                                break;
+                            case Skill_Type.Cooking:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Cooking_Level.Get_C_reading_page();
+                                break;
+                            case Skill_Type.Farming:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Farming_Level.Get_C_reading_page();
+                                break;
+                            case Skill_Type.FirstAid:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.FirstAid_Level.Get_C_reading_page();
+                                break;
+                            case Skill_Type.Electrical:
+                                Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Electrical_Level.Get_C_reading_page();
+                                break;
+                        }
                         break;
                     case Book_Type.Magazine:
                         // 해당 레시피 제작가능하게 값 변경

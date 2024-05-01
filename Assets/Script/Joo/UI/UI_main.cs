@@ -9,6 +9,7 @@ public class UI_main : MonoBehaviour
 {
     public static UI_main ui_main;
     public UI_State ui_player_state;
+    public UI_text ui_text;
 
     public bool Playing = false;
 
@@ -27,6 +28,8 @@ public class UI_main : MonoBehaviour
     UnityEngine.UI.Text Temperature_text;
     [SerializeField]
     UnityEngine.UI.Text Day_text;
+
+    
 
     void Awake()
     {
@@ -97,10 +100,8 @@ public class UI_main : MonoBehaviour
     }
 
     void Update()
-    {
-        
+    {        
         Player_main.player_main.playerMoodles.Set_Player_Language(player_Setting_Language_to_Korean);
-
     }
 
     public void Set_UIDamage()
