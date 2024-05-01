@@ -960,6 +960,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4527601505006261649}
+    - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 136947771688710300}
   m_SourcePrefab: {fileID: 100100000, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
 --- !u!4 &1037320202092173772 stripped
 Transform:
@@ -990,6 +993,7 @@ MonoBehaviour:
   playerrot: {fileID: 0}
   low_Fen: 0
   test: 0
+  aser: 0
 --- !u!54 &8801438680588040346
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1100,6 +1104,7 @@ MonoBehaviour:
   playerState: {fileID: 6656421304549569139}
   player_HP: {fileID: 1046426336433378471}
   playerMoodles: {fileID: 3195372121684297361}
+  ui_inven_using: {fileID: 0}
   Weight_text: {fileID: 0}
   Weight: 83
   Calories: 300
@@ -1142,6 +1147,7 @@ MonoBehaviour:
   Panic_value: 0.15
   current_SkillBook_type: 9
   current_SKillBook_level: -1
+  Skillbook_Readpage: 0
   aaa: {fileID: 21300000, guid: 5f28b23d707b4e249a88e9840249d136, type: 3}
   bbb: {fileID: 21300000, guid: 8691d7cd3bfbf2f4088fd1e9bcac88d2, type: 3}
   ccc: {fileID: 21300000, guid: dea4fa31bb32fc8459e1d969edd7dc20, type: 3}
@@ -1167,7 +1173,7 @@ MonoBehaviour:
   Bleeding_total_count: 0
   _Infection: 0
   _Probability_of_Catching_a_cold: 0.03
-  Apparent_Temperature: 36
+  Apparent_Temperature: 0
   Frequency_of_Coughing: 0
 --- !u!114 &1046426336433378471
 MonoBehaviour:
@@ -1221,6 +1227,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Inventory: []
+--- !u!114 &136947771688710300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037320202092397996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b5e88c0e449874d968d9b480c8844a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4516196319208696341
 PrefabInstance:
   m_ObjectHideFlags: 0
