@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class UI_State_Skill : MonoBehaviour
@@ -15,11 +16,16 @@ public class UI_State_Skill : MonoBehaviour
     public void Start()
     {
         state_skill_info = this;
+        for(int i = 0; i < Multiplier_icon_anim.Length; i++)
+        {
+            Multiplier_icon_anim[i].index_anim = i;
+        }
     }
 
     public void Open_Multiplier_icon(int index)
     {
         Multiplier_icon[index].SetActive(true);
+
     }
 
     public void Close_Multiplier_icon(int index)
@@ -29,7 +35,18 @@ public class UI_State_Skill : MonoBehaviour
 
     public void Set_anim(int index, int step)
     {
-        Multiplier_icon_anim[index].OnSpeed(step);
+        Multiplier_icon_anim[index].step = step;
+    }
+
+    public void Delete_anim(int index)
+    {
+        for(int i = 0; i < Multiplier_icon_anim.Length; i++)
+        {
+            if (Multiplier_icon_anim[i].index_anim == index)
+            {
+                Multiplier_icon_anim[i].step = -1;
+            }
+        }
     }
 
     public void Set_InfoWindow(int num)

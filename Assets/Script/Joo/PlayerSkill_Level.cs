@@ -984,6 +984,11 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         return C_BookLevel_reading_page;
     }
 
+    public int Get_C_Multiplier_Number()
+    {
+        return C_Multiplier_Number;
+    }
+
     public float Check_C_Book_Reading_finish(int booklevel, float page)
     {
         return C_BookLevel_reading_page / C_BookLevel_Totalpage[booklevel - 1];
@@ -1025,7 +1030,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         Set_C_Book_Reading_Step();
                         break;
                     default:
-                        Get_failed_Read();
+                        //Get_failed_Read();
                         break;
                 }
                 break;
@@ -1039,7 +1044,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         Set_C_Book_Reading_Step();
                         break;
                     default:
-                        Get_failed_Read();
+                        //Get_failed_Read();
                         break;
                 }                
                 break;
@@ -1053,7 +1058,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         Set_C_Book_Reading_Step();
                         break;
                     default:
-                        Get_failed_Read();
+                        //Get_failed_Read();
                         break;
                 }
                 break;
@@ -1067,7 +1072,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         Set_C_Book_Reading_Step();
                         break;
                     default:
-                        Get_failed_Read();
+                        //Get_failed_Read();
                         break;
                 }
                 break;
@@ -1081,7 +1086,7 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         Set_C_Book_Reading_Step();
                         break;
                     default:
-                        Get_failed_Read();
+                        //Get_failed_Read();
                         break;
                 }
                 break;
@@ -1089,18 +1094,22 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         }
     }
 
-    public void Get_failed_Read()
+    public void Get_failed_Read(bool over)
     {
         C_BookLevel_points = 1f;
 
-        if (C_BookLevel > C_Level)
+        //if (C_BookLevel > C_Level)
+        if(over)
         {
-            Debug.Log("어려워서 읽지 못함");
+            //Debug.Log("어려워서 읽지 못함");
+            UI_main.ui_main.ui_text.text_window_playing("어려워서 읽지 못함");
             // 책 못 읽음
         }
-        else if (C_BookLevel < C_Level)
+        //else if (C_BookLevel < C_Level)
+        else
         {
-            Debug.Log("이미 다 아는 내용임");
+            //Debug.Log("이미 다 아는 내용임");
+            UI_main.ui_main.ui_text.text_window_playing("이미 다 아는 내용임");
             // 책을 읽긴하지만 아무 변화 없음
         }
     }
@@ -1122,6 +1131,16 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         case 1:
                         case 2:
                             return true;
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                            Get_failed_Read(false);
+                            return false;
                         default:
                             return false;
                     }
@@ -1131,6 +1150,19 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         case 3:
                         case 4:
                             return true;
+                        case 0:
+                        case 1:
+                        case 2:
+                            Get_failed_Read(true);
+                            return false;
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                            Get_failed_Read(false);
+                            return false;
                         default:
                             return false;
                     }
@@ -1140,6 +1172,19 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         case 5:
                         case 6:
                             return true;
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            Get_failed_Read(true);
+                            return false;
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                            Get_failed_Read(false);
+                            return false;
                         default:
                             return false;
                     }
@@ -1149,6 +1194,19 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         case 7:
                         case 8:
                             return true;
+                        case 9:
+                        case 10:
+                            Get_failed_Read(false);
+                            return false;
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                            Get_failed_Read(true);
+                            return false;
                         default:
                             return false;
                     }
@@ -1158,6 +1216,17 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
                         case 9:
                         case 10:
                             return true;
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                            Get_failed_Read(true);
+                            return false;
                         default:
                             return false;
                     }
@@ -1328,11 +1397,11 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
             }
 
-            if (S_BookLevel != S_Level && S_BookLevel != S_Level + 1)
-            {
-                UI_State_Skill.state_skill_info.Close_Multiplier_icon(S_Multiplier_Number);
-                S_BookLevel = -1;
-            }
+            //if (S_BookLevel != S_Level && S_BookLevel != S_Level + 1)
+            //{
+            //    UI_State_Skill.state_skill_info.Close_Multiplier_icon(S_Multiplier_Number);
+            //    S_BookLevel = -1;
+            //}
 
             if ((S_BookLevel == 1 && S_Level > 2)   // Level: 1, 2
                 || (S_BookLevel == 2 && S_Level <= 2 && S_Level > 4)   // Level: 3, 4
@@ -1395,9 +1464,14 @@ public class PlayerSurvivalSkill_Level  // 사냥, 낚시, 채집, 승마
 
     public float Get_S_reading_page()
     {
-        Debug.Log("S_BookLevel_reading_page :" + S_BookLevel_reading_page);
         return S_BookLevel_reading_page;
     }
+
+    public int Get_S_Multiplier_Number()
+    {
+        return S_Multiplier_Number;
+    }
+
     public float Check_S_Book_Reading_finish(int booklevel, float page)
     {
         return S_BookLevel_reading_page / S_BookLevel_Totalpage[booklevel - 1];

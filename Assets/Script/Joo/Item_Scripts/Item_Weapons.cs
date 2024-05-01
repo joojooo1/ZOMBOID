@@ -39,8 +39,9 @@ public class Item_Weapons : ScriptableObject
     public float W_Max_Condition;  // 내구도
     public float W_Condition_lower_chance;  // 내구도가 내려갈 확률
     public int W_Multi_Hit;  // 다중 타격
-    public AMMO_Type Gun_Ammunition;
-    public Magazine_Type Gun_Magazine;
+    //public AMMO_Type Gun_Ammunition;
+    //public Magazine_Type Gun_Magazine;
+    public bool equip_Magagine;  // 총기류는 탄창을 장착해야 사용 가능
     public float Gun_Accuracy;  // 정확도
     public float Gun_Additional_Accuracy_point;
     public float Gun_Additional_Critical_chance;
