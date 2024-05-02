@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d878866378bd86a40b8cba2e7b5e75b1, type: 3}
   m_Name: Bandage_RippedSheets_Sterilized 1
   m_EditorClassIdentifier: 
-  type: 3
+  type: 9
   MedicalType: 0
   Usingtype: 9
   Power_type: 5
