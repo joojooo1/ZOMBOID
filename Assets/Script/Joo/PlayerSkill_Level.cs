@@ -1102,14 +1102,14 @@ public class PlayerCraftingSkill_Level  // 목공, 요리, 농사, 의료, 전기공학
         if(over)
         {
             //Debug.Log("어려워서 읽지 못함");
-            UI_main.ui_main.ui_text.text_window_playing("어려워서 읽지 못함");
+            UI_main.ui_main.ui_text.text_window_playing("Too difficult", "어려워서 읽지 못함");
             // 책 못 읽음
         }
         //else if (C_BookLevel < C_Level)
         else
         {
             //Debug.Log("이미 다 아는 내용임");
-            UI_main.ui_main.ui_text.text_window_playing("이미 다 아는 내용임");
+            UI_main.ui_main.ui_text.text_window_playing("It's already known", "이미 다 아는 내용임");
             // 책을 읽긴하지만 아무 변화 없음
         }
     }

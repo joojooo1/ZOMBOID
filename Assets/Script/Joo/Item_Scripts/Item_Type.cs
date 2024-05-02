@@ -5,12 +5,15 @@ using UnityEngine;
 public enum Type
 {
     weapon = 0,
-    tool = 1,
+    gardening = 1,
     food = 2,
-    Normal = 3,
+    Normal = 3,   // ETC
     literature = 4,
     clothing = 6,
-    Container = 7
+    Container = 7,
+    Electronics = 8,
+    Medical = 9,
+    Furniture = 10
 }
 
 public enum Using_Type
@@ -25,7 +28,8 @@ public enum Using_Type
     Ingredients = 7,  // 재료
     Stationery = 8,  // 문구류
     Medical = 9,
-    Carpentry = 10
+    Carpentry = 10,
+    tool = 11
 }
 
 public enum Medical_Type
@@ -74,7 +78,8 @@ public enum Food_Type
     Sweet = 7,
     Vegetable = 8,
     Cooking = 9,
-    Water = 10
+    Water = 10,
+    Ingredients_food = 11
 }
 
 public enum Freshness_Level

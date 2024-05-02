@@ -32,6 +32,8 @@ public class UI_Title : MonoBehaviour
     int Total_Point;
     [SerializeField] GameObject Nextbutton;
 
+    public Sprite[] job_image;
+
     void Awake()
     {
         ui_title = this;
@@ -187,7 +189,14 @@ public class UI_Title : MonoBehaviour
                 }
             }
 
-        }        
+        }
+
+        UI_State.State_icon_main.playing_job.index = 0;
+        UI_State.State_icon_main.playing_job.Job_name = "Angler";
+        UI_State.State_icon_main.playing_job.Job_name_kr = "낚시꾼";
+        UI_State.State_icon_main.playing_job.Explanation_for_Characteristic = "Knows the basics of fishing.";
+        UI_State.State_icon_main.playing_job.Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
+        UI_State.State_icon_main.playing_job.image = job_image[UI_State.State_icon_main.playing_job.index];
     }
 
     public void Job_Burglar()
@@ -347,7 +356,15 @@ public class UI_Title : MonoBehaviour
                 }
             }
 
-        }        
+        }
+
+        UI_State.State_icon_main.playing_job.index = 1;
+        UI_State.State_icon_main.playing_job.Job_name = "Burglar";
+        UI_State.State_icon_main.playing_job.Job_name_kr = "좀도둑";
+        UI_State.State_icon_main.playing_job.Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
+        UI_State.State_icon_main.playing_job.Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
+        //UI_State.State_icon_main.playing_job.image = job_image[UI_State.State_icon_main.playing_job.index];
+
     }
 
     public void Add_value_list(string name, string name_kr, float level, float add_value, Player_Job Job, Characteristic_Value_type type)
@@ -434,6 +451,13 @@ public class UI_Title : MonoBehaviour
                 default: break;
             }
         }
+
+        UI_State.State_icon_main.playing_job.index = 2;
+        UI_State.State_icon_main.playing_job.Job_name = "veteran";
+        UI_State.State_icon_main.playing_job.Job_name_kr = "퇴역 군인";
+        UI_State.State_icon_main.playing_job.Explanation_for_Characteristic = "War... War never changes.";
+        UI_State.State_icon_main.playing_job.Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
+        //UI_State.State_icon_main.playing_job.image = job_image[UI_State.State_icon_main.playing_job.index];
     }
 
 }

@@ -278,7 +278,7 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 32:
                     Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Sleepyhead = true;
-                    Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= characteristics_Player[i].Prefab.value_list[0];
+                    Player_main.player_main.playerState.Tired_reduction_for_Sleeping *= 0.9f;
                     break;
                 case 35:
                     Player_main.player_main.playerSkill_ActivationProbability.Characteristic_Asthmatic = characteristics_Player[i].Prefab.value_list[0];

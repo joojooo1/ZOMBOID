@@ -10,9 +10,13 @@ public class UI_State_Info : MonoBehaviour
     public List<UI_Title_Characteristic_prefab> characteristics_On_Playing = new List<UI_Title_Characteristic_prefab>();
     public static UI_State_Info Instance;
 
+    public UnityEngine.UI.Text player_job_text;
+
     private void OnEnable()
     {
         Instance = this;
+
+
 
         for (int i = 0; i < Player_Characteristic.current.characteristics_Player.Count;)
         {
@@ -24,6 +28,8 @@ public class UI_State_Info : MonoBehaviour
             tempObj.transform.SetSiblingIndex(0);
             i++;
         }
+
+
     }
 
     private void OnDisable()
