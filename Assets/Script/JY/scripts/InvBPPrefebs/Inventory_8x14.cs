@@ -18,6 +18,7 @@ public class Inventory_8x14 : MonoBehaviour
 
     public GameObject SlotPrefeb; // v
 
+    public Sprite GroundImage_Only_For8x14;
 
     Item_Container ThisID;
     public InventorySlot[] Slots; // v
@@ -82,7 +83,7 @@ public class Inventory_8x14 : MonoBehaviour
         Slot_Image.gameObject.GetComponent<Image>().sprite = ThisID.Container_Image;
         Slot_Weight.gameObject.GetComponent<TextMeshProUGUI>().text = "..";
         //바닥예시 0429 지울것
-        Generating_Slots_First(example,99);
+        //Generating_Slots_First(example,99);
     }
 
     
@@ -345,7 +346,7 @@ public class Inventory_8x14 : MonoBehaviour
                     {
                         int Width = Size / 100;
                         int Height = Size % 100;
-                        
+
                         int CanvasWidth = SlotSize_Req(Width);
                         int CanvasHeight = SlotSize_Req(Height);
 
@@ -355,7 +356,7 @@ public class Inventory_8x14 : MonoBehaviour
 
                         canvasRectTransform.anchorMin = new Vector2(0f, 1f);
                         canvasRectTransform.anchorMax = new Vector2(0f, 1f);
-                        canvasRectTransform.localPosition = new Vector3(((Mathf.Round((CanvasWidth / 2) * 10f) / 10f)), ((-1f)* (Mathf.Round((CanvasHeight / 2) * 10f) / 10f)), 0f);
+                        canvasRectTransform.localPosition = new Vector3(((Mathf.Round((CanvasWidth / 2) * 10f) / 10f)), ((-1f) * (Mathf.Round((CanvasHeight / 2) * 10f) / 10f)), 0f);
 
                         if (changedPackage[3, XLine, YLine] == 0) //정상
                         {

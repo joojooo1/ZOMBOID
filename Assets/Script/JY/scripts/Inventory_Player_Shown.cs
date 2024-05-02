@@ -38,14 +38,22 @@ public class Inventory_Player_Shown : MonoBehaviour
     public List<short> Storage_List; // 접근중인 저장소 리스트
 
     public Transform PlayerBackPacks_Shown; // 가방에 할당된 아이콘이 보이는곳
+    public Transform Non_PlayerBackPacks_Shown; // 서브
+
     public GameObject[] PBP_S_Ordering_Array; // 아이콘 순서 정리 배열
-    public Transform Out_Location;
+
+    public Transform Out_Location; // 공유
+
     public Transform The_Basic_BPIcon_NeverMove;
+    public Transform The_Basic_TileIcon_NeverMove; //서브
 
     public GameObject BackPack_Public_Prefeb; // v
     [SerializeField]
-    GameObject[] Inventory_Form_Prefebs;
-    public Transform Inventory_Form_Location;
+    GameObject[] Inventory_Form_Prefebs; // 공유
+
+    public Transform Inventory_Form_Location; // 인벤 프리펩 생성위치
+    public Transform Inventory_Form_Location_ForStorage; //서브
+    public Transform Tile_Basic_Format_Never_Delete;
 
     public List<short[,,]> Packages_Player;
     public List<short[,,]> Packages_Storage;// 장비, 가방에 대응하는 아이템 배열( 1면 type / 2면, id / 3면 갯수 / 4면 방향 / 5면 특수정보)
@@ -286,6 +294,10 @@ public class Inventory_Player_Shown : MonoBehaviour
             else
             {
                 Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Inventory_Form_Location);
+                foreach(GameObject BPNotIcons in Inventory_Form_Location)
+                {
+                    BPNotIcons.transform.localScale = new Vector3(1, 1, 1);
+                }
             }
         }
     }
@@ -300,10 +312,76 @@ public class Inventory_Player_Shown : MonoBehaviour
         }
     }
 
+
+    public void Storage_Contact_Refresh(short Storage_Order_HaveToChange,int Unchangeable_Size  ,bool On_Off)
+    {
+        if (On_Off)
+        {
+            //GameObject New_BP_Image = Instantiate(BackPack_Public_Prefeb, new Vector3(0f, 0f, 0f), Quaternion.identity);
+            //New_BP_Image.transform.SetParent(Non_PlayerBackPacks_Shown);
+
+            //prefeb.transform.localScale = Vector3.one;
+
+            //New_BP_Image.GetComponent<Image>().sprite = Item_DataBase.item_database.Requesting_Image(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
+            //생각필요
+
+            //RectTransform canvasRectTransform = New_BP_Image.GetComponent<RectTransform>();
+            //canvasRectTransform.anchorMin = new Vector2(0f, 1f);
+            //canvasRectTransform.anchorMax = new Vector2(0f, 1f);
+            //canvasRectTransform.localPosition = Vector3.zero;
+            //canvasRectTransform.localScale = new Vector3(0.8f, 0.8f, 1);
+
+            int BP_RealSize = Unchangeable_Size;
+            switch (BP_RealSize)
+            {
+                case 814:
+                    //GameObject New_Bp_Tabs = Instantiate(Inventory_Form_Prefebs[7], new Vector3(0f, 0f, 0f), Quaternion.identity);
+                    //New_Bp_Tabs.transform.SetParent(Inventory_Form_Location_ForStorage);
+                    //RectTransform Bp_Rect = New_Bp_Tabs.GetComponent<RectTransform>();
+                    //Bp_Rect.anchorMin = new Vector2(0f, 1f);
+                    //Bp_Rect.anchorMax = new Vector2(0f, 1f);
+                    //Bp_Rect.localPosition = Vector3.zero;
+                    //New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs.transform;
+                    //New_Bp_Tabs.GetComponent<Inventory_8x14>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Storage_Order],Storage_Order);
+                    if (Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Slots.Length == 0)
+                    {
+                        Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Generating_Slots_First(Inventory_Library.IL.Getting_Package(Storage_Order_HaveToChange), 0);
+                        Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Slot_Image.GetComponent<Image>().sprite = Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().GroundImage_Only_For8x14;
+                    }
+                    else
+                    {
+                        Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(Inventory_Library.IL.Getting_Package(Storage_Order_HaveToChange));
+                        Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Storage_Order = Storage_Order_HaveToChange;
+
+                        Inventory_Library.IL.Resetting_Package(Storage_Order_HaveToChange, Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Recent_Recieved_Package);
+
+                    }
+
+                    break;
+
+                //    break;
+                //case 405:
+                //    GameObject New_Bp_Tabs = Instantiate(Inventory_Form_Prefebs[5], new Vector3(0f, 0f, 0f), Quaternion.identity);
+                //    Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D = New_Bp_Tabs.transform;
+                //    New_Bp_Tabs.transform.SetParent(Inventory_Form_Location);
+                //    RectTransform Bp_Rect = New_Bp_Tabs.GetComponent<RectTransform>();
+                //    Bp_Rect.anchorMin = new Vector2(0f, 1f);
+                //    Bp_Rect.anchorMax = new Vector2(0f, 1f);
+                //    Bp_Rect.localPosition = Vector3.zero;
+                //    //0426
+                //    New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs.transform;
+
+                //    New_Bp_Tabs.GetComponent<Inventory_8x10>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]], Equipment_Package_Notbe_Synchronized[4, XLine, 0]);
+                //    break;
+            }
+
+        }
+    }
+
     public bool Drag_Check_Only() 
     {
         int Width = FS_Item_Size / 100;
-        int Height = FS_Item_Size % 10;
+        int Height = FS_Item_Size % 100;
         short[,,] CopyPackage_FS = new short[1, 1, 1];
         short[,,] CopyPackage_LS = new short[1, 1, 1];
         switch (FSPSize) // 사이즈 조정 ※
@@ -331,6 +409,9 @@ public class Inventory_Player_Shown : MonoBehaviour
             case 43:
                 CopyPackage_FS = FSParent.GetComponent<Inventory_4x3>().Recent_Recieved_Package;
                 break;
+            case 814:
+                CopyPackage_FS = FSParent.GetComponent<Inventory_8x14>().Recent_Recieved_Package;
+                break;
         }
         switch (LSPSize)
         {
@@ -356,6 +437,9 @@ public class Inventory_Player_Shown : MonoBehaviour
                 break;
             case 43:
                 CopyPackage_LS = LSParent.GetComponent<Inventory_4x3>().Recent_Recieved_Package;
+                break;
+            case 814:
+                CopyPackage_LS = LSParent.GetComponent<Inventory_8x14>().Recent_Recieved_Package;
                 break;
         }
 
@@ -473,6 +557,9 @@ public class Inventory_Player_Shown : MonoBehaviour
                 case 43:
                     CopyPackage_FS = FSParent.GetComponent<Inventory_4x3>().Recent_Recieved_Package;
                     break;
+                case 814:
+                    CopyPackage_FS = FSParent.GetComponent<Inventory_8x14>().Recent_Recieved_Package;
+                    break;
             }
             switch (LSPSize)
             {
@@ -501,6 +588,9 @@ public class Inventory_Player_Shown : MonoBehaviour
                 case 43:
                     CopyPackage_LS = FSParent.GetComponent<Inventory_4x3>().Recent_Recieved_Package;
                     break;
+                case 814:
+                    CopyPackage_LS = LSParent.GetComponent<Inventory_8x14>().Recent_Recieved_Package;
+                    break;
             }
             //바로 패키지 이동
             for (int i = 0; i < 5; i++)
@@ -516,31 +606,35 @@ public class Inventory_Player_Shown : MonoBehaviour
                     break;
                 case 86:
                     FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x6>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x6>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 810:
                     FSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 812:
                     FSParent.GetComponent<Inventory_8x12>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 24:
                     FSParent.GetComponent<Inventory_2x4>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 610:
                     FSParent.GetComponent<Inventory_6x10>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 44:
                     FSParent.GetComponent<Inventory_4x4>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 43:
                     FSParent.GetComponent<Inventory_4x3>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    break;
+                case 814:
+                    FSParent.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(CopyPackage_FS);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x14>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
             }
             switch (LSPSize)
@@ -550,32 +644,37 @@ public class Inventory_Player_Shown : MonoBehaviour
                     break;
                 case 86:
                     LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x6>().Storage_Order, true,FS_Slot_X,FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x6>().Storage_Order, true,FS_Slot_X,FS_Slot_Y);
                     break;
                 case 810:
                     LSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 812:
                     LSParent.GetComponent<Inventory_8x12>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 24:
                     LSParent.GetComponent<Inventory_2x4>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 610:
                     LSParent.GetComponent<Inventory_6x10>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 44:
                     LSParent.GetComponent<Inventory_4x4>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 43:
                     LSParent.GetComponent<Inventory_4x3>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
+                case 814:
+                    LSParent.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(CopyPackage_LS);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x14>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    break;
+
 
             }
             return;
@@ -610,6 +709,9 @@ public class Inventory_Player_Shown : MonoBehaviour
                 case 43:
                     CopyPackage_FS = FSParent.GetComponent<Inventory_4x3>().Recent_Recieved_Package;
                     break;
+                case 814:
+                    CopyPackage_FS = FSParent.GetComponent<Inventory_8x14>().Recent_Recieved_Package;
+                    break;
             }
             switch (LSPSize)
             {
@@ -637,6 +739,9 @@ public class Inventory_Player_Shown : MonoBehaviour
                 case 43:
                     CopyPackage_LS = LSParent.GetComponent<Inventory_4x3>().Recent_Recieved_Package;
                     break;
+                case 814:
+                    CopyPackage_LS = LSParent.GetComponent<Inventory_8x14>().Recent_Recieved_Package;
+                    break;
             }
         }
 
@@ -657,31 +762,35 @@ public class Inventory_Player_Shown : MonoBehaviour
                     break;
                 case 86:
                     FSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x6>().Storage_Order, true, FS_Slot_X,FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x6>().Storage_Order, true, FS_Slot_X,FS_Slot_Y);
                     break;
                 case 810:
                     FSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 812:
                     FSParent.GetComponent<Inventory_8x12>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 24:
                     FSParent.GetComponent<Inventory_2x4>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 610:
                     FSParent.GetComponent<Inventory_6x10>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 44:
                     FSParent.GetComponent<Inventory_4x4>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 43:
                     FSParent.GetComponent<Inventory_4x3>().Refreshing_Changed_Slots(CopyPackage_FS);
-                    SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    break;
+                case 814:
+                    FSParent.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(CopyPackage_FS);
+                    //SendServer_Inv_Info(CopyPackage_FS, FSParent.GetComponent<Inventory_8x14>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
             }
             switch (LSPSize)
@@ -692,31 +801,35 @@ public class Inventory_Player_Shown : MonoBehaviour
                     break;
                 case 86:
                     LSParent.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x6>().Storage_Order, true,FS_Slot_X,FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x6>().Storage_Order, true,FS_Slot_X,FS_Slot_Y);
                     break;
                 case 810:
                     LSParent.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 812:
                     LSParent.GetComponent<Inventory_8x12>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x12>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 24:
                     LSParent.GetComponent<Inventory_2x4>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_2x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 610:
                     LSParent.GetComponent<Inventory_6x10>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_6x10>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 44:
                     LSParent.GetComponent<Inventory_4x4>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x4>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
                 case 43:
                     LSParent.GetComponent<Inventory_4x3>().Refreshing_Changed_Slots(CopyPackage_LS);
-                    SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_4x3>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
+                    break;
+                case 814:
+                    LSParent.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(CopyPackage_LS);
+                    //SendServer_Inv_Info(CopyPackage_LS, LSParent.GetComponent<Inventory_8x14>().Storage_Order, true, FS_Slot_X, FS_Slot_Y);
                     break;
             }
 
@@ -780,6 +893,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                                 Bp_Rect.anchorMin = new Vector2(0f, 1f);
                                 Bp_Rect.anchorMax = new Vector2(0f, 1f);
                                 Bp_Rect.localPosition = Vector3.zero;
+                                Bp_Rect.localScale = new Vector3(1, 1, 1);
                                 //0426
                                 New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs.transform;
 
@@ -875,6 +989,10 @@ public class Inventory_Player_Shown : MonoBehaviour
             case 43:
                 xl = 4;
                 yl = 3;
+                break;
+            case 814:
+                xl = 8;
+                yl = 14;
                 break;
         }
 
@@ -973,6 +1091,13 @@ public class Inventory_Player_Shown : MonoBehaviour
                                 break;
                             case 43:
                                 if (!LSParent.GetComponent<Inventory_4x3>().Slots[(Xfirst + Last_Slot_X_order) + 4 * (Ysecond + Last_Slot_Y_order)].IsMain)
+                                {
+                                    Clear = false;
+                                    return Clear;
+                                }
+                                break;
+                            case 814:
+                                if (!LSParent.GetComponent<Inventory_8x14>().Slots[(Xfirst + Last_Slot_X_order) + 8 * (Ysecond + Last_Slot_Y_order)].IsMain)
                                 {
                                     Clear = false;
                                     return Clear;
