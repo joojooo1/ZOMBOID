@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f6ebc2d2f48584fb7958ee49997844, type: 3}
   m_Name: Handle_Petrol_Full
   m_EditorClassIdentifier: 
-  type: 3
+  type: 8
   usingtype: 1
   electronic_Type: 1
   Power_type: 2

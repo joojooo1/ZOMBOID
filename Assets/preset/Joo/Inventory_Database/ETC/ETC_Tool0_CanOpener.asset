@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75540daaa13ebba478e67698195564d5, type: 3}
   m_Name: ETC_Tool0_CanOpener
   m_EditorClassIdentifier: 
-  type: 1
-  ETC_Type: 0
-  Clothing_ID: 0
+  type: 3
+  Usingtype: 0
+  ETC_ID: 0
   ETC_Name: 
   ETC_Name_kr: 
   ETC_Image: {fileID: 0}
   Height: 0
   Width: 0
   Nesting_Depth: 0
-  Is_Equipping: 0
-  Equipping_Position: 0
   ETC_Weight: 0
