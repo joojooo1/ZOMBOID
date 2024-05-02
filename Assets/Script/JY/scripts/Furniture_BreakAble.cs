@@ -10,6 +10,8 @@ public class Furniture_BreakAble : MonoBehaviour
     public bool IsMain=false;
     public List<GameObject> Parts;
     public Transform PointMainBody;
+    public bool IsStorage;
+    public int StorageNum;
 
     public void Setting_First(bool tof1, bool tof2, bool tof3, bool tof4)
     {
