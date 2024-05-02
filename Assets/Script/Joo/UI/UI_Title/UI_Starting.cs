@@ -5,6 +5,7 @@ using UnityEngine;
 public class UI_Starting : MonoBehaviour
 {
     [SerializeField] UnityEngine.UI.Text text;
+    [SerializeField] GameObject text_Object;
     [SerializeField] GameObject start_button;
 
     float Timer = 20f;
@@ -19,6 +20,7 @@ public class UI_Starting : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
+    Vector3 pos = new Vector3(0, -192, 0);
     void Update()
     {
         if (i < 4)
@@ -45,6 +47,8 @@ public class UI_Starting : MonoBehaviour
                 {
                     start_button.SetActive(true);
                     text.text = Set_Start_Text(3);
+
+                    text_Object.transform.localPosition += pos;
                     anim.SetBool("start", true);
                     Timer = 0;
                 }

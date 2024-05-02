@@ -39,10 +39,25 @@ public class UI_Craft_window : MonoBehaviour
         Crafting_item_Prefab_list = new List<UI_Craft_Prefab>();
         Crafting_Ingredients_Prefab_list = new List<UI_Craft_Prefab>();
 
-        list_ins();
+        Add_Crafting_list();
 
         scrollbar.value = 1;
     }
+
+    public void Add_Crafting_list()
+    {
+        for (int i = 0; i < Player_main.player_main.crafting_recipe.Recipe_Crafting_list.Count;)
+        {
+            if (Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Is_Craftng)
+            {
+                Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Add_Recipe();
+            }
+            i++;
+        }
+
+        list_ins();
+    }
+
 
     public void list_ins()
     {
@@ -231,6 +246,8 @@ public class UI_Craft_window : MonoBehaviour
                 UI_Craft_Ins_Prefab item = obj.GetComponent<UI_Craft_Ins_Prefab>();
                 item.Set_Info(Selected_item.item_Info);
                 delete_button.SetActive(true);
+
+                // 재료만큼 인벤토리에서 없애야 함
             }
             else
             {

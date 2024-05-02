@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public class Playing_job
+{
+    public string Job_name;
+    public string Job_name_kr;
+    public string Explanation_for_Characteristic;
+    public string Explanation_for_Characteristic_kr;
+    public int index;
+    public Sprite image;
+}
+
 public class UI_State : MonoBehaviour, IPointerClickHandler
 {
     public static UI_State State_icon_main;
@@ -22,6 +32,8 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
     [SerializeField] GameObject[] icon_position;
 
     public List<UI_State_detailwindow> Damagelist = new List<UI_State_detailwindow>();
+
+    public Playing_job playing_job = new Playing_job();
 
     private void Start()
     {

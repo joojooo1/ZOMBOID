@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class UI_Title_Characteristic_job : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public int index;

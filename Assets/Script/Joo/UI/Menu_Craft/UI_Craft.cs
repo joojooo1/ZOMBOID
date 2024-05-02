@@ -79,13 +79,38 @@ public class Crafting_item
             F_Calories = 0;
             F_Thirst = 0;
 
-            for(int i = 0; i < 3; i++)
+            if(F_Satiety != null)
             {
-                F_Satiety[i] = 0;
-                F_Unhappiness[i] = 0;
-                F_Boredom[i] = 0;
-                F_Fatigue[i] = 0;
+                for (int i = 0; i < F_Satiety.Length; i++)
+                {
+                    F_Satiety[i] = 0;
+                }
             }
+
+            if(F_Unhappiness != null)
+            {
+                for (int i = 0; i < F_Unhappiness.Length; i++)
+                {
+                    F_Unhappiness[i] = 0;
+                }
+            }
+
+            if( F_Boredom != null)
+            {
+                for (int i = 0; i < F_Boredom.Length; i++)
+                {
+                    F_Boredom[i] = 0;
+                }
+            }
+
+            if(F_Fatigue != null)
+            {
+                for (int i = 0; i < F_Fatigue.Length; i++)
+                {
+                    F_Fatigue[i] = 0;
+                }
+            }
+
 
         }
 
@@ -102,6 +127,7 @@ public class Crafting_item
             return name;
         }
     }
+
     public void Add_Ingredients(Type _DB_type, int _DB_ID, Sprite image, string name, string name_kr, int value)
     {
         Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, image, name, name_kr, value);

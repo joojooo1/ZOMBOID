@@ -13,9 +13,17 @@ public class UI_text : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void text_window_playing(string text)
+    public void text_window_playing(string text, string text_kr)
     {
-        text_window_text.text = text;
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            text_window_text.text = text_kr;
+        }
+        else
+        {
+            text_window_text.text = text;
+        }
+
         anim.SetTrigger("talk");
     }
 }
