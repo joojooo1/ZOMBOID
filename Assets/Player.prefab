@@ -963,6 +963,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 136947771688710300}
+    - targetCorrespondingSourceObject: {fileID: 100046, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 971029390981065616}
   m_SourcePrefab: {fileID: 100100000, guid: f3cd25b3bf53c4adaaf087d862e435e6, type: 3}
 --- !u!4 &1037320202092173772 stripped
 Transform:
@@ -1104,7 +1107,8 @@ MonoBehaviour:
   playerState: {fileID: 6656421304549569139}
   player_HP: {fileID: 1046426336433378471}
   playerMoodles: {fileID: 3195372121684297361}
-  ui_inven_using: {fileID: 0}
+  ui_inven_using: {fileID: 971029390981065616}
+  crafting_recipe: {fileID: 136947771688710300}
   Weight_text: {fileID: 0}
   Weight: 83
   Calories: 300
@@ -1239,6 +1243,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b5e88c0e449874d968d9b480c8844a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &971029390981065616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037320202092397996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544e861906a9be64d85071ed2cd71631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemtype: 0
+  item_ID: 0
 --- !u!1001 &4516196319208696341
 PrefabInstance:
   m_ObjectHideFlags: 0
