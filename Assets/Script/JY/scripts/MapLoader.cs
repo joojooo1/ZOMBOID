@@ -58,6 +58,7 @@ public class MapLoader : MonoBehaviour
         }
         Tiles=TilesList.ToArray();
         Debug.Log(Inventory_Library.IL.Inventory_DB.Count + "개의 인벤토리 총 생성됨");
+        Inventory_Library.IL.Spawn_Items(5);
     }
 
     //void StartGeneratingTiles(int LengthofX,int LengthofY,float yhight)//가로로 열단위 생성
