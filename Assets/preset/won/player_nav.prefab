@@ -1274,6 +1274,19 @@ MonoBehaviour:
   Restless_Sleeper_characteristics: 0
   Resilient_Characteristic: 0
   Prone_to_Illness_Characteristic: 0
+  Fast_Healer_Characteristic: 0
+  Fast_Learner_Characteristic: 0
+  Thick_Skinned_Characteristic: 0
+  Thin_skinned_Characteristic: 0
+  Adrenaline_Junkie_Characteristic: 0
+  Pacifist_Characteristic: 0
+  Slow_Healer_Characteristic: 0
+  Slow_Learner_Characteristic: 0
+  Obese_Characteristic: 0
+  Overweight_Characteristic: 0
+  Underweight_Characteristic: 0
+  Very_Underweight_Characteristic: 0
+  Emaciated_Characteristic: 0
   characteristics_list: []
   characteristics_Player: []
 --- !u!114 &3990882962270716752
@@ -1343,10 +1356,18 @@ MonoBehaviour:
   Is_Driving: 0
   Is_Eating: 0
   Is_food_poisoning: 0
+  Is_Reading: 0
   Likelihood_of_food_poisoning: 0.2
   Time_for_food_poisoning: 200
   Satiety_value: 0.06
   Panic_value: 0.15
+  current_SkillBook_type: 9
+  current_SKillBook_level: -1
+  aaa: {fileID: 0}
+  bbb: {fileID: 0}
+  ccc: {fileID: 0}
+  Driving_Speed: 1
+  Characteristic_Asthmatic_for_Weapon: 1
 --- !u!114 &1583269545026921007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,6 +1420,7 @@ MonoBehaviour:
   Tired_reduction_for_Sleeping: 1
   Tired_value: 0.01
   Thirsty_Speed: 1
+  Thirsty_speed: 1
   Zombification: 0
   Bleeding_total_count: 0
   _Infection: 0
