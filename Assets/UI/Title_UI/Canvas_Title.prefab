@@ -3291,6 +3291,7 @@ MonoBehaviour:
   Value_Prefab: {fileID: 3575595358308766695, guid: d52e20ca69f0f274dbf8ca7819aae096, type: 3}
   Total_Point_Window: {fileID: 2180040221086009029}
   Nextbutton: {fileID: 5731964452201535231}
+  job_image: []
 --- !u!1 &3437631860305373712
 GameObject:
   m_ObjectHideFlags: 0
