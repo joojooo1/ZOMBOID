@@ -35,6 +35,8 @@ public class Item_DataBase : MonoBehaviour
     public List<Item_Clothing> clothing_Ins;
     public List<Item_Gardening> gardening_Ins;
     public List<Item_Container> Container_Ins;
+    public List<Item_ETC> ETC_Ins;
+    public List<Item_Furniture> furniture_Ins;
 
     public void Requesting_Baisics(Item_Type item_Type, short ID)
     {
@@ -101,6 +103,36 @@ public class Item_DataBase : MonoBehaviour
             default:
                 return 0;
         }
+    }
+    public int Requesting_Original_Width(int Type, int ID)
+    {
+        int Width = 0;
+
+        switch (Type)
+        {
+            case 1:
+                Width = (int)food_Ins[ID].Width;
+                break;
+            case 8:
+                Width = (int)Container_Ins[ID].Width;
+                break;
+        }
+        return Width;
+    }
+    public int Requesting_Original_Height(int Type, int ID)
+    {
+        int Height = 0;
+
+        switch (Type)
+        {
+            case 1:
+                Height = (int)food_Ins[ID].Height;
+                break;
+            case 8:
+                Height = (int)Container_Ins[ID].Height;
+                break;
+        }
+        return Height;
     }
     public short Requesting_Wei;
     Item_Ins DetailWindow;

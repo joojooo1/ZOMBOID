@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 1
   bag_Type: 5
+  ClothingType: 13
   Container_ID: 0
   ContainerName: "\uC5EC\uD589\uC6A9 \uAC00\uBC29"
   ContainerName_Kr: Big Hiking Bag

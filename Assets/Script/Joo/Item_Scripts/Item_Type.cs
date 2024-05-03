@@ -5,12 +5,15 @@ using UnityEngine;
 public enum Type
 {
     weapon = 0,
-    tool = 1,
+    gardening = 1,
     food = 2,
-    Normal = 3,
+    Normal = 3,   // ETC
     literature = 4,
     clothing = 6,
-    Container = 7
+    Container = 7,
+    Electronics = 8,
+    Medical = 9,
+    Furniture = 10
 }
 
 public enum Using_Type
@@ -25,7 +28,8 @@ public enum Using_Type
     Ingredients = 7,  // 재료
     Stationery = 8,  // 문구류
     Medical = 9,
-    Carpentry = 10
+    Carpentry = 10,
+    tool = 11
 }
 
 public enum Medical_Type
@@ -37,30 +41,30 @@ public enum Medical_Type
     Pharmaceutical = 4
 }
 
-public enum AMMO_Type
-{
-    Round_223 = 0,
-    Round_308 = 1,
-    Special_Round_38 = 2,
-    Magnum_Round_44 = 3,
-    Auto_Round_45 = 4,
-    Round_556mm = 5,
-    Round_9mm = 6,
-    Shotgun_Shells = 7,
-    None = 8
-}
+//public enum AMMO_Type
+//{
+//    Round_223 = 0,
+//    Round_308 = 1,
+//    Special_Round_38 = 2,
+//    Magnum_Round_44 = 3,
+//    Auto_Round_45 = 4,
+//    Round_556mm = 5,
+//    Round_9mm = 6,
+//    Shotgun_Shells = 7,
+//    None = 8
+//}
 
-public enum Magazine_Type
-{
-    M9_Magazine = 0,
-    M1911_Auto_Magazine = 1,
-    D_E_Magazine = 2,
-    MSR700_Magazine = 3,
-    MSR788_Magazine = 4,
-    M16_Magazine = 5,
-    M14_Magazine = 6,
-    None = 7
-}
+//public enum Magazine_Type
+//{
+//    M9_Magazine = 0,
+//    M1911_Auto_Magazine = 1,
+//    D_E_Magazine = 2,
+//    MSR700_Magazine = 3,
+//    MSR788_Magazine = 4,
+//    M16_Magazine = 5,
+//    M14_Magazine = 6,
+//    None = 7
+//}
 
 public enum Food_Type
 {
@@ -74,7 +78,8 @@ public enum Food_Type
     Sweet = 7,
     Vegetable = 8,
     Cooking = 9,
-    Water = 10
+    Water = 10,
+    Ingredients_food = 11
 }
 
 public enum Freshness_Level

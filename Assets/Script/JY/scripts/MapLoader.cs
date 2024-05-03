@@ -51,9 +51,14 @@ public class MapLoader : MonoBehaviour
         ImageNum = 0;
         TilesList = new List<GameObject> { };
         //StartGeneratingTiles(10, 10);
-        StartGeneratingTilesQuater(LengthofX, LengthofY, 0f);
-        StartGeneratingTilesQuater2(LengthofX, LengthofY, 1.95f);
+        if (Tiles.Length == 0)
+        {
+            StartGeneratingTilesQuater(LengthofX, LengthofY, 0f);
+            //StartGeneratingTilesQuater2(LengthofX, LengthofY, 1.95f);
+        }
         Tiles=TilesList.ToArray();
+        Debug.Log(Inventory_Library.IL.Inventory_DB.Count + "개의 인벤토리 총 생성됨");
+        Inventory_Library.IL.Spawn_Items(5);
     }
 
     //void StartGeneratingTiles(int LengthofX,int LengthofY,float yhight)//가로로 열단위 생성
@@ -83,6 +88,7 @@ public class MapLoader : MonoBehaviour
     //    }
     //}
 
+
     void StartGeneratingTilesQuater(int LengthofX,int LengthofY,float yhight)
     {
         List<GameObject> obj = new List<GameObject>();
@@ -95,7 +101,7 @@ public class MapLoader : MonoBehaviour
                 inst.GetComponent<TileItsInfo>().Floor = 1;
                 inst.GetComponent<TileItsInfo>().Y_line = o;
                 inst.GetComponent<TileItsInfo>().Counts = i;
-                inst.GetComponent<TileItsInfo>().Storage_Order = i + (o * LengthofX);
+                inst.GetComponent<TileItsInfo>().Storage_Order = Inventory_Library.IL.Adding_New_Ground8x14_Package();
                 obj.Add(inst);
                 TilesList.Add(inst);
             }

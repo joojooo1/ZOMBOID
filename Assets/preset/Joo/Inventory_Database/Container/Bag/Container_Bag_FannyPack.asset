@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 1
   Bag_EquipType: 2
   bag_Type: 1
+  ClothingType: 12
   Container_ID: 3
   ContainerName: "\uD5C8\uB9AC\uAC00\uBC29"
   ContainerName_Kr: FannyPack

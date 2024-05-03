@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 0
   Bag_EquipType: 0
   bag_Type: 0
+  ClothingType: 17
   Container_ID: 9
   ContainerName: Bowl of Water
   ContainerName_Kr: "\uBB3C \uADF8\uB987"

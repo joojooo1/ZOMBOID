@@ -17,6 +17,7 @@ MonoBehaviour:
   Usingtype: 0
   Bag_EquipType: 0
   bag_Type: 0
+  ClothingType: 17
   Container_ID: 20
   ContainerName: Water Bottle (Whiskey)
   ContainerName_Kr: "\uC704\uC2A4\uD0A4 \uBCD1"

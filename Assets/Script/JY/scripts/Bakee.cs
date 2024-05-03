@@ -16,8 +16,8 @@ public class Bakee : MonoBehaviour
     private void Start()
     {
         TryBake();
-        StartCoroutine("CheckDistance");
-        StartCoroutine("BK");
+        //StartCoroutine("CheckDistance");
+        //StartCoroutine("BK");
     }
     // Update is called once per frame
     void Update()
@@ -48,7 +48,7 @@ public class Bakee : MonoBehaviour
             Debug.Log("bk");    
         }
     }
-    void TryBake()
+    public void TryBake()
     {
         
         if (surface != null)

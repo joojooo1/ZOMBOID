@@ -1509,7 +1509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5380206364913153523
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4361,7 +4361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5902087843989358344
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6199,7 +6199,7 @@ MonoBehaviour:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UI_main, Assembly-CSharp
         m_MethodName: Set_Gender
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8132,6 +8132,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4294328682240056956, guid: af5dd20fcf128c44a8f58cdf3275fd3b, type: 3}
+      propertyPath: text_Object
+      value: 
+      objectReference: {fileID: 6290717084733928143}
     - target: {fileID: 4516141383080642998, guid: af5dd20fcf128c44a8f58cdf3275fd3b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -8248,6 +8252,11 @@ PrefabInstance:
 --- !u!224 &2123056506148579244 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8809009903518900417, guid: af5dd20fcf128c44a8f58cdf3275fd3b, type: 3}
+  m_PrefabInstance: {fileID: 7442619983004501869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6290717084733928143 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3459998900293662114, guid: af5dd20fcf128c44a8f58cdf3275fd3b, type: 3}
   m_PrefabInstance: {fileID: 7442619983004501869}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6829154843403549199 stripped
