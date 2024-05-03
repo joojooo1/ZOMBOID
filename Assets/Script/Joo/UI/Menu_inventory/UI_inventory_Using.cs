@@ -10,8 +10,16 @@ public class UI_inventory_Using : MonoBehaviour
     public int item_ID;   // 우클릭 상호작용시 확인하는 변수
     bool Possibility;
 
-    private void OnEnable()
+    private void Start()
     {
+        Using_item = this;
+    }
+
+    public void Open_Choice_Window(Type _itemtype, int _item_ID)
+    {
+        itemtype = _itemtype;
+        item_ID = _item_ID;
+
         Possibility = false;
         switch (itemtype)
         {

@@ -46,13 +46,12 @@ public class UI_Craft_window : MonoBehaviour
 
     public void Add_Crafting_list()
     {
-        for (int i = 0; i < Player_main.player_main.crafting_recipe.Recipe_Crafting_list.Count;)
+        for (int i = 0; i < Player_main.player_main.crafting_recipe.Recipe_Crafting_list.Count; i++)
         {
             if (Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Is_Craftng)
             {
                 Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Add_Recipe();
-            }
-            i++;
+            }            
         }
 
         list_ins();

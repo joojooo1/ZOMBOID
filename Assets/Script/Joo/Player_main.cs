@@ -35,7 +35,7 @@ public class Player_main : MonoBehaviour
     public PlayerState playerState;
     public Player_HP player_HP;
     public Player_Moodles playerMoodles;
-    public UI_inventory_Using ui_inven_using;
+    //public UI_inventory_Using ui_inven_using;
     public Player_Crafting crafting_recipe;
 
     [SerializeField] UnityEngine.UI.Text Weight_text;
