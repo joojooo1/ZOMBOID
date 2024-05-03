@@ -179,7 +179,8 @@ public class zom_anime : MonoBehaviour
         }
         else
         {
-            //int 
+            animatorsetBool("down", false);
+            animatorsetBool("up", false);
         }
     }
     void zom_player_atk()

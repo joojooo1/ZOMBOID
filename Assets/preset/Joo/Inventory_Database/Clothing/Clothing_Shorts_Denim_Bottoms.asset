@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_Bottoms
+  m_Name: Clothing_Shorts_Denim_Bottoms
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 9
   Clothing_ID: 0
-  Clothing_Name: Bottoms
-  Clothing_Name_kr: 
-  ClothingImage: {fileID: 0}
-  Height: 1
-  Width: 1
-  Nesting_Depth: 1
+  Clothing_Name: "\uCCAD\uBC18\uBC14\uC9C0"
+  Clothing_Name_kr: Shorts_Denim_Bottom
+  ClothingImage: {fileID: 21300000, guid: 5db4607491a63f940a6e1287d498649f, type: 3}
+  Height: 0
+  Width: 0
+  Nesting_Depth: 0
   Is_Equipping: 0
   Equipping_Position: 0
-  ClothingWeight: 1
+  ClothingWeight: 0
