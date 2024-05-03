@@ -23,13 +23,14 @@ public class Crafting_item
     public string name;
     public string name_kr;
 
-    public float F_Calories;  // 칼로리
-    public float F_Thirst;  // 갈증
+    public float item_Calories;  // 칼로리
+    public float item_Thirst;  // 갈증
 
-    public float[] F_Satiety;  // 포만감
-    public float[] F_Unhappiness;  // 불행
-    public float[] F_Boredom;  // 지루함
-    public float[] F_Fatigue;  // 피로
+    public List<float> item_Satiety = new List<float>();  // 포만감
+    public List<float> item_Unhappiness = new List<float>();  // 불행
+    public List<float> item_Boredom = new List<float>();  // 지루함
+    public List<float> item_Fatigue = new List<float>();  // 피로
+    public List<float> item_Stress = new List<float>();  // 스트레스
 
     public List<Crafting_Ingredients> Ingredients_list = new List<Crafting_Ingredients>();
 
@@ -42,77 +43,81 @@ public class Crafting_item
         this.name = name;
         this.name_kr = name_kr;
 
-        if(item_DB_type == Type.food)
+        switch (item_DB_type)
         {
-            if(Item_DataBase.item_database.food_Ins[item_DB_ID].FoodType == Food_Type.Cooking)
-            {
-                for(int j = 0; j < Ingredients_list.Count; j++)
+            case Type.food:
+                if (Item_DataBase.item_database.food_Ins[item_DB_ID].FoodType == Food_Type.Cooking)
                 {
-                    F_Calories += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Calories;
-                    F_Thirst += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Thirst;
+                    if(item_Satiety == null)
+                    {
+                        for(int i = 0; i < 3; i++)
+                        {
+                            item_Satiety.Add(0);
+                        }               
+                    }
+
+                    if(item_Unhappiness == null)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            item_Unhappiness.Add(0);
+                        }
+                    }
+
+                    if(item_Boredom == null)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            item_Boredom.Add(0);
+                        }                        
+                    }
+
+                    if(item_Fatigue == null)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            item_Fatigue.Add(0);
+                        }                        
+                    }
+
+                    for (int j = 0; j < Ingredients_list.Count; j++)
+                    {
+                        item_Calories += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Calories * 1.05f);
+                        item_Thirst += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Thirst * 1.05f);
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            item_Satiety[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Satiety[i] * 1.05f);
+                            item_Unhappiness[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Unhappiness[i] * 1.05f);
+                            item_Boredom[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Boredom[i] * 1.05f);
+                            item_Fatigue[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Fatigue[i] * 1.05f);
+                        }
+                    }
+                }
+                else
+                {
+                    item_Calories = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Calories;
+                    item_Thirst = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Thirst;
 
                     for (int i = 0; i < 3; i++)
                     {
-                        F_Satiety[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Satiety[i];
-                        F_Unhappiness[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Unhappiness[i];
-                        F_Boredom[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Boredom[i];
-                        F_Fatigue[i] += Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Fatigue[i];
+                        item_Satiety[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety[i];
+                        item_Unhappiness[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness[i];
+                        item_Boredom[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom[i];
+                        item_Fatigue[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue[i];
                     }
                 }
-            }
-            else
-            {
-                F_Calories = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Calories;
-                F_Thirst = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Thirst;
-
-                for (int i = 0; i < 3; i++)
+                break;
+            case Type.literature:
+                if (Item_DataBase.item_database.literature_Ins[item_DB_ID].LiteratureType == Book_Type.Leisure)
                 {
-                    F_Satiety[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety[i];
-                    F_Unhappiness[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness[i];
-                    F_Boredom[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom[i];
-                    F_Fatigue[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue[i];
+                    item_Unhappiness.Add(Item_DataBase.item_database.literature_Ins[item_DB_ID].L_Unhappiness);
+                    item_Stress.Add(Item_DataBase.item_database.literature_Ins[item_DB_ID].L_Stress);
+                    item_Boredom.Add(Item_DataBase.item_database.literature_Ins[item_DB_ID].L_Boredom);
                 }
-            }
+                break;
         }
-        else
-        {
-            F_Calories = 0;
-            F_Thirst = 0;
-
-            if(F_Satiety != null)
-            {
-                for (int i = 0; i < F_Satiety.Length; i++)
-                {
-                    F_Satiety[i] = 0;
-                }
-            }
-
-            if(F_Unhappiness != null)
-            {
-                for (int i = 0; i < F_Unhappiness.Length; i++)
-                {
-                    F_Unhappiness[i] = 0;
-                }
-            }
-
-            if( F_Boredom != null)
-            {
-                for (int i = 0; i < F_Boredom.Length; i++)
-                {
-                    F_Boredom[i] = 0;
-                }
-            }
-
-            if(F_Fatigue != null)
-            {
-                for (int i = 0; i < F_Fatigue.Length; i++)
-                {
-                    F_Fatigue[i] = 0;
-                }
-            }
-
-
-        }
+        
 
     }
 
@@ -181,6 +186,32 @@ public class Crafting_Ingredients
     {
         Ingredients_DB_type = _DB_type;
         Ingredients_DB_ID = _DB_ID;
+
+        //switch (_DB_type)
+        //{
+        //    case Type.food:
+                
+        //        break;
+        //    case Type.Medical: 
+        //        break;
+        //    case Type.weapon: 
+        //        break;
+        //    case Type.literature: 
+        //        break;
+        //    case Type.Electronics: 
+        //        break;
+        //    case Type.clothing: 
+        //        break;
+        //    case Type.gardening: 
+        //        break;
+        //    case Type.Container:
+        //        break;
+        //    case Type.Normal:
+        //        break;
+        //    case Type.Furniture: 
+        //        break;
+        //    default: break;
+        //}
         Ingredients_Image = ingredients_Image;
         Ingredients_name = ingredients_name;
         Ingredients_name_kr = ingredients_name_kr;
@@ -236,19 +267,119 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
         switch (item_type)
         {
             case Crafting_type.Crafting_General:
-                Crafting_General_list.Add(item);
+                if(Crafting_General_list.Count != 0)
+                {
+                    for (int i = 0; i < Crafting_General_list.Count;)
+                    {
+                        if (Crafting_General_list[i].item_DB_ID == item_DB_ID && Crafting_General_list[i].item_DB_type == item_DB_type)
+                        {
+                            break;
+                        }
+                        else
+                            i++;
+
+                        if (i == Crafting_General_list.Count)
+                        {
+                            Crafting_General_list.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    Crafting_General_list.Add(item);
+                }            
                 break;
             case Crafting_type.Crafting_Tool:
-                Crafting_Tool_list.Add(item);
+                if(Crafting_Tool_list.Count != 0)
+                {
+                    for (int i = 0; i < Crafting_Tool_list.Count;)
+                    {
+                        if (Crafting_Tool_list[i].item_DB_ID == item_DB_ID && Crafting_Tool_list[i].item_DB_type == item_DB_type)
+                        {
+                            break;
+                        }
+                        else
+                            i++;
+
+                        if (i == Crafting_Tool_list.Count)
+                        {
+                            Crafting_Tool_list.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    Crafting_Tool_list.Add(item);
+                }
                 break;
             case Crafting_type.Crafting_Cook:  // 인벤토리에 조리도구 들어오면 추가, 없어지면 삭제
-                Crafting_Cook_list.Add(item);
+                if(Crafting_Cook_list.Count != 0)
+                {
+                    for (int i = 0; i < Crafting_Cook_list.Count;)
+                    {
+                        if (Crafting_Cook_list[i].item_DB_ID == item_DB_ID && Crafting_Cook_list[i].item_DB_type == item_DB_type)
+                        {
+                            break;
+                        }
+                        else
+                            i++;
+
+                        if (i == Crafting_Cook_list.Count)
+                        {
+                            Crafting_Cook_list.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    Crafting_Cook_list.Add(item);
+                }
                 break;
             case Crafting_type.Crafting_Medical:
-                Crafting_Medical_list.Add(item);
+                if(Crafting_Medical_list.Count != 0)
+                {
+                    for (int i = 0; i < Crafting_Medical_list.Count;)
+                    {
+                        if (Crafting_Medical_list[i].item_DB_ID == item_DB_ID && Crafting_Medical_list[i].item_DB_type == item_DB_type)
+                        {
+                            break;
+                        }
+                        else
+                            i++;
+
+                        if (i == Crafting_Medical_list.Count)
+                        {
+                            Crafting_Medical_list.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    Crafting_Medical_list.Add(item);
+                }
                 break;
             case Crafting_type.Crafting_Furniture:
-                Crafting_Furniture_list.Add(item);
+                if(Crafting_Furniture_list.Count != 0)
+                {
+                    for (int i = 0; i < Crafting_Furniture_list.Count;)
+                    {
+                        if (Crafting_Furniture_list[i].item_DB_ID == item_DB_ID && Crafting_Furniture_list[i].item_DB_type == item_DB_type)
+                        {
+                            break;
+                        }
+                        else
+                            i++;
+
+                        if (i == Crafting_Furniture_list.Count)
+                        {
+                            Crafting_Furniture_list.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    Crafting_Furniture_list.Add(item);
+                }
                 break;
         }
     }
@@ -258,15 +389,15 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
         switch (item_type)
         {
             case Crafting_type.Crafting_General:
-                return Crafting_General_list.Count - 1;
+                return Crafting_General_list.Count;
             case Crafting_type.Crafting_Tool:
-                return Crafting_Tool_list.Count - 1;
+                return Crafting_Tool_list.Count;
             case Crafting_type.Crafting_Cook:
-                return Crafting_Cook_list.Count - 1;
+                return Crafting_Cook_list.Count;
             case Crafting_type.Crafting_Medical:
-                return Crafting_Medical_list.Count - 1;
+                return Crafting_Medical_list.Count;
             case Crafting_type.Crafting_Furniture:
-                return Crafting_Furniture_list.Count - 1;
+                return Crafting_Furniture_list.Count;
             default: return 0;
         }
     }

@@ -291,7 +291,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e69cf4d44af33349b7c13f29a59145e, type: 2}
   - {fileID: 11400000, guid: 8a6cc014a6de11d49bae3807bbb7f538, type: 2}
   electronics_Ins: []
-  clothing_Ins: []
+  clothing_Ins:
+  - {fileID: 11400000, guid: 65572c59c65518846814d8c81303b709, type: 2}
   gardening_Ins: []
   Container_Ins:
   - {fileID: 11400000, guid: 78cbd57f57b39aa45a09a5dc0c5ad63e, type: 2}
@@ -316,6 +317,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2efb73cfea79ed54c9592af02c75b3ce, type: 2}
   - {fileID: 11400000, guid: ee75c604641d74f4781475422b528fa2, type: 2}
   - {fileID: 11400000, guid: 401c17dd34598cc41a35edae0607185a, type: 2}
+  ETC_Ins: []
+  furniture_Ins: []
   Requesting_Wei: 0
 --- !u!114 &475684720242648991
 MonoBehaviour:
@@ -397,5 +400,18 @@ MonoBehaviour:
   Restless_Sleeper_characteristics: 0
   Resilient_Characteristic: 0
   Prone_to_Illness_Characteristic: 0
+  Fast_Healer_Characteristic: 0
+  Fast_Learner_Characteristic: 0
+  Thick_Skinned_Characteristic: 0
+  Thin_skinned_Characteristic: 0
+  Adrenaline_Junkie_Characteristic: 0
+  Pacifist_Characteristic: 0
+  Slow_Healer_Characteristic: 0
+  Slow_Learner_Characteristic: 0
+  Obese_Characteristic: 0
+  Overweight_Characteristic: 0
+  Underweight_Characteristic: 0
+  Very_Underweight_Characteristic: 0
+  Emaciated_Characteristic: 0
   characteristics_list: []
   characteristics_Player: []
