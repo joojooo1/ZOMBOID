@@ -10,22 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_Belt
+  m_Name: Clothing_Beret_Army_Hat
   m_EditorClassIdentifier: 
-  type: 6
-  ClothingType: 7
+  type: 0
+  ClothingType: 0
   Clothing_ID: 0
-  Clothing_Name: Belt
-<<<<<<< HEAD
-  Clothing_Name_kr: "\uBCA8\uD2B8"
-  ClothingImage: {fileID: 21300000, guid: b2a382230ad1a3f4ab199fb8caa0d3cf, type: 3}
-=======
-  Clothing_Name_kr: 
-  ClothingImage: {fileID: 0}
->>>>>>> 3ac361a5d6e5b7c027ca7b59c1366126c10ae2a5
+  Clothing_Name: "\uAD70\uC6A9\uBCA0\uB808\uBAA8"
+  Clothing_Name_kr: Beret_Army
+  ClothingImage: {fileID: 21300000, guid: 127778c8f1d752c41b94cbd7bdc06ad8, type: 3}
   Height: 0
   Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
-  Equipping_Position: 7
+  Equipping_Position: 0
   ClothingWeight: 0
