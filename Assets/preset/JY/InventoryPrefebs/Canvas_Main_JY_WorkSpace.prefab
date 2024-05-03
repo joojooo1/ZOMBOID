@@ -25744,6 +25744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui_player_state: {fileID: 4862650550636199308}
+  ui_text: {fileID: 0}
   Playing: 0
   player_Setting_Language_to_Korean: 1
   Is_Female: 1
@@ -52910,7 +52911,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2631651169688119444}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.21972743
+  m_Size: 0.21972744
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -75045,7 +75046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -5.9809, y: -93.401}
+  m_AnchoredPosition: {x: -5.9809, y: -93.40091}
   m_SizeDelta: {x: 159.6582, y: 1334.3}
   m_Pivot: {x: 0.5, y: 0.93}
 --- !u!222 &2238992014456601338
@@ -85075,6 +85076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77e7b5e7cff2304d9ad03bbe2c97784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ui_state_skill: {fileID: 0}
   UI_window: {fileID: 3417831451703201219}
   UI_window_Image:
   - {fileID: 21300000, guid: 6b150aca285e5ee44970e773cd5eef6e, type: 3}
