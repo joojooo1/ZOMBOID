@@ -6,7 +6,7 @@ using UnityEngine;
 public class Item_Weapons : ScriptableObject
 {
     public Type type;
-    public Using_Type Usingtype;
+    public Using_Type[] Usingtype;
     public PowerSources_Type Power_type;
     public Weapon_type WeaponType;
     public bool created;

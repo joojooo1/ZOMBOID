@@ -7,19 +7,21 @@ public class Recipe_item
 {
     public bool Is_Craftng;
 
-    public int Recipe_ID;  // 잡지 안읽는 레시피는 -1
+    public int Recipe_ID;
 
+    public int Magazine_ID;  // 잡지 안읽는 레시피는 -1
     public Type Crafting_item_type;
     public int Crafting_item_ID;
     public Crafting_type _Crafting_type;
-    public List<Recipe_Ingredients> Recipe_Ingredients_list = new List<Recipe_Ingredients>();
+    public List<Recipe_Ingredients> Recipe_Ingredients_list;
 
-    public Recipe_item(int _Recipe_ID, Type _Crafting_item_type, int _Crafting_item_ID)
+    public Recipe_item(int _Magazine_ID, Type _Crafting_item_type, int _Crafting_item_ID)
     {
-        Recipe_ID = _Recipe_ID;
+        Magazine_ID = _Magazine_ID;
         Crafting_item_type = _Crafting_item_type;
         Crafting_item_ID = _Crafting_item_ID;
         Is_Craftng = false;
+        Recipe_Ingredients_list = new List<Recipe_Ingredients>();
 
         switch (_Crafting_item_type)
         {
@@ -35,7 +37,7 @@ public class Recipe_item
             case Type.Electronics:
                 _Crafting_type = Crafting_type.Crafting_General;
                 break;
-            case Type.gardening:
+            case Type.Farming:
                 _Crafting_type = Crafting_type.Crafting_Tool;
                 break;
             case Type.Container:
@@ -58,7 +60,7 @@ public class Recipe_item
 
     public void Add_Recipe()
     {
-        switch (Crafting_item_type)
+        switch (Crafting_item_type)  // 만드는 아이템의 타입
         {
             case Type.food:
                 UI_Craft.UI_Craft_main.Add_Crafting_list(Crafting_item_type, Crafting_item_ID, _Crafting_type,
@@ -76,9 +78,9 @@ public class Recipe_item
                 UI_Craft.UI_Craft_main.Add_Crafting_list(Crafting_item_type, Crafting_item_ID, _Crafting_type,
                     Item_DataBase.item_database.electronics_Ins[Crafting_item_ID].Electronics_Image, Item_DataBase.item_database.electronics_Ins[Crafting_item_ID].ElectronicsName, Item_DataBase.item_database.electronics_Ins[Crafting_item_ID].ElectronicsName_Kr);
                 break;
-            case Type.gardening:
+            case Type.Farming:
                 UI_Craft.UI_Craft_main.Add_Crafting_list(Crafting_item_type, Crafting_item_ID, _Crafting_type,
-                    Item_DataBase.item_database.gardening_Ins[Crafting_item_ID].Gardening_Image, Item_DataBase.item_database.gardening_Ins[Crafting_item_ID].Gardening_Name, Item_DataBase.item_database.electronics_Ins[Crafting_item_ID].ElectronicsName_Kr);
+                    Item_DataBase.item_database.Farming_Ins[Crafting_item_ID].Gardening_Image, Item_DataBase.item_database.Farming_Ins[Crafting_item_ID].Gardening_Name, Item_DataBase.item_database.electronics_Ins[Crafting_item_ID].ElectronicsName_Kr);
                 break;
             case Type.Container:
                 UI_Craft.UI_Craft_main.Add_Crafting_list(Crafting_item_type, Crafting_item_ID, _Crafting_type,
@@ -94,25 +96,30 @@ public class Recipe_item
                 break;
         }
 
-        int temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(_Crafting_type) - 1;
+        int last_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(_Crafting_type) - 1;
         for (int i = 0; i < Recipe_Ingredients_list.Count; i++)
         {
             switch (_Crafting_type)
             {
                 case Crafting_type.Crafting_General:
-                   // UI_Craft.UI_Craft_main.Crafting_General_list[temp_index].Add_Ingredients
-                break;
+                    UI_Craft.UI_Craft_main.Crafting_General_list[last_index].Add_Ingredients(
+                        Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                    break;
                 case Crafting_type.Crafting_Tool:
-
+                    UI_Craft.UI_Craft_main.Crafting_Tool_list[last_index].Add_Ingredients(
+                        Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
                     break;
                 case Crafting_type.Crafting_Cook:
-
+                    UI_Craft.UI_Craft_main.Crafting_Cook_list[last_index].Add_Ingredients(
+                        Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
                     break;
                 case Crafting_type.Crafting_Medical:
-
+                    UI_Craft.UI_Craft_main.Crafting_Medical_list[last_index].Add_Ingredients(
+                        Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
                     break;
                 case Crafting_type.Crafting_Furniture:
-
+                    UI_Craft.UI_Craft_main.Crafting_Furniture_list[last_index].Add_Ingredients(
+                        Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
                     break;
             }
         }
@@ -131,108 +138,7 @@ public class Recipe_Ingredients
         Recipe_Ingredients_DB_ID = _DB_ID;
         Recipe_value = value;
     }
-
-    public void Add_Recipe()
-    {
-        //int temp_index = -1;
-        //switch (_Crafting_item_type)
-        //{            
-        //    case Type.food:  // Crafting_Cook
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook);
-        //        if(temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_Cook_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Cook)].
-        //                Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.food_Ins[Recipe_Ingredients_DB_ID].Food_Image[0],
-        //                Item_DataBase.item_database.food_Ins[Recipe_Ingredients_DB_ID].FoodName, Item_DataBase.item_database.food_Ins[Recipe_Ingredients_DB_ID].FoodName_Kr, Recipe_value);
-        //        }
-        //        break;
-        //    case Type.Medical:  // Crafting_Medical
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Medical);
-        //        if (temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_Medical_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Medical)].
-        //                Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.medical_Ins[Recipe_Ingredients_DB_ID].Medical_Image,
-        //                Item_DataBase.item_database.medical_Ins[Recipe_Ingredients_DB_ID].MedicalName, Item_DataBase.item_database.medical_Ins[Recipe_Ingredients_DB_ID].MedicalName_Kr, Recipe_value);
-        //        }
-        //        break;
-        //    case Type.weapon:  // Crafting_Tool
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Tool);
-        //        if (temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_Tool_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Tool)].
-        //                Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.weapons_Ins[Recipe_Ingredients_DB_ID].ItemImage,
-        //                Item_DataBase.item_database.weapons_Ins[Recipe_Ingredients_DB_ID].WeaponName, Item_DataBase.item_database.weapons_Ins[Recipe_Ingredients_DB_ID].WeaponName_Kr, Recipe_value);
-        //        }
-        //        break;
-        //    case Type.Electronics:  // Crafting_General
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General);
-        //        if (temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].
-        //                Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.electronics_Ins[Recipe_Ingredients_DB_ID].Electronics_Image,
-        //                Item_DataBase.item_database.electronics_Ins[Recipe_Ingredients_DB_ID].ElectronicsName, Item_DataBase.item_database.electronics_Ins[Recipe_Ingredients_DB_ID].ElectronicsName_Kr, Recipe_value);
-        //        }
-        //        break;
-        //    case Type.clothing:  // Crafting_General
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General);
-        //        if (temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].
-        //            Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.clothing_Ins[Recipe_Ingredients_DB_ID].ClothingImage,
-        //            Item_DataBase.item_database.clothing_Ins[Recipe_Ingredients_DB_ID].Clothing_Name, Item_DataBase.item_database.clothing_Ins[Recipe_Ingredients_DB_ID].Clothing_Name_kr, Recipe_value);
-        //        }
-        //        break;
-        //    case Type.gardening:  // Crafting_Tool
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Tool);
-        //        if (temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_Tool_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_Tool)].
-        //                Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.gardening_Ins[Recipe_Ingredients_DB_ID].Gardening_Image,
-        //                Item_DataBase.item_database.gardening_Ins[Recipe_Ingredients_DB_ID].Gardening_Name, Item_DataBase.item_database.gardening_Ins[Recipe_Ingredients_DB_ID].Gardening_Name_kr, Recipe_value);
-        //        }
-        //        break;
-        //    case Type.Container:  // Crafting_General
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General);
-        //        if (temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].
-        //                Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.Container_Ins[Recipe_Ingredients_DB_ID].Container_Image,
-        //                Item_DataBase.item_database.Container_Ins[Recipe_Ingredients_DB_ID].ContainerName, Item_DataBase.item_database.Container_Ins[Recipe_Ingredients_DB_ID].ContainerName_Kr, Recipe_value);
-        //        }
-        //        break;
-        //    case Type.Normal:  // Crafting_General
-        //        temp_index = UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General);
-        //        if (temp_index >= 0)
-        //        {
-        //            UI_Craft.UI_Craft_main.Crafting_General_list[UI_Craft.UI_Craft_main.Get_Crafting_list_index(Crafting_type.Crafting_General)].
-        //                Add_Ingredients(Recipe_Ingredients_DB_type, Recipe_Ingredients_DB_ID, Item_DataBase.item_database.ETC_Ins[Recipe_Ingredients_DB_ID].ETC_Image,
-        //                Item_DataBase.item_database.ETC_Ins[Recipe_Ingredients_DB_ID].ETC_Name, Item_DataBase.item_database.ETC_Ins[Recipe_Ingredients_DB_ID].ETC_Name_kr, Recipe_value);
-        //        }
-        //        break;
-        //}
-    }
 }
-
-//public class Recipe_for_Magazine
-//{
-//    public bool Is_reading;
-
-//    public Type Magazine_type;
-//    public int Magazine_ID;
-//    public Type Craftingitem_type;
-//    public int Craftingitem_ID;
-
-
-//    public Recipe_for_Magazine(Type _Magazine_type, int _Magazine_ID, Type _Craftingitem_type, int _Craftingitem_ID)
-//    {
-//        Magazine_type = _Magazine_type;
-//        Magazine_ID = _Magazine_ID;
-//        Craftingitem_type = _Craftingitem_type;
-//        Craftingitem_ID = _Craftingitem_ID;
-//        Is_reading = false;
-//    }
-
-//}
 
 public class Player_Crafting : MonoBehaviour
 {
@@ -296,11 +202,12 @@ public class Player_Crafting : MonoBehaviour
     //36. Guerilla Radio Vol. 2 :  임시 무전기 제작
     public Recipe_item Recipe_Craft_Makeshift_Walkie_Talkie;
     //37. Guerilla Radio Vol. 3 :  임시 햄 라디오 제작
-    public Recipe_item Recipe_Craft_Makeshift_Ham_Radio;
+    //public Recipe_item Recipe_Craft_Makeshift_Ham_Radio;
 
 
-    public Recipe_item Recipe_Craft_RippedSheets;
-
+    // Start Recipe
+    public Recipe_item Recipe_Craft_RippedSheets;  // 찢어진 천
+    public Recipe_item Recipe_Craft_;
 
 
 
@@ -358,9 +265,9 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Make_Metal_Sheet = new Recipe_item(34, Type.Normal, 0);
         Recipe_Make_Small_Metal_Sheet = new Recipe_item(34, Type.Normal, 0);
 
-        Recipe_Craft_Makeshift_Radio = new Recipe_item(35, Type.Normal, 0);
-        Recipe_Craft_Makeshift_Walkie_Talkie = new Recipe_item(36, Type.Normal, 0);
-        Recipe_Craft_Makeshift_Ham_Radio = new Recipe_item(37, Type.Normal, 0);
+        Recipe_Craft_Makeshift_Radio = new Recipe_item(35, Type.Normal, 0);  // 라디오 제작
+        Recipe_Craft_Makeshift_Walkie_Talkie = new Recipe_item(36, Type.Normal, 0);  // 무전기 제작
+        //Recipe_Craft_Makeshift_Ham_Radio = new Recipe_item(37, Type.Normal, 0);
 
         // Farming
         Recipe_Make_Mildew_Cure = new Recipe_item(20, Type.Normal, 0);
@@ -383,10 +290,11 @@ public class Player_Crafting : MonoBehaviour
 
 
         // Start
+        // 찢어진 천
         Recipe_Craft_RippedSheets = new Recipe_item(-1, Type.Medical, 6);
         for (int i = 0; i < Item_DataBase.item_database.clothing_Ins.Count; i++)
         {
-            if (Item_DataBase.item_database.clothing_Ins[i].Clothing_Name == "Tshirt")
+            if (Item_DataBase.item_database.clothing_Ins[i].ClothingType == Clothing_Type.T_shirt)
             {
                 Recipe_Craft_RippedSheets.Add_Recipe_Ingredients(Type.clothing, i, 1);
                 break;
@@ -394,11 +302,19 @@ public class Player_Crafting : MonoBehaviour
         }
         Recipe_Crafting_list.Add(Recipe_Craft_RippedSheets);
 
+
+
+
     }
 
 
     private void Start()
     {
+        //for (int i = 0; i < Recipe_Crafting_list.Count; i++)
+        //{
+        //    Recipe_Crafting_list[i].Recipe_ID = i;
+        //}
+
         // Start 레시피는 시작할때 true로 변경
         Recipe_Craft_RippedSheets.Is_Craftng = true;
     }

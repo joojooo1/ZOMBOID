@@ -7,7 +7,7 @@ public class UI_State_CloseButton : MonoBehaviour, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        UI_State.State_icon_main.UI_window.SetActive(false);
-        UI_State.State_icon_main.Image.sprite = UI_State.State_icon_main.UI_window_Image[0];
+        UI_main.ui_main.ui_player_state.UI_window.SetActive(false);
+        UI_main.ui_main.ui_player_state.Image.sprite = UI_main.ui_main.ui_player_state.UI_window_Image[0];
     }
 }

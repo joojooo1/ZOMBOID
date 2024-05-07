@@ -215,19 +215,19 @@ public class Player_body_Location
                         case Damage_Pattern.Scratches:
                             // ±ÜÈû  
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            UI_main.ui_main.ui_player_state.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(7);  // 7% È®·ü·Î °¨¿°
                             break;
                         case Damage_Pattern.Lacerations:  // ±íÀº»óÃ³ (ºÀÇÕ ÇÊ¿ä)
                             // Âõ±è
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            UI_main.ui_main.ui_player_state.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Calculating_Infection(25);  // 25% È®·ü·Î °¨¿°
                             break;
                         case Damage_Pattern.Bites:
                             // ¹°¸²
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            UI_main.ui_main.ui_player_state.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             PlayerState.playerState.Set_Is_Infection(true);  // 100% È®·ü·Î °¨¿°
                             break;
                         case Damage_Pattern.Glass:
@@ -243,19 +243,19 @@ public class Player_body_Location
                     {
                         case Damage_Pattern.Abrasion:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            UI_main.ui_main.ui_player_state.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.bullet:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            UI_main.ui_main.ui_player_state.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.Fracture:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            UI_main.ui_main.ui_player_state.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         case Damage_Pattern.Lacerations:
                             Player_main.player_main.player_HP.Set_Player_HP_for_Damage(Attack_power);
-                            UI_State.State_icon_main.icon_Ins(Attack_Pattern, _Body_Location_Code);
+                            UI_main.ui_main.ui_player_state.icon_Ins(Attack_Pattern, _Body_Location_Code);
                             break;
                         default:
                             break;
@@ -337,7 +337,7 @@ public class Player_body_Location
                 Body_Damage_array[j].Set_recovery_Count();
                 if (Body_Damage_array[j].recovery_Count > recovery_damagecount)
                 {
-                    UI_State.State_icon_main.icon_Destroy(_Body_Location_Code, Body_Damage_array[j].Attack_Pattern, j);
+                    UI_main.ui_main.ui_player_state.icon_Destroy(_Body_Location_Code, Body_Damage_array[j].Attack_Pattern, j);
                 }
             }
         }
