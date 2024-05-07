@@ -15,8 +15,6 @@ public class Playing_job
 
 public class UI_State : MonoBehaviour, IPointerClickHandler
 {
-    public static UI_State State_icon_main;
-
     public UI_State_Skill ui_state_skill;
 
     public GameObject UI_window;
@@ -31,13 +29,14 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
     [SerializeField] GameObject icon_prefab;
     [SerializeField] GameObject[] icon_position;
 
+    public GameObject TreatmentBar;
+
     public List<UI_State_detailwindow> Damagelist = new List<UI_State_detailwindow>();
 
     public Playing_job playing_job = new Playing_job();
 
     private void Start()
     {
-        State_icon_main = this;
         if (UI_window.activeSelf) { Image.sprite = UI_window_Image[1]; }
         else { Image.sprite = UI_window_Image[0]; }
 
@@ -56,13 +55,23 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
         {
             UI_window.SetActive(true);
             Image.sprite = UI_window_Image[1];
+            UI_window.transform.SetAsLastSibling();
         }
     }
 
-
-
     public void icon_Ins(Damage_Pattern damagetype, body_point position)
     {
+        for(int i = 0; i < icon_position.Length; i++)
+        {
+            if(i == (int)position)
+            {
+                if (icon_position[i].activeSelf == false)
+                    icon_position[i].SetActive(true);
+                else
+                    break;
+            }
+        }
+
         GameObject tempObj = null;
 
         for(int i = 0; i < Player_main.player_main.playerState.Player_body_point[(int)position].Body_Damage_array.Length; i++)
@@ -116,7 +125,32 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
             }
         }
 
-        
+
+        for (int k = 0; k < Damagelist.Count; k++)
+        {
+            if (Damagelist[k].body_position == position)
+                break;
+            else
+            {
+                if(k == Damagelist.Count - 1)
+                {
+                    for (int i = 0; i < icon_position.Length; i++)
+                    {
+                        if (i == (int)position)
+                        {
+                            if (icon_position[i].activeSelf == true)
+                                icon_position[i].SetActive(false);
+                            else
+                                break;
+                        }
+                    }
+                }
+            }
+            
+        }
+
+
+
     }
 }
 

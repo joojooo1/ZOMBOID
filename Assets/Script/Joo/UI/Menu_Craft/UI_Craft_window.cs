@@ -68,6 +68,10 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_General_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_General_list[i]);
+                        //for(int j = 0; j < UI_Craft.UI_Craft_main.Crafting_General_list[i].Ingredients_list.Count; j++)
+                        //{
+                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_General_list[i].Ingredients_list[j]);
+                        //}
                     }
                 }
                 break;
@@ -77,6 +81,10 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Tool_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Tool_list[i]);
+                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Tool_list[i].Ingredients_list.Count; j++)
+                        //{
+                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Tool_list[i].Ingredients_list[j]);
+                        //}
                     }
                 }
                 break;
@@ -86,6 +94,10 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Cook_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Cook_list[i]);
+                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Cook_list[i].Ingredients_list.Count; j++)
+                        //{
+                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Cook_list[i].Ingredients_list[j]);
+                        //}
                     }
                 }
                 break;
@@ -95,6 +107,11 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Medical_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Medical_list[i]);
+
+                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Medical_list[i].Ingredients_list.Count; j++)
+                        //{
+                        //    Origin_list[i].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Medical_list[i].Ingredients_list[j]);
+                        //}
                     }
                 }
                 break;
@@ -104,8 +121,11 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Furniture_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Furniture_list[i]);
+                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Furniture_list[i].Ingredients_list.Count; j++)
+                        //{
+                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Furniture_list[i].Ingredients_list[j]);
+                        //}
                     }
-
                 }
                 break;
         }
@@ -126,15 +146,14 @@ public class UI_Craft_window : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (Transform child in Crafting_Window)
-        {
-            Destroy(child.gameObject);
-        }
-
         Selected_item = null;
+        for(int i = 0; i < Origin_list.Count; i++)
+        {
+            Origin_list[i].Ingredients_list.Clear();
+        }
         Origin_list.Clear();
-        Crafting_item_Prefab_list.Clear();
         Clear_Ingredients_Window();
+        Clear_item_Window();
     }
 
     public void Choice_item(int index)
@@ -145,6 +164,7 @@ public class UI_Craft_window : MonoBehaviour
             {
                 Crafting_item_Prefab_list[i].Choice = true;
                 Selected_item = Crafting_item_Prefab_list[i];
+                break;
             }
             else
             {
@@ -188,12 +208,12 @@ public class UI_Craft_window : MonoBehaviour
     {
         if(_item.item_Info.item_type != Crafting_type.Crafting_Cook)
         {
-            for (int i = 0; i < _item.item_Info.Ingredients_list.Count;)
+            for (int i = 0; i < Origin_list[_item.item_index].Ingredients_list.Count;)
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients(_item.item_Info, i);
+                item.Set_Ingredients(Origin_list[_item.item_index], i);
                 Crafting_Ingredients_Prefab_list.Add(item);
                 i++;
             }
@@ -211,6 +231,15 @@ public class UI_Craft_window : MonoBehaviour
             }
         }
 
+    }
+
+    public void Clear_item_Window()
+    {
+        foreach (Transform child in Crafting_Window)
+        {
+            Destroy(child.gameObject);
+        }
+        Crafting_item_Prefab_list.Clear();
     }
 
     public void Clear_Ingredients_Window()

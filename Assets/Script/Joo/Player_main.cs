@@ -114,26 +114,12 @@ public class Player_main : MonoBehaviour
     float Read_Timer = 5.0f;
 
     void Update()
-    {      
+    {
         if (UnityEngine.Input.GetKeyDown(KeyCode.P))
         {
-            //Debug.Log("Read book");
-            //Is_Reading = true;
-            //current_SkillBook_type = Skill_Type.Fishing;
-            //current_SKillBook_level = 1;
-            //Skillbook_Readpage = 150;
-            //Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-
-            //Skill.Fishing_Level.Set_S_Level(3);
-            //Skill.Fishing_Level.Set_S_Books_Point(3);
-
-
-            //ui_inven_using.itemtype = Type.literature;
-            //ui_inven_using.item_ID = 52;
-
-            //ui_inven_using.Check_item_Literature(temp.item_ID);
+            GameObject a = new GameObject();
+            Calculate_HitForce(a, "easy", false, false);
         }
-
         if (Input.GetKeyDown(KeyCode.O))
         {
             //Skill.Fishing_Level.SetEXP(700);

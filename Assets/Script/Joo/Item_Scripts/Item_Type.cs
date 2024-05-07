@@ -5,31 +5,34 @@ using UnityEngine;
 public enum Type
 {
     weapon = 0,
-    gardening = 1,
+    Farming = 1,
     food = 2,
-    Normal = 3,   // ETC
+    Normal = 3,   // 도구가 아닌 일반 아이템 ( 무기로 쓰이는 아이템 포함 )
     literature = 4,
     clothing = 6,
     Container = 7,
     Electronics = 8,
     Medical = 9,
-    Furniture = 10
+    Furniture = 10,
+    Tool = 11  // 도구 ( 무기로 쓰이는 도구 포함 )
 }
 
 public enum Using_Type
 {
     Attack = 0,
     General = 1,
-    Gardening = 2,
+    Gardening = 2,   // 안씀
     Fishing = 3,
     Cooking = 4,
-    Destroy = 5,
+    Destroy = 5,  // ?
     Farming = 6,
     Ingredients = 7,  // 재료
     Stationery = 8,  // 문구류
     Medical = 9,
     Carpentry = 10,
-    tool = 11
+    tool = 11,
+    Repair = 12,  // 수리
+    Container = 13  // 용기
 }
 
 public enum Medical_Type
@@ -119,13 +122,14 @@ public enum Skill_Type
     None = 9
 }
 
-public enum Electronic_Type
+public enum Electronic_usingType
 {
-    PowerSources = 0,
-    Handle = 1,
+    PowerSources = 0,  // 연료
+    Container = 1,  // 연료 담는 용도
     Gas = 2,
     Light = 3,
-    Charger = 4
+    Charger = 4,
+    Tool = 5
 }
 
 public enum PowerSources_Type  // 만들어내는 or 담는 연료의 타입
