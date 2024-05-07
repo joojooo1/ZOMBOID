@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06f6ebc2d2f48584fb7958ee49997844, type: 3}
-  m_Name: Charger_CarBatteryCharger
+  m_Name: Container_Propane Tank
   m_EditorClassIdentifier: 
   type: 8
-  usingtype: 1
-  electronic_usingType: 4
-  Power_type: 1
-  UsingPower_type: 1
+  usingtype: 13
+  electronic_usingType: 1
+  Power_type: 4
+  UsingPower_type: 0
   Equipping_Position: 
   Electronics_ID: 0
-  Height: 2
-  Width: 2
+  Height: 4
+  Width: 4
   Nesting_Depth: 1
-  ElectronicsName: Car Battery Charger
-  ElectronicsName_Kr: "\uC790\uB3D9\uCC28 \uBC30\uD130\uB9AC \uCDA9\uC804\uAE30"
-  ElectronicsWeight: 2
-  Electronics_Image: {fileID: 21300000, guid: ff33ae4bd0773a94581c62f9dbe15492, type: 3}
+  ElectronicsName: Propane Tank
+  ElectronicsName_Kr: "\uD504\uB85C\uD310 \uD0F1\uD06C"
+  ElectronicsWeight: 20
+  Electronics_Image: {fileID: 21300000, guid: dc7efb5e36aa989498984dc865d85f5a, type: 3}
   On: 0
   PowerSources_Item: {fileID: 0}
-  Capacity: 0
+  Capacity: 160
   Range: 0
   Condition: 100

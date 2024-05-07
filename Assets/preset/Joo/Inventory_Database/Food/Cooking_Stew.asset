@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
-  m_Name: Cooking_Soup
+  m_Name: Cooking_Stew
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 9
-  Food_ID: 80
+  Food_ID: 82
   FoodState: 1
   Cooking_time_to_NextStep: 0
-  Height: 1
-  Width: 2
+  Height: 3
+  Width: 3
   Nesting_Depth: 1
-  FoodName: Soup
-  FoodName_Kr: "\uC218\uD504"
-  FoodWeight: 0
+  FoodName: Stew
+  FoodName_Kr: "\uC2A4\uD29C"
+  FoodWeight: 1
   Food_Image:
-  - {fileID: 21300000, guid: 93670d26d76d18b4b9e861ad7b2dab80, type: 3}
+  - {fileID: 21300000, guid: b3998d519a762004ab85d41fecce0db3, type: 3}
   Is_Perishable: 1
   Freshness: 0
-  Preservation_period_for_freshness: 2
+  Preservation_period_for_freshness: 3
   Preservation_period_for_stale: 2
   Is_freezing: 0
   Is_Canned: 0
