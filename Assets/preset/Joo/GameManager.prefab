@@ -292,7 +292,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a6cc014a6de11d49bae3807bbb7f538, type: 2}
   electronics_Ins: []
   clothing_Ins:
-  - {fileID: 11400000, guid: 65572c59c65518846814d8c81303b709, type: 2}
+  - {fileID: 11400000, guid: 674a732ccd2e3be418e5b7ef61264207, type: 2}
   gardening_Ins: []
   Container_Ins:
   - {fileID: 11400000, guid: 78cbd57f57b39aa45a09a5dc0c5ad63e, type: 2}
