@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Clothing_ Sun_Glasses
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 0
+  ClothingType: 1
   Clothing_ID: 0
   Clothing_Name: "\uC36C\uAE00\uB77C\uC2A4"
   Clothing_Name_kr: Sun_Glasses

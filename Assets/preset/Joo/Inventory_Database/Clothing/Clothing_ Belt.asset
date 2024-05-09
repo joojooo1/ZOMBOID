@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Clothing_ Belt
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 0
+  ClothingType: 7
   Clothing_ID: 0
   Clothing_Name: "\uBCA8\uD2B8"
   Clothing_Name_kr: Belt

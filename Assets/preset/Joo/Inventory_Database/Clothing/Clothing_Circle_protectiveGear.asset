@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
   m_Name: Clothing_Circle_protectiveGear
   m_EditorClassIdentifier: 
-  type: 0
-  ClothingType: 0
+  type: 6
+  ClothingType: 10
   Clothing_ID: 0
   Clothing_Name: "\uC6D0\uD615\uBB34\uB98E\uBCF4\uD638\uB300"
   Clothing_Name_kr: Circle_protectiveGear

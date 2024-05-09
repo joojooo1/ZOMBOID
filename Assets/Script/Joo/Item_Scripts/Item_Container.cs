@@ -39,5 +39,6 @@ public class Item_Container : ScriptableObject
 
     public float Capacity_Water;
     public float Rain_factor;  // 빗물 차는 속도
+    public int Item_Index;
 
 }

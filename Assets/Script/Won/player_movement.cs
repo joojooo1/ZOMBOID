@@ -109,7 +109,7 @@ public class player_movement : MonoBehaviour
 
                         playeranime[i].animatorsetBool(anima_name, false);
 
-                        playeranime[i].animatorsetting(0.7f);
+                        playeranime[i].animatorsetting(1,0.7f);
                     }
                 }
                 navMeshAgent.enabled = true;
@@ -127,7 +127,7 @@ public class player_movement : MonoBehaviour
                 {
                     if (playeraimeobject[i].activeSelf)
                     {
-                        playeranime[i].animatorsetting(0.7f);
+                        playeranime[i].animatorsetting(1,0.7f);
 
                     }
 
@@ -204,7 +204,7 @@ public class player_movement : MonoBehaviour
             if (playeraimeobject[i].activeSelf)
             {
 
-                playeranime[i].animatorsetting(0f);
+                playeranime[i].animatorsetting(1,0f);
                 playeranime[i].animatersetTrigger("end");
 
             }
@@ -244,7 +244,7 @@ public class player_movement : MonoBehaviour
                 Debug.Log("시작");
                 playeranime[i].animatersetTrigger("don`t_move");
                 playeranime[i].animatorsetBool("sleep", true);
-                playeranime[i].animatorsetting(0f);
+                playeranime[i].animatorsetting(1, 0f);
                 anima_name = "sleep";
             }
 
@@ -272,7 +272,7 @@ public class player_movement : MonoBehaviour
             if (playeraimeobject[i].activeSelf)
             {
                 playeranime[i].animatorsetBool("sit", true);
-                playeranime[i].animatorsetting(1f);
+                playeranime[i].animatorsetting(1, 1f);
                 anima_name = "sit";
             }
 

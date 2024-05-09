@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
   m_Name: Clothing_ Leather_Black_Gloves
   m_EditorClassIdentifier: 
-  type: 0
-  ClothingType: 0
+  type: 6
+  ClothingType: 6
   Clothing_ID: 0
   Clothing_Name: "\uAC00\uC8FD\uC7A5\uAC11(\uAC80\uC815)"
   Clothing_Name_kr: GlovesLeatherBlack

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Clothing_ Watch
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 0
+  ClothingType: 5
   Clothing_ID: 0
   Clothing_Name: "\uC190\uBAA9\uC2DC\uACC4"
   Clothing_Name_kr: Watch

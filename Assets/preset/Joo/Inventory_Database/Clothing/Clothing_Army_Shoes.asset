@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
   m_Name: Clothing_Army_Shoes
   m_EditorClassIdentifier: 
-  type: 0
-  ClothingType: 0
+  type: 6
+  ClothingType: 8
   Clothing_ID: 0
-  Clothing_Name: "\uAC00\uC8FD\uC7A5\uAC11(\uAC80\uC815)"
-  Clothing_Name_kr: GlovesLeatherBlack
-  ClothingImage: {fileID: 21300000, guid: 127d752c49fd0984ea56ad5fedc418d1, type: 3}
+  Clothing_Name: "\uAD70\uD654"
+  Clothing_Name_kr: Army_Shoes
+  ClothingImage: {fileID: 21300000, guid: fbd405f03cdf8f246be8554fdae33492, type: 3}
   Height: 0
   Width: 0
   Nesting_Depth: 0
