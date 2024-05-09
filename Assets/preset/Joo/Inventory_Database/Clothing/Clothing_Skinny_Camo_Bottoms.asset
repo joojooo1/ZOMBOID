@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
   m_Name: Clothing_Skinny_Camo_Bottoms
   m_EditorClassIdentifier: 
-  type: 0
-  ClothingType: 0
+  type: 6
+  ClothingType: 9
   Clothing_ID: 0
   Clothing_Name: "\uC2A4\uD0A4\uB2C8\uC804\uD22C\uBCF5"
   Clothing_Name_kr: Skinny_Camo
@@ -24,3 +24,4 @@ MonoBehaviour:
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
+  Item_index: 4

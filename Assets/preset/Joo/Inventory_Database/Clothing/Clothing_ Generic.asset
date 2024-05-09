@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_subBottoms
+  m_Name: Clothing_ Generic
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 11
+  ClothingType: 0
   Clothing_ID: 0
-  Clothing_Name: subBottoms
-  Clothing_Name_kr: 
-  ClothingImage: {fileID: 0}
+  Clothing_Name: "\uBE44\uB2C8"
+  Clothing_Name_kr: Generic
+  ClothingImage: {fileID: 21300000, guid: ccc63dd86a3d64843bd49223f8141db5, type: 3}
   Height: 0
   Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
+  Item_index: 0

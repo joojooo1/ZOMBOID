@@ -13,17 +13,11 @@ MonoBehaviour:
   m_Name: Clothing_Army_Shoes
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 1
+  ClothingType: 8
   Clothing_ID: 0
-<<<<<<< HEAD:Assets/preset/Joo/Inventory_Database/Clothing/Clothing_Army_Shoes.asset
-  Clothing_Name: "\uC804\uD22C\uD654"
+  Clothing_Name: "\uAD70\uD654"
   Clothing_Name_kr: Army_Shoes
   ClothingImage: {fileID: 21300000, guid: fbd405f03cdf8f246be8554fdae33492, type: 3}
-=======
-  Clothing_Name: Glasses
-  Clothing_Name_kr: 
-  ClothingImage: {fileID: 0}
->>>>>>> 3ac361a5d6e5b7c027ca7b59c1366126c10ae2a5:Assets/preset/Joo/Inventory_Database/Clothing/Clothing_Glasses.asset
   Height: 0
   Width: 0
   Nesting_Depth: 0

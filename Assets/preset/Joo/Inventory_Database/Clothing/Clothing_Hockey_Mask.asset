@@ -24,3 +24,4 @@ MonoBehaviour:
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
+  Item_index: 1

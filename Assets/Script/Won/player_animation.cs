@@ -115,9 +115,9 @@ public class player_animation : MonoBehaviour
     {
         audio.audioclip(walkClip, 0.5f);
     }
-    public void animatorsetting(float setting)
+    public void animatorsetting(int A, float setting)
     {
-        animator.SetLayerWeight(1, setting);
+        animator.SetLayerWeight(A, setting);
 
     }
     void end()

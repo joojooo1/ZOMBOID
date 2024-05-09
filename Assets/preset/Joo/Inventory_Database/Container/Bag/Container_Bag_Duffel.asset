@@ -34,3 +34,4 @@ MonoBehaviour:
   Is_Empty: 0
   Capacity_Water: 0
   Rain_factor: 0
+  Item_Index: 1

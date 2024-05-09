@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
   m_Name: Clothing_Beret_Army_Hat
   m_EditorClassIdentifier: 
-  type: 0
+  type: 6
   ClothingType: 0
   Clothing_ID: 0
   Clothing_Name: "\uAD70\uC6A9\uBCA0\uB808\uBAA8"
@@ -24,3 +24,4 @@ MonoBehaviour:
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
+  Item_index: 2

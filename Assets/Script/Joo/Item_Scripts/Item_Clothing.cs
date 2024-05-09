@@ -21,7 +21,7 @@ public class Item_Clothing : ScriptableObject
     public body_point Equipping_Position;  // 장비 위치
 
     public float ClothingWeight;
-
+    public int Item_index;
 
 
 
