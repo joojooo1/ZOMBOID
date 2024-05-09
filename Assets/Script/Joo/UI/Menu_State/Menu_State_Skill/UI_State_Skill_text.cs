@@ -88,22 +88,22 @@ public class UI_State_Skill_text : MonoBehaviour, IPointerEnterHandler, IPointer
                 sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Reloading_Level.Get_Gun_EXP(),
                     (int)Player_main.player_main.Skill.Reloading_Level.Get_Gun_Level());
                 break;
-            case 16:
-                sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Hunting_Level.Get_S_EXP(),
-                    (int)Player_main.player_main.Skill.Hunting_Level.Get_S_Level());
-                break;
+            //case 16:
+            //    sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Hunting_Level.Get_S_EXP(),
+            //        (int)Player_main.player_main.Skill.Hunting_Level.Get_S_Level());
+            //    break;
             case 15:
                 sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Fishing_Level.Get_S_EXP(),
                     (int)Player_main.player_main.Skill.Fishing_Level.Get_S_Level());
                 break;
-            case 17:
-                sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Foraging_Level.Get_S_EXP(),
-                    (int)Player_main.player_main.Skill.Foraging_Level.Get_S_Level());
-                break;
-            case 18:
-                sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Riding_Level.Get_S_EXP(),
-                    (int)Player_main.player_main.Skill.Riding_Level.Get_S_Level());
-                break;
+            //case 17:
+            //    sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Foraging_Level.Get_S_EXP(),
+            //        (int)Player_main.player_main.Skill.Foraging_Level.Get_S_Level());
+            //    break;
+            //case 18:
+            //    sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Riding_Level.Get_S_EXP(),
+            //        (int)Player_main.player_main.Skill.Riding_Level.Get_S_Level());
+            //    break;
             case 19:
                 sslider.Set_SkillBar_slider(Player_main.player_main.Skill.Carpentry_Level.Get_C_EXP(),
                     (int)Player_main.player_main.Skill.Carpentry_Level.Get_C_Level());

@@ -1272,7 +1272,7 @@ public class PlayerCraftingSkill_Level  // ¸ñ°ø, ¿ä¸®, ³ó»ç, ÀÇ·á, Àü±â°øÇÐ
 
 }
 
-public class PlayerSurvivalSkill_Level  // »ç³É, ³¬½Ã, Ã¤Áý, ½Â¸¶
+public class PlayerSurvivalSkill_Level  // ³¬½Ã
 {
     string S_SkillName = "";
     string S_SkillName_kr = "";
@@ -1311,23 +1311,24 @@ public class PlayerSurvivalSkill_Level  // »ç³É, ³¬½Ã, Ã¤Áý, ½Â¸¶
             S_SkillName_kr = skillname_kr;
             S_Level = initialLevel;
             InitializeExpRequirements();
+            S_Multiplier_Number = 0;
 
-            if (S_SkillName == "Hunting")
-            {
-                S_Multiplier_Number = 1;
-            }
-            else if (S_SkillName == "Fishing")
-            {
-                S_Multiplier_Number = 0;
-            }
-            else if (S_SkillName == "Foraging")
-            {
-                S_Multiplier_Number = 2;
-            }
-            else if (S_SkillName == "Riding")
-            {
-                S_Multiplier_Number = 3;
-            }
+            //if (S_SkillName == "Hunting")
+            //{
+            //    S_Multiplier_Number = 1;
+            //}
+            //else if (S_SkillName == "Fishing")
+            //{
+            //    S_Multiplier_Number = 0;
+            //}
+            //else if (S_SkillName == "Foraging")
+            //{
+            //    S_Multiplier_Number = 2;
+            //}
+            //else if (S_SkillName == "Riding")
+            //{
+            //    S_Multiplier_Number = 3;
+            //}
 
 
             for (int i = 0; i < S_BookLevel_Totalpage.Length; i++)
@@ -1380,22 +1381,22 @@ public class PlayerSurvivalSkill_Level  // »ç³É, ³¬½Ã, Ã¤Áý, ½Â¸¶
             S_EXP -= S_expRequirements[(int)S_Level][0];
             S_Level++;
 
-            if (S_SkillName == "Hunting")
-            {
+            //if (S_SkillName == "Hunting")
+            //{
 
-            }
-            else if (S_SkillName == "Fishing")
-            {
+            //}
+            //else if (S_SkillName == "Fishing")
+            //{
 
-            }
-            else if (S_SkillName == "Foraging")
-            {
+            //}
+            //else if (S_SkillName == "Foraging")
+            //{
 
-            }
-            else if (S_SkillName == "Riding")
-            {
+            //}
+            //else if (S_SkillName == "Riding")
+            //{
 
-            }
+            //}
 
             //if (S_BookLevel != S_Level && S_BookLevel != S_Level + 1)
             //{

@@ -7,7 +7,7 @@ public enum Type
     weapon = 0,
     Farming = 1,
     food = 2,
-    Normal = 3,   // 도구가 아닌 일반 아이템 ( 무기로 쓰이는 아이템 포함 )
+    Normal = 3,   // 도구가 아닌 일반 아이템 == ETC ( 무기로 쓰이는 아이템 포함 ) // 소모품
     literature = 4,
     clothing = 6,
     Container = 7,
@@ -21,7 +21,7 @@ public enum Using_Type
 {
     Attack = 0,
     General = 1,
-    Gardening = 2,   // 안씀
+    Repair = 2,  // 수리
     Fishing = 3,
     Cooking = 4,
     Destroy = 5,  // ?
@@ -31,8 +31,7 @@ public enum Using_Type
     Medical = 9,
     Carpentry = 10,
     tool = 11,
-    Repair = 12,  // 수리
-    Container = 13  // 용기
+    Container = 12  // 용기
 }
 
 public enum Medical_Type
@@ -151,8 +150,7 @@ public enum Weapon_type
     ShortBlade = 4,
     Spear = 5,
     Gun = 6,
-    tool = 7,
-    None = 8
+    None = 7
 }
 
 public enum Container_Type

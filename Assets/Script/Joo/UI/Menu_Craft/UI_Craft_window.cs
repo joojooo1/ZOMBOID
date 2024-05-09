@@ -33,8 +33,6 @@ public class UI_Craft_window : MonoBehaviour
     {
         ui_Craft_Window = this;
 
-        delete_button.SetActive(false);
-
         Origin_list = new List<Crafting_item>();
         Crafting_item_Prefab_list = new List<UI_Craft_Prefab>();
         Crafting_Ingredients_Prefab_list = new List<UI_Craft_Prefab>();
@@ -68,10 +66,6 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_General_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_General_list[i]);
-                        //for(int j = 0; j < UI_Craft.UI_Craft_main.Crafting_General_list[i].Ingredients_list.Count; j++)
-                        //{
-                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_General_list[i].Ingredients_list[j]);
-                        //}
                     }
                 }
                 break;
@@ -81,10 +75,6 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Tool_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Tool_list[i]);
-                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Tool_list[i].Ingredients_list.Count; j++)
-                        //{
-                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Tool_list[i].Ingredients_list[j]);
-                        //}
                     }
                 }
                 break;
@@ -94,10 +84,6 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Cook_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Cook_list[i]);
-                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Cook_list[i].Ingredients_list.Count; j++)
-                        //{
-                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Cook_list[i].Ingredients_list[j]);
-                        //}
                     }
                 }
                 break;
@@ -107,11 +93,6 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Medical_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Medical_list[i]);
-
-                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Medical_list[i].Ingredients_list.Count; j++)
-                        //{
-                        //    Origin_list[i].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Medical_list[i].Ingredients_list[j]);
-                        //}
                     }
                 }
                 break;
@@ -121,10 +102,6 @@ public class UI_Craft_window : MonoBehaviour
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Furniture_list.Count; i++)
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Furniture_list[i]);
-                        //for (int j = 0; j < UI_Craft.UI_Craft_main.Crafting_Furniture_list[i].Ingredients_list.Count; j++)
-                        //{
-                        //    Origin_list[Origin_list.Count - 1].Ingredients_list.Add(UI_Craft.UI_Craft_main.Crafting_Furniture_list[i].Ingredients_list[j]);
-                        //}
                     }
                 }
                 break;
@@ -252,7 +229,6 @@ public class UI_Craft_window : MonoBehaviour
     }
 
     UI_Craft_Prefab Selected_item = null;
-
     public void Ins_item_Window()
     {
         bool check = false;
@@ -275,7 +251,24 @@ public class UI_Craft_window : MonoBehaviour
                 item.Set_Info(Selected_item.item_Info);
                 delete_button.SetActive(true);
 
-                // 재료만큼 인벤토리에서 없애야 함
+                // 재료만큼 인벤토리에서 없애고 관련 스킬 경험치 올려야됨
+                switch (Selected_item.item_Info.item_DB_type)
+                {
+                    case Type.food:
+                        Player_main.player_main.Skill.Cooking_Level.SetEXP(0.75f);
+                        break;
+                    case Type.Electronics:
+                        Player_main.player_main.Skill.Electrical_Level.SetEXP(0.75f);
+                        break;
+                    case Type.Furniture:
+                        Player_main.player_main.Skill.Carpentry_Level.SetEXP(0.75f);
+                        break;
+
+                        //case Type.Farming:  // Farming_Level은 농사지어서 EXP up
+                        //case Type.Medical:  // FirstAid_Level은 치료해서 EXP up
+                        //case Type.clothing: // 재단술 구현x
+                }
+
             }
             else
             {

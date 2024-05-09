@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Item_ETC : ScriptableObject
+public class Item_ETC : ScriptableObject  // 소모품 or 기타 아이템
 {
     public Type type;
     public Using_Type Usingtype;
