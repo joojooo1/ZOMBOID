@@ -248,7 +248,6 @@ public class Player_Characteristic : MonoBehaviour
                     break;
                 case 29:
                     Player_main.player_main.Satiety_value *= characteristics_Player[i].Prefab.value_list[0];
-                    Player_main.player_main.Skill.Foraging_Level.S_Exp_characteristic = characteristics_Player[i].Prefab.value_list[1];
                     break;
                 case 8:
                     Player_main.player_main.Panic_value *= characteristics_Player[i].Prefab.value_list[0];

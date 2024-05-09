@@ -21,10 +21,10 @@ public class PlayerSkill : MonoBehaviour
     public PlayerPassiveSkill_Level Strength_Level;  // 근력       /* 24.02.16 test */
 
     // 생존 능력
-    public PlayerSurvivalSkill_Level Hunting_Level;  // 사냥  // 함정포함
+    //public PlayerSurvivalSkill_Level Hunting_Level;  // 사냥  // 함정포함
     public PlayerSurvivalSkill_Level Fishing_Level;  // 낚시
-    public PlayerSurvivalSkill_Level Foraging_Level;  // 채집
-    public PlayerSurvivalSkill_Level Riding_Level;  // 승마
+    //public PlayerSurvivalSkill_Level Foraging_Level;  // 채집
+    //public PlayerSurvivalSkill_Level Riding_Level;  // 승마
 
     // 운동 능력
     public PlayerGeneralSkill_Level Sprinting_Level;  // 능숙한 달리기                                                    /* 24.02.16 test */
@@ -47,7 +47,7 @@ public class PlayerSkill : MonoBehaviour
     public PlayerGunSkill_Level Reloading_Level;  // 재장전
 
     // 제작 능력
-    public PlayerCraftingSkill_Level Carpentry_Level;  // 목공
+    public PlayerCraftingSkill_Level Carpentry_Level;  // 목공   // 벽, 바닥, 문  // 오븐, 냉장고, 나무상자, 침대, 싱크대
     public PlayerCraftingSkill_Level Cooking_Level;  // 요리
     public PlayerCraftingSkill_Level Farming_Level;  // 농사
     public PlayerCraftingSkill_Level FirstAid_Level;  // 의료
@@ -63,10 +63,10 @@ public class PlayerSkill : MonoBehaviour
         Fitness_Level = new PlayerPassiveSkill_Level(5.0f, "Fitness", "체력");
         Strength_Level = new PlayerPassiveSkill_Level(5.0f, "Strength", "근력");
 
-        Hunting_Level = new PlayerSurvivalSkill_Level(0f, "Hunting", "사냥");  // 덪 도구 제작, 레벨: 획득량 
+        //Hunting_Level = new PlayerSurvivalSkill_Level(0f, "Hunting", "사냥");  // 덪 도구 제작, 레벨: 획득량 
         Fishing_Level = new PlayerSurvivalSkill_Level(0f, "Fishing", "낚시");  // 레벨: 획득량, 성공 확률  낚시대는 도구 제작
-        Foraging_Level = new PlayerSurvivalSkill_Level(0f, "Foraging", "채집");  // 우클릭으로 채집(약초), 레벨: 획득량에 관련
-        Riding_Level = new PlayerSurvivalSkill_Level(0f, "Riding", "승마");  // 레벨에 따라서 탈수있는지, 속도   ( 후순위 )
+        //Foraging_Level = new PlayerSurvivalSkill_Level(0f, "Foraging", "채집");  // 우클릭으로 채집(약초), 레벨: 획득량에 관련
+        //Riding_Level = new PlayerSurvivalSkill_Level(0f, "Riding", "승마");  // 레벨에 따라서 탈수있는지, 속도   ( 후순위 )
 
         Sprinting_Level = new PlayerGeneralSkill_Level(0f, "Sprinting", "능숙한 달리기");
         Lightfooted_Level = new PlayerGeneralSkill_Level(0f, "Lightfooted", "조용한 발걸음");

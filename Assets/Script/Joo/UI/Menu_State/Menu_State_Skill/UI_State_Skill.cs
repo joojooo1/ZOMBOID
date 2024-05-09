@@ -143,30 +143,30 @@ public class UI_State_Skill : MonoBehaviour
                 Exp_text.text = Player_main.player_main.Skill.Reloading_Level.Get_Gun_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Reloading_Level.Get_Gun_TotalEXP();
                 break;
-            case 16:
-                Name_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_SkillName();
-                Level_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_Level().ToString();
-                Exp_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_CurrentEXP() + " / " +
-                    Player_main.player_main.Skill.Hunting_Level.Get_S_TotalEXP();
-                break;
+            //case 16:
+            //    Name_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_SkillName();
+            //    Level_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_Level().ToString();
+            //    Exp_text.text = Player_main.player_main.Skill.Hunting_Level.Get_S_CurrentEXP() + " / " +
+            //        Player_main.player_main.Skill.Hunting_Level.Get_S_TotalEXP();
+            //    break;
             case 15:
                 Name_text.text = Player_main.player_main.Skill.Fishing_Level.Get_S_SkillName();
                 Level_text.text = Player_main.player_main.Skill.Fishing_Level.Get_S_Level().ToString();
                 Exp_text.text = Player_main.player_main.Skill.Fishing_Level.Get_S_CurrentEXP() + " / " +
                     Player_main.player_main.Skill.Fishing_Level.Get_S_TotalEXP();
                 break;
-            case 17:
-                Name_text.text = Player_main.player_main.Skill.Foraging_Level.Get_S_SkillName();
-                Level_text.text = Player_main.player_main.Skill.Foraging_Level.Get_S_Level().ToString();
-                Exp_text.text = Player_main.player_main.Skill.Foraging_Level.Get_S_CurrentEXP() + " / " +
-                    Player_main.player_main.Skill.Foraging_Level.Get_S_TotalEXP();
-                break;
-            case 18:
-                Name_text.text = Player_main.player_main.Skill.Riding_Level.Get_S_SkillName();
-                Level_text.text = Player_main.player_main.Skill.Riding_Level.Get_S_Level().ToString();
-                Exp_text.text = Player_main.player_main.Skill.Riding_Level.Get_S_CurrentEXP() + " / " +
-                    Player_main.player_main.Skill.Riding_Level.Get_S_TotalEXP();
-                break;
+            //case 17:
+            //    Name_text.text = Player_main.player_main.Skill.Foraging_Level.Get_S_SkillName();
+            //    Level_text.text = Player_main.player_main.Skill.Foraging_Level.Get_S_Level().ToString();
+            //    Exp_text.text = Player_main.player_main.Skill.Foraging_Level.Get_S_CurrentEXP() + " / " +
+            //        Player_main.player_main.Skill.Foraging_Level.Get_S_TotalEXP();
+            //    break;
+            //case 18:
+            //    Name_text.text = Player_main.player_main.Skill.Riding_Level.Get_S_SkillName();
+            //    Level_text.text = Player_main.player_main.Skill.Riding_Level.Get_S_Level().ToString();
+            //    Exp_text.text = Player_main.player_main.Skill.Riding_Level.Get_S_CurrentEXP() + " / " +
+            //        Player_main.player_main.Skill.Riding_Level.Get_S_TotalEXP();
+            //    break;
             case 19:
                 Name_text.text = Player_main.player_main.Skill.Carpentry_Level.Get_C_SkillName();
                 Level_text.text = Player_main.player_main.Skill.Carpentry_Level.Get_C_Level().ToString();

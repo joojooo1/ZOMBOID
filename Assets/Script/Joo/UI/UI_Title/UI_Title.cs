@@ -427,9 +427,6 @@ public class UI_Title : MonoBehaviour
                 case Characteristic_Value_type.Fishing:
                     Player_main.player_main.Skill.Fishing_Level.Set_S_Level(value_List[i].Get_Level());
                     break;
-                case Characteristic_Value_type.Foraging:
-                    Player_main.player_main.Skill.Foraging_Level.Set_S_Level(value_List[i].Get_Level());
-                    break;
                 case Characteristic_Value_type.Lightfooted:
                     Player_main.player_main.Skill.Lightfooted_Level.Set_G_Level(value_List[i].Get_Level());
                     break;

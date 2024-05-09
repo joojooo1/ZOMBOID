@@ -335,27 +335,27 @@ public class Player_main : MonoBehaviour
                             Is_Reading = false;
                         }
                         break;
-                    case Skill_Type.Hunting:
-                        Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Foraging:
-                        Skill.Foraging_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Riding:
-                        Skill.Riding_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;                    
+                    //case Skill_Type.Hunting:
+                    //    Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                    //    if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                    //    {
+                    //        Is_Reading = false;
+                    //    }
+                    //    break;
+                    //case Skill_Type.Foraging:
+                    //    Skill.Foraging_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                    //    if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                    //    {
+                    //        Is_Reading = false;
+                    //    }
+                    //    break;
+                    //case Skill_Type.Riding:
+                    //    Skill.Riding_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                    //    if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                    //    {
+                    //        Is_Reading = false;
+                    //    }
+                    //    break;                    
                     case Skill_Type.Carpentry:
                         Skill.Carpentry_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
                         if(Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)

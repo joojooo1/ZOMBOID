@@ -55,24 +55,24 @@ public class UI_inventory_Using : MonoBehaviour
                                 Possibility = true;
                             }
                             break;
-                        case Skill_Type.Hunting:
-                            if (Player_main.player_main.Skill.Hunting_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
-                            {
-                                Possibility = true;
-                            }
-                            break;
-                        case Skill_Type.Foraging:
-                            if (Player_main.player_main.Skill.Foraging_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
-                            {
-                                Possibility = true;
-                            }
-                            break;
-                        case Skill_Type.Riding:
-                            if (Player_main.player_main.Skill.Riding_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
-                            {
-                                Possibility = true;
-                            }
-                            break;
+                        //case Skill_Type.Hunting:
+                        //    if (Player_main.player_main.Skill.Hunting_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
+                        //    {
+                        //        Possibility = true;
+                        //    }
+                        //    break;
+                        //case Skill_Type.Foraging:
+                        //    if (Player_main.player_main.Skill.Foraging_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
+                        //    {
+                        //        Possibility = true;
+                        //    }
+                        //    break;
+                        //case Skill_Type.Riding:
+                        //    if (Player_main.player_main.Skill.Riding_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
+                        //    {
+                        //        Possibility = true;
+                        //    }
+                        //    break;
                         case Skill_Type.Carpentry:
                             if (Player_main.player_main.Skill.Carpentry_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
                             {
@@ -188,15 +188,15 @@ public class UI_inventory_Using : MonoBehaviour
                                 case Skill_Type.Fishing:
                                     Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Fishing_Level.Get_S_reading_page();
                                     break;
-                                case Skill_Type.Hunting:
-                                    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Hunting_Level.Get_S_reading_page();
-                                    break;
-                                case Skill_Type.Foraging:
-                                    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Foraging_Level.Get_S_reading_page();
-                                    break;
-                                case Skill_Type.Riding:
-                                    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Riding_Level.Get_S_reading_page();
-                                    break;
+                                //case Skill_Type.Hunting:
+                                //    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Hunting_Level.Get_S_reading_page();
+                                //    break;
+                                //case Skill_Type.Foraging:
+                                //    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Foraging_Level.Get_S_reading_page();
+                                //    break;
+                                //case Skill_Type.Riding:
+                                //    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Riding_Level.Get_S_reading_page();
+                                //    break;
                                 case Skill_Type.Carpentry:
                                     Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Carpentry_Level.Get_C_reading_page();
                                     break;

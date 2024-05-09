@@ -23,6 +23,8 @@ public class Crafting_item
     public string name;
     public string name_kr;
 
+    public int if_Crafting_number;  // 제작할때 만들어지는 아이템의 갯수
+
     public float item_Calories;  // 칼로리
     public float item_Thirst;  // 갈증
 
@@ -34,7 +36,7 @@ public class Crafting_item
 
     public List<Crafting_Ingredients> Ingredients_list;
 
-    public Crafting_item(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr)
+    public Crafting_item(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr, int if_Crafting_number)
     {
         this.item_DB_type = item_DB_type;
         this.item_DB_ID = item_DB_ID;
@@ -42,6 +44,7 @@ public class Crafting_item
         this.item_Image = item_Image;
         this.name = name;
         this.name_kr = name_kr;
+        this.if_Crafting_number = if_Crafting_number;
         Ingredients_list = new List<Crafting_Ingredients>();
 
         switch (item_DB_type)
@@ -118,8 +121,6 @@ public class Crafting_item
                 }
                 break;
         }
-        
-
     }
 
     public string Get_name()
@@ -277,11 +278,11 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
     public Sprite[] Craft_Button_Image;
     public UnityEngine.UI.Image Craft_Button_current;
 
-    public List<Crafting_item> Crafting_General_list;
-    public List<Crafting_item> Crafting_Tool_list;
-    public List<Crafting_item> Crafting_Cook_list;
-    public List<Crafting_item> Crafting_Medical_list;
-    public List<Crafting_item> Crafting_Furniture_list;
+    public List<Crafting_item> Crafting_General_list;  // electronics, container, normal(ETC)
+    public List<Crafting_item> Crafting_Tool_list;  // weapon, farming, tool
+    public List<Crafting_item> Crafting_Cook_list;  // food
+    public List<Crafting_item> Crafting_Medical_list;  // medical
+    public List<Crafting_item> Crafting_Furniture_list;  // furniture
 
     private void Start()
     {
@@ -311,9 +312,10 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void Add_Crafting_list(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr)
+    public int Add_Crafting_list(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr, int if_Crafting_number)
     {
-        Crafting_item item = new Crafting_item(item_DB_type, item_DB_ID, item_type, item_Image, name, name_kr);   // 만들려는 아이템만 만듦 ( 재료 추가 전 )
+        int current_index = -1;
+        Crafting_item item = new Crafting_item(item_DB_type, item_DB_ID, item_type, item_Image, name, name_kr, if_Crafting_number);   // 만들려는 아이템만 만듦 ( 재료 추가 전 )
         switch (item_type)
         {
             case Crafting_type.Crafting_General:
@@ -322,7 +324,8 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                     for (int i = 0; i < Crafting_General_list.Count; i++)
                     {
                         if (Crafting_General_list[i].item_DB_ID == item_DB_ID && Crafting_General_list[i].item_DB_type == item_DB_type)
-                        {                            
+                        {
+                            current_index = i;
                             break;
                         }
                         else
@@ -330,6 +333,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                             if (i == Crafting_General_list.Count - 1)
                             {
                                 Crafting_General_list.Add(item);
+                                current_index = Crafting_General_list.Count-1;
                             }
                         }
                     }
@@ -337,6 +341,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                 else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_General_list.Add(item);
+                    current_index = Crafting_General_list.Count - 1;
                 }            
                 break;
             case Crafting_type.Crafting_Tool:
@@ -346,6 +351,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                     {
                         if (Crafting_Tool_list[i].item_DB_ID == item_DB_ID && Crafting_Tool_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
@@ -353,6 +359,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                             if (i == Crafting_Tool_list.Count - 1)
                             {
                                 Crafting_Tool_list.Add(item);
+                                current_index = Crafting_Tool_list.Count - 1;
                             }
                         }
                     }
@@ -360,6 +367,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                 else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Tool_list.Add(item);
+                    current_index = Crafting_Tool_list.Count - 1;
                 }
                 break;
             case Crafting_type.Crafting_Cook:  // 인벤토리에 조리도구 들어오면 추가, 없어지면 삭제
@@ -369,6 +377,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                     {
                         if (Crafting_Cook_list[i].item_DB_ID == item_DB_ID && Crafting_Cook_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
@@ -376,6 +385,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                             if (i == Crafting_Cook_list.Count - 1)
                             {
                                 Crafting_Cook_list.Add(item);
+                                current_index = Crafting_Cook_list.Count - 1;
                             }
                         }
                     }
@@ -383,6 +393,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                 else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Cook_list.Add(item);
+                    current_index = Crafting_Cook_list.Count - 1;
                 }
                 break;
             case Crafting_type.Crafting_Medical:
@@ -392,6 +403,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                     {
                         if (Crafting_Medical_list[i].item_DB_ID == item_DB_ID && Crafting_Medical_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
@@ -399,6 +411,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                             if (i == Crafting_Medical_list.Count - 1)
                             {
                                 Crafting_Medical_list.Add(item);
+                                current_index = Crafting_Medical_list.Count - 1;
                             }
                         }
                     }
@@ -406,6 +419,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                 else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Medical_list.Add(item);
+                    current_index = Crafting_Medical_list.Count - 1;
                 }
                 break;
             case Crafting_type.Crafting_Furniture:
@@ -415,6 +429,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                     {
                         if (Crafting_Furniture_list[i].item_DB_ID == item_DB_ID && Crafting_Furniture_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
@@ -422,6 +437,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                             if (i == Crafting_Furniture_list.Count - 1)
                             {
                                 Crafting_Furniture_list.Add(item);
+                                current_index = Crafting_Furniture_list.Count - 1;
                             }
                         }
                     }
@@ -429,9 +445,12 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                 else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Furniture_list.Add(item);
+                    current_index = Crafting_Furniture_list.Count - 1;
                 }
                 break;
         }
+
+        return current_index;
     }
 
     public int Get_Crafting_list_index(Crafting_type item_type)
