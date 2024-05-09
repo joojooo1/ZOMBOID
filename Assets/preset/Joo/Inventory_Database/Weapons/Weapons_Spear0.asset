@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Weapons_Spear0
   m_EditorClassIdentifier: 
   type: 0
-  Usingtype: 0
+  Usingtype: 00000000
   Power_type: 0
   WeaponType: 5
   created: 1
-  Weapon_ID: 29
+  Weapon_ID: 30
   WeaponName: SpearMachete
   WeaponName_Kr: "\uCC3D(\uB9C8\uCCB4\uD14C)"
   ItemImage: {fileID: 21300000, guid: 545eb72cf58ce1e4f8140a1a4b4a70f0, type: 3}
@@ -42,8 +42,7 @@ MonoBehaviour:
   W_Max_Condition: 12
   W_Condition_lower_chance: 0.1
   W_Multi_Hit: 2
-  Gun_Ammunition: 0
-  Gun_Magazine: 0
+  equip_Magagine: 0
   Gun_Accuracy: 0
   Gun_Additional_Accuracy_point: 0
   Gun_Additional_Critical_chance: 0

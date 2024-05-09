@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3594bc8d9c9406b4b84ceed489a766d1, type: 3}
+  m_Name: Tool_Handsaw
+  m_EditorClassIdentifier: 
+  type: 11
+  Usingtype: 0b000000
+  Tool_Name: Handsaw
+  Tool_Name_Kr: "\uD1B1"
+  Tool_Image: {fileID: 21300000, guid: b9cdd6451b063d54b90c212eb86d26d4, type: 3}
+  Tool_Weight: 0.7
+  Height: 1
+  Width: 2
+  Nesting_Depth: 1
+  Capacity_Water: 0
+  Rain_factor: 0
+  Is_Empty: 0
+  Store_Water: 0
+  Store_Oil: 0
+  On_Fire: 0
+  On_Microwave: 0

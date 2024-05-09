@@ -114,26 +114,12 @@ public class Player_main : MonoBehaviour
     float Read_Timer = 5.0f;
 
     void Update()
-    {      
+    {
         if (UnityEngine.Input.GetKeyDown(KeyCode.P))
         {
-            //Debug.Log("Read book");
-            //Is_Reading = true;
-            //current_SkillBook_type = Skill_Type.Fishing;
-            //current_SKillBook_level = 1;
-            //Skillbook_Readpage = 150;
-            //Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-
-            //Skill.Fishing_Level.Set_S_Level(3);
-            //Skill.Fishing_Level.Set_S_Books_Point(3);
-
-
-            //ui_inven_using.itemtype = Type.literature;
-            //ui_inven_using.item_ID = 52;
-
-            //ui_inven_using.Check_item_Literature(temp.item_ID);
+            GameObject a = new GameObject();
+            Calculate_HitForce(a, "easy", false, false);
         }
-
         if (Input.GetKeyDown(KeyCode.O))
         {
             //Skill.Fishing_Level.SetEXP(700);
@@ -349,27 +335,27 @@ public class Player_main : MonoBehaviour
                             Is_Reading = false;
                         }
                         break;
-                    case Skill_Type.Hunting:
-                        Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Foraging:
-                        Skill.Foraging_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Riding:
-                        Skill.Riding_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;                    
+                    //case Skill_Type.Hunting:
+                    //    Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                    //    if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                    //    {
+                    //        Is_Reading = false;
+                    //    }
+                    //    break;
+                    //case Skill_Type.Foraging:
+                    //    Skill.Foraging_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                    //    if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                    //    {
+                    //        Is_Reading = false;
+                    //    }
+                    //    break;
+                    //case Skill_Type.Riding:
+                    //    Skill.Riding_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                    //    if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                    //    {
+                    //        Is_Reading = false;
+                    //    }
+                    //    break;                    
                     case Skill_Type.Carpentry:
                         Skill.Carpentry_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
                         if(Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)

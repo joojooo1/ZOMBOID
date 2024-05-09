@@ -20,6 +20,4 @@ public class UI_Drag_Window : MonoBehaviour, IDragHandler, IEndDragHandler
     }
 
 
-
-
 }

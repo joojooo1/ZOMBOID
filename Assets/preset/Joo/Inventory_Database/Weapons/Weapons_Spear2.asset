@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Weapons_Spear2
   m_EditorClassIdentifier: 
   type: 0
-  Usingtype: 0
+  Usingtype: 00000000
   Power_type: 0
   WeaponType: 5
   created: 0
-  Weapon_ID: 31
+  Weapon_ID: 32
   WeaponName: StickSharpened
   WeaponName_Kr: "\uB098\uBB34\uCC3D"
   ItemImage: {fileID: 21300000, guid: 5880a8dda9261bf4e98c043f0643ea1c, type: 3}
@@ -42,8 +42,7 @@ MonoBehaviour:
   W_Max_Condition: 7
   W_Condition_lower_chance: 0.33333334
   W_Multi_Hit: 2
-  Gun_Ammunition: 0
-  Gun_Magazine: 0
+  equip_Magagine: 0
   Gun_Accuracy: 0
   Gun_Additional_Accuracy_point: 0
   Gun_Additional_Critical_chance: 0

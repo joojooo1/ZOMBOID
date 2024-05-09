@@ -12,6 +12,8 @@ public class Inventory_2x4 : MonoBehaviour
     public short Storage_Order;
     public bool IsPlayers;
     public short[,,] Recent_Recieved_Package; // v
+    [SerializeField]
+    public Sprite Basic;
 
     public Transform Slot_Image;
     public Transform Slot_Weight;
@@ -27,8 +29,17 @@ public class Inventory_2x4 : MonoBehaviour
     private void Start()
     {
         ThisID = Item_DataBase.item_database.Container_Ins[0];
-        Slot_Image.gameObject.GetComponent<Image>().sprite = ThisID.Container_Image;
+        if (Storage_Order == 0)
+        {
+            Slot_Image.gameObject.GetComponent<Image>().sprite = Basic;
+        }
+        else
+        {
+            Slot_Image.gameObject.GetComponent<Image>().sprite = ThisID.Container_Image;
+        }
+       
         Slot_Weight.gameObject.GetComponent<TextMeshProUGUI>().text = "..";
+        Generating_Slots_First(Inventory_Library.IL.Inventory_DB[0], 0);
     }
 
     public void Generating_Slots_First(short[,,] package, short Storage_Order_Set)

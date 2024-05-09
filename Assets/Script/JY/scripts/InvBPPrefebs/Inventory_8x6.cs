@@ -83,7 +83,7 @@ public class Inventory_8x6 : MonoBehaviour
             {
                 if (!(package[0, XLine, YLine] == 0))
                 {
-                    Debug.Log(XLine + "," + YLine + "is Exist");
+                    //Debug.Log(XLine + "," + YLine + "is Exist");
                     Slots[YLine * X_Length + XLine].Image.GetComponent<Image>().sprite = Item_DataBase.item_database.Requesting_Image(package[0, XLine, YLine], package[1, XLine, YLine]);
                     Slots[YLine * X_Length + XLine].Image.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                     Slots[YLine * X_Length + XLine].BackgroundColor.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);

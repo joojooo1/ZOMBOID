@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3594bc8d9c9406b4b84ceed489a766d1, type: 3}
+  m_Name: Container_Pot_Empty
+  m_EditorClassIdentifier: 
+  type: 11
+  Usingtype: 040000000c000000
+  Tool_Name: Cooking Pot
+  Tool_Name_Kr: "\uB0C4\uBE44"
+  Tool_Image: {fileID: 21300000, guid: 30338c247595c4e4c8c4b1aeaba4b0d3, type: 3}
+  Tool_Weight: 1
+  Height: 3
+  Width: 3
+  Nesting_Depth: 1
+  Is_Equipping: 0
+  Is_TwoHand: 0
+  Equipping_Position: 
+  Is_Weapon: 0
+  Condition: 0
+  Capacity_Water: 10
+  Rain_factor: 0.5
+  Is_Empty: 1
+  Store_Water: 1
+  Store_Oil: 0
+  On_Fire: 1
+  On_Microwave: 1

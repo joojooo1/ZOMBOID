@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Weapons_LongBlunt5_Sledgehamer
   m_EditorClassIdentifier: 
   type: 0
-  Usingtype: 10
+  Usingtype: 0a00000000000000
   Power_type: 0
-  WeaponType: 7
+  WeaponType: 1
   created: 0
   Weapon_ID: 15
   WeaponName: Sledgehamer
@@ -42,8 +42,7 @@ MonoBehaviour:
   W_Max_Condition: 10
   W_Condition_lower_chance: 0.025
   W_Multi_Hit: 3
-  Gun_Ammunition: 0
-  Gun_Magazine: 0
+  equip_Magagine: 0
   Gun_Accuracy: 0
   Gun_Additional_Accuracy_point: 0
   Gun_Additional_Critical_chance: 0

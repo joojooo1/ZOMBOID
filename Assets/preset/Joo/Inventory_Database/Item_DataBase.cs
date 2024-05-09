@@ -27,16 +27,17 @@ public class Item_DataBase : MonoBehaviour
         }
     }
 
-    public List<Item_Food> food_Ins;
-    public List<Item_Medical> medical_Ins;
-    public List<Item_Weapons> weapons_Ins;
-    public List<Item_Literature> literature_Ins;
-    public List<Item_Electronics> electronics_Ins;
     public List<Item_Clothing> clothing_Ins;
-    public List<Item_Gardening> gardening_Ins;
     public List<Item_Container> Container_Ins;
+    public List<Item_Electronics> electronics_Ins;
     public List<Item_ETC> ETC_Ins;
+    public List<Item_Farming> Farming_Ins;
+    public List<Item_Food> food_Ins;
     public List<Item_Furniture> furniture_Ins;
+    public List<Item_Literature> literature_Ins;
+    public List<Item_Medical> medical_Ins;
+    public List<Item_Tool> Tool_Ins;
+    public List<Item_Weapons> weapons_Ins;
 
     public void Requesting_Baisics(Item_Type item_Type, short ID)
     {
@@ -64,14 +65,14 @@ public class Item_DataBase : MonoBehaviour
         {
             case 1:
                 Sprite Img1 = food_Ins[ID].Food_Image[0];
-                Debug.Log("IDB image send");
+                //Debug.Log("IDB image send");
                 return Img1;
             case 8:
                 Sprite Img8 = Container_Ins[ID].Container_Image;
-                Debug.Log("IDB image send");
+                //Debug.Log("IDB image send");
                 return Img8;
             default:
-                Debug.Log("IDB image null");
+                //Debug.Log("IDB image null");
                 return null;
         }
     }

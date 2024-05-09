@@ -9,6 +9,7 @@ public class BPIcon_SimpleAct : MonoBehaviour
     public short Its_Own_Order;
     private Toggle Toggle;
     public bool IsBasic = false;
+    public bool IsPlayer = false;
 
     private void Start()
     {
@@ -18,13 +19,28 @@ public class BPIcon_SimpleAct : MonoBehaviour
 
     public void ToggleValueChanged(bool IsOn)
     {
-        if (IsBasic)
+
+        if (IsPlayer == true)
         {
-            Return_Basic();
+            if (IsBasic)
+            {
+                Return_Basic();
+            }
+            else if (IsOn)
+            {
+                Request_Selected();
+            }
         }
-        else if (IsOn)
+        else
         {
-            Request_Selected();
+            if (IsBasic)
+            {
+                Return_Basic();
+            }
+            else if (IsOn)
+            {
+                Request_Selected();
+            }
         }
     }
 

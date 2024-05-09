@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75540daaa13ebba478e67698195564d5, type: 3}
+  m_Name: Container_magazine
+  m_EditorClassIdentifier: 
+  type: 3
+  Usingtype: 12
+  ETC_ID: 1
+  ETC_Name: Magazine
+  ETC_Name_kr: "\uD0C4\uCC3D"
+  ETC_Image: {fileID: 21300000, guid: da900e34bd83e8e449c4cc5801c794b2, type: 3}
+  Height: 2
+  Width: 1
+  Nesting_Depth: 1
+  Is_Consumable: 0
+  ETC_Weight: 0.2
+  ETC_Capacity: 15
+  ETC_value: 0

@@ -15,7 +15,7 @@ public class Item_Ins : MonoBehaviour
     Item_Literature LiteratureData;
     Item_Electronics ElectronicsData;
     Item_Clothing ClothingData;
-    Item_Gardening GardeningData;
+    Item_Farming GardeningData;
     Item_Container ContainerData;
 
     public int CurrentID;

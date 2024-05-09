@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 8
   usingtype: 1
-  electronic_Type: 4
+  electronic_usingType: 4
   Power_type: 1
   UsingPower_type: 1
   Equipping_Position: 

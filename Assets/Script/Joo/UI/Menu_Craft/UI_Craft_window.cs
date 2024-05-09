@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
+//using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 using static Item_DataBase;
@@ -32,8 +32,6 @@ public class UI_Craft_window : MonoBehaviour
     private void OnEnable()
     {
         ui_Craft_Window = this;
-
-        delete_button.SetActive(false);
 
         Origin_list = new List<Crafting_item>();
         Crafting_item_Prefab_list = new List<UI_Craft_Prefab>();
@@ -105,7 +103,6 @@ public class UI_Craft_window : MonoBehaviour
                     {
                         Origin_list.Add(UI_Craft.UI_Craft_main.Crafting_Furniture_list[i]);
                     }
-
                 }
                 break;
         }
@@ -126,15 +123,14 @@ public class UI_Craft_window : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (Transform child in Crafting_Window)
-        {
-            Destroy(child.gameObject);
-        }
-
         Selected_item = null;
+        for(int i = 0; i < Origin_list.Count; i++)
+        {
+            Origin_list[i].Ingredients_list.Clear();
+        }
         Origin_list.Clear();
-        Crafting_item_Prefab_list.Clear();
         Clear_Ingredients_Window();
+        Clear_item_Window();
     }
 
     public void Choice_item(int index)
@@ -145,6 +141,7 @@ public class UI_Craft_window : MonoBehaviour
             {
                 Crafting_item_Prefab_list[i].Choice = true;
                 Selected_item = Crafting_item_Prefab_list[i];
+                break;
             }
             else
             {
@@ -188,12 +185,12 @@ public class UI_Craft_window : MonoBehaviour
     {
         if(_item.item_Info.item_type != Crafting_type.Crafting_Cook)
         {
-            for (int i = 0; i < _item.item_Info.Ingredients_list.Count;)
+            for (int i = 0; i < Origin_list[_item.item_index].Ingredients_list.Count;)
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients(_item.item_Info, i);
+                item.Set_Ingredients(Origin_list[_item.item_index], i);
                 Crafting_Ingredients_Prefab_list.Add(item);
                 i++;
             }
@@ -213,6 +210,15 @@ public class UI_Craft_window : MonoBehaviour
 
     }
 
+    public void Clear_item_Window()
+    {
+        foreach (Transform child in Crafting_Window)
+        {
+            Destroy(child.gameObject);
+        }
+        Crafting_item_Prefab_list.Clear();
+    }
+
     public void Clear_Ingredients_Window()
     {
         foreach (Transform child in Crafting_Ingredients_Window)
@@ -223,7 +229,6 @@ public class UI_Craft_window : MonoBehaviour
     }
 
     UI_Craft_Prefab Selected_item = null;
-
     public void Ins_item_Window()
     {
         bool check = false;
@@ -246,7 +251,24 @@ public class UI_Craft_window : MonoBehaviour
                 item.Set_Info(Selected_item.item_Info);
                 delete_button.SetActive(true);
 
-                // 재료만큼 인벤토리에서 없애야 함
+                // 재료만큼 인벤토리에서 없애고 관련 스킬 경험치 올려야됨
+                switch (Selected_item.item_Info.item_DB_type)
+                {
+                    case Type.food:
+                        Player_main.player_main.Skill.Cooking_Level.SetEXP(0.75f);
+                        break;
+                    case Type.Electronics:
+                        Player_main.player_main.Skill.Electrical_Level.SetEXP(0.75f);
+                        break;
+                    case Type.Furniture:
+                        Player_main.player_main.Skill.Carpentry_Level.SetEXP(0.75f);
+                        break;
+
+                        //case Type.Farming:  // Farming_Level은 농사지어서 EXP up
+                        //case Type.Medical:  // FirstAid_Level은 치료해서 EXP up
+                        //case Type.clothing: // 재단술 구현x
+                }
+
             }
             else
             {

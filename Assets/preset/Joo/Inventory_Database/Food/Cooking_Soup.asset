@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   FoodType: 9
-  Food_ID: 80
+  Food_ID: 81
   FoodState: 1
   Cooking_time_to_NextStep: 0
   Height: 1
@@ -24,7 +24,7 @@ MonoBehaviour:
   FoodName_Kr: "\uC218\uD504"
   FoodWeight: 0
   Food_Image:
-  - {fileID: 21300000, guid: 3cda10c33d5b85e44aae31ce4e427c26, type: 3}
+  - {fileID: 21300000, guid: 93670d26d76d18b4b9e861ad7b2dab80, type: 3}
   Is_Perishable: 1
   Freshness: 0
   Preservation_period_for_freshness: 2

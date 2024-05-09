@@ -23,6 +23,8 @@ public class Crafting_item
     public string name;
     public string name_kr;
 
+    public int if_Crafting_number;  // 제작할때 만들어지는 아이템의 갯수
+
     public float item_Calories;  // 칼로리
     public float item_Thirst;  // 갈증
 
@@ -32,9 +34,9 @@ public class Crafting_item
     public List<float> item_Fatigue = new List<float>();  // 피로
     public List<float> item_Stress = new List<float>();  // 스트레스
 
-    public List<Crafting_Ingredients> Ingredients_list = new List<Crafting_Ingredients>();
+    public List<Crafting_Ingredients> Ingredients_list;
 
-    public Crafting_item(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr)
+    public Crafting_item(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr, int if_Crafting_number)
     {
         this.item_DB_type = item_DB_type;
         this.item_DB_ID = item_DB_ID;
@@ -42,6 +44,8 @@ public class Crafting_item
         this.item_Image = item_Image;
         this.name = name;
         this.name_kr = name_kr;
+        this.if_Crafting_number = if_Crafting_number;
+        Ingredients_list = new List<Crafting_Ingredients>();
 
         switch (item_DB_type)
         {
@@ -117,8 +121,6 @@ public class Crafting_item
                 }
                 break;
         }
-        
-
     }
 
     public string Get_name()
@@ -133,10 +135,31 @@ public class Crafting_item
         }
     }
 
-    public void Add_Ingredients(Type _DB_type, int _DB_ID, Sprite image, string name, string name_kr, int value)
+    public void Add_Ingredients(Type _DB_type, int _DB_ID, int value)
     {
-        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, image, name, name_kr, value);
-        Ingredients_list.Add(Ingredients);
+        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, value);
+        if(Ingredients_list.Count > 0)
+        {
+            for (int i = 0; i < Ingredients_list.Count; i++)
+            {
+                if (Ingredients_list[i].Ingredients_DB_type == _DB_type && Ingredients_list[i].Ingredients_DB_ID == _DB_ID)
+                {
+                    break;
+                }
+                else
+                {
+                    if (i == Ingredients_list.Count - 1)
+                    {
+                        Ingredients_list.Add(Ingredients);
+                    }
+                }
+            }
+        }
+        else
+        {
+            Ingredients_list.Add(Ingredients);
+        }
+
     }
 
     public Sprite Get_Ingredients_Image(int index)
@@ -182,41 +205,68 @@ public class Crafting_Ingredients
     public int Value;  // 필요한 갯수
     public bool fulfill;
 
-    public Crafting_Ingredients(Type _DB_type, int _DB_ID, Sprite ingredients_Image, string ingredients_name, string ingredients_name_kr, int value)
+    public Crafting_Ingredients(Type _DB_type, int _DB_ID, int value)
     {
         Ingredients_DB_type = _DB_type;
         Ingredients_DB_ID = _DB_ID;
-
-        //switch (_DB_type)
-        //{
-        //    case Type.food:
-                
-        //        break;
-        //    case Type.Medical: 
-        //        break;
-        //    case Type.weapon: 
-        //        break;
-        //    case Type.literature: 
-        //        break;
-        //    case Type.Electronics: 
-        //        break;
-        //    case Type.clothing: 
-        //        break;
-        //    case Type.gardening: 
-        //        break;
-        //    case Type.Container:
-        //        break;
-        //    case Type.Normal:
-        //        break;
-        //    case Type.Furniture: 
-        //        break;
-        //    default: break;
-        //}
-        Ingredients_Image = ingredients_Image;
-        Ingredients_name = ingredients_name;
-        Ingredients_name_kr = ingredients_name_kr;
         Value = value;
         fulfill = false;
+
+        switch (_DB_type)
+        {
+            case Type.food:
+                Ingredients_Image = Item_DataBase.item_database.food_Ins[Ingredients_DB_ID].Food_Image[0];
+                Ingredients_name = Item_DataBase.item_database.food_Ins[Ingredients_DB_ID].FoodName;
+                Ingredients_name_kr = Item_DataBase.item_database.food_Ins[Ingredients_DB_ID].FoodName_Kr;
+                break;
+            case Type.Medical:
+                Ingredients_Image = Item_DataBase.item_database.medical_Ins[Ingredients_DB_ID].Medical_Image;
+                Ingredients_name = Item_DataBase.item_database.medical_Ins[Ingredients_DB_ID].MedicalName;
+                Ingredients_name_kr = Item_DataBase.item_database.medical_Ins[Ingredients_DB_ID].MedicalName_Kr;
+                break;
+            case Type.weapon:
+                Ingredients_Image = Item_DataBase.item_database.weapons_Ins[Ingredients_DB_ID].ItemImage;
+                Ingredients_name = Item_DataBase.item_database.weapons_Ins[Ingredients_DB_ID].WeaponName;
+                Ingredients_name_kr = Item_DataBase.item_database.weapons_Ins[Ingredients_DB_ID].WeaponName_Kr;
+                break;
+            case Type.literature:
+                Ingredients_Image = Item_DataBase.item_database.literature_Ins[Ingredients_DB_ID].Literature_Image;
+                Ingredients_name = Item_DataBase.item_database.literature_Ins[Ingredients_DB_ID].LiteratureName;
+                Ingredients_name_kr = Item_DataBase.item_database.literature_Ins[Ingredients_DB_ID].LiteratureName_Kr;
+                break;
+            case Type.Electronics:
+                Ingredients_Image = Item_DataBase.item_database.electronics_Ins[Ingredients_DB_ID].Electronics_Image;
+                Ingredients_name = Item_DataBase.item_database.electronics_Ins[Ingredients_DB_ID].ElectronicsName;
+                Ingredients_name_kr = Item_DataBase.item_database.electronics_Ins[Ingredients_DB_ID].ElectronicsName_Kr;
+                break;
+            case Type.clothing:
+                Ingredients_Image = Item_DataBase.item_database.clothing_Ins[Ingredients_DB_ID].ClothingImage;
+                Ingredients_name = Item_DataBase.item_database.clothing_Ins[Ingredients_DB_ID].Clothing_Name;
+                Ingredients_name_kr = Item_DataBase.item_database.clothing_Ins[Ingredients_DB_ID].Clothing_Name_kr;
+                break;
+            case Type.Farming:
+                Ingredients_Image = Item_DataBase.item_database.Farming_Ins[Ingredients_DB_ID].Gardening_Image;
+                Ingredients_name = Item_DataBase.item_database.Farming_Ins[Ingredients_DB_ID].Gardening_Name;
+                Ingredients_name_kr = Item_DataBase.item_database.Farming_Ins[Ingredients_DB_ID].Gardening_Name_kr;
+                break;
+            case Type.Container:
+                Ingredients_Image = Item_DataBase.item_database.Container_Ins[Ingredients_DB_ID].Container_Image;
+                Ingredients_name = Item_DataBase.item_database.Container_Ins[Ingredients_DB_ID].ContainerName;
+                Ingredients_name_kr = Item_DataBase.item_database.Container_Ins[Ingredients_DB_ID].ContainerName_Kr;
+                break;
+            case Type.Normal:
+                Ingredients_Image = Item_DataBase.item_database.ETC_Ins[Ingredients_DB_ID].ETC_Image;
+                Ingredients_name = Item_DataBase.item_database.ETC_Ins[Ingredients_DB_ID].ETC_Name;
+                Ingredients_name_kr = Item_DataBase.item_database.ETC_Ins[Ingredients_DB_ID].ETC_Name_kr;
+                break;
+            case Type.Furniture:
+                Ingredients_Image = Item_DataBase.item_database.furniture_Ins[Ingredients_DB_ID].Furniture_Image;
+                Ingredients_name = Item_DataBase.item_database.furniture_Ins[Ingredients_DB_ID].Furniture_Name;
+                Ingredients_name_kr = Item_DataBase.item_database.furniture_Ins[Ingredients_DB_ID].Furniture_Name_kr;
+                break;
+            default: break;
+        }
+
     }
 }
 
@@ -228,11 +278,11 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
     public Sprite[] Craft_Button_Image;
     public UnityEngine.UI.Image Craft_Button_current;
 
-    public List<Crafting_item> Crafting_General_list;
-    public List<Crafting_item> Crafting_Tool_list;
-    public List<Crafting_item> Crafting_Cook_list;
-    public List<Crafting_item> Crafting_Medical_list;
-    public List<Crafting_item> Crafting_Furniture_list;
+    public List<Crafting_item> Crafting_General_list;  // electronics, container, normal(ETC)
+    public List<Crafting_item> Crafting_Tool_list;  // weapon, farming, tool
+    public List<Crafting_item> Crafting_Cook_list;  // food
+    public List<Crafting_item> Crafting_Medical_list;  // medical
+    public List<Crafting_item> Crafting_Furniture_list;  // furniture
 
     private void Start()
     {
@@ -258,130 +308,149 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
         {
             Craft_window.SetActive(true);
             Craft_Button_current.sprite = Craft_Button_Image[1];
+            Craft_window.transform.SetAsLastSibling();
         }
     }
 
-    public void Add_Crafting_list(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr)
+    public int Add_Crafting_list(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr, int if_Crafting_number)
     {
-        Crafting_item item = new Crafting_item(item_DB_type, item_DB_ID, item_type, item_Image, name, name_kr);
+        int current_index = -1;
+        Crafting_item item = new Crafting_item(item_DB_type, item_DB_ID, item_type, item_Image, name, name_kr, if_Crafting_number);   // 만들려는 아이템만 만듦 ( 재료 추가 전 )
         switch (item_type)
         {
             case Crafting_type.Crafting_General:
-                if(Crafting_General_list.Count != 0)
+                if(Crafting_General_list.Count > 0)  // 이미 리스트에 있는지 확인
                 {
-                    for (int i = 0; i < Crafting_General_list.Count;)
+                    for (int i = 0; i < Crafting_General_list.Count; i++)
                     {
                         if (Crafting_General_list[i].item_DB_ID == item_DB_ID && Crafting_General_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
-                            i++;
-
-                        if (i == Crafting_General_list.Count)
                         {
-                            Crafting_General_list.Add(item);
+                            if (i == Crafting_General_list.Count - 1)
+                            {
+                                Crafting_General_list.Add(item);
+                                current_index = Crafting_General_list.Count-1;
+                            }
                         }
                     }
                 }
-                else
+                else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_General_list.Add(item);
+                    current_index = Crafting_General_list.Count - 1;
                 }            
                 break;
             case Crafting_type.Crafting_Tool:
-                if(Crafting_Tool_list.Count != 0)
+                if(Crafting_Tool_list.Count > 0)  // 이미 리스트에 있는지 확인
                 {
-                    for (int i = 0; i < Crafting_Tool_list.Count;)
+                    for (int i = 0; i < Crafting_Tool_list.Count; i++)
                     {
                         if (Crafting_Tool_list[i].item_DB_ID == item_DB_ID && Crafting_Tool_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
-                            i++;
-
-                        if (i == Crafting_Tool_list.Count)
                         {
-                            Crafting_Tool_list.Add(item);
+                            if (i == Crafting_Tool_list.Count - 1)
+                            {
+                                Crafting_Tool_list.Add(item);
+                                current_index = Crafting_Tool_list.Count - 1;
+                            }
                         }
                     }
                 }
-                else
+                else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Tool_list.Add(item);
+                    current_index = Crafting_Tool_list.Count - 1;
                 }
                 break;
             case Crafting_type.Crafting_Cook:  // 인벤토리에 조리도구 들어오면 추가, 없어지면 삭제
-                if(Crafting_Cook_list.Count != 0)
+                if(Crafting_Cook_list.Count > 0)
                 {
-                    for (int i = 0; i < Crafting_Cook_list.Count;)
+                    for (int i = 0; i < Crafting_Cook_list.Count; i++)
                     {
                         if (Crafting_Cook_list[i].item_DB_ID == item_DB_ID && Crafting_Cook_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
-                            i++;
-
-                        if (i == Crafting_Cook_list.Count)
                         {
-                            Crafting_Cook_list.Add(item);
+                            if (i == Crafting_Cook_list.Count - 1)
+                            {
+                                Crafting_Cook_list.Add(item);
+                                current_index = Crafting_Cook_list.Count - 1;
+                            }
                         }
                     }
                 }
-                else
+                else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Cook_list.Add(item);
+                    current_index = Crafting_Cook_list.Count - 1;
                 }
                 break;
             case Crafting_type.Crafting_Medical:
-                if(Crafting_Medical_list.Count != 0)
+                if(Crafting_Medical_list.Count > 0)  // 이미 리스트에 있는지 확인
                 {
-                    for (int i = 0; i < Crafting_Medical_list.Count;)
+                    for (int i = 0; i < Crafting_Medical_list.Count; i++)
                     {
                         if (Crafting_Medical_list[i].item_DB_ID == item_DB_ID && Crafting_Medical_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
-                            i++;
-
-                        if (i == Crafting_Medical_list.Count)
                         {
-                            Crafting_Medical_list.Add(item);
+                            if (i == Crafting_Medical_list.Count - 1)
+                            {
+                                Crafting_Medical_list.Add(item);
+                                current_index = Crafting_Medical_list.Count - 1;
+                            }
                         }
                     }
                 }
-                else
+                else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Medical_list.Add(item);
+                    current_index = Crafting_Medical_list.Count - 1;
                 }
                 break;
             case Crafting_type.Crafting_Furniture:
-                if(Crafting_Furniture_list.Count != 0)
+                if(Crafting_Furniture_list.Count > 0)  // 이미 리스트에 있는지 확인
                 {
-                    for (int i = 0; i < Crafting_Furniture_list.Count;)
+                    for (int i = 0; i < Crafting_Furniture_list.Count; i++)
                     {
                         if (Crafting_Furniture_list[i].item_DB_ID == item_DB_ID && Crafting_Furniture_list[i].item_DB_type == item_DB_type)
                         {
+                            current_index = i;
                             break;
                         }
                         else
-                            i++;
-
-                        if (i == Crafting_Furniture_list.Count)
                         {
-                            Crafting_Furniture_list.Add(item);
+                            if (i == Crafting_Furniture_list.Count - 1)
+                            {
+                                Crafting_Furniture_list.Add(item);
+                                current_index = Crafting_Furniture_list.Count - 1;
+                            }
                         }
                     }
                 }
-                else
+                else  // 리스트의 Count가 0개면 바로 추가 
                 {
                     Crafting_Furniture_list.Add(item);
+                    current_index = Crafting_Furniture_list.Count - 1;
                 }
                 break;
         }
+
+        return current_index;
     }
 
     public int Get_Crafting_list_index(Crafting_type item_type)

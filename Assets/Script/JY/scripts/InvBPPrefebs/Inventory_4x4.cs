@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class Inventory_4x4 : MonoBehaviour
 {
@@ -12,60 +14,24 @@ public class Inventory_4x4 : MonoBehaviour
     public bool IsPlayers;
     public short[,,] Recent_Recieved_Package; // v
 
+    public Transform Slot_Image;
+    public Transform Slot_Weight;
+
     public GameObject SlotPrefeb; // v
 
 
     Item_Container ThisID;
     public InventorySlot[] Slots; // v
 
-    short[,,] packageExample1 =
-    {
-        {
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0}
-        },
-        {
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0}
-        },
-        {
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0}
-        },
-        {
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0}
-        },
-        {
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0} 
-        }
-    };
+   
 
     private void Start()
     {
-        ThisID = Item_DataBase.item_database.Container_Ins[0];
-        Generating_Slots_First(packageExample1);
-        Ex_Add();
-        IsPlayers = true;
+        ThisID = Item_DataBase.item_database.Container_Ins[4];
+        Slot_Image.gameObject.GetComponent<Image>().sprite = ThisID.Container_Image;
+        Slot_Weight.gameObject.GetComponent<TextMeshProUGUI>().text = "..";
     }
 
-    public void Ex_Add() // 서버 테스팅후 지울것
-    {
-        Storage_Order = Inventory_Library.IL.Adding_New_Package(Recent_Recieved_Package);
-        Debug.Log("Sample 810 has order = " + Storage_Order);
-        Inventory_Player_Shown.InvPS.Player_Storages.Add(this.transform);
-    }
 
     public void Generating_Slots_First(short[,,] package)
     {
@@ -116,10 +82,21 @@ public class Inventory_4x4 : MonoBehaviour
                     Slots[YLine * X_Length + XLine].Image.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                     Slots[YLine * X_Length + XLine].BackgroundColor.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
                     short Size = Item_DataBase.item_database.Requesting_Size(package[0, XLine, YLine], package[1, XLine, YLine]);
+
+                    //0429 8x6
+                    Slots[YLine * X_Length + XLine].Item_Type = package[0, XLine, YLine];
+                    Slots[YLine * X_Length + XLine].Item_ID = package[1, XLine, YLine];
+                    Slots[YLine * X_Length + XLine].ParentTransform = this.transform;
+                    Slots[YLine * X_Length + XLine].ParentSize = (short)This_Size;
+                    Slots[YLine * X_Length + XLine].Size = Size;
+
+                    Slots[YLine * X_Length + XLine].What_Main = null;
+                    Slots[YLine * X_Length + XLine].IsMain = true;
+
                     if (Size != 101) //11 아니면
                     {
                         int Width = Size / 100;
-                        int Height = Size % 10;
+                        int Height = Size % 100;
                         int CanvasWidth = SlotSize_Req(Width);
                         int CanvasHeight = SlotSize_Req(Height);
 
@@ -145,7 +122,9 @@ public class Inventory_4x4 : MonoBehaviour
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                     Slots[(YLine * X_Length + XLine) + Length_Of_X].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
-                                    if (Height > 1)
+
+                                    Slots[(YLine * X_Length + XLine) + Length_Of_X].ParentTransform = Slots[(YLine * X_Length + XLine) + Length_Of_X].What_Main.gameObject.GetComponent<InventorySlot>().ParentTransform;
+                                    Slots[(YLine * X_Length + XLine) + Length_Of_X].ParentSize = Slots[(YLine * X_Length + XLine) + Length_Of_X].What_Main.gameObject.GetComponent<InventorySlot>().ParentSize; if (Height > 1)
                                     {
                                         for (int Length_Of_Y = 1; Length_Of_Y < Height; Length_Of_Y++)
                                         {
@@ -157,6 +136,9 @@ public class Inventory_4x4 : MonoBehaviour
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
+
+                                            Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].ParentTransform = Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].What_Main.gameObject.GetComponent<InventorySlot>().ParentTransform;
+                                            Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].ParentSize = Slots[(YLine + Length_Of_Y) * X_Length + XLine + Length_Of_X].What_Main.gameObject.GetComponent<InventorySlot>().ParentSize;
                                         }
                                     }
                                 }
@@ -174,6 +156,8 @@ public class Inventory_4x4 : MonoBehaviour
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                     Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
 
+                                    Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].ParentTransform = Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].What_Main.gameObject.GetComponent<InventorySlot>().ParentTransform;
+                                    Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].ParentSize = Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].What_Main.gameObject.GetComponent<InventorySlot>().ParentSize;
                                     if (Width > 1)
                                     {
                                         for (int Length_Of_X = 1; Length_Of_X < Height; Length_Of_X++)
@@ -186,6 +170,9 @@ public class Inventory_4x4 : MonoBehaviour
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Putti.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].BorderLine.GetComponent<Image>().color = new Color(0, 0, 0, 0);
                                             Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].Text.GetComponent<Text>().color = new Color(1, 1, 1, 0);
+
+                                            Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].ParentTransform = Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].What_Main.gameObject.GetComponent<InventorySlot>().ParentTransform;
+                                            Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].ParentSize = Slots[(YLine * X_Length + XLine) + (X_Length * Length_Of_Y)].What_Main.gameObject.GetComponent<InventorySlot>().ParentSize;
                                         }
                                     }
                                 }
@@ -214,16 +201,6 @@ public class Inventory_4x4 : MonoBehaviour
                         }
                     }
 
-                    Slots[YLine * X_Length + XLine].Item_Type = package[0, XLine, YLine];
-                    Slots[YLine * X_Length + XLine].Item_ID = package[1, XLine, YLine];
-                    Slots[YLine * X_Length + XLine].ParentTransform = this.transform;
-                    Slots[YLine * X_Length + XLine].ParentSize = (short)This_Size;
-                    Slots[YLine * X_Length + XLine].Size = Size;
-
-                    Slots[YLine * X_Length + XLine].What_Main = null;
-                    Slots[YLine * X_Length + XLine].IsMain = true;
-
-                    Slots[YLine * X_Length + XLine].Is_Changed--;
                 }
                 else
                 {
