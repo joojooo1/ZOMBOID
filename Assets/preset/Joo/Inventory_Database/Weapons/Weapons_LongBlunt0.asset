@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapons_LongBlunt0
   m_EditorClassIdentifier: 
   type: 0
-  Usingtype: 0
+  Usingtype: 00000000
   Power_type: 0
   WeaponType: 1
   created: 0
@@ -42,8 +42,7 @@ MonoBehaviour:
   W_Max_Condition: 15
   W_Condition_lower_chance: 0.05
   W_Multi_Hit: 2
-  Gun_Ammunition: 0
-  Gun_Magazine: 0
+  equip_Magagine: 0
   Gun_Accuracy: 0
   Gun_Additional_Accuracy_point: 0
   Gun_Additional_Critical_chance: 0

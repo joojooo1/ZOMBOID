@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 8
   usingtype: 1
-  electronic_Type: 0
+  electronic_usingType: 0
   Power_type: 1
   UsingPower_type: 0
   Equipping_Position: 
-  Electronics_ID: 0
+  Electronics_ID: 7
   Height: 1
   Width: 1
   Nesting_Depth: 1

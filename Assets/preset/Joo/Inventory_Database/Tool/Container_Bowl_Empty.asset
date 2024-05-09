@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Container_Bowl_Empty
   m_EditorClassIdentifier: 
   type: 11
-  Usingtype: 040000000d000000
+  Usingtype: 040000000c000000
   Tool_Name: Bowl
   Tool_Name_Kr: "\uADF8\uB987"
   Tool_Image: {fileID: 21300000, guid: b4c72231134b5884aaf9ac66206cf05c, type: 3}

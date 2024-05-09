@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3594bc8d9c9406b4b84ceed489a766d1, type: 3}
   m_Name: Tool_CanOpener
   m_EditorClassIdentifier: 
-  type: 0
-  Usingtype: 
-  Tool_Name: 
-  Tool_Name_Kr: 
-  Tool_Image: {fileID: 0}
-  Tool_Weight: 0
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  type: 11
+  Usingtype: 0b000000
+  Tool_Name: Can Opener
+  Tool_Name_Kr: "\uBCD1\uB69C\uAED1 \uB530\uAC1C"
+  Tool_Image: {fileID: 21300000, guid: 611c7a3517c59834c87705bbb52d9d48, type: 3}
+  Tool_Weight: 0.6
+  Height: 2
+  Width: 1
+  Nesting_Depth: 1
   Is_Equipping: 0
   Is_TwoHand: 0
   Equipping_Position: 
