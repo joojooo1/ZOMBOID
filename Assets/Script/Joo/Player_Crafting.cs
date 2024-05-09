@@ -408,6 +408,13 @@ public class Player_Crafting : MonoBehaviour
                     Recipe_Craft_SheetRope.Add_Recipe_Ingredients(Type.Normal, i, 1);
                 }
             }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Log")  // Åë³ª¹«
+                {
+                    Recipe_Craft_SheetRope.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
             Recipe_Crafting_list.Add(Recipe_Craft_SheetRope);
         }
         else

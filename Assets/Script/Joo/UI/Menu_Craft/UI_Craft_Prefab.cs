@@ -61,6 +61,11 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
         item_Image.sprite = item_info.Get_Ingredients_Image(index);
         item_Info = item_info;
         item_Value.text = item_info.Get_Ingredients_value(index).ToString();
+
+        //0509 JY
+        //Debug.Log("I Hope." + item_info.Request_Type(index) + item_info.Requesting_Value(index) + item_info.Request_ID(index));
+        Inventory_Player_Shown.InvPS.Crafting_Resources((short)item_Info.Request_Type(index), (short)item_Info.Request_ID(index), (short)item_Info.Requesting_Value(index));
+        //0509 JY
     }
 
     public void Set_Ingredients_Box(int index)

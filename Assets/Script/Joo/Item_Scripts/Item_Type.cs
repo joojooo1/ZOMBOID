@@ -4,17 +4,18 @@ using UnityEngine;
 
 public enum Type
 {
-    weapon = 0,
+    Empty = 0,
     Farming = 1,
     food = 2,
     Normal = 3,   // 도구가 아닌 일반 아이템 == ETC ( 무기로 쓰이는 아이템 포함 ) // 소모품
     literature = 4,
+    Tool = 5,  // 도구 ( 무기로 쓰이는 도구 포함 )
     clothing = 6,
     Container = 7,
     Electronics = 8,
     Medical = 9,
     Furniture = 10,
-    Tool = 11  // 도구 ( 무기로 쓰이는 도구 포함 )
+    weapon = 11
 }
 
 public enum Using_Type

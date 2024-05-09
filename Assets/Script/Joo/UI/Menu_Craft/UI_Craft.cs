@@ -193,6 +193,25 @@ public class Crafting_item
     {
         return Ingredients_list[index].Value;
     }
+
+    //0509 JY
+
+    public Type Request_Type(int index)
+    {
+        return Ingredients_list[index].Ingredients_DB_type;
+    }
+
+    public int Request_ID(int index)
+    {
+        return Ingredients_list[index].Ingredients_DB_ID;
+    }
+
+    public int Requesting_Value(int index)
+    {
+        return Ingredients_list[index].Value;
+    }
+
+    //0509 JY
 }
 
 public class Crafting_Ingredients
@@ -203,7 +222,7 @@ public class Crafting_Ingredients
     public string Ingredients_name;
     public string Ingredients_name_kr;
     public int Value;  // 필요한 갯수
-    public bool fulfill;
+    public bool fulfill; // 완성조건
 
     public Crafting_Ingredients(Type _DB_type, int _DB_ID, int value)
     {
