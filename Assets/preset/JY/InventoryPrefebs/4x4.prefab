@@ -287,6 +287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Storage_Order: 0
   IsPlayers: 0
+  Slot_Image: {fileID: 6742536573245747624}
+  Slot_Weight: {fileID: 5347068022990928748}
   SlotPrefeb: {fileID: 2537107107453752010, guid: 76fd615f02f7cb44594ece95e1550c31, type: 3}
   Slots: []
 --- !u!1 &6695773595970678316

@@ -64,14 +64,14 @@ public class Item_DataBase : MonoBehaviour
         {
             case 1:
                 Sprite Img1 = food_Ins[ID].Food_Image[0];
-                Debug.Log("IDB image send");
+                //Debug.Log("IDB image send");
                 return Img1;
             case 8:
                 Sprite Img8 = Container_Ins[ID].Container_Image;
-                Debug.Log("IDB image send");
+                //Debug.Log("IDB image send");
                 return Img8;
             default:
-                Debug.Log("IDB image null");
+                //Debug.Log("IDB image null");
                 return null;
         }
     }

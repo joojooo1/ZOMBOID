@@ -309,13 +309,13 @@ public class CustomClass : MonoBehaviour
                 if (Physics.Raycast(ray, out hitInfo))
                 {
                     Transform HitObject = hitInfo.transform;
-                    Debug.Log(HitObject.name);
+                    //Debug.Log(HitObject.name);
                     if (HitObject.GetComponentInParent<TileItsInfo>()!=null)
                     {
-                        Debug.Log(HitObject.name + "좌클릭 정상적으로 타일을 발견");
+                        //Debug.Log(HitObject.name + "좌클릭 정상적으로 타일을 발견");
                         objectFound = true;
                         GameObject Hit = HitObject.GetComponentInParent<TileItsInfo>().transform.gameObject;
-                        Debug.Log(Hit + "Is Parent");
+                        //Debug.Log(Hit + "Is Parent");
                         if (Change_Create == 0 && !(HitObject.CompareTag("stair"))) // 1차 변경
                         {
                             if (Building_Type_Value == 0) // 변경_타일

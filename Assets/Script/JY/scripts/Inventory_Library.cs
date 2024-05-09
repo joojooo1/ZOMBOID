@@ -70,7 +70,7 @@ public class Inventory_Library : MonoBehaviour
         {
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
-            {1,0,1,0,0,0,0,0,0,0},
+            {1,0,1,0,0,8,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
             {1,0,0,0,0,0,0,0,0,0},
             {0,0,8,0,0,0,0,0,0,0},
@@ -80,7 +80,7 @@ public class Inventory_Library : MonoBehaviour
         {
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
-            {9,0,18,0,0,0,0,0,0,0},
+            {9,0,18,0,0,4,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,16,0,0,0,0,0,0,0},
@@ -110,7 +110,7 @@ public class Inventory_Library : MonoBehaviour
         {
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,3,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0},
@@ -188,6 +188,40 @@ public class Inventory_Library : MonoBehaviour
         }
     };
 
+    short[,,] packageExample_4x4 =
+   {
+        {
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0}
+        },
+        {
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0}
+        },
+        {
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0}
+        },
+        {
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0}
+        },
+        {
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0},
+            {0,0,0,0}
+        }
+    };
+
     public short[,,] packageExample_8x14 =
     {
         {
@@ -245,12 +279,20 @@ public class Inventory_Library : MonoBehaviour
     {
         IL = this;
         Inventory_DB = new List<short[,,]>();
-        Inventory_DB.Add(packageExample_8x6);
-        Debug.Log("invenlibrary adding example86" + Inventory_DB.Count);
-        Inventory_DB.Add(packageExample_8x10);
-        Debug.Log("LB 810 num = " + Inventory_DB.Count);
         Inventory_DB.Add(packageExample_2x4);
+
+        Inventory_DB.Add(packageExample_8x6);
+
+        Inventory_DB.Add(packageExample_8x10);
+
+        Inventory_DB.Add(packageExample_4x4);
+
         Inventory_DB.Add(packageExample_4x3);
+
+        short[,,] copy = new short[5, 8, 14];
+        Inventory_DB.Add(copy);
+        Debug.Log("Furniture Sample Num = " + Inventory_DB.Count);
+
     }
     private void Start()
     {
@@ -416,7 +458,7 @@ public class Inventory_Library : MonoBehaviour
             {
                 if (SizeSortedArray[Count] == 0)
                 {
-                    Debug.Log("EmptySSA");
+                    //Debug.Log("EmptySSA");
                     break;
                 }
                 else if (Item_DataBase.item_database.Requesting_Original_Width(SummonCollector[0, SizeSortedArray[Count] % 100, 0], SummonCollector[1, SizeSortedArray[Count] % 100, 0]) > Array_Heigt_Item_Width)
@@ -447,7 +489,7 @@ public class Inventory_Library : MonoBehaviour
                                     {
                                         sample[Depth, Item_x_Count, Item_y_Count] = SummonCollector[Depth, SizeSortedArray[Count] % 100, 0];
                                     }
-                                    Debug.Log("Sapwn 11 Complete");
+                                    //Debug.Log("Sapwn 11 Complete");
 
                                     goto Exitloop;
                                 }
@@ -484,7 +526,7 @@ public class Inventory_Library : MonoBehaviour
                                             }
                                         }
                                     }
-                                    Debug.Log("Spawn Not11 Complete");
+                                    //Debug.Log("Spawn Not11 Complete");
                                     goto Exitloop;
                                 }
                             }

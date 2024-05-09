@@ -127,7 +127,7 @@ public class Inventory_Player_Shown : MonoBehaviour
 
         // 장비 정의
 
-        Equipment_Package_Notbe_Synchronized = new short[5, 18, 1]; 
+        Equipment_Package_Notbe_Synchronized = new short[5, 18, 1];
         for (int Count = 0; Count < Equipment.Length; Count++)
         {
             Equipment[Count].GetComponent<InventorySlot>().Storage_Order_IfPlayer = 0;
@@ -146,7 +146,7 @@ public class Inventory_Player_Shown : MonoBehaviour
             int Num = 0;
             foreach (Image Kids in Equipment[Count].GetComponentsInChildren<Image>())
             {
-                
+
                 if (Num == 1)
                 {
                     Equipment[Count].GetComponent<InventorySlot>().BackgroundColor = Kids.transform.gameObject;
@@ -162,17 +162,17 @@ public class Inventory_Player_Shown : MonoBehaviour
                     break;
                 }
             }
-           
+
             short Size = Item_DataBase.item_database.Requesting_Size(Equipment_Package_Notbe_Synchronized[0, Count, 0], Equipment_Package_Notbe_Synchronized[1, Count, 0]);
             Equipment[Count].GetComponent<InventorySlot>().Size = Size;
-            
-            
+
+
         }
         // 0424 1차 라이브러리 테스팅 ============================================================================================
-        Inventory_Form_Location.gameObject.GetComponentInChildren<Inventory_8x6>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[0], 0);
+        Inventory_Form_Location.gameObject.GetComponentInChildren<Inventory_8x6>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[1], 1);
         //0426 초기 가방 테스팅=================================================
         Equipment_Package_Notbe_Synchronized[0, 14, 0] = 8;
-        Equipment_Package_Notbe_Synchronized[4, 14, 0] = 1;
+        Equipment_Package_Notbe_Synchronized[4, 14, 0] = 2;
         Refreshing_Equipment_Slots(Equipment_Package_Notbe_Synchronized);
 
         Resetting_BPICons_Order();
@@ -271,7 +271,7 @@ public class Inventory_Player_Shown : MonoBehaviour
         }
         PBP_S_Ordering_Array = Bag_Icons.ToArray();
         short Dumy_Num = 0;
-        foreach(GameObject Objects in PBP_S_Ordering_Array)
+        foreach (GameObject Objects in PBP_S_Ordering_Array)
         {
             Objects.GetComponent<BPIcon_SimpleAct>().Its_Own_Order = Dumy_Num;
             Dumy_Num++;
@@ -284,7 +284,7 @@ public class Inventory_Player_Shown : MonoBehaviour
 
     public void When_Selected_BPIcons(short Its_Own_Order)
     {
-        foreach(GameObject Bag_Icons in PBP_S_Ordering_Array)
+        foreach (GameObject Bag_Icons in PBP_S_Ordering_Array)
         {
             if (Bag_Icons.GetComponent<BPIcon_SimpleAct>().Its_Own_Order != Its_Own_Order) // 다르면 outl로 이동
             {
@@ -294,7 +294,7 @@ public class Inventory_Player_Shown : MonoBehaviour
             else
             {
                 Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Inventory_Form_Location);
-                foreach(GameObject BPNotIcons in Inventory_Form_Location)
+                foreach (GameObject BPNotIcons in Inventory_Form_Location)
                 {
                     BPNotIcons.transform.localScale = new Vector3(1, 1, 1);
                 }
@@ -304,7 +304,37 @@ public class Inventory_Player_Shown : MonoBehaviour
 
     public void Return_Basic_BPIcons()
     {
-        foreach(GameObject Kids in PBP_S_Ordering_Array)
+        foreach (GameObject Kids in PBP_S_Ordering_Array)
+        {
+            Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Out_Location);
+            Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.localPosition = new Vector3(0, 0, 0);
+            Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Inventory_Form_Location);
+        }
+    }
+
+    public void S_When_Selected_BPIcons(short Its_Own_Order)
+    {
+        foreach (GameObject Bag_Icons in PBP_S_Ordering_Array)
+        {
+            if (Bag_Icons.GetComponent<BPIcon_SimpleAct>().Its_Own_Order != Its_Own_Order) // 다르면 outl로 이동
+            {
+                Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Out_Location);
+                Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.localPosition = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                Bag_Icons.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Inventory_Form_Location);
+                foreach (GameObject BPNotIcons in Inventory_Form_Location)
+                {
+                    BPNotIcons.transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
+        }
+    }
+
+    public void S_Return_Basic_BPIcons()
+    {
+        foreach (GameObject Kids in PBP_S_Ordering_Array)
         {
             Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.SetParent(Out_Location);
             Kids.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.localPosition = new Vector3(0, 0, 0);
@@ -313,36 +343,15 @@ public class Inventory_Player_Shown : MonoBehaviour
     }
 
 
-    public void Storage_Contact_Refresh(short Storage_Order_HaveToChange,int Unchangeable_Size  ,bool On_Off)
+    public void Storage_Contact_Refresh(short Storage_Order_HaveToChange, int Unchangeable_Size, bool On_Off)
     {
         if (On_Off)
         {
-            //GameObject New_BP_Image = Instantiate(BackPack_Public_Prefeb, new Vector3(0f, 0f, 0f), Quaternion.identity);
-            //New_BP_Image.transform.SetParent(Non_PlayerBackPacks_Shown);
-
-            //prefeb.transform.localScale = Vector3.one;
-
-            //New_BP_Image.GetComponent<Image>().sprite = Item_DataBase.item_database.Requesting_Image(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
-            //생각필요
-
-            //RectTransform canvasRectTransform = New_BP_Image.GetComponent<RectTransform>();
-            //canvasRectTransform.anchorMin = new Vector2(0f, 1f);
-            //canvasRectTransform.anchorMax = new Vector2(0f, 1f);
-            //canvasRectTransform.localPosition = Vector3.zero;
-            //canvasRectTransform.localScale = new Vector3(0.8f, 0.8f, 1);
-
             int BP_RealSize = Unchangeable_Size;
             switch (BP_RealSize)
             {
                 case 814:
-                    //GameObject New_Bp_Tabs = Instantiate(Inventory_Form_Prefebs[7], new Vector3(0f, 0f, 0f), Quaternion.identity);
-                    //New_Bp_Tabs.transform.SetParent(Inventory_Form_Location_ForStorage);
-                    //RectTransform Bp_Rect = New_Bp_Tabs.GetComponent<RectTransform>();
-                    //Bp_Rect.anchorMin = new Vector2(0f, 1f);
-                    //Bp_Rect.anchorMax = new Vector2(0f, 1f);
-                    //Bp_Rect.localPosition = Vector3.zero;
-                    //New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs.transform;
-                    //New_Bp_Tabs.GetComponent<Inventory_8x14>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Storage_Order],Storage_Order);
+                    
                     if (Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Slots.Length == 0)
                     {
                         Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Generating_Slots_First(Inventory_Library.IL.Getting_Package(Storage_Order_HaveToChange), 0);
@@ -359,26 +368,12 @@ public class Inventory_Player_Shown : MonoBehaviour
 
                     break;
 
-                //    break;
-                //case 405:
-                //    GameObject New_Bp_Tabs = Instantiate(Inventory_Form_Prefebs[5], new Vector3(0f, 0f, 0f), Quaternion.identity);
-                //    Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D = New_Bp_Tabs.transform;
-                //    New_Bp_Tabs.transform.SetParent(Inventory_Form_Location);
-                //    RectTransform Bp_Rect = New_Bp_Tabs.GetComponent<RectTransform>();
-                //    Bp_Rect.anchorMin = new Vector2(0f, 1f);
-                //    Bp_Rect.anchorMax = new Vector2(0f, 1f);
-                //    Bp_Rect.localPosition = Vector3.zero;
-                //    //0426
-                //    New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs.transform;
-
-                //    New_Bp_Tabs.GetComponent<Inventory_8x10>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]], Equipment_Package_Notbe_Synchronized[4, XLine, 0]);
-                //    break;
             }
 
         }
     }
 
-    public bool Drag_Check_Only() 
+    public bool Drag_Check_Only()
     {
         int Width = FS_Item_Size / 100;
         int Height = FS_Item_Size % 100;
@@ -446,7 +441,7 @@ public class Inventory_Player_Shown : MonoBehaviour
         return Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize, CopyPackage_LS);
     }
 
-    public void SubRequest_Drag_Image() 
+    public void SubRequest_Drag_Image()
     {
         Sprite Image = null;
         short Type = FSItSelf.GetComponent<InventorySlot>().Item_Type;
@@ -456,8 +451,8 @@ public class Inventory_Player_Shown : MonoBehaviour
         int Width = (int)Size / 100;
         int Height = (int)Size % 10;
 
-        int Canvas_Width = SlotSize_Req(Width-2);
-        int Canvas_Height = SlotSize_Req(Height-2);
+        int Canvas_Width = SlotSize_Req(Width - 2);
+        int Canvas_Height = SlotSize_Req(Height - 2);
 
         Image = Item_DataBase.item_database.Requesting_Image(Type, ID);
 
@@ -524,7 +519,7 @@ public class Inventory_Player_Shown : MonoBehaviour
             }
         }
 
-        if (FSPSize == 100&&LSPSize == 100)
+        if (FSPSize == 100 && LSPSize == 100)
         {
             return;
         }
@@ -746,7 +741,7 @@ public class Inventory_Player_Shown : MonoBehaviour
         }
 
         //크기 검증
-        if (Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize,CopyPackage_LS))
+        if (Checking_Only_Size_For_InCanFit_All(FS_Is_Virtical, Width, Height, LS_Slot_X, LS_Slot_Y, (int)LSPSize, CopyPackage_LS))
         {
             //바로 이동
             for (int i = 0; i < 5; i++)
@@ -870,12 +865,13 @@ public class Inventory_Player_Shown : MonoBehaviour
                         GameObject New_BP_Image = Instantiate(BackPack_Public_Prefeb, new Vector3(0f, 0f, 0f), Quaternion.identity);
                         Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete = New_BP_Image.transform;
                         New_BP_Image.transform.SetParent(PlayerBackPacks_Shown);
-                        
+
 
                         //prefeb.transform.localScale = Vector3.one;
-                        
-                        New_BP_Image.GetComponent<Image>().sprite = Item_DataBase.item_database.Requesting_Image(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
 
+                        New_BP_Image.GetComponent<Image>().sprite = Item_DataBase.item_database.Requesting_Image(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
+                        New_BP_Image.GetComponent<Toggle>().group = PlayerBackPacks_Shown.GetComponent<ToggleGroup>();
+                        New_BP_Image.GetComponent<BPIcon_SimpleAct>().IsPlayer = true;
                         RectTransform canvasRectTransform = New_BP_Image.GetComponent<RectTransform>();
                         canvasRectTransform.anchorMin = new Vector2(0f, 1f);
                         canvasRectTransform.anchorMax = new Vector2(0f, 1f);
@@ -886,7 +882,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                         switch (BP_RealSize)
                         {
                             case 405:
-                                GameObject New_Bp_Tabs = Instantiate(Inventory_Form_Prefebs[5], new Vector3(0f,0f,0f), Quaternion.identity);
+                                GameObject New_Bp_Tabs = Instantiate(Inventory_Form_Prefebs[5], new Vector3(0f, 0f, 0f), Quaternion.identity);
                                 Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D = New_Bp_Tabs.transform;
                                 New_Bp_Tabs.transform.SetParent(Inventory_Form_Location);
                                 RectTransform Bp_Rect = New_Bp_Tabs.GetComponent<RectTransform>();
@@ -899,25 +895,39 @@ public class Inventory_Player_Shown : MonoBehaviour
 
                                 New_Bp_Tabs.GetComponent<Inventory_8x10>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]], Equipment_Package_Notbe_Synchronized[4, XLine, 0]);
                                 break;
+                            case 202:
+                                GameObject New_Bp_Tabs1 = Instantiate(Inventory_Form_Prefebs[2], new Vector3(0f, 0f, 0f), Quaternion.identity);
+                                Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D = New_Bp_Tabs1.transform;
+                                New_Bp_Tabs1.transform.SetParent(Inventory_Form_Location);
+                                RectTransform Bp_Rect1 = New_Bp_Tabs1.GetComponent<RectTransform>();
+                                Bp_Rect1.anchorMin = new Vector2(0f, 1f);
+                                Bp_Rect1.anchorMax = new Vector2(0f, 1f);
+                                Bp_Rect1.localPosition = Vector3.zero;
+                                Bp_Rect1.localScale = new Vector3(1, 1, 1);
+                                //0426
+                                New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs1.transform;
+
+                                New_Bp_Tabs1.GetComponent<Inventory_8x10>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]], Equipment_Package_Notbe_Synchronized[4, XLine, 0]);
+                                break;
                         }
-                        
+
                     }
                 }
                 //Equipment[XLine].GetComponent<InventorySlot>().Is_Changed--;
             }
             else // 빔
             {
-                if (XLine > 10 && XLine < 15&&!(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete==null))// 11,12,13,14 가방라인
+                if (XLine > 10 && XLine < 15 && !(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete == null))// 11,12,13,14 가방라인
                 {
                     Destroy(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete.gameObject);
                     Equipment[XLine].GetComponent<InventorySlot>().This_Own_Image_IfDoesntExiest_Delete = null;
                     Equipment[XLine].GetComponent<InventorySlot>().BP_Array_Num_Starting0 = 500;
                     Equipment[XLine].GetComponent<InventorySlot>().IsShown_OnPlayer = false;
 
-                    switch (Equipment[XLine].GetComponent<InventorySlot>().Size*2) // 확인필요 사라지지않음.
+                    switch (Equipment[XLine].GetComponent<InventorySlot>().Size * 2) // 확인필요 사라지지않음.
                     {
                         case 810:
-                            Inventory_Library.IL.Inventory_DB[Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject.GetComponent<Inventory_8x10>().Storage_Order]= Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
+                            Inventory_Library.IL.Inventory_DB[Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject.GetComponent<Inventory_8x10>().Storage_Order] = Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
                             break;
                     }
                     Destroy(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject);
@@ -937,14 +947,61 @@ public class Inventory_Player_Shown : MonoBehaviour
 
 
 
-       Equipment_Package_Notbe_Synchronized = changedPackage;
+        Equipment_Package_Notbe_Synchronized = changedPackage;
+    }
+
+    public void Storage_Contract(Transform Located_Tile, short Contacted_LB_Num, bool On_Off)
+    {
+        if (On_Off)
+        {
+            GameObject New_Storage_Image = Instantiate(BackPack_Public_Prefeb, new Vector3(0f, 0f, 0f), Quaternion.identity);
+            //New_BP_Image.GetComponent<Image>().sprite 아이콘 이미지 변경
+            New_Storage_Image.transform.SetParent(Non_PlayerBackPacks_Shown);
+            New_Storage_Image.GetComponent<Toggle>().group = Non_PlayerBackPacks_Shown.GetComponent<ToggleGroup>();
+            RectTransform Stroage_canvasRectTransform = New_Storage_Image.GetComponent<RectTransform>();
+
+            Stroage_canvasRectTransform.anchorMin = new Vector2(0f, 1f);
+            Stroage_canvasRectTransform.anchorMax = new Vector2(0f, 1f);
+            Stroage_canvasRectTransform.localPosition = Vector3.zero;
+            Stroage_canvasRectTransform.localScale = new Vector3(0.8f, 0.8f, 1);
+
+
+            //하위 저장소별 크기변경 할당 라이브러리 번호 할당
+            GameObject New_Storage_Tabs = Instantiate(Inventory_Form_Prefebs[7], new Vector3(0f, 0f, 0f), Quaternion.identity);
+            //저장소창 이미지 변경
+
+            New_Storage_Tabs.GetComponent<Inventory_8x14>().Storage_Order = Contacted_LB_Num;
+
+
+            New_Storage_Tabs.transform.SetParent(Inventory_Form_Location_ForStorage);
+            RectTransform Storage_Rect = New_Storage_Tabs.GetComponent<RectTransform>();
+            Storage_Rect.anchorMin = new Vector2(0f, 1f);
+            Storage_Rect.anchorMax = new Vector2(0f, 1f);
+            Storage_Rect.localPosition = Vector3.zero;
+            Storage_Rect.localScale = new Vector3(1, 1, 1);
+
+            New_Storage_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Storage_Tabs.transform;
+
+            New_Storage_Tabs.GetComponent<Inventory_8x14>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Contacted_LB_Num], Contacted_LB_Num);
+        }
+        else
+        {
+            foreach (BPIcon_SimpleAct Storage_Images in Non_PlayerBackPacks_Shown.GetComponentsInChildren<BPIcon_SimpleAct>())
+            {
+                if (Storage_Images.IsBasic == false)//기본저장소 아님
+                {
+                    Destroy((Storage_Images.Reverse_Lovation.gameObject));
+                    Destroy(Storage_Images.gameObject);
+                }
+            }
+        }
     }
 
     public bool Checking_Only_Size_For_InCanFit_All(bool IsVirtical, int First_Item_Lengthof_X, int First_Item_Lengthof_Y,
         short Last_Slot_X_order, short Last_Slot_Y_order, int LSPSize, short[,,] Target_Package)
     //Length = 1부터, order는 0부터
     {
-        
+
         bool Clear = false;
         if (LSPSize == 100)
         {
@@ -1055,7 +1112,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                                 }
                                 break;
                             case 810:
-                                if(!LSParent.GetComponent<Inventory_8x10>().Slots[(Xfirst + Last_Slot_X_order) + 8 * (Ysecond + Last_Slot_Y_order)].IsMain)
+                                if (!LSParent.GetComponent<Inventory_8x10>().Slots[(Xfirst + Last_Slot_X_order) + 8 * (Ysecond + Last_Slot_Y_order)].IsMain)
                                 {
                                     Clear = false;
                                     return Clear;
