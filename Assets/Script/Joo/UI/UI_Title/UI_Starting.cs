@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UI_Starting : MonoBehaviour
 {
+    public static UI_Starting US;
+
     [SerializeField] UnityEngine.UI.Text text;
     [SerializeField] GameObject text_Object;
     [SerializeField] GameObject start_button;
@@ -17,7 +19,17 @@ public class UI_Starting : MonoBehaviour
 
     private void Awake()
     {
+        US = this;
         anim = GetComponentInChildren<Animator>();
+    }
+
+    private void Start()
+    {
+
+        while (!Map_Setting_complete)
+        {
+            MapLoader.ML.Checking_Map_Load();
+        }
     }
 
     Vector3 pos = new Vector3(0, -192, 0);

@@ -11,6 +11,13 @@ public class Right_Click_Ui : MonoBehaviour,IPointerExitHandler
     public Transform Selection_Box;
     public GameObject Selection_Prefebs;
 
+    public static Right_Click_Ui RCU;
+
+    private void Awake()
+    {
+        RCU = this;
+    }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         Selection_Box.transform.localPosition = new Vector3(150f, 400f, 0);

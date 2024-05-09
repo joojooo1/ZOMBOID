@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler,IPointerClickHandler
 {
     bool IsPointerIn = false;
     public short Storage_Order_IfPlayer;//플레이어 저장소 순서
@@ -215,5 +215,17 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
         Inventory_Player_Shown.InvPS.Drag_Target_Prefeb.GetComponent<Inventry_DragImage>().Change_Border_Color(false);
         //ItemInfoTextBox.InfoTextBox.TextSet(null, 0, 0, 0, IsPointerIn, null);
 
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            // 좌클릭을 처리하는 코드 작성
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Debug.Log("RC Detected");
+            
+        }
     }
 }
