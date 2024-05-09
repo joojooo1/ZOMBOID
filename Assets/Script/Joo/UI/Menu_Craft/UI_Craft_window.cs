@@ -162,7 +162,9 @@ public class UI_Craft_window : MonoBehaviour
             }
             Crafting_item_Prefab_list[k].item_Image.color = tmp;
         }
-
+        //0509 JY
+        Inventory_Player_Shown.InvPS.Clearing_Ready_Crafting();
+        //0509 JY
         Clear_Ingredients_Window();
         Ins_Ingredients_Window(Crafting_item_Prefab_list[index]);
     }
@@ -189,8 +191,12 @@ public class UI_Craft_window : MonoBehaviour
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+
+
+
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
                 item.Set_Ingredients(Origin_list[_item.item_index], i);
+                
                 Crafting_Ingredients_Prefab_list.Add(item);
                 i++;
             }
@@ -202,7 +208,8 @@ public class UI_Craft_window : MonoBehaviour
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients_Box(i);                
+                item.Set_Ingredients_Box(i);
+
                 Crafting_Ingredients_Prefab_list.Add(item);
                 i++;
             }
@@ -241,8 +248,16 @@ public class UI_Craft_window : MonoBehaviour
             }
         }
 
-        if (Selected_item != null && check == false)
+        if (Selected_item != null && check == false)//여기에 재료 조건문 추가
         {
+            //0509 JY
+            
+
+            if (!Inventory_Player_Shown.InvPS.Checking_Crafting_Canbe())
+            {
+                return;
+            }
+            //0509 JY
             if (type != Crafting_type.Crafting_Furniture)   // 재료가 있는지 확인하고 있으면 생성하도록 구현해야함
             {
                 GameObject obj = null;
