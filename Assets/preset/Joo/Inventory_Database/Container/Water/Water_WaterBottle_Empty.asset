@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 7
   container_Type: 1
-  Usingtype: 0
+  Usingtype: 12
   Bag_EquipType: 0
   bag_Type: 0
   ClothingType: 17
-  Container_ID: 17
+  Container_ID: 11
   ContainerName: Water Bottle (Orange Soda)
   ContainerName_Kr: "\uBB3C\uBCD1"
   ContainergWeight: 0.1

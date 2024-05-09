@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Weapons_ShortBlade1_HandScythe
   m_EditorClassIdentifier: 
   type: 0
-  Usingtype: 6
+  Usingtype: 0600000000000000
   Power_type: 0
-  WeaponType: 7
+  WeaponType: 4
   created: 0
   Weapon_ID: 19
   WeaponName: HandScythe
@@ -42,8 +42,7 @@ MonoBehaviour:
   W_Max_Condition: 5
   W_Condition_lower_chance: 0.2
   W_Multi_Hit: 2
-  Gun_Ammunition: 0
-  Gun_Magazine: 0
+  equip_Magagine: 0
   Gun_Accuracy: 0
   Gun_Additional_Accuracy_point: 0
   Gun_Additional_Critical_chance: 0

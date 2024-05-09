@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 7
   container_Type: 1
-  Usingtype: 0
+  Usingtype: 12
   Bag_EquipType: 0
   bag_Type: 0
   ClothingType: 17
-  Container_ID: 20
+  Container_ID: 14
   ContainerName: Water Bottle (Whiskey)
   ContainerName_Kr: "\uC704\uC2A4\uD0A4 \uBCD1"
   ContainergWeight: 0.3
