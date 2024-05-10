@@ -225,7 +225,7 @@ public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDropHandler, IEn
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             Debug.Log("RC Detected");
-            
+            Right_Click_Ui.RCU.OnPointerExit(null);
         }
     }
 }

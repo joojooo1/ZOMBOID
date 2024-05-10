@@ -9,6 +9,12 @@ using VirusWarGameServer;
 public class CMainGame : MonoBehaviour
 {
     public static CMainGame current;
+
+    public bool IsConnecting;
+    public bool Multiplaying;
+    public int playerSN = -1;
+    public bool Is_Host = false;
+
     void Awake()
     {
         UnityEngine.Screen.SetResolution(800, 600,false);
@@ -17,22 +23,54 @@ public class CMainGame : MonoBehaviour
             current = this;
         else
             Debug.LogError("Not Single CMainGame");
+        IsConnecting=false;
+        Multiplaying=false;
     }
 
     CNetworkManager network_manager;
     private void Start()
     {
         network_manager = GetComponent<CNetworkManager>();
-        network_manager.Connect();
-        Debug.Log("NetWorkManagerWorking");
-        Invoke("MatchingRoom", 2f);
+        //if (CNetworkManager.CNetManager.Multiplayer == true)
+        //{
+        //    network_manager.Connect();
+        //    Debug.Log("NetWorkManagerWorking");
+        //    Invoke("MatchingRoom", 2f);
 
-        //string EX_Name = "Dummy";
-        //MatchingRoom(EX_Name);
+        //    //string EX_Name = "Dummy";
+        //    //MatchingRoom(EX_Name);
+        //}
     }
+
+    public void Connecting_Req()
+    {
+        IsConnecting = true;
+    }
+
+    public void Connecting_Cancle()
+    {
+        IsConnecting = false;
+    }
+
+    public void TryringToGetInMultiplayer()
+    {
+        //network_manager = GetComponent<CNetworkManager>();
+        if (IsConnecting)
+        {
+            network_manager.Connect();
+            Debug.Log("NetWorkManagerWorking");
+            Invoke("MatchingRoom", 2f);
+
+            //string EX_Name = "Dummy";
+            //MatchingRoom(EX_Name);
+        }
+    }
+
     public void MatchingRoom()
     {
         string PlayerName = "TestClient Name";
+        Multiplaying = true;
+        IsConnecting = false;
         CPacket msg2 = CPacket.create((short)PROTOCOL.ENTER_GAME_ROOM);
         msg2.push(PlayerName);
         network_manager.send(msg2);
@@ -75,7 +113,7 @@ public class CMainGame : MonoBehaviour
         msg2.push(playerindex);
         network_manager.send(msg2);
     }
-    public int playerSN = -1;
+
 
     public void Inv_Sync(CPacket InvPacket)
     {
@@ -91,6 +129,19 @@ public class CMainGame : MonoBehaviour
             case PROTOCOL.ENTER_GAME_ROOM: //플레이어
                 {
                     playerSN = msg.pop_int32();
+                    int IsH = msg.pop_int32();
+                    if (IsH == 1)
+                    {
+                        Is_Host = true;
+                        //자기 맵생성, db생성 시작
+                    }
+                    else
+                    {
+                        //맵은 생성, db 생성하지않음*
+                        CPacket msg2 = CPacket.create((short)PROTOCOL.FIRST_SYNC_REQ);
+                        msg2.push(playerSN);
+                        network_manager.send(msg2);
+                    }
                     //ServerObjectManager.current.MoveObject(playerSN,
                     //    Vector3.zero,0, ServerObjectManager.OBJECT_TYPE.PLAYER);
                     Debug.Log("Recieved EnterGameRoom Successfully");
@@ -237,6 +288,24 @@ public class CMainGame : MonoBehaviour
                 }
                     break;
 
+            case PROTOCOL.FIRST_SYNC_REQ:
+                {
+                    Debug.Log("-------------------------");
+                }
+                break;
+            case PROTOCOL.FIRST_SYNC_REQTOHOST:
+                {
+                    int Req_SN = msg.pop_int32();
+                    int Host_SN = msg.pop_int32();
+                    Debug.Log("Server Succesfully Respons FSR");
+                    Debug.Log(playerSN + " " + Host_SN);
+                    if (Host_SN == playerSN)
+                    {
+                        Debug.Log("requesting Arrival 0501");
+                        Inventory_Library.IL.Syncronize_Packages_If_Host(Req_SN);
+                    }
+                }
+                break;
         }
     }
 }

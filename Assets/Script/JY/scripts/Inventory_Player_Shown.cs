@@ -97,6 +97,9 @@ public class Inventory_Player_Shown : MonoBehaviour
     public GameObject Storage_s;
     public bool inven_open; // v
 
+    //Crafting 연동
+    public List<short[]> CraftingResources;
+
     private void Awake()
     {
         InvPS = this;
@@ -114,6 +117,7 @@ public class Inventory_Player_Shown : MonoBehaviour
 
     private void Start()
     {
+        CraftingResources = new List<short[]>();
         //초기 생성연산만
         //플레이어의 장비목록을 가져옴 backpacks list에 정렬후 넣음
         for (short i = 0; i < Backpacks_List.Count; i++)
@@ -180,8 +184,6 @@ public class Inventory_Player_Shown : MonoBehaviour
 
 
     }
-
-
 
     private void Generating_Acting_Inventory(short Backpack_ID, short[,,] Exiest_Packages, short Order)
     {
@@ -342,7 +344,6 @@ public class Inventory_Player_Shown : MonoBehaviour
         }
     }
 
-
     public void Storage_Contact_Refresh(short Storage_Order_HaveToChange, int Unchangeable_Size, bool On_Off)
     {
         if (On_Off)
@@ -351,7 +352,7 @@ public class Inventory_Player_Shown : MonoBehaviour
             switch (BP_RealSize)
             {
                 case 814:
-                    
+
                     if (Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Slots.Length == 0)
                     {
                         Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Generating_Slots_First(Inventory_Library.IL.Getting_Package(Storage_Order_HaveToChange), 0);
@@ -1173,6 +1174,137 @@ public class Inventory_Player_Shown : MonoBehaviour
 
     //방향, type, id, 갯수 // 특정
 
+    public void Clearing_Ready_Crafting() // crafting below
+    {
+        CraftingResources = new List<short[]>();
+    }
+
+    public void Crafting_Resources(short Type, short ID, short Amount)
+    {
+        short[] New_Resource_T_ID_Am = { Type, ID, Amount };
+        CraftingResources.Add(New_Resource_T_ID_Am);
+    }
+
+    public bool Searching_Crafting_Resources(short[] Find_It) // 순환 저장소 고려않음
+    {
+        bool Cleared = false;
+        foreach(Toggle obj in PlayerBackPacks_Shown.GetComponentsInChildren<Toggle>())
+        {
+            short Player_InvWindow_Size = obj.gameObject.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.gameObject.GetComponentInChildren<InventorySlot>().ParentSize;
+            Transform Player_InvWindow = obj.gameObject.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation.gameObject.GetComponentInChildren<InventorySlot>().ParentTransform;
+
+            short[,,] Target_Package = new short[1, 1, 1];
+            short Target_Package_Num = 0;
+            switch (Player_InvWindow_Size)
+            {
+                case 100:
+                    break;
+                case 86:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_8x6>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_8x6>().Storage_Order;
+                    break;
+                case 810:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_8x10>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_8x10>().Storage_Order;
+                    break;
+                case 812:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_8x12>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_8x12>().Storage_Order;
+                    break;
+                case 24:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_2x4>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_2x4>().Storage_Order;
+                    break;
+                case 610:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_6x10>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_6x10>().Storage_Order;
+                    break;
+                case 44:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_4x4>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_4x4>().Storage_Order;
+                    break;
+                case 43:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_4x3>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_4x3>().Storage_Order;
+                    break;
+                case 814:
+                    Target_Package = Player_InvWindow.GetComponent<Inventory_8x14>().Recent_Recieved_Package;
+                    Target_Package_Num = Player_InvWindow.GetComponent<Inventory_8x14>().Storage_Order;
+                    break;
+            }
+            for(int y = 0; y < Target_Package.GetLength(1); y++)
+            {
+                for(int x=0; x < Target_Package.GetLength(2); x++)
+                {
+                    if (Target_Package[0, y, x] == Find_It[0]&&Target_Package[1,y,x]==Find_It[1]&&Target_Package[2,y,x]>=Find_It[2])
+                    {
+                        Target_Package[2,y,x] -= Find_It[2];
+
+                        Cleared = true;
+                        goto Is_Right;
+                    }
+                }
+            }
+        Is_Right:;
+            if (Cleared == true)
+            {
+                switch (Player_InvWindow_Size)
+                {
+                    case 100:
+                        break;
+                    case 86:
+                        Player_InvWindow.GetComponent<Inventory_8x6>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                    case 810:
+                        Player_InvWindow.GetComponent<Inventory_8x10>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                    case 812:
+                        Player_InvWindow.GetComponent<Inventory_8x12>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                    case 24:
+                        Player_InvWindow.GetComponent<Inventory_2x4>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                    case 610:
+                        Player_InvWindow.GetComponent<Inventory_6x10>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                    case 44:
+                        Player_InvWindow.GetComponent<Inventory_4x4>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                    case 43:
+                        Player_InvWindow.GetComponent<Inventory_4x3>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                    case 814:
+                        Player_InvWindow.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(Target_Package);
+                        break;
+                }
+            }
+            return Cleared;
+            //? library 동기화 ?
+        }
+        return Cleared;
+    }
+
+    public bool Checking_Crafting_Canbe()
+    {
+        bool All_Cleared = false;
+        int Goal = CraftingResources.Count;
+        int Count = 0;
+        foreach(short[] acts in CraftingResources)
+        {
+            if (Searching_Crafting_Resources(acts))
+            {
+                Count++;
+            }
+        }
+        if (Count == Goal)
+        {
+            All_Cleared = true;
+        }
+
+
+        return All_Cleared;
+    }
+
 
 
     public void SendServer_Inv_Info(short[,,] After_Package, short Order, bool IsP, short Before_X, short Before_Y)
@@ -1232,49 +1364,5 @@ public class Inventory_Player_Shown : MonoBehaviour
     }
 
 
-
-    private void Changed_Backpacks_Output(short Backpack_ID, short[,,] Exiest_Packages, short Order)
-    {
-        //가방의 정보 고유번호 저장소를 host에게 저장
-    }
-    private void Changed_Backpacks_Input(short Backpack_ID, short[,,] Exiest_Packages, short Order)
-    {
-        // Order 정렬 후 대입연산
-    }
-
-
-    public void Refresh_BackpacksList(int[,] Order_And_ID)
-    {
-    }
-
-    public void Refresh_Packages(int order, int BackPackID, int[,] package)
-    {
-    }
-
-    public void Dragging_Item_Image_On()
-    {
-
-    }
-    public void Dragging_Item_End()
-    {
-
-    }
-
-    public void When_Drag_Success()
-    {
-
-    }
-    public void Moving_Count_Add()
-    {
-
-    }
-    public void Moving_Empty_Add()
-    {
-
-    }
-    public void Moving_Change_Space()
-    {
-
-    }
 }
 
