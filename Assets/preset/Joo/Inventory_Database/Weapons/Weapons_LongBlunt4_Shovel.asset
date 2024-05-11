@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1333044d3d8744f893776360c46754, type: 3}
   m_Name: Weapons_LongBlunt4_Shovel
   m_EditorClassIdentifier: 
-  type: 0
+  type: 11
   Usingtype: 0600000000000000
   Power_type: 0
   WeaponType: 1

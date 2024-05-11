@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 7
-  ETC_ID: 7
+  ETC_ID: 10
   ETC_Name: SheetRope
   ETC_Name_kr: "\uCC9C \uBC27\uC904"
   ETC_Image: {fileID: 21300000, guid: 356fa357a7d9fc6499e0908a030ae340, type: 3}

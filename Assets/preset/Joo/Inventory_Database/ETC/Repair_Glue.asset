@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 2
-  ETC_ID: 9
+  ETC_ID: 15
   ETC_Name: Glue
   ETC_Name_kr: "\uC811\uCC29\uC81C"
   ETC_Image: {fileID: 21300000, guid: 5553c93fedcdff24f8cfa1e467462517, type: 3}

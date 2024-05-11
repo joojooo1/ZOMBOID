@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 7
-  ETC_ID: 2
+  ETC_ID: 5
   ETC_Name: Log
   ETC_Name_kr: "\uD1B5\uB098\uBB34"
   ETC_Image: {fileID: 21300000, guid: 26e565fca7999f140abe94f609cf0957, type: 3}

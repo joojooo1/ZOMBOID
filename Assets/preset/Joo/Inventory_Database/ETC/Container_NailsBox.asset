@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 12
-  ETC_ID: 5
+  ETC_ID: 3
   ETC_Name: NailsBox
   ETC_Name_kr: "\uBABB \uC0C1\uC790"
   ETC_Image: {fileID: 21300000, guid: 6313d7d6bfd95184db8333acf43ec94a, type: 3}
