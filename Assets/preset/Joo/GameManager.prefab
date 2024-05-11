@@ -46,8 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd4402648f59c74ab718437e6802982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Elapsed_time_text: {fileID: 0}
+  Weight_text: {fileID: 0}
   Is_Water: 0
   Is_Electricity: 1
+  Zombies_killed_count_text: {fileID: 0}
+  primary_Weapon_text: {fileID: 0}
 --- !u!114 &3782071685842955529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,11 +218,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac2cbd9e096555b47b711530c4ad5aff, type: 2}
   - {fileID: 11400000, guid: 025b5fe61e9ee0f4abd082828682b447, type: 2}
   - {fileID: 11400000, guid: 7f02e236f8a61594b8f5f15685ff2739, type: 2}
-  - {fileID: 11400000, guid: 37aec868048f3f248bba428b2ffddaf8, type: 2}
   - {fileID: 11400000, guid: 5e85f61823d491a49a1654e704e9e0ea, type: 2}
-  - {fileID: 11400000, guid: 01c7564f7327150428b066ef2ce21f00, type: 2}
-  - {fileID: 11400000, guid: ec7a5810bb735a649a0ccf83c832bc54, type: 2}
-  - {fileID: 11400000, guid: 90de7feb64e3f614caf4ee1104327a44, type: 2}
   - {fileID: 11400000, guid: 55427343f2143cd4fa0647b297dc0f78, type: 2}
   - {fileID: 11400000, guid: 34ebb455fb1efd044801bfa781106cf6, type: 2}
   - {fileID: 11400000, guid: e8ebfd8d86de2f941b8540389166f223, type: 2}
@@ -260,21 +260,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4fa40a6efcf49ce4da3071ec6421d77c, type: 2}
   - {fileID: 11400000, guid: ff13bb498c10d98479db9b11f69e01a2, type: 2}
   - {fileID: 11400000, guid: 4e2e877c4e2952b43b6bb30ebbb7e534, type: 2}
-  - {fileID: 11400000, guid: 8559adbddc5e53f40a3298bb413fbaf4, type: 2}
-  - {fileID: 11400000, guid: af4cae3199fbc3b4fa3f2dbcad8b6801, type: 2}
-  - {fileID: 11400000, guid: f1fb7286bf81860409e5c57094b00184, type: 2}
-  - {fileID: 11400000, guid: b2fd1d5d8045e144ba236c10eca2c51d, type: 2}
-  - {fileID: 11400000, guid: 0371a38c545c9a14f9afdb082aa5ce30, type: 2}
-  - {fileID: 11400000, guid: 7bd1fdfba4ec6d44689a64b98daec98a, type: 2}
-  - {fileID: 11400000, guid: 2b034b049e8ecf643b7aee668aa71bae, type: 2}
-  - {fileID: 11400000, guid: 6a9ced068fcf1fc4984a7b76136032b4, type: 2}
-  - {fileID: 11400000, guid: a707d7decb951bc439bad34bcd1cd8b9, type: 2}
-  - {fileID: 11400000, guid: 765b701e6e6aa964aa51eb13a7cf0f4c, type: 2}
-  - {fileID: 11400000, guid: 3e04af02e3b68434d8fe398665e0e925, type: 2}
-  - {fileID: 11400000, guid: 7ae491c4fa3b2314c959fb908e447234, type: 2}
-  - {fileID: 11400000, guid: 7eb15e022521e4244b582f5997d6a282, type: 2}
-  - {fileID: 11400000, guid: 5e69cf4d44af33349b7c13f29a59145e, type: 2}
-  - {fileID: 11400000, guid: 8a6cc014a6de11d49bae3807bbb7f538, type: 2}
   medical_Ins:
   - {fileID: 11400000, guid: 54781d0c76e2f6648b4d49b50cd50667, type: 2}
   - {fileID: 11400000, guid: 405e740b0b7b3934b8cfb9428cc08ee1, type: 2}
