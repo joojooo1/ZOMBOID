@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item_Farming : MonoBehaviour
+[CreateAssetMenu]
+public class Item_Farming : ScriptableObject
 {
     public Type type;
     public Using_Type Usingtype;

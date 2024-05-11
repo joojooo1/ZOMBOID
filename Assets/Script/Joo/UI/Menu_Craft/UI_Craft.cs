@@ -11,7 +11,7 @@ public enum Crafting_type
     Crafting_Tool = 1,
     Crafting_Cook = 2,
     Crafting_Medical = 3,
-    Crafting_Furniture = 4
+    Crafting_Installation = 4
 }
 
 public class Crafting_item
@@ -35,6 +35,7 @@ public class Crafting_item
     public List<float> item_Stress = new List<float>();  // 스트레스
 
     public List<Crafting_Ingredients> Ingredients_list;
+    public List<Crafting_Ingredients> Ingredients_Tool_list;
 
     public Crafting_item(Type item_DB_type, int item_DB_ID, Crafting_type item_type, Sprite item_Image, string name, string name_kr, int if_Crafting_number)
     {
@@ -46,6 +47,7 @@ public class Crafting_item
         this.name_kr = name_kr;
         this.if_Crafting_number = if_Crafting_number;
         Ingredients_list = new List<Crafting_Ingredients>();
+        Ingredients_Tool_list = new List<Crafting_Ingredients>();
 
         switch (item_DB_type)
         {
@@ -159,7 +161,32 @@ public class Crafting_item
         {
             Ingredients_list.Add(Ingredients);
         }
+    }
 
+    public void Add_Ingredients_Tool(Type _DB_type, int _DB_ID, int value)
+    {
+        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, value);
+        if (Ingredients_Tool_list.Count > 0)
+        {
+            for (int i = 0; i < Ingredients_Tool_list.Count; i++)
+            {
+                if (Ingredients_Tool_list[i].Ingredients_DB_type == _DB_type && Ingredients_Tool_list[i].Ingredients_DB_ID == _DB_ID)
+                {
+                    break;
+                }
+                else
+                {
+                    if (i == Ingredients_Tool_list.Count - 1)
+                    {
+                        Ingredients_Tool_list.Add(Ingredients);
+                    }
+                }
+            }
+        }
+        else
+        {
+            Ingredients_Tool_list.Add(Ingredients);
+        }
     }
 
     public Sprite Get_Ingredients_Image(int index)
@@ -441,7 +468,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                     current_index = Crafting_Medical_list.Count - 1;
                 }
                 break;
-            case Crafting_type.Crafting_Furniture:
+            case Crafting_type.Crafting_Installation:
                 if(Crafting_Furniture_list.Count > 0)  // 이미 리스트에 있는지 확인
                 {
                     for (int i = 0; i < Crafting_Furniture_list.Count; i++)
@@ -484,7 +511,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                 return Crafting_Cook_list.Count;
             case Crafting_type.Crafting_Medical:
                 return Crafting_Medical_list.Count;
-            case Crafting_type.Crafting_Furniture:
+            case Crafting_type.Crafting_Installation:
                 return Crafting_Furniture_list.Count;
             default: return 0;
         }

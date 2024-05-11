@@ -263,6 +263,7 @@ public class Player_body_Location
                 }
             }
         }
+        Player_main.player_main.Is_Fighting = false;
     }
 
     public Damage_Pattern Get_Bodypos_DamageType()
@@ -560,22 +561,23 @@ public class PlayerState : MonoBehaviour
 
                     }
 
+                    float Rate = Player_main.player_main.playerSkill_ActivationProbability.Get_Fatigue_Generation_Rate();
                     switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                     {
                         case 0:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication * Rate);
                             break;
                         case 1:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication * Rate);
                             break;
                         case 2:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication * Rate);
                             break;
                         case 3:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication * Rate);
                             break;
                         case 4:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication * Rate);
                             break;
                     }
 

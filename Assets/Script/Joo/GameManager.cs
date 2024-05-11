@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour
     int Day = 9;
     int Hour = 11;
     int Minute = 0;
-    int Elapsed_time = 0;
-
+    int Elapsed_time = 0;  // 생존일수
+    [SerializeField] UnityEngine.UI.Text Elapsed_time_text;
+    [SerializeField] UnityEngine.UI.Text Weight_text;
     public bool Is_Water = true;
     public bool Is_Electricity = true;
 
@@ -30,12 +31,24 @@ public class GameManager : MonoBehaviour
             UI_main.ui_main.Set_Clock(Hour.ToString(), Minute.ToString(), Month, Day, Current_Temperature);
         }
 
+        Elapsed_time_text.text = Elapsed_time + "일";
+
+        for(int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+        {
+            int[] Kill_count = new int[2];
+            Kill_count[0] = i;
+            Kill_count[1] = 0;
+            Weapon_ID_Count.Add(Kill_count);
+        }
+
     }
 
     private void Update()
     {
         if (UI_main.ui_main.Playing)
         {
+            Weight_text.text = Player_main.player_main.Get_Weight().ToString();
+
             Timer += Time.deltaTime;
 
             if (Timer > 8)
@@ -48,6 +61,7 @@ public class GameManager : MonoBehaviour
                     {
                         Hour = 0;
                         Elapsed_time++;
+                        Elapsed_time_text.text = Elapsed_time + " 일";
 
                         if (Day < 31)
                             Day += 1;
@@ -110,4 +124,32 @@ public class GameManager : MonoBehaviour
     }
 
     public float Get_Current_Temperature() { return (float)Current_Temperature; }
+
+    // Info) 처치한 좀비 수, 주 사용 무기, 생존일수
+    int Zombies_killed_count = 0;
+    [SerializeField] UnityEngine.UI.Text Zombies_killed_count_text;
+    List<int[]> Weapon_ID_Count = new List<int[]>();   // 무기 DB 순서와 동일 // 각 노드안의 배열은 [0]: 무기index, [1]: 처치한 좀비 수
+    [SerializeField] UnityEngine.UI.Text primary_Weapon_text;
+
+    public void Set_Info_from_Server()
+    {
+        Zombies_killed_count++;
+        Zombies_killed_count_text.text = Zombies_killed_count.ToString();
+
+        int current_index = Player_main.player_main.Current_equipping_Weapon;
+        Weapon_ID_Count[current_index][1]++;
+
+        int target_index = -1;
+        int current_kill_count = 0;
+        for(int i = 0; i < Weapon_ID_Count.Count; i++)
+        {
+            if (Weapon_ID_Count[i][1] > current_kill_count)
+            {
+                current_kill_count = Weapon_ID_Count[i][1];
+                target_index = i;
+            }
+        }
+        primary_Weapon_text.text = Item_DataBase.item_database.weapons_Ins[target_index].WeaponName;
+    }
+
 }

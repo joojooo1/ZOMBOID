@@ -8,15 +8,11 @@ public class UI_State_Info : MonoBehaviour
     [SerializeField] GameObject Characteristic_Prefab_Info;
 
     public List<UI_Title_Characteristic_prefab> characteristics_On_Playing = new List<UI_Title_Characteristic_prefab>();
-    public static UI_State_Info Instance;
-
-    public UnityEngine.UI.Text player_job_text;
+    public static UI_State_Info UI_Info;
 
     private void OnEnable()
     {
-        Instance = this;
-
-
+        UI_Info = this;
 
         for (int i = 0; i < Player_Characteristic.current.characteristics_Player.Count;)
         {
