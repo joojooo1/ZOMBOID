@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 2
-  ETC_ID: 8
+  ETC_ID: 14
   ETC_Name: Duct Tape
   ETC_Name_kr: "\uAC15\uB825 \uC811\uCC29 \uD14C\uC774\uD504"
   ETC_Image: {fileID: 21300000, guid: 550fda80bccf8a1438ad4db0cda78151, type: 3}

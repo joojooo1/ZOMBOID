@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3594bc8d9c9406b4b84ceed489a766d1, type: 3}
   m_Name: Tool_CanOpener
   m_EditorClassIdentifier: 
-  type: 11
+  type: 5
   Usingtype: 0b000000
   Tool_Name: Can Opener
   Tool_Name_Kr: "\uBCD1\uB69C\uAED1 \uB530\uAC1C"
@@ -21,11 +21,6 @@ MonoBehaviour:
   Height: 2
   Width: 1
   Nesting_Depth: 1
-  Is_Equipping: 0
-  Is_TwoHand: 0
-  Equipping_Position: 
-  Is_Weapon: 0
-  Condition: 0
   Capacity_Water: 0
   Rain_factor: 0
   Is_Empty: 0
