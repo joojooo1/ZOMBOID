@@ -329,7 +329,7 @@ public class UI_inventory_Using : MonoBehaviour
 
                     break;
                 case Type.weapon:
-                    Player_main.player_main.Current_equipping_Weapon = Item_DataBase.item_database.weapons_Ins[item_ID];
+                    Player_main.player_main.Current_equipping_Weapon = item_ID;
                     break;
             }
         }

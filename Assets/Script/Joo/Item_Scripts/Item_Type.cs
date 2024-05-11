@@ -31,7 +31,7 @@ public enum Using_Type
     Stationery = 8,  // 문구류
     Medical = 9,
     Carpentry = 10,
-    tool = 11,
+    Tool = 11,
     Container = 12  // 용기
 }
 
@@ -42,6 +42,13 @@ public enum Medical_Type
     Herb = 2,
     Medical_equipment = 3,
     Pharmaceutical = 4
+}
+
+public enum Farming_Type
+{
+    Seed = 0,
+    Plant = 1,
+
 }
 
 //public enum AMMO_Type
