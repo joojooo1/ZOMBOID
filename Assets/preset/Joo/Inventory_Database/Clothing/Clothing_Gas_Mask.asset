@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_Green_Vest
+  m_Name: Clothing_Gas_Mask
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 4
+  ClothingType: 2
   Clothing_ID: 0
-  Clothing_Name: "\uD0F1\uD06C \uD0D1(\uB179\uC0C9)"
-  Clothing_Name_kr: Tank_top_Green
-  ClothingImage: {fileID: 21300000, guid: 50684dc28986de847a46df2dd1bf8cc0, type: 3}
+  Clothing_Name: "\uBC29\uB3C5\uBA74"
+  Clothing_Name_kr: GasMask
+  ClothingImage: {fileID: 21300000, guid: e772604bbbbf11648825aeaf2475276b, type: 3}
   Height: 0
   Width: 0
-  Nesting_Depth: 0
+  Nesting_Depth: 1
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
+  Item_index: 3

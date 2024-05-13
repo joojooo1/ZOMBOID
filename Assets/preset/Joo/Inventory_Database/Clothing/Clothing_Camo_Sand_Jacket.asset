@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_Dress_Shirt
+  m_Name: Clothing_Camo_Sand_Jacket
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 14
+  ClothingType: 3
   Clothing_ID: 0
-  Clothing_Name: "\uC640\uC774\uC154\uCE20"
-  Clothing_Name_kr: Dress_Shirt
-  ClothingImage: {fileID: 21300000, guid: 725ed4c491221ef4284eb149a23731fd, type: 3}
+  Clothing_Name: "\uC804\uD22C\uBCF5\uC0C1\uC758(\uC0AC\uB9C9\uC0C9)"
+  Clothing_Name_kr: Camo_Sand_Jacket
+  ClothingImage: {fileID: 21300000, guid: 84a5ec53adcb324459082e26ddab47d5, type: 3}
   Height: 0
   Width: 0
   Nesting_Depth: 0

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_Sand_Vest
+  m_Name: Clothing_Camo_Green_Jacket
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 4
+  ClothingType: 3
   Clothing_ID: 0
-  Clothing_Name: "\uD0F1\uD06C \uD0D1(\uC0AC\uB9C9)"
-  Clothing_Name_kr: Tank_Top_Sand
-  ClothingImage: {fileID: 21300000, guid: f31f7f7ed6f9ce74a932b690ea3c9fbe, type: 3}
+  Clothing_Name: "\uC804\uD22C\uBCF5\uC0C1\uC758(\uB179\uC0C9)"
+  Clothing_Name_kr: Camo_Green_Jacket
+  ClothingImage: {fileID: 21300000, guid: b5fbc9ba923586c4aae16019f7503f3c, type: 3}
   Height: 0
   Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
-  Item_index: 1
+  Item_index: 2

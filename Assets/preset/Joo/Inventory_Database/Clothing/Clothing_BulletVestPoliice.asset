@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_Dress_Shirt
+  m_Name: Clothing_BulletVestPoliice
   m_EditorClassIdentifier: 
   type: 6
-  ClothingType: 14
+  ClothingType: 4
   Clothing_ID: 0
-  Clothing_Name: "\uC640\uC774\uC154\uCE20"
-  Clothing_Name_kr: Dress_Shirt
-  ClothingImage: {fileID: 21300000, guid: 725ed4c491221ef4284eb149a23731fd, type: 3}
+  Clothing_Name: "\uACBD\uCC30\uBC29\uD0C4\uC870\uB07C"
+  Clothing_Name_kr: BulletVestPolice
+  ClothingImage: {fileID: 21300000, guid: c5105c17a06b71a48909a0845c9de84b, type: 3}
   Height: 0
   Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
-  Item_index: 3
+  Item_index: 1
