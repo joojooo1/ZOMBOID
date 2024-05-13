@@ -17,6 +17,7 @@ public class UI_Craft_window : MonoBehaviour
     List<Crafting_item> Origin_list;
     List<UI_Craft_Prefab> Crafting_item_Prefab_list;
     List<UI_Craft_Prefab> Crafting_Ingredients_Prefab_list;
+    List<UI_Craft_Prefab> Crafting_Ingredients_Tool_Prefab_list;
 
     public GameObject Crafting_Prefab;
     public Transform Crafting_Window;
@@ -37,6 +38,7 @@ public class UI_Craft_window : MonoBehaviour
         Origin_list = new List<Crafting_item>();
         Crafting_item_Prefab_list = new List<UI_Craft_Prefab>();
         Crafting_Ingredients_Prefab_list = new List<UI_Craft_Prefab>();
+        Crafting_Ingredients_Tool_Prefab_list = new List<UI_Craft_Prefab>();
 
         Add_Crafting_list();
 
@@ -192,7 +194,11 @@ public class UI_Craft_window : MonoBehaviour
             obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
             for (int i = 0; i < Origin_list[_item.item_index].Ingredients_Tool_list.Count;)
             {
+                UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                item.Set_Ingredients(Origin_list[_item.item_index], i);
 
+                Crafting_Ingredients_Tool_Prefab_list.Add(item);
+                i++;
             }
         }
 
@@ -202,8 +208,6 @@ public class UI_Craft_window : MonoBehaviour
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
-
-
 
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
                 item.Set_Ingredients(Origin_list[_item.item_index], i);
@@ -246,6 +250,7 @@ public class UI_Craft_window : MonoBehaviour
             Destroy(child.gameObject);
         }
         Crafting_Ingredients_Prefab_list.Clear();
+        Crafting_Ingredients_Tool_Prefab_list.Clear();
     }
 
     UI_Craft_Prefab Selected_item = null;

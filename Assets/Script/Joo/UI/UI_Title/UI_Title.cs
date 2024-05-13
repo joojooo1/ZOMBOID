@@ -172,31 +172,9 @@ public class UI_Title : MonoBehaviour
                     }
                 }
             }
-            for (int i = 0; i < value_List.Count; i++)
-            {
-                if (value_List[i]._type == Characteristic_Value_type.Foraging)
-                    break;
-                else
-                {
-                    if (i == value_List.Count - 1)
-                    {
-                        GameObject Totalvalue = null;
-                        Totalvalue = Instantiate(Value_Prefab, Window_value);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Create_Totalvalue("Foraging", "채집", Player_Job.fisher, Characteristic_Value_type.Foraging);
-                        Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>().Set_Characteristic_T_value(Characteristic_Value_type.Foraging, 1, 75);
-                        value_List.Add(Totalvalue.GetComponent<UI_Title_Characteristic_value_prefab>());
-                    }
-                }
-            }
-
         }
 
-        UI_main.ui_main.ui_player_state.playing_job.index = 0;
-        UI_main.ui_main.ui_player_state.playing_job.Job_name = "Angler";
-        UI_main.ui_main.ui_player_state.playing_job.Job_name_kr = "낚시꾼";
-        UI_main.ui_main.ui_player_state.playing_job.Explanation_for_Characteristic = "Knows the basics of fishing.";
-        UI_main.ui_main.ui_player_state.playing_job.Explanation_for_Characteristic_kr = "낚시의 기본을 안다.";
-        UI_main.ui_main.ui_player_state.playing_job.image = job_image[UI_main.ui_main.ui_player_state.playing_job.index];
+        UI_main.ui_main.ui_player_state.Set_Job("Angler", "낚시꾼", job_image[0]);
     }
 
     public void Job_Burglar()
@@ -358,13 +336,7 @@ public class UI_Title : MonoBehaviour
 
         }
 
-        UI_main.ui_main.ui_player_state.playing_job.index = 1;
-        UI_main.ui_main.ui_player_state.playing_job.Job_name = "Burglar";
-        UI_main.ui_main.ui_player_state.playing_job.Job_name_kr = "좀도둑";
-        UI_main.ui_main.ui_player_state.playing_job.Explanation_for_Characteristic = "Can hotwire vehicles, less chance of breaking the lock of a window.";
-        UI_main.ui_main.ui_player_state.playing_job.Explanation_for_Characteristic_kr = "차량에 열선을 연결할 수 있어 창문 잠금 장치가 파손될 가능성이 줄어듭니다.";
-        //UI_State.State_icon_main.playing_job.image = job_image[UI_State.State_icon_main.playing_job.index];
-
+        UI_main.ui_main.ui_player_state.Set_Job("Burglar", "좀도둑", job_image[1]);
     }
 
     public void Add_value_list(string name, string name_kr, float level, float add_value, Player_Job Job, Characteristic_Value_type type)
@@ -449,12 +421,7 @@ public class UI_Title : MonoBehaviour
             }
         }
 
-        UI_main.ui_main.ui_player_state.playing_job.index = 2;
-        UI_main.ui_main.ui_player_state.playing_job.Job_name = "veteran";
-        UI_main.ui_main.ui_player_state.playing_job.Job_name_kr = "퇴역 군인";
-        UI_main.ui_main.ui_player_state.playing_job.Explanation_for_Characteristic = "War... War never changes.";
-        UI_main.ui_main.ui_player_state.playing_job.Explanation_for_Characteristic_kr = "전쟁... 전쟁은 결코 변하지 않는다.";
-        //UI_State.State_icon_main.playing_job.image = job_image[UI_State.State_icon_main.playing_job.index];
+        UI_main.ui_main.ui_player_state.Set_Job("Veteran", "퇴역 군인", job_image[2]);
     }
 
 }

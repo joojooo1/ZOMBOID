@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
 
+    public GameObject Option_Canvas;
+
     double Temperature = 36.0f;
     double Current_Temperature = 0f;
 
@@ -45,6 +47,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Option_Canvas.activeSelf)
+            UI_main.ui_main.Playing = false;
+        else
+            UI_main.ui_main.Playing = true;
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!Option_Canvas.activeSelf)
+                Option_Canvas.SetActive(true);
+        }
+
         if (UI_main.ui_main.Playing)
         {
             Weight_text.text = Player_main.player_main.Get_Weight().ToString();
