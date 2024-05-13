@@ -325,134 +325,115 @@ public class Player_main : MonoBehaviour
                 }
             }
 
-        }
-
-        if (Is_Running)
-        {
-            Running_Timer += Time.deltaTime;
-            if(Running_Timer > 10f)
+            if (Is_Running)
             {
-                Check_Probability_of_Falling();
-                Running_Timer = 0;
-            }
-        }
-
-
-        /* -------------------------- Is_Eating -------------------------- */
-        // 음식먹을 때 Calculating_Food_Poisoning 호출
-
-        if (Is_food_poisoning)
-        {
-            Food_Poison_Timer += Time.deltaTime;
-            if (Food_Poison_Timer > Time_for_food_poisoning)
-            {
-                Food_Poison_Timer = 0;
-                Is_food_poisoning = false;
-            }
-            else if (Food_Poison_Timer > 0 && Food_Poison_Timer < 200)
-            {
-                playerMoodles.Moodle_Sick.Set_Moodles_state(0.03f);
-            }
-        }
-
-        /************************************* Player_Heavy_Load **************************************/
-        if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
-            Is_Running = false;
-
-        /****************** Player_Has_a_Cold ******************/
-        if (Is_Cold)
-        {
-            Cold_Timer += Time.deltaTime;
-            if (Cold_Timer > (20 / playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_step()))
-            {
-                /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
-            }
-        }
-
-        /****************** Player_Is_Reading ******************/
-        if (Is_Reading)
-        {
-            Read_Timer += Time.deltaTime;
-            if(Read_Timer >= 5f)
-            {
-                Skillbook_Readpage++;
-                Read_Timer = 0;
-
-                switch (current_SkillBook_type)   // 다 읽으면 멈춤
+                Running_Timer += Time.deltaTime;
+                if (Running_Timer > 10f)
                 {
-                    case Skill_Type.Fishing:
-                        Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Fishing_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    //case Skill_Type.Hunting:
-                    //    Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                    //    if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                    //    {
-                    //        Is_Reading = false;
-                    //    }
-                    //    break;
-                    //case Skill_Type.Foraging:
-                    //    Skill.Foraging_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                    //    if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                    //    {
-                    //        Is_Reading = false;
-                    //    }
-                    //    break;
-                    //case Skill_Type.Riding:
-                    //    Skill.Riding_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                    //    if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                    //    {
-                    //        Is_Reading = false;
-                    //    }
-                    //    break;                    
-                    case Skill_Type.Carpentry:
-                        Skill.Carpentry_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if(Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Cooking:
-                        Skill.Cooking_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Cooking_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Farming:
-                        Skill.Farming_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Farming_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.FirstAid:
-                        Skill.FirstAid_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.FirstAid_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Electrical:
-                        Skill.Electrical_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Electrical_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
+                    Check_Probability_of_Falling();
+                    Running_Timer = 0;
                 }
             }
+
+
+            /* -------------------------- Is_Eating -------------------------- */
+            // 음식먹을 때 Calculating_Food_Poisoning 호출
+
+            if (Is_food_poisoning)
+            {
+                Food_Poison_Timer += Time.deltaTime;
+                if (Food_Poison_Timer > Time_for_food_poisoning)
+                {
+                    Food_Poison_Timer = 0;
+                    Is_food_poisoning = false;
+                }
+                else if (Food_Poison_Timer > 0 && Food_Poison_Timer < 200)
+                {
+                    playerMoodles.Moodle_Sick.Set_Moodles_state(0.03f);
+                }
+            }
+
+            /************************************* Player_Heavy_Load **************************************/
+            if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
+                Is_Running = false;
+
+            /****************** Player_Has_a_Cold ******************/
+            if (Is_Cold)
+            {
+                Cold_Timer += Time.deltaTime;
+                if (Cold_Timer > (20 / playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_step()))
+                {
+                    /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
+                }
+            }
+
+            /****************** Player_Is_Reading ******************/
+            if (Is_Reading)
+            {
+                Read_Timer += Time.deltaTime;
+                if (Read_Timer >= 5f)
+                {
+                    Skillbook_Readpage++;
+                    Read_Timer = 0;
+
+                    switch (current_SkillBook_type)   // 다 읽으면 멈춤
+                    {
+                        case Skill_Type.Fishing:
+                            Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Fishing_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Carpentry:
+                            Skill.Carpentry_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Cooking:
+                            Skill.Cooking_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Cooking_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Farming:
+                            Skill.Farming_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Farming_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.FirstAid:
+                            Skill.FirstAid_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.FirstAid_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Electrical:
+                            Skill.Electrical_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Electrical_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Read_Timer = 0;
+                current_SKillBook_level = -1;
+                Skillbook_Readpage = -1;
+                current_SkillBook_type = Skill_Type.None;
+            }
+
         }
-        else
-        {
-            Read_Timer = 0;
-            current_SKillBook_level = -1;
-            Skillbook_Readpage = -1;
-            current_SkillBook_type = Skill_Type.None;
-        }
+
+
 
 
     }

@@ -139,7 +139,7 @@ public class Crafting_item
 
     public void Add_Ingredients(Type _DB_type, int _DB_ID, int value)
     {
-        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, value);
+        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, value, false);
         if(Ingredients_list.Count > 0)
         {
             for (int i = 0; i < Ingredients_list.Count; i++)
@@ -165,7 +165,7 @@ public class Crafting_item
 
     public void Add_Ingredients_Tool(Type _DB_type, int _DB_ID, int value)
     {
-        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, value);
+        Crafting_Ingredients Ingredients = new Crafting_Ingredients(_DB_type, _DB_ID, value, true);
         if (Ingredients_Tool_list.Count > 0)
         {
             for (int i = 0; i < Ingredients_Tool_list.Count; i++)
@@ -250,13 +250,15 @@ public class Crafting_Ingredients
     public string Ingredients_name_kr;
     public int Value;  // 필요한 갯수
     public bool fulfill; // 완성조건
+    public bool Is_Tool;  // 도구인지
 
-    public Crafting_Ingredients(Type _DB_type, int _DB_ID, int value)
+    public Crafting_Ingredients(Type _DB_type, int _DB_ID, int value, bool is_Tool)
     {
         Ingredients_DB_type = _DB_type;
         Ingredients_DB_ID = _DB_ID;
         Value = value;
         fulfill = false;
+        Is_Tool = is_Tool;
 
         switch (_DB_type)
         {
@@ -312,7 +314,6 @@ public class Crafting_Ingredients
                 break;
             default: break;
         }
-
     }
 }
 

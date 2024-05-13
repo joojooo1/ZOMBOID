@@ -3,16 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Playing_job
-{
-    public string Job_name;
-    public string Job_name_kr;
-    public string Explanation_for_Characteristic;
-    public string Explanation_for_Characteristic_kr;
-    public int index;
-    public Sprite image;
-}
-
 public class UI_State : MonoBehaviour, IPointerClickHandler
 {
     public UI_State_Skill ui_state_skill;
@@ -33,7 +23,8 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
 
     public List<UI_State_detailwindow> Damagelist = new List<UI_State_detailwindow>();
 
-    public Playing_job playing_job = new Playing_job();
+    public UnityEngine.UI.Text job_text;
+    public UnityEngine.UI.Image job_image;
 
     private void Start()
     {
@@ -151,6 +142,20 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
 
 
 
+    }
+
+    public void Set_Job(string _job_name, string _job_name_kr, Sprite _job_image)
+    {
+        if (UI_main.ui_main.player_Setting_Language_to_Korean)
+        {
+            job_text.text = _job_name_kr;
+        }
+        else
+        {
+            job_text.text = _job_name;
+        }
+
+        job_image.sprite = _job_image;
     }
 }
 
