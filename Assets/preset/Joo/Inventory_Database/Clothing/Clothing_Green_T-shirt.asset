@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97bcb748a7413104dba225ccce1b4818, type: 3}
-  m_Name: Clothing_Long_Sleeve_PinkT-shirt
+  m_Name: Clothing_Green_T-shirt
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 15
   Clothing_ID: 0
-  Clothing_Name: "\uAE34\uD314\uD2F0\uC154\uCE20(\uBD84\uD64D)"
-  Clothing_Name_kr: Long_Sleeve_Pink
-  ClothingImage: {fileID: 21300000, guid: 5ce4b00435954e143b1a6cd740fbfdaa, type: 3}
+  Clothing_Name: "\uD0F1\uD06C \uD0D1(\uB179\uC0C9)"
+  Clothing_Name_kr: Tank_top_Green
+  ClothingImage: {fileID: 21300000, guid: 50684dc28986de847a46df2dd1bf8cc0, type: 3}
   Height: 0
   Width: 0
   Nesting_Depth: 0
   Is_Equipping: 0
   Equipping_Position: 0
   ClothingWeight: 0
-  Item_index: 2
+  Item_index: 0

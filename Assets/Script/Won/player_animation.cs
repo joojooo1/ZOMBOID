@@ -58,7 +58,7 @@ public class player_animation : MonoBehaviour
             animatorsetBool("Strife", true);
             Vector3 input = (audioobject.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
             input.Normalize();
-
+            playernav.GetComponent<Player_main>().Is_Aiming = true;
             animatorsetFloat("x", input.x);
             animatorsetFloat("z", -input.z);
             if (Input.GetMouseButton(0) && !atk)
@@ -71,6 +71,7 @@ public class player_animation : MonoBehaviour
         }
         else
         {
+            playernav.GetComponent<Player_main>().Is_Aiming = false;
             animatorsetBool("Strife", false);
         }
         if (Input.GetKeyDown(KeyCode.Q))

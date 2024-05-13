@@ -70,12 +70,12 @@ public class zom_pos : MonoBehaviour
         nav.SetDestination(new Vector3(pos.x, pos.y, 0));
     }
     
-    public void zomon()
+    public void zomon(GameObject player)
     {
         targetpos.SetActive(true);
         //zom_Targetpos.StartCoroutine("find");
     }
-    public void zomoff()
+    public void zomoff(GameObject player)
     {
         //zom_Targetpos.StopCoroutine("find");
         targetpos.SetActive(false);
