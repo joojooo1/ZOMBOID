@@ -103,6 +103,6 @@ public class player_rot : MonoBehaviour
     }
     public void getzomda(GameObject Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)
     {
-        playerpos.GetComponent<Player_main>().Calculate_HitForce(Zombie_Attack, Zom_Type, IsBack, IsDown);
+        playerpos.GetComponent<player_movement>().player_Main.Calculate_HitForce(Zombie_Attack, Zom_Type, IsBack, IsDown);
     }
 }
