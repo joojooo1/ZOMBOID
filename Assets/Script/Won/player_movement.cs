@@ -13,6 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class player_movement : MonoBehaviour
 {
+    public Player_main player_Main;
     private NavMeshAgent navMeshAgent;
     public float Playermovement_speed = 7;
     public float Playerturnspeed = 10;
@@ -42,7 +43,7 @@ public class player_movement : MonoBehaviour
     bool Strife_set = false;
     private void Update()
     {
-        navMeshAgent.speed = this.GetComponent<Player_main>().Get_Moving_Speed();
+        navMeshAgent.speed = player_Main.Get_Moving_Speed();
         if (!aser)
         {
             inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") + (UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
@@ -323,16 +324,16 @@ public class player_movement : MonoBehaviour
         switch (anim)
         {
             case "Is_Aiming":
-                this.GetComponent<Player_main>().Is_Aiming = action;
+                player_Main.Is_Aiming = action;
                 break;
             case "Is_Running":
-                this.GetComponent<Player_main>().Is_Running = action;
+                player_Main.Is_Running = action;
                 break;
             case "Is_Crouch":
-                this.GetComponent<Player_main>().Is_Crouch = action;
+                player_Main.Is_Crouch = action;
                 break;
             case "Is_Crawl":
-                this.GetComponent<Player_main>().Is_Crawl = action;
+                player_Main.Is_Crawl = action;
                 break;
         }
     }
