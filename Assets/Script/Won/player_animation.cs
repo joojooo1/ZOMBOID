@@ -32,61 +32,64 @@ public class player_animation : MonoBehaviour
         verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
         float HorizontalInput = Input.GetAxisRaw("Horizontal");
         HorizontalInput = Mathf.Clamp(HorizontalInput, -1f, 1f);
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        if (playernav.GetComponent<player_movement>().uI_Main.Playing)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
-                animatorsetBool("run", true);
-                
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    animatorsetBool("run", true);
+
+                }
+                else
+                {
+                    animatorsetBool("walk", true);
+
+                }
             }
             else
+            {
+
+                animatorsetBool("run", false);
+                animatorsetBool("walk", false);
+            }
+            if (Input.GetMouseButton(1))
+            {
+
+                animatorsetBool("run", false);
+                animatorsetBool("Strife", true);
+                Vector3 input = (audioobject.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
+                input.Normalize();
+                playernav.GetComponent<player_movement>().player_Main.Is_Aiming = true;
+                animatorsetFloat("x", input.x);
+                animatorsetFloat("z", -input.z);
+                if (Input.GetMouseButton(0) && !atk)
+                {
+                    atk = true;
+                    animatersetTrigger("ATK");
+
+                }
+
+            }
+            else
+            {
+                playernav.GetComponent<player_movement>().player_Main.Is_Aiming = false;
+                animatorsetBool("Strife", false);
+            }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (test_weapon_type < 4)
+                {
+                    test_weapon_type++;
+                }
+                else
+                    test_weapon_type = 0;
+                animatorsetFloat("weapon_type", test_weapon_type);
+            }
+            if (playernav.GetComponent<player_movement>().aser)
             {
                 animatorsetBool("walk", true);
-               
             }
-        }
-        else
-        {
-            
-            animatorsetBool("run", false);
-            animatorsetBool("walk", false);
-        }
-        if (Input.GetMouseButton(1))
-        {
-            
-            animatorsetBool("run", false);
-            animatorsetBool("Strife", true);
-            Vector3 input = (audioobject.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
-            input.Normalize();
-            playernav.GetComponent<player_movement>().player_Main.Is_Aiming = true;
-            animatorsetFloat("x", input.x);
-            animatorsetFloat("z", -input.z);
-            if (Input.GetMouseButton(0) && !atk)
-            {
-                atk = true;
-                animatersetTrigger("ATK");
-                
-            }
-
-        }
-        else
-        {
-            playernav.GetComponent<player_movement>().player_Main.Is_Aiming = false;
-            animatorsetBool("Strife", false);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (test_weapon_type < 4)
-            {
-                test_weapon_type++;
-            }
-            else
-                test_weapon_type = 0;
-            animatorsetFloat("weapon_type", test_weapon_type);
-        }
-        if (playernav.GetComponent<player_movement>().aser)
-        {
-            animatorsetBool("walk", true);
         }
     }
 
