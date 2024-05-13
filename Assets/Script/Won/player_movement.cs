@@ -13,6 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class player_movement : MonoBehaviour
 {
+    public UI_main uI_Main;
     public Player_main player_Main;
     private NavMeshAgent navMeshAgent;
     public float Playermovement_speed = 7;
@@ -66,79 +67,84 @@ public class player_movement : MonoBehaviour
                 }
             }
         }
-        if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
+        if (uI_Main.Playing)
         {
-            run_set =true;
-            playeranimetion("Is_Running", run_set);
-        }
-        else if (UnityEngine.Input.GetMouseButton(1))
-        {
-            Strife_set = true;
-            playeranimetion("Is_Aiming", Strife_set);
-        }
-        else
-        {
-            Strife_set = false;
-            run_set = false;
-            playeranimetion("Is_Running", run_set);
-            playeranimetion("Is_Aiming", Strife_set);
+            if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
+            {
+                run_set = true;
+                playeranimetion("Is_Running", run_set);
+            }
+            else if (UnityEngine.Input.GetMouseButton(1))
+            {
+                Strife_set = true;
+                playeranimetion("Is_Aiming", Strife_set);
+            }
+            else
+            {
+                Strife_set = false;
+                run_set = false;
+                playeranimetion("Is_Running", run_set);
+                playeranimetion("Is_Aiming", Strife_set);
+            }
         }
     }
     public bool aser = false;
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        if (navMeshAgent.enabled && UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
+        if (uI_Main.Playing)
         {
-            if (aser)
+            if (navMeshAgent.enabled && UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
             {
-                navMeshAgent.ResetPath();
-                aser = false;
-            }
-            navMeshAgent.Move(inputpos);
-        }
-        if (!navMeshAgent.enabled && !low_Fen)
-        {
-            if (UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
-            {
-                //transform.position = new Vector3 (test.x-0.5f,test.y -1f,0);
-                for (int i = 0; i < playeranime.Length; i++)
+                if (aser)
                 {
-                    if (playeraimeobject[i].activeSelf)
-                    {
-
-                        playeranime[i].animatorsetBool(anima_name, false);
-
-                        playeranime[i].animatorsetting(1,0.7f);
-                    }
+                    navMeshAgent.ResetPath();
+                    aser = false;
                 }
-                navMeshAgent.enabled = true;
+                navMeshAgent.Move(inputpos);
             }
-        }
-
-        if (low_Fen)
-        {
-
-            transform.position = Vector3.Lerp(transform.position, Fence, Time.deltaTime * 3);
-            if (Vector3.Distance(transform.position, Fence) < 0.1)
+            if (!navMeshAgent.enabled && !low_Fen)
             {
-                low_Fen = false;
-                for (int i = 0; i < playeranime.Length; i++)
+                if (UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
                 {
-                    if (playeraimeobject[i].activeSelf)
+                    //transform.position = new Vector3 (test.x-0.5f,test.y -1f,0);
+                    for (int i = 0; i < playeranime.Length; i++)
                     {
-                        playeranime[i].animatorsetting(1,0.7f);
+                        if (playeraimeobject[i].activeSelf)
+                        {
+
+                            playeranime[i].animatorsetBool(anima_name, false);
+
+                            playeranime[i].animatorsetting(1, 0.7f);
+                        }
+                    }
+                    navMeshAgent.enabled = true;
+                }
+            }
+
+            if (low_Fen)
+            {
+
+                transform.position = Vector3.Lerp(transform.position, Fence, Time.deltaTime * 3);
+                if (Vector3.Distance(transform.position, Fence) < 0.1)
+                {
+                    low_Fen = false;
+                    for (int i = 0; i < playeranime.Length; i++)
+                    {
+                        if (playeraimeobject[i].activeSelf)
+                        {
+                            playeranime[i].animatorsetting(1, 0.7f);
+
+                        }
 
                     }
-
+                    navMeshAgent.enabled = true;
                 }
-                navMeshAgent.enabled = true;
             }
-        }
-        if (UnityEngine.Input.GetKeyDown(KeyCode.F11))
-        {
-            animepos(new Vector3(0, 0, 0), "smoking");
+            if (UnityEngine.Input.GetKeyDown(KeyCode.F11))
+            {
+                animepos(new Vector3(0, 0, 0), "smoking");
+            }
         }
     }
     void playergoseverpos(Vector3 playergoseverpos)
