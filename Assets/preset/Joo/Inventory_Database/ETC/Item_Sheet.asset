@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 7
-  ETC_ID: 6
+  ETC_ID: 9
   ETC_Name: Sheet
   ETC_Name_kr: "\uCC9C"
   ETC_Image: {fileID: 21300000, guid: eba6609c23b5b9a4e9300348ad15450e, type: 3}

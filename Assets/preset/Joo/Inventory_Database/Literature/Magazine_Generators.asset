@@ -17,17 +17,15 @@ MonoBehaviour:
   LiteratureSkillType: 8
   PowerSources_Type: 5
   created: 0
-  Literature_ID: 24
+  Literature_ID: 19
   Height: 1
   Width: 1
   Nesting_Depth: 1
   LiteratureName: How to Use Generators
   LiteratureName_Kr: "\uBC1C\uC804\uAE30\uB97C \uC0AC\uC6A9\uD558\uB294 \uBC29\uBC95"
   LiteratureWeight: 0.1
-  Literature_Image: {fileID: 21300000, guid: 7857391dd8ef6a146985376ec7a76b8a, type: 3}
+  Literature_Image: {fileID: 21300000, guid: 373c0f4d66913a34e80eea3a6f4d6e65, type: 3}
   Literature_Level: 7
-  Literature_Page: 1
-  Literature_Multiplier: 1
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0

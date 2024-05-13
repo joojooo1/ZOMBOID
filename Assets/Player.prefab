@@ -1105,7 +1105,6 @@ MonoBehaviour:
   player_HP: {fileID: 1046426336433378471}
   playerMoodles: {fileID: 3195372121684297361}
   crafting_recipe: {fileID: 136947771688710300}
-  Weight_text: {fileID: 0}
   Weight: 83
   Calories: 300
   Satiety: 0
@@ -1126,7 +1125,7 @@ MonoBehaviour:
   ability_Read: 1
   ability_Hear: 1
   Is_Equipping_Weapons: 0
-  Current_equipping_Weapon: {fileID: 0}
+  Current_equipping_Weapon: 3
   Is_Aiming: 0
   Is_Running: 0
   Is_Crouch: 0

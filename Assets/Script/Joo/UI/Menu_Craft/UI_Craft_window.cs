@@ -17,10 +17,12 @@ public class UI_Craft_window : MonoBehaviour
     List<Crafting_item> Origin_list;
     List<UI_Craft_Prefab> Crafting_item_Prefab_list;
     List<UI_Craft_Prefab> Crafting_Ingredients_Prefab_list;
+    List<UI_Craft_Prefab> Crafting_Ingredients_Tool_Prefab_list;
 
     public GameObject Crafting_Prefab;
     public Transform Crafting_Window;
     public GameObject Crafting_Ingredients_Prefab;
+    public GameObject Crafting_Ingredients_Tool_Prefab;
     public Transform Crafting_Ingredients_Window;
     public GameObject Crafting_Ins_item;
     public Transform Crafting_Ins_Window;
@@ -36,6 +38,7 @@ public class UI_Craft_window : MonoBehaviour
         Origin_list = new List<Crafting_item>();
         Crafting_item_Prefab_list = new List<UI_Craft_Prefab>();
         Crafting_Ingredients_Prefab_list = new List<UI_Craft_Prefab>();
+        Crafting_Ingredients_Tool_Prefab_list = new List<UI_Craft_Prefab>();
 
         Add_Crafting_list();
 
@@ -96,7 +99,7 @@ public class UI_Craft_window : MonoBehaviour
                     }
                 }
                 break;
-            case Crafting_type.Crafting_Furniture:
+            case Crafting_type.Crafting_Installation:
                 if (UI_Craft.UI_Craft_main.Crafting_Furniture_list != null)
                 {
                     for (int i = 0; i < UI_Craft.UI_Craft_main.Crafting_Furniture_list.Count; i++)
@@ -162,7 +165,9 @@ public class UI_Craft_window : MonoBehaviour
             }
             Crafting_item_Prefab_list[k].item_Image.color = tmp;
         }
-
+        //0509 JY
+        Inventory_Player_Shown.InvPS.Clearing_Ready_Crafting();
+        //0509 JY
         Clear_Ingredients_Window();
         Ins_Ingredients_Window(Crafting_item_Prefab_list[index]);
     }
@@ -183,17 +188,35 @@ public class UI_Craft_window : MonoBehaviour
 
     public void Ins_Ingredients_Window(UI_Craft_Prefab _item)
     {
-        if(_item.item_Info.item_type != Crafting_type.Crafting_Cook)
+        if (Origin_list[_item.item_index].Ingredients_Tool_list.Count > 0)
+        {
+            GameObject obj = null;
+            obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+            for (int i = 0; i < Origin_list[_item.item_index].Ingredients_Tool_list.Count;)
+            {
+                UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                item.Set_Ingredients(Origin_list[_item.item_index], i);
+
+                Crafting_Ingredients_Tool_Prefab_list.Add(item);
+                i++;
+            }
+        }
+
+        if (_item.item_Info.item_type != Crafting_type.Crafting_Cook)
         {
             for (int i = 0; i < Origin_list[_item.item_index].Ingredients_list.Count;)
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
                 item.Set_Ingredients(Origin_list[_item.item_index], i);
+                
                 Crafting_Ingredients_Prefab_list.Add(item);
                 i++;
             }
+
+
         }
         else
         {
@@ -202,7 +225,8 @@ public class UI_Craft_window : MonoBehaviour
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients_Box(i);                
+                item.Set_Ingredients_Box(i);
+
                 Crafting_Ingredients_Prefab_list.Add(item);
                 i++;
             }
@@ -226,6 +250,7 @@ public class UI_Craft_window : MonoBehaviour
             Destroy(child.gameObject);
         }
         Crafting_Ingredients_Prefab_list.Clear();
+        Crafting_Ingredients_Tool_Prefab_list.Clear();
     }
 
     UI_Craft_Prefab Selected_item = null;
@@ -241,9 +266,17 @@ public class UI_Craft_window : MonoBehaviour
             }
         }
 
-        if (Selected_item != null && check == false)
+        if (Selected_item != null && check == false)//여기에 재료 조건문 추가
         {
-            if (type != Crafting_type.Crafting_Furniture)   // 재료가 있는지 확인하고 있으면 생성하도록 구현해야함
+            //0509 JY
+            
+
+            if (!Inventory_Player_Shown.InvPS.Checking_Crafting_Canbe())
+            {
+                return;
+            }
+            //0509 JY
+            if (type != Crafting_type.Crafting_Installation)   // 재료가 있는지 확인하고 있으면 생성하도록 구현해야함
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ins_item, Crafting_Ins_Window);

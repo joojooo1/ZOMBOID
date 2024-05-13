@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using FreeNet;
+using VirusWarGameServer;
 
 public class Inventory_Library : MonoBehaviour
 {
     public static Inventory_Library IL;
     //서버에서 최초접속자 호스트로 지정
 
-    bool Is_Host = false;
     public List<short[,,]> Inventory_DB;
 
     short[,,] packageExample_8x6 =
@@ -122,19 +123,19 @@ public class Inventory_Library : MonoBehaviour
     short[,,] packageExample_2x4 =
     {
         {
-            {0,0},
-            {0,0},
-            {0,0},
-            {0,0}
-        },
-        {
-            {0,0},
+            {9,0},
             {0,0},
             {0,0},
             {0,0}
         },
         {
+            {6,0},
             {0,0},
+            {0,0},
+            {0,0}
+        },
+        {
+            {3,0},
             {0,0},
             {0,0},
             {0,0}
@@ -303,15 +304,6 @@ public class Inventory_Library : MonoBehaviour
         //}
 
     }
-    public void Setting_ThisPlayer_Host()
-    {
-        Is_Host = true;
-    }
-    public bool Getting_IsThisPlayer_Host()
-    {
-        return Is_Host;
-    }
-
     public short Adding_New_Package(short[,,] Packages)
     {
         //db에 패키지 추가 고유번호 반환
@@ -553,4 +545,56 @@ public class Inventory_Library : MonoBehaviour
         }
     }
 
+    public void Syncronize_Packages_If_Host(int Req_SN)
+    {
+        Debug.Log("LLLLLLLLLLLLLLLLLLLL");
+        for (int Db_Count = 1;Db_Count < Inventory_DB.Count; Db_Count++)
+        {
+            int Length_Y=Inventory_DB[Db_Count].GetLength(1);
+            int Length_X=Inventory_DB[Db_Count].GetLength(2);
+            for(int Ly = 0; Ly < Length_Y; Ly++)
+            {
+                for (int Lx = 0; Lx < Length_X; Lx++)
+                {
+                    if (Inventory_DB[Db_Count][0, Ly, Lx] != 0)
+                    {
+                        CPacket msg = CPacket.create((short)PROTOCOL.FIRST_SYNC_REQTOHOST); // 프로토콜 수정
+                        int locationPacket = 1000000000;
+                        int DataPacket = 1000000000;
+
+                        locationPacket += Db_Count * 10000;
+                        locationPacket += Ly * 100;
+                        locationPacket += Lx * 1;
+                        for (int deep = 0; deep < 5; deep++)
+                        {
+                            //2,3,2,1,etc
+                            switch (deep)
+                            {
+                                case 0:
+                                    DataPacket += Inventory_DB[Db_Count][deep, Ly, Lx] * 10000000;//7
+                                    break;
+                                case 1:
+                                    DataPacket += Inventory_DB[Db_Count][deep, Ly, Lx] * 10000;//4
+                                    break;
+                                case 2:
+                                    DataPacket += Inventory_DB[Db_Count][deep, Ly, Lx] * 100;//2
+                                    break;
+                                case 3:
+                                    DataPacket += Inventory_DB[Db_Count][deep, Ly, Lx] * 10;//1
+                                    break;
+                                case 4:
+                                    DataPacket += Inventory_DB[Db_Count][deep, Ly, Lx] * 1;//0
+                                    break;
+                            }
+                            
+                        }
+                        msg.push(locationPacket);
+                        msg.push(DataPacket);
+                        msg.push(Req_SN);
+                        CNetworkManager.CNetManager.send(msg);
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75540daaa13ebba478e67698195564d5, type: 3}
+  m_Name: Item_MetalSheet
+  m_EditorClassIdentifier: 
+  type: 3
+  Usingtype: 7
+  ETC_ID: 6
+  ETC_Name: Metal Sheet
+  ETC_Name_kr: "\uAE08\uC18D\uD310"
+  ETC_Image: {fileID: 21300000, guid: bbbde25b60e61d4419653034cf63585f, type: 3}
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
+  Is_Consumable: 1
+  ETC_Weight: 1.5
+  ETC_Capacity: 0
+  ETC_value: 0

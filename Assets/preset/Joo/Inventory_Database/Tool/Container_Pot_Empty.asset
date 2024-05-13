@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3594bc8d9c9406b4b84ceed489a766d1, type: 3}
   m_Name: Container_Pot_Empty
   m_EditorClassIdentifier: 
-  type: 11
+  type: 5
   Usingtype: 040000000c000000
   Tool_Name: Cooking Pot
   Tool_Name_Kr: "\uB0C4\uBE44"
@@ -21,11 +21,6 @@ MonoBehaviour:
   Height: 3
   Width: 3
   Nesting_Depth: 1
-  Is_Equipping: 0
-  Is_TwoHand: 0
-  Equipping_Position: 
-  Is_Weapon: 0
-  Condition: 0
   Capacity_Water: 10
   Rain_factor: 0.5
   Is_Empty: 1

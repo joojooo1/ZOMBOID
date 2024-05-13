@@ -17,7 +17,7 @@ MonoBehaviour:
   LiteratureSkillType: 8
   PowerSources_Type: 5
   created: 0
-  Literature_ID: 29
+  Literature_ID: 21
   Height: 1
   Width: 1
   Nesting_Depth: 1
@@ -26,8 +26,6 @@ MonoBehaviour:
   LiteratureWeight: 0.1
   Literature_Image: {fileID: 21300000, guid: 15a5e17938dcf2342a065c68a92242a5, type: 3}
   Literature_Level: 9
-  Literature_Page: 1
-  Literature_Multiplier: 1
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0

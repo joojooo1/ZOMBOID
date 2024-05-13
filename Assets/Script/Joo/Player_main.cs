@@ -35,10 +35,7 @@ public class Player_main : MonoBehaviour
     public PlayerState playerState;
     public Player_HP player_HP;
     public Player_Moodles playerMoodles;
-    //public UI_inventory_Using ui_inven_using;
     public Player_Crafting crafting_recipe;
-
-    [SerializeField] UnityEngine.UI.Text Weight_text;
 
     /* --------------------------------------------------------------------------------- */
     // 직업특성 등 반영안된 기본 능력치 (임의로 설정)
@@ -66,7 +63,7 @@ public class Player_main : MonoBehaviour
     public bool ability_Hear = true;
 
     public bool Is_Equipping_Weapons = false;
-    public Item_Weapons Current_equipping_Weapon = null;  // 무기 착용시, 착용한 무기로 변경
+    public int Current_equipping_Weapon = 3;  // 무기 착용시, 착용한 무기로 변경
     public bool Is_Aiming = false;  // 조준
     public bool Is_Running = false;  // 달릴때
     public bool Is_Crouch = false;  // 쪼그려앉을때
@@ -81,6 +78,10 @@ public class Player_main : MonoBehaviour
     public bool Is_Eating = false;
     public bool Is_food_poisoning = false;  // 식중독
     public bool Is_Reading = false;
+
+    public bool Is_Fighting = false;  // 싸우는 중인지 확인
+
+    public bool near_Zombie = false;
 
     public float Likelihood_of_food_poisoning = 0.2f;  // 식중독에 걸릴 확률
     public float Time_for_food_poisoning = 200f;  // 식중독 유지 시간
@@ -99,8 +100,6 @@ public class Player_main : MonoBehaviour
         player_main = this;
 
         Skill = GetComponent<PlayerSkill>();
-        Weight_text.text = Weight.ToString();
-
     }
 
     float Calories_Timer = 0.0f;
@@ -112,23 +111,24 @@ public class Player_main : MonoBehaviour
     float Sleeping_Timer = 0.0f;
     float Food_Poison_Timer = 0.0f;
     float Read_Timer = 5.0f;
+    float Running_Timer = 0.0f;
+
+    float Sprinting_Timer = 0.0f;
+    float Lightfooted_Timer = 0.0f;   // 싸움이 끝났을 때부터 
+    float Nimble_Timer = 0.0f;
+    float Sneaking_Timer = 0.0f;
 
     void Update()
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.P))
         {
-            GameObject a = new GameObject();
-            Calculate_HitForce(a, "easy", false, false);
+            //GameObject a = new GameObject();
+            //Calculate_HitForce(a, "easy", false, false);
+            Current_equipping_Weapon = 8;
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            //Skill.Fishing_Level.SetEXP(700);
-            //Debug.Log("current_SkillBook_type :" + current_SkillBook_type);
-            //Debug.Log("current_SKillBook_level :" + current_SKillBook_level);
-            //Debug.Log("Skillbook_Readpage :" + Skillbook_Readpage);
-            //Is_Reading = false;
-
-            
+            GameManager.gameManager.Set_Info_from_Server();
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
@@ -139,11 +139,10 @@ public class Player_main : MonoBehaviour
             //current_SKillBook_level = 1;
             //Skillbook_Readpage = 0;
             //Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-
+            Current_equipping_Weapon = 7;
 
         }
 
-        Weight_text.text = Weight.ToString();
         if (!ability_Sleeping) { Is_Sleeping = false; }
         if (!ability_Eat) { Is_Eating = false; }
         if (!ability_Read) { Is_Reading = false; }
@@ -154,7 +153,7 @@ public class Player_main : MonoBehaviour
             Satiety_Timer += Time.deltaTime;
             if (Satiety_Timer > 1.0f)  // 포만감 1초에 0.25씩 감소
             {
-                Satiety -= (Satiety_value * Rate_of_Hunger_increase );  // 포만감 -300 ~ 300
+                Satiety -= (Satiety_value * Rate_of_Hunger_increase);  // 포만감 -300 ~ 300
                 if (Satiety < -300) { Satiety = -300.0f; }
                 else if (Satiety > 300) { Satiety = 300.0f; }
 
@@ -284,123 +283,159 @@ public class Player_main : MonoBehaviour
                     }
                 }
             }
-        }
 
-        /* -------------------------- Is_Eating -------------------------- */
-        // 음식먹을 때 Calculating_Food_Poisoning 호출
-
-        if (Is_food_poisoning)
-        {
-            Food_Poison_Timer += Time.deltaTime;
-            if (Food_Poison_Timer > Time_for_food_poisoning)
+            /**************************** Player_GeneralSkill_exp ( bool값이 false로 바뀌어도 타이머 값 초기화 안됨 ) ****************************/
+            if (Is_Running)
             {
-                Food_Poison_Timer = 0;
-                Is_food_poisoning = false;
-            }
-            else if (Food_Poison_Timer > 0 && Food_Poison_Timer < 200)
-            {
-                playerMoodles.Moodle_Sick.Set_Moodles_state(0.03f);
-            }
-        }
-
-        /************************************* Player_Heavy_Load **************************************/
-        if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
-            Is_Running = false;
-
-        /****************** Player_Has_a_Cold ******************/
-        if (Is_Cold)
-        {
-            Cold_Timer += Time.deltaTime;
-            if (Cold_Timer > (20 / playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_step()))
-            {
-                /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
-            }
-        }
-
-        /****************** Player_Is_Reading ******************/
-        if (Is_Reading)
-        {
-            Read_Timer += Time.deltaTime;
-            if(Read_Timer >= 5f)
-            {
-                Skillbook_Readpage++;
-                Read_Timer = 0;
-
-                switch (current_SkillBook_type)   // 다 읽으면 멈춤
+                Sprinting_Timer += Time.deltaTime;
+                if (Sprinting_Timer > 3.5f)
                 {
-                    case Skill_Type.Fishing:
-                        Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Fishing_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    //case Skill_Type.Hunting:
-                    //    Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                    //    if (Skill.Hunting_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                    //    {
-                    //        Is_Reading = false;
-                    //    }
-                    //    break;
-                    //case Skill_Type.Foraging:
-                    //    Skill.Foraging_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                    //    if (Skill.Foraging_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                    //    {
-                    //        Is_Reading = false;
-                    //    }
-                    //    break;
-                    //case Skill_Type.Riding:
-                    //    Skill.Riding_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                    //    if (Skill.Riding_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                    //    {
-                    //        Is_Reading = false;
-                    //    }
-                    //    break;                    
-                    case Skill_Type.Carpentry:
-                        Skill.Carpentry_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if(Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Cooking:
-                        Skill.Cooking_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Cooking_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Farming:
-                        Skill.Farming_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Farming_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.FirstAid:
-                        Skill.FirstAid_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.FirstAid_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
-                    case Skill_Type.Electrical:
-                        Skill.Electrical_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-                        if (Skill.Electrical_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
-                        {
-                            Is_Reading = false;
-                        }
-                        break;
+                    Skill.Sprinting_Level.SetEXP(10);
+                    Sprinting_Timer = 0f;
                 }
             }
+
+            if (Is_Fighting == false)
+            {
+                if (near_Zombie)
+                {
+                    Lightfooted_Timer += Time.deltaTime;
+                    if (Lightfooted_Timer > 3.5f)
+                    {
+                        Skill.Lightfooted_Level.SetEXP(10);
+                        Lightfooted_Timer = 0;
+                    }
+                }
+
+                Sneaking_Timer += Time.deltaTime;
+                if(Sneaking_Timer > 5f)
+                {
+                    Skill.Sneaking_Level.SetEXP(10);
+                    Sneaking_Timer = 0f;
+                }
+            }
+
+            if (Is_Aiming)
+            {
+                Nimble_Timer += Time.deltaTime;
+                if(Nimble_Timer > 3.5f)
+                {
+                    Skill.Nimble_Level.SetEXP(10);
+                    Nimble_Timer = 0;
+                }
+            }
+
+            if (Is_Running)
+            {
+                Running_Timer += Time.deltaTime;
+                if (Running_Timer > 10f)
+                {
+                    Check_Probability_of_Falling();
+                    Running_Timer = 0;
+                }
+            }
+
+
+            /* -------------------------- Is_Eating -------------------------- */
+            // 음식먹을 때 Calculating_Food_Poisoning 호출
+
+            if (Is_food_poisoning)
+            {
+                Food_Poison_Timer += Time.deltaTime;
+                if (Food_Poison_Timer > Time_for_food_poisoning)
+                {
+                    Food_Poison_Timer = 0;
+                    Is_food_poisoning = false;
+                }
+                else if (Food_Poison_Timer > 0 && Food_Poison_Timer < 200)
+                {
+                    playerMoodles.Moodle_Sick.Set_Moodles_state(0.03f);
+                }
+            }
+
+            /************************************* Player_Heavy_Load **************************************/
+            if (playerMoodles.Moodle_Heavy_Load.Get_Moodle_current_step() >= 2)
+                Is_Running = false;
+
+            /****************** Player_Has_a_Cold ******************/
+            if (Is_Cold)
+            {
+                Cold_Timer += Time.deltaTime;
+                if (Cold_Timer > (20 / playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_step()))
+                {
+                    /* 재채기: 좀비를 끌어들이는 어그로 ( 미구현 사항 )*/
+                }
+            }
+
+            /****************** Player_Is_Reading ******************/
+            if (Is_Reading)
+            {
+                Read_Timer += Time.deltaTime;
+                if (Read_Timer >= 5f)
+                {
+                    Skillbook_Readpage++;
+                    Read_Timer = 0;
+
+                    switch (current_SkillBook_type)   // 다 읽으면 멈춤
+                    {
+                        case Skill_Type.Fishing:
+                            Skill.Fishing_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Fishing_Level.Check_S_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Carpentry:
+                            Skill.Carpentry_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Carpentry_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Cooking:
+                            Skill.Cooking_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Cooking_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Farming:
+                            Skill.Farming_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Farming_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.FirstAid:
+                            Skill.FirstAid_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.FirstAid_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                        case Skill_Type.Electrical:
+                            Skill.Electrical_Level.Set_C_Books_Point(current_SKillBook_level, Skillbook_Readpage);
+                            if (Skill.Electrical_Level.Check_C_Book_Reading_finish(current_SKillBook_level, Skillbook_Readpage) >= 1)
+                            {
+                                Is_Reading = false;
+                            }
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Read_Timer = 0;
+                current_SKillBook_level = -1;
+                Skillbook_Readpage = -1;
+                current_SkillBook_type = Skill_Type.None;
+            }
+
         }
-        else
-        {
-            Read_Timer = 0;
-            current_SKillBook_level = -1;
-            Skillbook_Readpage = -1;
-            current_SkillBook_type = Skill_Type.None;
-        }
+
+
+
+
     }
 
     public void Set_Endurance(float value)
@@ -635,40 +670,35 @@ public class Player_main : MonoBehaviour
         }
     }
 
-
-    public void Set_Attack_Power_for_Equipping_Weapons(Item_Weapons Current_Equipping_weapon)  // 무기를 끼면 함수 호출
+    public bool Check_Probability_of_Falling()   // 울타리 넘을 때 호출
     {
-        // 무기 Script 구현사항
-        // 무기별 타입
-        // 무기별 공격력
-        // 무기별 내구도
+        float falling = playerSkill_ActivationProbability.Get_Probability_of_Falling();
+        System.Random rand = new System.Random();
+        int randomNumber = rand.Next(100);
 
-        switch ((Weapon_type)Current_Equipping_weapon.WeaponType)
+        if ((float)randomNumber/100 < falling)
         {
-            case Weapon_type.Axe:
-                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                break;
-            case Weapon_type.LongBlunt:
-                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                break;
-            case Weapon_type.ShortBlunt:
-                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                break;
-            case Weapon_type.LongBlade:
-                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                break;
-            case Weapon_type.ShortBlade:
-                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                break;
-            case Weapon_type.Spear:
-                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                break;
-            case Weapon_type.Gun:
-                Skill.Aiming_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                Skill.Reloading_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                break;
-            default:
-                break;
+            return true;   // 넘어지는 animation
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool Check_Probability_of_Crossing_a_High_Wall()   // 높은 담을 넘을 때 호출
+    {
+        float falling = playerSkill_ActivationProbability.Get_Probability_of_Crossing_a_High_Wall();
+        System.Random rand = new System.Random();
+        int randomNumber = rand.Next(100);
+
+        if ((float)randomNumber / 100 < falling)
+        {
+            return true;   // 넘어지는 animation
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -677,6 +707,8 @@ public class Player_main : MonoBehaviour
     // 1. 공격 받으면 밀쳐낼 확률 계산
     public void Calculate_HitForce(GameObject zom, string Zom_Type, bool IsBack, bool IsDown)  // 좀비 -> 플레이어: 좀비의 공격 성공여부, 좀비의 강도, 후방 여부, 기는지 여부
     {
+        Is_Fighting = true;
+        Lightfooted_Timer = 0;
         Debug.Log("좀비가 공격함 !!");
 
         playerMoodles.Moodle_Panic.Set_Moodles_state(0.01f);  /* 마주친 좀비의 수 확인가능하면 받아서   0.01 x 좀비수  로 수정*/
@@ -947,11 +979,53 @@ public class Player_main : MonoBehaviour
 
     }
 
+
+    public void Set_Attack_Power_for_Equipping_Weapons(Item_Weapons Current_Equipping_weapon)  // 무기를 끼면 함수 호출
+    {
+        // 무기 Script 구현사항
+        // 무기별 타입
+        // 무기별 공격력
+        // 무기별 내구도
+
+        switch (Current_Equipping_weapon.WeaponType)
+        {
+            case Weapon_type.Axe:
+                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.LongBlunt:
+                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.ShortBlunt:
+                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.LongBlade:
+                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.ShortBlade:
+                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.Spear:
+                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.Gun:
+                Skill.Aiming_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                Skill.Reloading_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            default:
+                break;
+        }
+    }
+
     public float Characteristic_Asthmatic_for_Weapon = 1f;
     public float Calculate_damage_to_Zombie()  // Player -> Zombie 공격
     {
+        Is_Fighting = true;
+        Lightfooted_Timer = 0;
+
+        Min_Attack_Power = 8 + 0;
+        Max_Attack_Power = 8 + 0;
         System.Random rand_Damage = new System.Random();
-        float Total_Damage = (rand_Damage.Next((int)(Min_Attack_Power*100), (int)(Max_Attack_Power*100)))/100;
+        float Total_Damage = (rand_Damage.Next((int)(Min_Attack_Power*100), (int)(Max_Attack_Power*100)))/100; // 8 ~ 8
 
         if (Is_Equipping_Weapons)
         {
@@ -959,14 +1033,24 @@ public class Player_main : MonoBehaviour
             // 무기 공격력 불러오는 함수
             // + 근접 무기일 경우 * 근접 공격력
             // + 총기 사용시 조준 등 반영
-            Weapon_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Current_equipping_Weapon);  // 무기 레벨에 따른 공격력 증가
+            if(playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon]) > 0)  // 무기 레벨에 따른 공격력 증가
+            {
+                Weapon_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon]);
+            }
+            
+
+            if(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].WeaponType != Weapon_type.Gun)  // 근접 공격력
+            {
+                Weapon_Power *= playerSkill_ActivationProbability.Get_Melee_Attack_Power_Ratio();
+            }
+
         }
 
         // 치명타 확률
         float Critical_Attack_Bonus = 0;
         System.Random rand = new System.Random();
         int rand_Critical = rand.Next(100);
-        if(rand_Critical/100 > playerSkill_ActivationProbability.Get_Critical_Hit_Chance())
+        if(rand_Critical/100 < playerSkill_ActivationProbability.Get_Critical_Hit_Chance())
         {
             Total_Damage *= 1.2f;
         }
@@ -974,7 +1058,34 @@ public class Player_main : MonoBehaviour
         float temp = 3.0f * playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate() * Characteristic_Asthmatic_for_Weapon;
         Set_Endurance(-temp);
 
+        switch (Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].WeaponType)
+        {
+            case Weapon_type.Axe:
+                Skill.Axe_Level.SetEXP(20);
+                break;
+            case Weapon_type.LongBlunt: 
+                Skill.LongBlunt_Level.SetEXP(20);
+                break;
+            case Weapon_type.ShortBlunt:
+                Skill.ShortBlunt_Level.SetEXP(20);
+                break;
+            case Weapon_type.LongBlade:
+                Skill.LongBlade_Level.SetEXP(20);
+                break;
+            case Weapon_type.ShortBlade:
+                Skill.ShortBlade_Level.SetEXP(20);
+                break;
+            case Weapon_type.Spear: 
+                Skill.Spear_Level.SetEXP(20);
+                break;
+            case Weapon_type.Gun: 
+                Skill.Aiming_Level.SetEXP(20);
+                Skill.Reloading_Level.SetEXP(20);
+                break;
+            default: break;
+        }
 
+        Is_Fighting = false;
         return Total_Damage;
         /* 참고사항
 

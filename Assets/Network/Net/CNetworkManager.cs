@@ -6,11 +6,15 @@ using FreeNetUnity;
 using FreeNet;
 public class CNetworkManager : MonoBehaviour
 {
+    public static CNetworkManager CNetManager;
+
     CFreeNetUnityService gameserver;
     [SerializeField]
     MonoBehaviour message_receiver;
+
     void Awake()
     {
+        CNetManager = this;
         this.gameserver = gameObject.AddComponent<CFreeNetUnityService>();
         this.gameserver.appcallback_on_status_changed += on_Status_changed;
         this.gameserver.appcallback_on_message += on_message;

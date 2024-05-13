@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,7 @@ public class Recipe_item
     public Crafting_type _Crafting_type;
     public int Crafting_item_number;
     public List<Recipe_Ingredients> Recipe_Ingredients_list;
+    public List<Recipe_Ingredients> Recipe_Ingredients_Tool_list;
 
     public Recipe_item(int _Magazine_ID, Type _Crafting_item_type, int _Crafting_item_ID, int _Crafting_item_number)
     {
@@ -24,6 +26,7 @@ public class Recipe_item
         Crafting_item_number = _Crafting_item_number;
         Is_Craftng = false;
         Recipe_Ingredients_list = new List<Recipe_Ingredients>();
+        Recipe_Ingredients_Tool_list = new List<Recipe_Ingredients>();
 
         switch (_Crafting_item_type)
         {
@@ -49,7 +52,7 @@ public class Recipe_item
                 _Crafting_type = Crafting_type.Crafting_General;
                 break;
             case Type.Furniture:
-                _Crafting_type = Crafting_type.Crafting_Furniture;
+                _Crafting_type = Crafting_type.Crafting_Installation;
                 break;
             case Type.Tool:
                 _Crafting_type = Crafting_type.Crafting_Tool;
@@ -61,6 +64,12 @@ public class Recipe_item
     {
         Recipe_Ingredients recipe_Ingredients = new Recipe_Ingredients(_DB_type, _DB_ID, value);
         Recipe_Ingredients_list.Add(recipe_Ingredients);
+    }
+
+    public void Add_Recipe_Ingredients_Tool(Type _DB_type, int _DB_ID, int value)
+    {
+        Recipe_Ingredients recipe_Ingredients = new Recipe_Ingredients(_DB_type, _DB_ID, value);
+        Recipe_Ingredients_Tool_list.Add(recipe_Ingredients);
     }
 
     public void Add_Recipe()
@@ -130,10 +139,40 @@ public class Recipe_item
                     UI_Craft.UI_Craft_main.Crafting_Medical_list[Current_index].Add_Ingredients(
                         Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
                     break;
-                case Crafting_type.Crafting_Furniture:
+                case Crafting_type.Crafting_Installation:
                     UI_Craft.UI_Craft_main.Crafting_Furniture_list[Current_index].Add_Ingredients(
                         Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
                     break;
+            }
+        }
+
+        if (Recipe_Ingredients_Tool_list.Count > 0)
+        {
+            for (int i = 0; i < Recipe_Ingredients_Tool_list.Count; i++)
+            {
+                switch (_Crafting_type)
+                {
+                    case Crafting_type.Crafting_General:
+                        UI_Craft.UI_Craft_main.Crafting_General_list[Current_index].Add_Ingredients_Tool(
+                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                        break;
+                    case Crafting_type.Crafting_Tool:
+                        UI_Craft.UI_Craft_main.Crafting_Tool_list[Current_index].Add_Ingredients_Tool(
+                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                        break;
+                    case Crafting_type.Crafting_Cook:
+                        UI_Craft.UI_Craft_main.Crafting_Cook_list[Current_index].Add_Ingredients_Tool(
+                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                        break;
+                    case Crafting_type.Crafting_Medical:
+                        UI_Craft.UI_Craft_main.Crafting_Medical_list[Current_index].Add_Ingredients_Tool(
+                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                        break;
+                    case Crafting_type.Crafting_Installation:
+                        UI_Craft.UI_Craft_main.Crafting_Furniture_list[Current_index].Add_Ingredients_Tool(
+                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                        break;
+                }
             }
         }
     }
@@ -155,67 +194,62 @@ public class Recipe_Ingredients
 
 public class Player_Crafting : MonoBehaviour
 {
-    //12. Good Cooking Magazine Vol. 1 : 케이크 반죽, 파이 반죽, 초콜릿칩쿠키 반죽, 초콜릿쿠키 반죽, 오트밀쿠키 반죽, 쇼트브레드쿠키 반죽, 설탕쿠키 반죽 만들기
-    public Recipe_item Recipe_Make_Cake_Batter;
-    public Recipe_item Recipe_Make_Pie_Dough;
-    //13. Good Cooking Magazine Vol. 2 :  빵, 피자, 바게트, 비스킷 만들기
-    public Recipe_item Recipe_Make_Bread; // dough
-    //14. Electronics Magazine Vol. 1 :  리모콘 v1, v2, v3 만들기 ( -> 리모콘 만들기 하나로 통일 )
-    public Recipe_item Recipe_Make_Remote_Controller;
-    //15. Electronics Magazine Vol. 2 :  타이머 만들기, 다른 물건에 타이머 달기
-    public Recipe_item Recipe_Make_Timer;
-    public Recipe_item Recipe_Add_Timer;
-    //16. Electronics Magazine Vol. 3 :  모션센서 v1, v2, v3 만들기 ( -> 모션센서 만들기 하나로 통일 )
-    public Recipe_item Recipe_Add_Motion_Sensor;
-    //17. Electronics Magazine Vol. 4 :  원격 트리거 만들기, 다른 물건에 원격 트리거 달기
-    public Recipe_item Recipe_Make_Remote_Trigger;
-    public Recipe_item Recipe_Add_Crafted_Trigger;
-    //18. Engineer Magazine Vol. 1 :  소음 발생기 만들기
-    public Recipe_item Recipe_Make_Noise_Maker;
-    //19. Engineer Magazine Vol. 2 :  연막탄 만들기
-    public Recipe_item Recipe_Make_Smoke_Bomb;
-    //20. The Farming Magazine :  살충제 스프레이, 곰팡이 스프레이 만들기
-    public Recipe_item Recipe_Make_Mildew_Cure;
-    public Recipe_item Recipe_Make_Flies_Cure;
-    //21. Angler USA Magazine Vol. 1 :  낚시대 만들기, 낚시대 고치기
-    public Recipe_item Recipe_Make_Fishing_Rod;
-    public Recipe_item Recipe_Fix_Fishing_Rod;
-    //22. Angler USA Magazine Vol. 2 :  낚시 그물 만들기, 고장난 낚시 그물에서 와이어 떼내기
-    public Recipe_item Recipe_Make_Fishing_Net;
-    public Recipe_item Recipe_Get_Wire_Back;
-    ////23. The Herbalist :  독이 있는 열매, 버섯 식별 가능
-    //public Recipe_item Recipe_Can_identifty_poisonous_berries_and_mushrooms_and_forage_medicinal_plants;
-    //24. How to Use Generators :  발전기 사용법
+    /********** Magazine Recipe *********/
+    //12. Good Cooking Magazine Vol. 1
+    public Recipe_item Recipe_Make_Dough;  // 반죽
+    //13. Good Cooking Magazine Vol. 2 
+    public Recipe_item Recipe_Make_Bread; // 빵
+
+    //14. Engineer Magazine Vol. 1
+    public Recipe_item Recipe_Make_Charcoal_Barbecue;  // 숯불 바베큐 기계
+                                                        // 재료: 소형금속판x4, 프로판토치(2), 용접 마스크 + 금속level_3   // 금속 exp 6.25
+    //15. Engineer Magazine Vol. 2 
+    public Recipe_item Recipe_Make_Propane_Barbecue;   // 프로판 바베큐 기계
+                                                        // 재료: 금속판x4, 프로판탱크, 프로판토치(2), 용접 마스크 + 금속level_6   // 금속 exp 6.25
+
+    //16. The Farming Magazine
+    public Recipe_item Recipe_Make_Mildew_Cure;    // 살충제 스프레이
+                                                    // 재료: 빈 원예용 스프레이, 물(3), 담배(5)
+    public Recipe_item Recipe_Make_Flies_Cure;    // 곰팡이 스프레이
+                                                    // 재료: 빈 원예용 스프레이, 우유
+
+    //17. Angler USA Magazine Vol. 1
+    public Recipe_item Recipe_Make_Fishing_Rod;  // 낚시대
+                                                 // 재료: 튼튼한 막대기x1, 칼
+    public Recipe_item Recipe_Fix_Fishing_Rod;  // 낚시대 고치기
+                                                // 재료: 튼튼한 막대기x1, 못x1, 끈x2, 칼
+    //18. Angler USA Magazine Vol. 2
+    public Recipe_item Recipe_Make_Fishing_Net;  // 낚시 그물
+                                                 // 재료: 끈x2, 철사x1
+    public Recipe_item Recipe_Get_Wire_Back;  //  고장난 낚시 그물에서 와이어 떼내기   // 철사x1 나옴
+
+    //19. How to Use Generators :  발전기 사용법
     public Recipe_item Recipe_Teaches_the_player_how_to_connect_generators_to_buildings;
-    ////25. The Hunter Magazine Vol. 1 :  스네어 트랩 만들기  // skip
-    //public Recipe_item Recipe_Make_Snare_Trap;
-    ////26. The Hunter Magazine Vol. 2 :  함정상자 만들기, 스틱 트랩 만들기  // skip
-    //public Recipe_item Recipe_Make_Trap_Box;
-    //public Recipe_item Recipe_Make_Stick_Trap;
-    ////27. The Hunter Magazine Vol. 3 :  케이지트랩 만들기  // skip
-    //public Recipe_item Recipe_Make_Cage_Trap;
-    //28. Laines Auto Manual - Commercial Models :  표준 차량 유형 유지관리 가능
+
+    //20. Laines Auto Manual - Commercial Models :  표준 차량 유형 유지관리 가능
     public Recipe_item Recipe_Can_perform_maintenance_on_heavy_duty_vehicle_types;
-    //29. Laines Auto Manual - Performance Models :  대형 차량 유형 유지관리 가능
+    //21. Laines Auto Manual - Performance Models :  대형 차량 유형 유지관리 가능
     public Recipe_item Recipe_Can_perform_maintenance_on_sport_vehicle_types;
-    //30. Laines Auto Manual - Standard Models :  스포츠 차량 유형 유지관리 가능
+    //22. Laines Auto Manual - Standard Models :  스포츠 차량 유형 유지관리 가능
     public Recipe_item Recipe_Can_perform_maintenance_on_standard_vehicle_types;
-    //31. The Metalwork Magazine Vol. 1 :  금속벽 만들기, 금속지붕 만들기
-    public Recipe_item Recipe_Make_Metal_Walls;
-    public Recipe_item Recipe_Make_Metal_Roof;
-    //32. The Metalwork Magazine Vol. 2 :  금속컨테이너 만들기
-    public Recipe_item Recipe_Make_Metal_Containers;
-    //33. The Metalwork Magazine Vol. 3 :  금속울타리 만들기
-    public Recipe_item Recipe_Make_Metal_Fences;
-    //34. The Metalwork Magazine Vol. 4 :  금속판 만들기, 소형금속판 만들기
-    public Recipe_item Recipe_Make_Metal_Sheet;
-    public Recipe_item Recipe_Make_Small_Metal_Sheet;
-    //35. Guerilla Radio Vol. 1 :  임시 라디오 제작
-    public Recipe_item Recipe_Craft_Makeshift_Radio;
-    //36. Guerilla Radio Vol. 2 :  임시 무전기 제작
-    public Recipe_item Recipe_Craft_Makeshift_Walkie_Talkie;
-    //37. Guerilla Radio Vol. 3 :  임시 햄 라디오 제작
-    //public Recipe_item Recipe_Craft_Makeshift_Ham_Radio;
+
+    //23. The Metalwork Magazine Vol. 1
+    public Recipe_item Recipe_Make_Log_Walls;   // 통나무 벽
+                                                 //  재료: 찢어진천x4, 통나무x4, 망치   // 목공 exp 1.25
+    //24. The Metalwork Magazine Vol. 2  
+    public Recipe_item Recipe_Make_Counters;   // 카운터 
+                                                //  재료: 판자x4, 못x4, 망치  + 목공level_4   // 목공 exp 1.25
+    //25. The Metalwork Magazine Vol. 3 
+    public Recipe_item Recipe_Make_Composter;   // 퇴비통
+                                                 //  재료: 판자x5, 못x4, 망치  + 목공level_2   // 목공 exp 1.25
+
+    //26. Guerilla Radio Vol. 1 
+    public Recipe_item Recipe_Craft_Makeshift_Radio;  // 라디오
+    //27. Guerilla Radio Vol. 2 
+    public Recipe_item Recipe_Craft_Makeshift_Walkie_Talkie;  // 무전기
+
+    /********** Level Recipe *********/
+
 
 
     // Start Recipe
@@ -224,10 +258,19 @@ public class Player_Crafting : MonoBehaviour
     public Recipe_item Recipe_Craft_SheetRope;  // 천 밧줄
     public Recipe_item Recipe_Craft_Plank;  // 판자
     public Recipe_item Recipe_Craft_Logs;  // 통나무 묶음
-   
+    public Recipe_item Recipe_Craft_Log;  // 통나무 ( 묶음 -> 낱개 )
+
+    public Recipe_item Recipe_Craft_Barricade;  // 바리케이트  ( 문or창문에 상호작용 )    // 재료: 판자x1, 못x2, 망치   // 목공 exp 0.75
+    public Recipe_item Recipe_Craft_Metal_Barricade;  // 금속 바리케이트    // 재료: 금속판x1, 프로판토치(1), 용접 마스크   // 금속 exp 1.5
+
+    public Recipe_item Recipe_Make_Metal_Sheet;    // 금속판  // 재료: 소형금속판x4, 프로판토치(2), 용접 마스크 + 금속level_2       // 금속 exp 6.25
+    public Recipe_item Recipe_Make_Small_Metal_Sheet;    // 소형 금속판x3  // 재료: 금속판x1, 프로판토치(2), 용접 마스크 + 금속level_2        // 금속 exp 6.25
 
     public Recipe_item Recipe_Craft_Spear;  // 제작된 창
     public Recipe_item Recipe_Craft_SpearMachete;  // 창(마테체)
+
+    public Recipe_item Recipe_Craft_Splint;  // 부목  // 재료: 판자x1, 찢어진 천x1 
+    public Recipe_item Recipe_Craft_Sturdy_Stick;  // 튼튼한 막대기x8   // 재료: 판자x1, 톱
 
 
 
@@ -259,39 +302,24 @@ public class Player_Crafting : MonoBehaviour
         //}
         //Recipe_Crafting_list.Add(Recipe_Make_Cake_Batter);
 
-        Recipe_Make_Pie_Dough = new Recipe_item(12, Type.food, 0, 1);
-        //Recipe_Crafting_list.Add(Recipe_Make_Pie_Dough);
-
         Recipe_Make_Bread = new Recipe_item(13, Type.food, 0, 1);
         //Recipe_Crafting_list.Add(Recipe_Make_Bread);
 
         // Electronics
-        Recipe_Make_Remote_Controller = new Recipe_item(14, Type.Electronics, 0, 1);
-        Recipe_Make_Timer = new Recipe_item(15, Type.Electronics, 0, 1);
-        Recipe_Add_Timer = new Recipe_item(15, Type.Electronics, 0, 1);
-        Recipe_Add_Motion_Sensor = new Recipe_item(16, Type.Electronics, 0, 1);
-        Recipe_Make_Remote_Trigger = new Recipe_item(17, Type.Electronics, 0, 1);
-        Recipe_Add_Crafted_Trigger = new Recipe_item(17, Type.Electronics, 0, 1);
-
-        Recipe_Make_Noise_Maker = new Recipe_item(18, Type.Electronics, 0, 1);
-        Recipe_Make_Smoke_Bomb = new Recipe_item(19, Type.Electronics, 0, 1);
-
         Recipe_Teaches_the_player_how_to_connect_generators_to_buildings = new Recipe_item(24, Type.Electronics, 0, 1);
 
         Recipe_Can_perform_maintenance_on_heavy_duty_vehicle_types = new Recipe_item(28, Type.Normal, 0, 1);
         Recipe_Can_perform_maintenance_on_sport_vehicle_types = new Recipe_item(29, Type.Normal, 0, 1);
         Recipe_Can_perform_maintenance_on_standard_vehicle_types = new Recipe_item(30, Type.Normal, 0, 1);
 
-        Recipe_Make_Metal_Walls = new Recipe_item(31, Type.Normal, 0, 1);
-        Recipe_Make_Metal_Roof = new Recipe_item(31, Type.Normal, 0, 1);
-        Recipe_Make_Metal_Containers = new Recipe_item(32, Type.Electronics, 0, 1);
-        Recipe_Make_Metal_Fences = new Recipe_item(33, Type.Normal, 0, 1);
+        Recipe_Make_Log_Walls = new Recipe_item(31, Type.Furniture, 0, 1);
+        Recipe_Make_Counters = new Recipe_item(32, Type.Furniture, 0, 1);
+        Recipe_Make_Composter = new Recipe_item(33, Type.Furniture, 0, 1);
         Recipe_Make_Metal_Sheet = new Recipe_item(34, Type.Normal, 0, 1);
         Recipe_Make_Small_Metal_Sheet = new Recipe_item(34, Type.Normal, 0, 1);
 
         Recipe_Craft_Makeshift_Radio = new Recipe_item(35, Type.Normal, 0, 1);  // 라디오 제작
         Recipe_Craft_Makeshift_Walkie_Talkie = new Recipe_item(36, Type.Normal, 0, 1);  // 무전기 제작
-        //Recipe_Craft_Makeshift_Ham_Radio = new Recipe_item(37, Type.Normal, 0);
 
         // Farming
         Recipe_Make_Mildew_Cure = new Recipe_item(20, Type.Normal, 0, 1);
@@ -302,16 +330,6 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Fix_Fishing_Rod = new Recipe_item(21, Type.Normal, 0, 1);
         Recipe_Make_Fishing_Net = new Recipe_item(22, Type.weapon, 0, 1);
         Recipe_Get_Wire_Back = new Recipe_item(22, Type.Normal, 0, 1);
-
-        //// Foraging
-        //Recipe_Can_identifty_poisonous_berries_and_mushrooms_and_forage_medicinal_plants = new Recipe_item(23, Type.Normal, 0, 1);
-
-        // Hunting
-        //Recipe_Make_Snare_Trap = new Recipe_item(25, Type.weapon, 0, 1);
-        //Recipe_Make_Trap_Box = new Recipe_item(26, Type.weapon, 0, 1);
-        //Recipe_Make_Stick_Trap = new Recipe_item(26, Type.weapon, 0, 1);
-        //Recipe_Make_Cage_Trap = new Recipe_item(27, Type.weapon, 0, 1);
-
 
 
         // Start
@@ -450,20 +468,133 @@ public class Player_Crafting : MonoBehaviour
         }
 
 
-        //// 통나무 -> 통나무 묶음
-        //Recipe_Craft_Logs = new Recipe_item(-1, Type.Normal, 0, 1);
+        // 통나무 묶음
+        for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Log stack")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.ETC_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Logs = new Recipe_item(-1, Type.Normal, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Log")  // 통나무x4
+                {
+                    Recipe_Craft_Logs.Add_Recipe_Ingredients(Type.Normal, i, 4);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Logs);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
-        //// 통나무 묶음 -> 통나무
+        // 통나무x4  
+        for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Log")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.ETC_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Log = new Recipe_item(-1, Type.Normal, target_index, 4);
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Log stack")  // 통나무 묶음
+                {
+                    Recipe_Craft_Log.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Log);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
-
-        //// 제작된 창
-        //Recipe_Craft_Spear = new Recipe_item(-1, Type.weapon, 33, 1);
+        // 제작된 창
+        for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "SpearStick")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.weapons_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Spear = new Recipe_item(-1, Type.weapon, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자
+                {
+                    Recipe_Craft_Spear.Add_Recipe_Ingredients(Type.weapon, i, 1);
+                }
+            }
+            //for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            //{
+            //    if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Machete")  // 마테체_Tool
+            //    {
+            //        Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+            //    }
+            //}
+            //for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            //{
+            //    if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Cleaver")  // 중식도_Tool
+            //    {
+            //        Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+            //    }
+            //}
+            Recipe_Crafting_list.Add(Recipe_Craft_Spear);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
         //// 창 ( 마테체 )
         //Recipe_Craft_SpearMachete = new Recipe_item(-1, Type.weapon, 30, 1);
 
+        // 바리케이트
+        Recipe_Craft_Barricade = new Recipe_item(-1, Type.Furniture, target_index, 1);  // 바리케이트  ( 문or창문에 상호작용 )    // 재료: 판자x1, 못x2, 망치   // 목공 exp 0.75
+        Recipe_Craft_Metal_Barricade = new Recipe_item(-1, Type.Furniture, target_index, 1);  // 금속 바리케이트    // 재료: 금속판x1, 프로판토치(1), 용접 마스크   // 금속 exp 1.5
 
 
+
+        Recipe_Make_Metal_Sheet = new Recipe_item(-1, Type.Normal, target_index, 1);    // 금속판  // 재료: 소형금속판x4, 프로판토치(2), 용접 마스크 + 금속level_2       // 금속 exp 6.25
+        Recipe_Make_Small_Metal_Sheet = new Recipe_item(-1, Type.Normal, target_index, 3);    // 소형 금속판x3  // 재료: 금속판x1, 프로판토치(2), 용접 마스크 + 금속level_2        // 금속 exp 6.25
+
+        Recipe_Craft_Splint = new Recipe_item(-1, Type.Medical, target_index, 1);  // 부목  // 재료: 판자x1, 찢어진 천x1 
+        Recipe_Craft_Sturdy_Stick = new Recipe_item(-1, Type.Normal, target_index, 8);  // 튼튼한 막대기x8   // 재료: 판자x1, 톱
     }
 
 
@@ -479,6 +610,9 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Craft_Sheets.Is_Craftng = true;
         Recipe_Craft_SheetRope.Is_Craftng= true;
         Recipe_Craft_Plank.Is_Craftng = true;
+        Recipe_Craft_Logs.Is_Craftng = true;
+        Recipe_Craft_Log.Is_Craftng = true;
+        Recipe_Craft_Spear.Is_Craftng = true;
     }
 
 

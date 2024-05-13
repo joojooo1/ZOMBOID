@@ -17,17 +17,15 @@ MonoBehaviour:
   LiteratureSkillType: 8
   PowerSources_Type: 5
   created: 0
-  Literature_ID: 18
+  Literature_ID: 14
   Height: 1
   Width: 1
   Nesting_Depth: 1
   LiteratureName: Engineer Magazine Vol. 1
   LiteratureName_Kr: "\uC5D4\uC9C0\uB2C8\uC5B4 \uB9E4\uAC70\uC9C4 Vol. 1"
   LiteratureWeight: 0.1
-  Literature_Image: {fileID: 21300000, guid: 373c0f4d66913a34e80eea3a6f4d6e65, type: 3}
+  Literature_Image: {fileID: 21300000, guid: 5949d130aa3538840b43128c7ebe7c6c, type: 3}
   Literature_Level: 5
-  Literature_Page: 1
-  Literature_Multiplier: 1
   L_Unhappiness: 0
   L_Stress: 0
   L_Boredom: 0

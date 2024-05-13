@@ -32,6 +32,10 @@ namespace VirusWarGameServer
 
         INV_SYNCHRONIZATION,
 
+        FIRST_SYNC_REQTOHOST,
+        FIRST_SYNC_REQ,
+        END_DB_SYNC,
+
         END
     }
 }

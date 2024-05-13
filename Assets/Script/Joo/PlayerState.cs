@@ -263,6 +263,7 @@ public class Player_body_Location
                 }
             }
         }
+        Player_main.player_main.Is_Fighting = false;
     }
 
     public Damage_Pattern Get_Bodypos_DamageType()
@@ -560,22 +561,23 @@ public class PlayerState : MonoBehaviour
 
                     }
 
+                    float Rate = Player_main.player_main.playerSkill_ActivationProbability.Get_Fatigue_Generation_Rate();
                     switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                     {
                         case 0:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication * Rate);
                             break;
                         case 1:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state(Tired_value * Endurance_level * intoxication * Rate);
                             break;
                         case 2:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.002f) * Endurance_level * intoxication * Rate);
                             break;
                         case 3:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.005f) * Endurance_level * intoxication * Rate);
                             break;
                         case 4:
-                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication);
+                            Player_main.player_main.playerMoodles.Moodle_Tired.Set_Moodles_state((Tired_value + 0.03f) * Endurance_level * intoxication * Rate);
                             break;
                     }
 
@@ -606,110 +608,112 @@ public class PlayerState : MonoBehaviour
                 Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Set_Moodles_state(-temp);  // Cold -> Hot 로 무들 변경
                 Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Set_Moodles_state(-temp);  // Cold의 current_value 0으로 초기화
             }
-        }
 
-        /****************** Player_Endurance ******************/
-        if (Player_main.player_main.Is_Running)
-        {
-            Endurance_Timer += Time.deltaTime;
-            if (Endurance_Timer > 0.3f)
-            {
-                float Temp = 2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate();
-                Player_main.player_main.Set_Endurance(-Temp);
-                Endurance_Timer = 0.0f;
-            }
-        }
-        else
-        {
-            Endurance_Timer = 0.0f;
-            if (Player_main.player_main.playerMoodles.Moodle_Tired.Get_Moodle_current_step() < 4)
+            /****************** Player_Endurance ******************/
+            if (Player_main.player_main.Is_Running)
             {
                 Endurance_Timer += Time.deltaTime;
-                if (Endurance_Timer > 0.5f)
+                if (Endurance_Timer > 0.3f)
                 {
-                    float Temp = 3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate();
-                    Player_main.player_main.Set_Endurance(Temp);
+                    float Temp = 2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate();
+                    Player_main.player_main.Set_Endurance(-Temp);
                     Endurance_Timer = 0.0f;
-                }
-            }
-        }
-
-        /****************** Player_Stressed (Unhappy) ******************/
-        if (Player_main.player_main.playerMoodles.Moodle_Stressed.Get_Moodle_current_step() > 2)
-        {
-            Unhappy_Timer += Time.deltaTime;
-            if (Unhappy_Timer > 3f)
-            {
-                Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(0.015f);
-            }
-        }
-
-        /****************** Player_Has_a_Cold ******************/
-        if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() > 0)
-        {
-            if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() <= 1)
-            {
-                Has_a_Cold_Timer += Time.deltaTime;
-                if (Has_a_Cold_Timer > 5f)
-                {
-                    Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Set_Moodles_state(0.05f);
-                    Has_a_Cold_Timer = 0;
-                }
-            }
-        }
-        else
-        {
-            Has_a_Cold_Timer = 0;
-        }
-
-        /****************** Player_Drunk (Unhappy) ******************/
-        if (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
-        {
-            Drunk_Timer += Time.deltaTime;
-            if (Drunk_Timer > 1.5f)
-            {
-                Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(-0.05f);
-                Drunk_Timer = 0;
-            }
-        }
-        else
-        {
-            Drunk_Timer = 0;
-        }
-
-        if (Get_Is_Infection())  // 감염된 경우
-        {
-            Infection_Timer += Time.deltaTime;
-            if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
-            {
-                if (Infection_Timer > 3.75f)
-                {
-                    if (Player_Characteristic.current.Resilient_Characteristic)
-                    {
-                        Zombification += (0.07f * 0.25f);
-                    }
-                    else
-                        Zombification += 0.07f;
-
-                    Infection_Timer = 0;
                 }
             }
             else
             {
-                if (Infection_Timer > 5f)
+                Endurance_Timer = 0.0f;
+                if (Player_main.player_main.playerMoodles.Moodle_Tired.Get_Moodle_current_step() < 4)
                 {
-                    if (Player_Characteristic.current.Resilient_Characteristic)
+                    Endurance_Timer += Time.deltaTime;
+                    if (Endurance_Timer > 0.5f)
                     {
-                        Zombification += (0.07f * 0.25f);
+                        float Temp = 3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate();
+                        Player_main.player_main.Set_Endurance(Temp);
+                        Endurance_Timer = 0.0f;
                     }
-                    else
-                        Zombification += 0.07f;
-
-                    Infection_Timer = 0;
                 }
             }
 
+            /****************** Player_Stressed (Unhappy) ******************/
+            if (Player_main.player_main.playerMoodles.Moodle_Stressed.Get_Moodle_current_step() > 2)
+            {
+                Unhappy_Timer += Time.deltaTime;
+                if (Unhappy_Timer > 3f)
+                {
+                    Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(0.015f);
+                }
+            }
+
+            /****************** Player_Has_a_Cold ******************/
+            if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() > 0)
+            {
+                if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() <= 1)
+                {
+                    Has_a_Cold_Timer += Time.deltaTime;
+                    if (Has_a_Cold_Timer > 5f)
+                    {
+                        Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Set_Moodles_state(0.05f);
+                        Has_a_Cold_Timer = 0;
+                    }
+                }
+            }
+            else
+            {
+                Has_a_Cold_Timer = 0;
+            }
+
+            /****************** Player_Drunk (Unhappy) ******************/
+            if (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
+            {
+                Drunk_Timer += Time.deltaTime;
+                if (Drunk_Timer > 1.5f)
+                {
+                    Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(-0.05f);
+                    Drunk_Timer = 0;
+                }
+            }
+            else
+            {
+                Drunk_Timer = 0;
+            }
+
+            if (Get_Is_Infection())  // 감염된 경우
+            {
+                Infection_Timer += Time.deltaTime;
+                if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
+                {
+                    if (Infection_Timer > 3.75f)
+                    {
+                        if (Player_Characteristic.current.Resilient_Characteristic)
+                        {
+                            Zombification += (0.07f * 0.25f);
+                        }
+                        else
+                            Zombification += 0.07f;
+
+                        Infection_Timer = 0;
+                    }
+                }
+                else
+                {
+                    if (Infection_Timer > 5f)
+                    {
+                        if (Player_Characteristic.current.Resilient_Characteristic)
+                        {
+                            Zombification += (0.07f * 0.25f);
+                        }
+                        else
+                            Zombification += 0.07f;
+
+                        Infection_Timer = 0;
+                    }
+                }
+
+            }
         }
+
+
 
     }
 

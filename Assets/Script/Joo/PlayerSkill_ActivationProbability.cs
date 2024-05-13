@@ -204,7 +204,7 @@ public class PlayerSkill_ActivationProbability
 
     // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용  // Moodle_Panic
     float Basic_Increase_in_Attack_Power = 0.3f;  // 무기 미착용 시
-    float Increase_in_Attack_Power = 0.0f;  // 무기 착용 시
+    float Increase_in_Attack_Power = 1.0f;  // 무기 착용 시
     float Increase_in_Attack_Power_forMoodle = 0.0f;
     public float Get_Increase_in_Attack_Power(Item_Weapons current_weapon)
     {
@@ -480,19 +480,19 @@ public class PlayerSkill_ActivationProbability
     public float Probability_of_Falling_VeryUnderweight = 1f;
     public float Probability_of_Falling_Emaciated = 1f;
 
-    public float Get_Probability_of_Falling(bool Is_Zombie) 
+    public float Get_Probability_of_Falling() 
     {
         if (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
         {
-            return (Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain) * Set_Probability_of_Falling_forChar(Is_Zombie);
+            return (Probability_of_Falling + Probability_of_Falling_forMoodle - Probability_of_Falling_for_Pain) * Set_Probability_of_Falling_forChar();
         }
         else
         {
-            return (Probability_of_Falling + Probability_of_Falling_forMoodle) * Set_Probability_of_Falling_forChar(Is_Zombie);
+            return (Probability_of_Falling + Probability_of_Falling_forMoodle) * Set_Probability_of_Falling_forChar();
         }
     }
 
-    public float Set_Probability_of_Falling_forChar(bool Is_Zombie)
+    public float Set_Probability_of_Falling_forChar()
     {
         if (Player_Characteristic.current.Overweight_Characteristic)
         {
@@ -512,16 +512,9 @@ public class PlayerSkill_ActivationProbability
             Probability_of_Falling_Underweight = 1f;
         }
 
-        if (Player_Characteristic.current.Obese_Characteristic)   // 비만)  넘어질 확률: +20%, 좀비랑 부딪힐때 넘어질 확률: -10%
+        if (Player_Characteristic.current.Obese_Characteristic)   // 비만)  넘어질 확률: +20%,  ( 미구현 사항 : 좀비랑 부딪힐때 넘어질 확률: -10% )
         {
-            if (Is_Zombie)
-            {
-                Probability_of_Falling_Obese = 0.9f;
-            }
-            else
-            {
-                Probability_of_Falling_Obese = 1.2f;
-            }
+            Probability_of_Falling_Obese = 1.2f;
         }
         else
         {
