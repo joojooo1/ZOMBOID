@@ -95,6 +95,7 @@ MonoBehaviour:
   item_Transform: {fileID: 5543397183040952128}
   Choice: 0
   Is_Ingredients: 1
+  Is_Ingredients_Tool: 0
   item_index: 0
   Ingredients_index: 0
 --- !u!1 &6104214829495340550
