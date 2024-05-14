@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 2
-  Clothing_ID: 0
-  Clothing_Name: "\uC544\uC774\uC2A4\uD558\uD0A4 \uB9C8\uC2A4\uD06C"
-  Clothing_Name_kr: Hockey_Mask
+  Clothing_ID: 23
+  Clothing_Name: Hockey Mask
+  Clothing_Name_kr: "\uC544\uC774\uC2A4\uD558\uD0A4 \uB9C8\uC2A4\uD06C"
   ClothingImage: {fileID: 21300000, guid: fd2ae5a389e91764e989a445de003e9a, type: 3}
-  Height: 0
-  Width: 0
+  Height: 2
+  Width: 2
   Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0.4
+  Neck_Defense: 0
+  Insulation: 0.25
+  Wind_resistance: 0.55
+  Is_Cotton: 0
+  ClothingWeight: 1
   Item_index: 1

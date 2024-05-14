@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 5
   Usingtype: 0c000000
+  Tool_ID: 1
   Tool_Name: Bowl of Water
   Tool_Name_Kr: "\uADF8\uB987(\uBB3C)"
   Tool_Image: {fileID: 21300000, guid: 22acc2bfd51c3234f99dbd45693adcfa, type: 3}

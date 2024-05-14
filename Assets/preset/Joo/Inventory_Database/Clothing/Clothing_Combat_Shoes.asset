@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 8
-  Clothing_ID: 0
-  Clothing_Name: "\uAD70\uC6A9\uC2E0\uBC1C(\uAC80\uC815)"
-  Clothing_Name_kr: Combat_Shoes
+  Clothing_ID: 18
+  Clothing_Name: Combat Shoes
+  Clothing_Name_kr: "\uAD70\uC6A9\uC2E0\uBC1C(\uAC80\uC815)"
   ClothingImage: {fileID: 21300000, guid: c8485961ffbe170459af99e326e88fe8, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 3
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 1
+  Neck_Defense: 0
+  Insulation: 0.75
+  Wind_resistance: 0.65
+  Is_Cotton: 0
+  ClothingWeight: 1
   Item_index: 2

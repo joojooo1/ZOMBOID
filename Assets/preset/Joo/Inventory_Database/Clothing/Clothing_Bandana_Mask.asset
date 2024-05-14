@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 2
-  Clothing_ID: 0
-  Clothing_Name: "\uBC18\uB2E4\uB098"
-  Clothing_Name_kr: Bandana
+  Clothing_ID: 9
+  Clothing_Name: Bandana
+  Clothing_Name_kr: "\uBC18\uB2E4\uB098"
   ClothingImage: {fileID: 21300000, guid: e541849202383d04d9477c61223f4d39, type: 3}
-  Height: 0
-  Width: 0
+  Height: 1
+  Width: 2
   Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0
+  Neck_Defense: 0
+  Insulation: 0.1
+  Wind_resistance: 0
+  Is_Cotton: 0
+  ClothingWeight: 0.1
+  Item_index: 0
