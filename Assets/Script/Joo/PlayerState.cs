@@ -181,20 +181,41 @@ public class Player_body_Location
         Debug.Log("ddddddd"+Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack());
 
         bool Is_Block = false;
-        if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
+        if(_Body_Location_Code == body_point.Neck)
         {
-            if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack()))
+            if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
             {
-                Is_Block = true;
+                if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack() * PlayerState.playerState.Clothing_Neck_Defense))
+                {
+                    Is_Block = true;
+                }
+            }
+            else
+            {
+                if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * PlayerState.playerState.Clothing_Neck_Defense)
+                {
+                    Is_Block = true;
+                }
             }
         }
         else
         {
-            if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
+            if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
             {
-                Is_Block = true;
+                if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack() * PlayerState.playerState.Clothing_Defense))
+                {
+                    Is_Block = true;
+                }
+            }
+            else
+            {
+                if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * PlayerState.playerState.Clothing_Defense)
+                {
+                    Is_Block = true;
+                }
             }
         }
+
         Debug.Log("좀비가 qewqwr !!");
         if (!Is_Block)
         {
@@ -460,6 +481,9 @@ public class PlayerState : MonoBehaviour
     public float Tired_value = 0.01f;  // 피로도 증가량
     public float Thirsty_Speed = 1f;  // 갈증 진행 속도
     public float Thirsty_speed = 1f;
+
+    public float Clothing_Neck_Defense = 1f;
+    public float Clothing_Defense = 1f;
 
     public float Zombification = 0.0f;
 
@@ -793,6 +817,7 @@ public class PlayerState : MonoBehaviour
     // 옷으로 오르는 최고온도, 찬바람으로 내려가는 최저온도 조절  ( 20 ~ 50 )
     // Hot = 옷, Cold = 찬바람
     float Apparent_Temperature_forMoodle = 0f;
+    float Apparent_Temperature_forClothing = 1f;
 
     public float Get_Apparent_Temperature()
     {        
@@ -807,6 +832,11 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
+            if(value < 0)
+            {
+                value *= Apparent_Temperature_forClothing;
+            }
+
             if(Player_Characteristic.current.Prone_to_Illness_Characteristic && value < 0)
             {
                 Apparent_Temperature += value * 0.8f;
@@ -828,7 +858,12 @@ public class PlayerState : MonoBehaviour
 
     public void Set_Apparent_Temperature_forMoodle(float value)
     {
-        Apparent_Temperature_forMoodle = value;
+        Apparent_Temperature_forMoodle = 1 + value;
+    }
+
+    public void Set_Wear(float value)
+    {
+        Apparent_Temperature_forClothing = value;
     }
 
     [SerializeField] int Frequency_of_Coughing = 0;

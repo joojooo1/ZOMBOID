@@ -32,6 +32,9 @@ public class UI_inventory_Using : MonoBehaviour
             case Type.weapon:
                 //
                 break;
+            case Type.clothing:
+                //
+                break;
         }
 
         // 사용할 때 호출하는 함수
@@ -330,6 +333,12 @@ public class UI_inventory_Using : MonoBehaviour
                     break;
                 case Type.weapon:
                     Player_main.player_main.Current_equipping_Weapon = item_ID;
+                    break;
+                case Type.clothing:
+                    Player_main.player_main.playerState.Clothing_Neck_Defense = 1 + Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                    Player_main.player_main.playerState.Clothing_Defense = 1 + Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                    Player_main.player_main.playerState.Set_Wear(Item_DataBase.item_database.clothing_Ins[item_ID].Insulation);
+                    GameManager.gameManager.Clothing_Wind_resistance = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
                     break;
             }
         }
