@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 9
-  Clothing_ID: 0
-  Clothing_Name: "\uC2A4\uD0A4\uB2C8\uC804\uD22C\uBCF5"
-  Clothing_Name_kr: Skinny_Camo
+  Clothing_ID: 31
+  Clothing_Name: Skinny Camo
+  Clothing_Name_kr: "\uC2A4\uD0A4\uB2C8\uC804\uD22C\uBCF5"
   ClothingImage: {fileID: 21300000, guid: d3f60fc9c2fc6c448a74daa6ab760d26, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0.15
+  Neck_Defense: 0
+  Insulation: 0.5
+  Wind_resistance: 0.3
+  Is_Cotton: 1
+  ClothingWeight: 1
   Item_index: 4

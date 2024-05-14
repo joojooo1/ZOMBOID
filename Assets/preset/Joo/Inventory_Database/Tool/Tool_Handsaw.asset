@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Tool_Handsaw
   m_EditorClassIdentifier: 
   type: 5
-  Usingtype: 0b000000
+  Usingtype: 0b0000000a000000
+  Tool_ID: 8
   Tool_Name: Handsaw
   Tool_Name_Kr: "\uD1B1"
   Tool_Image: {fileID: 21300000, guid: b9cdd6451b063d54b90c212eb86d26d4, type: 3}
