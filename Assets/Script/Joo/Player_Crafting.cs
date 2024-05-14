@@ -66,9 +66,9 @@ public class Recipe_item
         Recipe_Ingredients_list.Add(recipe_Ingredients);
     }
 
-    public void Add_Recipe_Ingredients_Tool(Type _DB_type, int _DB_ID, int value)
+    public void Add_Recipe_Ingredients_Tool(Type _DB_type, int _DB_ID)
     {
-        Recipe_Ingredients recipe_Ingredients = new Recipe_Ingredients(_DB_type, _DB_ID, value);
+        Recipe_Ingredients recipe_Ingredients = new Recipe_Ingredients(_DB_type, _DB_ID, 1);
         Recipe_Ingredients_Tool_list.Add(recipe_Ingredients);
     }
 
@@ -154,23 +154,23 @@ public class Recipe_item
                 {
                     case Crafting_type.Crafting_General:
                         UI_Craft.UI_Craft_main.Crafting_General_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
                         break;
                     case Crafting_type.Crafting_Tool:
                         UI_Craft.UI_Craft_main.Crafting_Tool_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
                         break;
                     case Crafting_type.Crafting_Cook:
                         UI_Craft.UI_Craft_main.Crafting_Cook_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
                         break;
                     case Crafting_type.Crafting_Medical:
                         UI_Craft.UI_Craft_main.Crafting_Medical_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
                         break;
                     case Crafting_type.Crafting_Installation:
                         UI_Craft.UI_Craft_main.Crafting_Furniture_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_list[i].Recipe_value);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
                         break;
                 }
             }
@@ -260,8 +260,8 @@ public class Player_Crafting : MonoBehaviour
     public Recipe_item Recipe_Craft_Logs;  // 통나무 묶음
     public Recipe_item Recipe_Craft_Log;  // 통나무 ( 묶음 -> 낱개 )
 
-    public Recipe_item Recipe_Craft_Barricade;  // 바리케이트  ( 문or창문에 상호작용 )    // 재료: 판자x1, 못x2, 망치   // 목공 exp 0.75
-    public Recipe_item Recipe_Craft_Metal_Barricade;  // 금속 바리케이트    // 재료: 금속판x1, 프로판토치(1), 용접 마스크   // 금속 exp 1.5
+    // public Recipe_item Recipe_Craft_Barricade;  // 바리케이트  ( 문or창문에 상호작용 )    // 재료: 판자x1, 못x2, 망치   // 목공 exp 0.75
+    // public Recipe_item Recipe_Craft_Metal_Barricade;  // 금속 바리케이트    // 재료: 금속판x1, 프로판토치(1), 용접 마스크   // 금속 exp 1.5
 
     public Recipe_item Recipe_Make_Metal_Sheet;    // 금속판  // 재료: 소형금속판x4, 프로판토치(2), 용접 마스크 + 금속level_2       // 금속 exp 6.25
     public Recipe_item Recipe_Make_Small_Metal_Sheet;    // 소형 금속판x3  // 재료: 금속판x1, 프로판토치(2), 용접 마스크 + 금속level_2        // 금속 exp 6.25
@@ -272,14 +272,53 @@ public class Player_Crafting : MonoBehaviour
     public Recipe_item Recipe_Craft_Splint;  // 부목  // 재료: 판자x1, 찢어진 천x1 
     public Recipe_item Recipe_Craft_Sturdy_Stick;  // 튼튼한 막대기x8   // 재료: 판자x1, 톱
 
-
+    public Recipe_item Recipe_Craft_Salad;
 
     public List<Recipe_item> Recipe_Crafting_list = new List<Recipe_item>();
 
     int target_index = -1;
     private void Awake()  
     {
+        // 샐러드
+        for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.food_Ins[i].FoodName == "Salad")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.food_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Salad = new Recipe_item(-1, Type.food, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.food_Ins[i].Ingredients_Cooked == true)  // 요리 재료인 경우
+                {
+                    Recipe_Craft_Salad.Add_Recipe_Ingredients(Type.food, i, 1);
+                }
 
+            }
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Bowl")  // 그릇_Tool
+                {
+                    Recipe_Craft_Salad.Add_Recipe_Ingredients_Tool(Type.Tool, i);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Salad);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
 
         // Cooking
@@ -354,10 +393,10 @@ public class Player_Crafting : MonoBehaviour
             Recipe_Craft_RippedSheets = new Recipe_item(-1, Type.Medical, target_index, 1); 
             for (int i = 0; i < Item_DataBase.item_database.clothing_Ins.Count; i++)
             {
-                if (Item_DataBase.item_database.clothing_Ins[i].ClothingType == Clothing_Type.T_shirt)  // T_shirt 타입인 의류  ( 추가 가능 )
+                if (Item_DataBase.item_database.clothing_Ins[i].Is_Cotton == true)  // T_shirt 타입인 의류  ( 추가 가능 )
                 {
                     Recipe_Craft_RippedSheets.Add_Recipe_Ingredients(Type.clothing, i, 1);
-                    break;
+                    //break;
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Craft_RippedSheets);
@@ -560,20 +599,20 @@ public class Player_Crafting : MonoBehaviour
                     Recipe_Craft_Spear.Add_Recipe_Ingredients(Type.weapon, i, 1);
                 }
             }
-            //for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
-            //{
-            //    if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Machete")  // 마테체_Tool
-            //    {
-            //        Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
-            //    }
-            //}
-            //for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
-            //{
-            //    if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Cleaver")  // 중식도_Tool
-            //    {
-            //        Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
-            //    }
-            //}
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Machete")  // 마테체_Tool
+                {
+                    Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Cleaver")  // 중식도_Tool
+                {
+                    Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i);
+                }
+            }
             Recipe_Crafting_list.Add(Recipe_Craft_Spear);
         }
         else
@@ -581,20 +620,136 @@ public class Player_Crafting : MonoBehaviour
             target_index = -1;
         }
 
-        //// 창 ( 마테체 )
-        //Recipe_Craft_SpearMachete = new Recipe_item(-1, Type.weapon, 30, 1);
+        // 창 ( 마테체 )
+        for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "SpearMachete")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.weapons_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_SpearMachete = new Recipe_item(-1, Type.weapon, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "SpearStick")  // 제작된 창
+                {
+                    Recipe_Craft_SpearMachete.Add_Recipe_Ingredients(Type.weapon, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Machete")  // 마테체
+                {
+                    Recipe_Craft_SpearMachete.Add_Recipe_Ingredients(Type.weapon, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Duct Tape")  // 강력 접착 테이프
+                {
+                    Recipe_Craft_SpearMachete.Add_Recipe_Ingredients(Type.Normal, i, 2);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_SpearMachete);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
-        // 바리케이트
-        Recipe_Craft_Barricade = new Recipe_item(-1, Type.Furniture, target_index, 1);  // 바리케이트  ( 문or창문에 상호작용 )    // 재료: 판자x1, 못x2, 망치   // 목공 exp 0.75
-        Recipe_Craft_Metal_Barricade = new Recipe_item(-1, Type.Furniture, target_index, 1);  // 금속 바리케이트    // 재료: 금속판x1, 프로판토치(1), 용접 마스크   // 금속 exp 1.5
+        // 부목
+        for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Splint")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.medical_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Splint = new Recipe_item(-1, Type.Medical, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Ripped Sheets")  // 찢어진 천
+                {
+                    Recipe_Craft_Splint.Add_Recipe_Ingredients(Type.Medical, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자
+                {
+                    Recipe_Craft_Splint.Add_Recipe_Ingredients(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Splint);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
-
+        // 튼튼한 막대기x8   // 재료: 판자x1, 톱
+        for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "WoodenStick")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.ETC_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Sturdy_Stick = new Recipe_item(-1, Type.Normal, target_index, 8);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자
+                {
+                    Recipe_Craft_Sturdy_Stick.Add_Recipe_Ingredients(Type.weapon, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Handsaw")  // 톱_Tool
+                {
+                    Recipe_Craft_Sturdy_Stick.Add_Recipe_Ingredients_Tool(Type.Tool, i);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Sturdy_Stick);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
         Recipe_Make_Metal_Sheet = new Recipe_item(-1, Type.Normal, target_index, 1);    // 금속판  // 재료: 소형금속판x4, 프로판토치(2), 용접 마스크 + 금속level_2       // 금속 exp 6.25
         Recipe_Make_Small_Metal_Sheet = new Recipe_item(-1, Type.Normal, target_index, 3);    // 소형 금속판x3  // 재료: 금속판x1, 프로판토치(2), 용접 마스크 + 금속level_2        // 금속 exp 6.25
 
-        Recipe_Craft_Splint = new Recipe_item(-1, Type.Medical, target_index, 1);  // 부목  // 재료: 판자x1, 찢어진 천x1 
-        Recipe_Craft_Sturdy_Stick = new Recipe_item(-1, Type.Normal, target_index, 8);  // 튼튼한 막대기x8   // 재료: 판자x1, 톱
     }
 
 
@@ -606,6 +761,8 @@ public class Player_Crafting : MonoBehaviour
         //}
 
         // Start 레시피는 시작할때 true로 변경
+        Recipe_Craft_Salad.Is_Craftng = true;
+
         Recipe_Craft_RippedSheets.Is_Craftng = true;
         Recipe_Craft_Sheets.Is_Craftng = true;
         Recipe_Craft_SheetRope.Is_Craftng= true;
@@ -613,6 +770,9 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Craft_Logs.Is_Craftng = true;
         Recipe_Craft_Log.Is_Craftng = true;
         Recipe_Craft_Spear.Is_Craftng = true;
+        Recipe_Craft_SpearMachete.Is_Craftng = true;
+        Recipe_Craft_Splint.Is_Craftng = true;
+        Recipe_Craft_Sturdy_Stick.Is_Craftng = true;
     }
 
 

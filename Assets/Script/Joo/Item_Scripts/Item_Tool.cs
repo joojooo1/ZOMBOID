@@ -7,6 +7,7 @@ public class Item_Tool : ScriptableObject   // 무기로 쓰이지 않는 도구
 {
     public Type type;
     public Using_Type[] Usingtype;
+    public int Tool_ID; // 고유ID
 
     public string Tool_Name;
     public string Tool_Name_Kr;

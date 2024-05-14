@@ -69,7 +69,9 @@ public class GameManager : MonoBehaviour
                 if (Minute >= 50)
                 {
                     if (Hour < 23)
+                    {
                         Hour += 1;
+                    }
                     else
                     {
                         Hour = 0;
@@ -126,13 +128,13 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    public float Clothing_Wind_resistance = 1f;
     void Set_Windchill()
     {
         System.Random rand = new System.Random();
         float Temp = rand.Next(0, 10);
 
-        Player_main.player_main.playerMoodles.Moodle_Windchill.Set_Moodles_state(Temp);
+        Player_main.player_main.playerMoodles.Moodle_Windchill.Set_Moodles_state(Temp * Clothing_Wind_resistance);
         
     }
 
@@ -165,4 +167,13 @@ public class GameManager : MonoBehaviour
         primary_Weapon_text.text = Item_DataBase.item_database.weapons_Ins[target_index].WeaponName;
     }
 
+    public int Get_Elapsed_time()
+    {
+        return Elapsed_time;
+    }
+
+    public int Get_killed_count()
+    {
+        return Zombies_killed_count;
+    }
 }

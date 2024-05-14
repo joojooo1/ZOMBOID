@@ -1161,7 +1161,7 @@ public class Moodles_state
                 break;     /* 24.03.07 */  // 옷벗을때, 찬바람 무들 활성화 일때 호출
             case Moodles_private_code.Windchill:  //  2f, 5f, 7f, 9f  // GameManager
                 _Moodle_current_value = current_value;
-                if (current_value < _First_state)
+                if (_Moodle_current_value < _First_state)
                 {
                     _current_state_to_string = "";
                     _current_detail_state_to_string = "";
@@ -1172,7 +1172,7 @@ public class Moodles_state
                     Player_main.player_main.playerState.Set_Apparent_Temperature_forMoodle(0f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (current_value >= _First_state && current_value < _Second_state)  // 1단계
+                else if (_Moodle_current_value >= _First_state && _Moodle_current_value < _Second_state)  // 1단계
                 {
                     _current_state_to_string_KR = "가벼운 찬 바람";
                     _current_detail_state_to_string_KR = "실제보다 5-10도 정도 차갑게 느낀다.";
@@ -1183,7 +1183,7 @@ public class Moodles_state
                     Player_main.player_main.playerState.Set_Apparent_Temperature_forMoodle(-5.0f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (current_value >= _Second_state && current_value < _Third_state)  // 2단계
+                else if (_Moodle_current_value >= _Second_state && _Moodle_current_value < _Third_state)  // 2단계
                 {
                     _current_state_to_string_KR = "성가신 찬 바람";
                     _current_detail_state_to_string_KR = "실제보다 10-15도 정도 차갑게 느낀다.";
@@ -1194,7 +1194,7 @@ public class Moodles_state
                     Player_main.player_main.playerState.Set_Apparent_Temperature_forMoodle(-10.0f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (current_value >= _Third_state && current_value < _Fourth_state)  // 3단계
+                else if (_Moodle_current_value >= _Third_state && _Moodle_current_value < _Fourth_state)  // 3단계
                 {
                     _current_state_to_string_KR = "얼음같은 찬 바람";
                     _current_detail_state_to_string_KR = "실제보다 15-20도 정도 차갑게 느낀다.";
@@ -1205,7 +1205,7 @@ public class Moodles_state
                     Player_main.player_main.playerState.Set_Apparent_Temperature_forMoodle(-15.0f);
                     UI_Moodle.ui_moodle.Moodle_Ins(_Moodle_Code, _Moodle_current_step);
                 }
-                else if (current_value > _Fourth_state)  // 4단계
+                else if (_Moodle_current_value > _Fourth_state)  // 4단계
                 {
                     _current_state_to_string_KR = "엄청나게 추운 바람";
                     _current_detail_state_to_string_KR = "실제보다 20도 넘게 차갑게 느낀다.";
