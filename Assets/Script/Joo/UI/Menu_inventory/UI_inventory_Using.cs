@@ -58,24 +58,6 @@ public class UI_inventory_Using : MonoBehaviour
                                 Possibility = true;
                             }
                             break;
-                        //case Skill_Type.Hunting:
-                        //    if (Player_main.player_main.Skill.Hunting_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
-                        //    {
-                        //        Possibility = true;
-                        //    }
-                        //    break;
-                        //case Skill_Type.Foraging:
-                        //    if (Player_main.player_main.Skill.Foraging_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
-                        //    {
-                        //        Possibility = true;
-                        //    }
-                        //    break;
-                        //case Skill_Type.Riding:
-                        //    if (Player_main.player_main.Skill.Riding_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
-                        //    {
-                        //        Possibility = true;
-                        //    }
-                        //    break;
                         case Skill_Type.Carpentry:
                             if (Player_main.player_main.Skill.Carpentry_Level.Check_reading(Item_DataBase.item_database.literature_Ins[item_ID].Literature_Level))
                             {
@@ -121,7 +103,7 @@ public class UI_inventory_Using : MonoBehaviour
                     // 이미 읽은 잡지인지아닌지 확인
                     for(int i = 0; i < Player_main.player_main.crafting_recipe.Recipe_Crafting_list.Count;)
                     {
-                        if(Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Recipe_ID == item_ID)
+                        if(Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Magazine_ID == item_ID)
                         {
                             if (Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Is_Craftng == false)
                             {
@@ -191,15 +173,6 @@ public class UI_inventory_Using : MonoBehaviour
                                 case Skill_Type.Fishing:
                                     Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Fishing_Level.Get_S_reading_page();
                                     break;
-                                //case Skill_Type.Hunting:
-                                //    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Hunting_Level.Get_S_reading_page();
-                                //    break;
-                                //case Skill_Type.Foraging:
-                                //    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Foraging_Level.Get_S_reading_page();
-                                //    break;
-                                //case Skill_Type.Riding:
-                                //    Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Riding_Level.Get_S_reading_page();
-                                //    break;
                                 case Skill_Type.Carpentry:
                                     Player_main.player_main.Skillbook_Readpage = Player_main.player_main.Skill.Carpentry_Level.Get_C_reading_page();
                                     break;
@@ -220,7 +193,7 @@ public class UI_inventory_Using : MonoBehaviour
                         case Book_Type.Magazine:
                             for(int i = 0; i < Player_main.player_main.crafting_recipe.Recipe_Crafting_list.Count; i++)
                             {
-                                if (Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Recipe_ID == item_ID)
+                                if (Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Magazine_ID == item_ID)
                                 {
                                     Player_main.player_main.crafting_recipe.Recipe_Crafting_list[i].Is_Craftng = true;
                                 }
@@ -335,10 +308,7 @@ public class UI_inventory_Using : MonoBehaviour
                     Player_main.player_main.Current_equipping_Weapon = item_ID;
                     break;
                 case Type.clothing:
-                    Player_main.player_main.playerState.Clothing_Neck_Defense = 1 + Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
-                    Player_main.player_main.playerState.Clothing_Defense = 1 + Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
-                    Player_main.player_main.playerState.Set_Wear(Item_DataBase.item_database.clothing_Ins[item_ID].Insulation);
-                    GameManager.gameManager.Clothing_Wind_resistance = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                    Player_main.player_main.playerState.Set_Wear(item_ID);
                     break;
             }
         }
