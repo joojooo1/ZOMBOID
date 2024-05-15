@@ -245,3 +245,9 @@ public enum Clothing_Type
     Underwear = 16,
     None = 17
 }
+
+public enum Installation_Type
+{
+    Furniture = 0,
+    Construction = 1
+}

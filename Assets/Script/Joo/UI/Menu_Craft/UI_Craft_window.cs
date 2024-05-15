@@ -148,7 +148,6 @@ public class UI_Craft_window : MonoBehaviour
             {
                 Crafting_item_Prefab_list[i].Choice = true;
                 Selected_item = Crafting_item_Prefab_list[i];
-                break;
             }
             else
             {
@@ -180,7 +179,7 @@ public class UI_Craft_window : MonoBehaviour
     {
         Info_window.SetActive(true);
         Info_window.transform.position = pos.position;
-        Vector3 temp = new Vector3(130, -20, 0);
+        Vector3 temp = new Vector3(110, -40, 0);
         Info_window.transform.position += temp;
         item_Text.text = name;       
     }
@@ -320,8 +319,12 @@ public class UI_Craft_window : MonoBehaviour
 
         if (Selected_item != null && check == false)//여기에 재료 조건문 추가
         {
+            //0514 EJ
+              // 도구) 리스트 중 1개만 있으면 됨. 용접 쪽만 2개
+              // 재료) 제작 시 갯수만큼 인벤토리에서 제거
+
             //0509 JY
-            
+
 
             if (!Inventory_Player_Shown.InvPS.Checking_Crafting_Canbe())
             {

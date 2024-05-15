@@ -59,7 +59,7 @@ public class Player_main : MonoBehaviour
 
     public bool ability_Sleeping = true;
     public bool ability_Eat = true;
-    public bool ability_Read = false;
+    public bool ability_Read = true;
     public bool ability_Hear = true;
 
     public bool Is_Equipping_Weapons = false;

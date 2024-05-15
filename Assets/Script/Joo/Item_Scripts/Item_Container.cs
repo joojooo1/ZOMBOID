@@ -37,7 +37,7 @@ public class Item_Container : ScriptableObject
 
     public bool Is_Empty;
 
-    public float Capacity_Water;
+    public float Capacity;  // 물
     public float Rain_factor;  // 빗물 차는 속도
     public int Item_Index;
 
