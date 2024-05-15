@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 4
-  Clothing_ID: 0
-  Clothing_Name: "\uACBD\uCC30\uBC29\uD0C4\uC870\uB07C"
-  Clothing_Name_kr: BulletVestPolice
+  Clothing_ID: 12
+  Clothing_Name: Bullet Vest Police
+  Clothing_Name_kr: "\uACBD\uCC30\uBC29\uD0C4\uC870\uB07C"
   ClothingImage: {fileID: 21300000, guid: c5105c17a06b71a48909a0845c9de84b, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0.62
+  Neck_Defense: 0
+  Insulation: 0.65
+  Wind_resistance: 0.3
+  Is_Cotton: 0
+  ClothingWeight: 1
   Item_index: 1

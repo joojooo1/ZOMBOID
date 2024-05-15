@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 9
-  Clothing_ID: 30
+  Clothing_ID: 33
   Clothing_Name: Shorts Denim Bottom
   Clothing_Name_kr: "\uCCAD\uBC18\uBC14\uC9C0"
   ClothingImage: {fileID: 21300000, guid: 5db4607491a63f940a6e1287d498649f, type: 3}

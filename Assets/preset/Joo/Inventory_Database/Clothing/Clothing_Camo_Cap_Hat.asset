@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 0
-  Clothing_ID: 11
+  Clothing_ID: 13
   Clothing_Name: Camo Cap Hat
   Clothing_Name_kr: "\uAD70\uC6A9\uD65C\uB3D9\uBAA8"
   ClothingImage: {fileID: 21300000, guid: 604c20b872cbf2e45bee85de71bf80f0, type: 3}
