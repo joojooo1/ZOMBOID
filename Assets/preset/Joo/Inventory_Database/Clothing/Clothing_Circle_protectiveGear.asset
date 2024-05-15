@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 10
-  Clothing_ID: 16
+  Clothing_ID: 18
   Clothing_Name: Circle protectiveGear
   Clothing_Name_kr: "\uC6D0\uD615\uBB34\uB98E\uBCF4\uD638\uB300"
   ClothingImage: {fileID: 21300000, guid: ec72cf42881b1b74b90f127948e10f80, type: 3}

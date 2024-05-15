@@ -32,5 +32,6 @@ MonoBehaviour:
   On_Fire: 0
   On_Microwave: 0
   Is_Empty: 1
-  Capacity_Water: 10
+  Capacity: 10
   Rain_factor: 0.5
+  Item_Index: 0

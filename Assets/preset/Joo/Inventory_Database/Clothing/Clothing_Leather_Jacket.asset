@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 3
-  Clothing_ID: 25
+  Clothing_ID: 28
   Clothing_Name: Leather Jacket
   Clothing_Name_kr: "\uAC00\uC8FD\uC790\uCF13"
   ClothingImage: {fileID: 21300000, guid: a8ba03522ba48a140ae362629f4f138d, type: 3}

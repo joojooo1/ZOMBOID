@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 8
-  Clothing_ID: 18
+  Clothing_ID: 20
   Clothing_Name: Combat Shoes
   Clothing_Name_kr: "\uAD70\uC6A9\uC2E0\uBC1C(\uAC80\uC815)"
   ClothingImage: {fileID: 21300000, guid: c8485961ffbe170459af99e326e88fe8, type: 3}

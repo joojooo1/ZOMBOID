@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 3
-  Clothing_ID: 0
-  Clothing_Name: "\uC804\uD22C\uBCF5\uC0C1\uC758(\uB179\uC0C9)"
-  Clothing_Name_kr: Camo_Green_Jacket
+  Clothing_ID: 15
+  Clothing_Name: Camo Green Jacket
+  Clothing_Name_kr: "\uC804\uD22C\uBCF5\uC0C1\uC758(\uB179\uC0C9)"
   ClothingImage: {fileID: 21300000, guid: b5fbc9ba923586c4aae16019f7503f3c, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0.26
+  Neck_Defense: 0.5
+  Insulation: 0.45
+  Wind_resistance: 0.3
+  Is_Cotton: 1
+  ClothingWeight: 2
   Item_index: 2
