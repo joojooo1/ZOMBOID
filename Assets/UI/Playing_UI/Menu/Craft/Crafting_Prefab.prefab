@@ -165,8 +165,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item_Image: {fileID: 9025903434591274942}
+  item_Value: {fileID: 0}
   item_Transform: {fileID: 2654579292967246791}
   Choice: 0
   Is_Ingredients: 0
+  Is_Ingredients_Tool: 0
   item_index: 0
   Ingredients_index: 0
