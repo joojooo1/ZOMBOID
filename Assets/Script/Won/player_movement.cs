@@ -26,6 +26,9 @@ public class player_movement : MonoBehaviour
     public GameObject playerrot;
     public bool low_Fen = false;
     private readonly float[] targetAngles = { -45f, 45f, 135f, -135f };
+
+    public bool Player; // 0513 JY
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,31 +47,36 @@ public class player_movement : MonoBehaviour
     bool Strife_set = false;
     private void Update()
     {
-        navMeshAgent.speed = player_Main.Get_Moving_Speed();
-        if (!aser)
+        if (Player) // 0513 JY
         {
-            inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") + (UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
-            inputpos.Normalize();
-            inputpos *= Time.fixedDeltaTime * (navMeshAgent.speed);
-        }
-        else
-        {
-            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
+            navMeshAgent.speed = player_Main.Get_Moving_Speed();
+            if (!aser)
             {
-                Debug.Log("멈춤");
-                aser = false;
-                navMeshAgent.ResetPath();
-                for (int i = 0; i < playeranime.Length; i++)
+                inputpos = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal") + (UnityEngine.Input.GetAxisRaw("Vertical") * 0.001f), UnityEngine.Input.GetAxisRaw("Vertical"), 0F);
+                inputpos.Normalize();
+                inputpos *= Time.fixedDeltaTime * (navMeshAgent.speed);
+            }
+            else
+            {
+                if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && !navMeshAgent.pathPending)
                 {
-                    if (playeraimeobject[i].activeSelf)
+                    Debug.Log("멈춤");
+                    aser = false;
+                    navMeshAgent.ResetPath();
+                    for (int i = 0; i < playeranime.Length; i++)
                     {
-                        playeranime[i].animatersetTrigger(anim);
+                        if (playeraimeobject[i].activeSelf)
+                        {
+                            playeranime[i].animatersetTrigger(anim);
+                        }
                     }
                 }
             }
+        
         }
         if (uI_Main.Playing)
         {
+
             if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
             {
                 run_set = true;
@@ -88,12 +96,17 @@ public class player_movement : MonoBehaviour
             }
         }
     }
+    }
     public bool aser = false;
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (Player) // 0513 JY
+        {
+
         if (uI_Main.Playing)
         {
+
             if (navMeshAgent.enabled && UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
             {
                 if (aser)
@@ -146,10 +159,12 @@ public class player_movement : MonoBehaviour
                 animepos(new Vector3(0, 0, 0), "smoking");
             }
         }
+        }
     }
-    void playergoseverpos(Vector3 playergoseverpos)
+    public Vector3 playergoseverpos(Vector3 playergoseverpos)
     {
-        //������ ��ǥ ����(������ũ��Ʈ).(�÷��̾� �ѹ�)(playergoseverpos);
+        playergoseverpos = this.transform.position;
+        return playergoseverpos;
     }
     void playergetseverpos(Vector3 playergetseverpos)
     {
