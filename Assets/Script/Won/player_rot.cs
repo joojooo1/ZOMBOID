@@ -25,7 +25,11 @@ public class player_rot : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         if (Player)
+
+        if (playerpos.GetComponent<player_movement>().uI_Main.Playing)
+
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
@@ -41,14 +45,16 @@ public class player_rot : MonoBehaviour
             }
             else if (horizontalInput != 0f || verticalInput != 0f)
             {
-                // ÀÔ·Â°ªÀ» ±âÁØÀ¸·Î È¸Àü °¢µµ¸¦ °è»ê
+                // ì…ë ¥ê°’ì„ ê¸°ì¤€ìœ¼ë¡œ íšŒì „ ê°ë„ë¥¼ ê³„ì‚°
                 float targetAngle = Mathf.Atan2(horizontalInput, verticalInput) * Mathf.Rad2Deg;
-                // È¸Àü °¢µµ Àû¿ë
+                // íšŒì „ ê°ë„ ì ìš©
                 targetRotation = Quaternion.Euler(0, targetAngle, 0f);
                 transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
                 //gosever(targetRotation);
+
                 //0516 JY
                 CMainGame.current.Player_Rotation_Sending_Req(targetRotation);
+
             }
             if (playerpos.GetComponent<player_movement>().aser)
             {
@@ -86,7 +92,7 @@ public class player_rot : MonoBehaviour
                 Collider[] colliders = Physics.OverlapSphere(transform.position, currentVolume * 5, layerMask);
                 foreach (Collider collider in colliders)
                 {
-                    // Ãæµ¹Ã¼°¡ °øÅëµÈ ½ºÅ©¸³Æ®¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+                    // ì¶©ëŒì²´ê°€ ê³µí†µëœ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
                     zom_pos zomtarget = collider.GetComponent<zom_pos>();
                     if (zomtarget != null)
                     {
@@ -96,6 +102,7 @@ public class player_rot : MonoBehaviour
             }
 
         }
+    }
     }
 
     //0516 JY
@@ -114,11 +121,11 @@ public class player_rot : MonoBehaviour
 
     void gosever(Quaternion player_rot)
     {
-        //¼­¹ö·Î È¸Àü°ª Àü¼Û (¼­¹ö½ºÅ©¸³Æ®).(ÇÃ·¹ÀÌ¾î ³Ñ¹ö).(player_rot);
+        //ì„œë²„ë¡œ íšŒì „ê°’ ì „ì†¡ (ì„œë²„ìŠ¤í¬ë¦½íŠ¸).(í”Œë ˆì´ì–´ ë„˜ë²„).(player_rot);
     }
     void getseverrot(Quaternion player_rot)
     {
-        //¼­¹ö¿¡¼­ ¹Ş¾ÒÀ»‹š È¸Àü°ªÀû¿ëtransform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //ì„œë²„ì—ì„œ ë°›ì•˜ì„Â‹Âš íšŒì „ê°’ì ìš©transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
     public void getzomda(GameObject Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)
     {

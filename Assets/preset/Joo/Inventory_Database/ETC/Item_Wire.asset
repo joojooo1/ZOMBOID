@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75540daaa13ebba478e67698195564d5, type: 3}
   m_Name: Item_Wire
   m_EditorClassIdentifier: 
-  type: 0
-  Usingtype: 0
+  type: 3
+  Usingtype: 7
   ETC_ID: 12
   ETC_Name: Wire
   ETC_Name_kr: "\uCCA0\uC0AC"

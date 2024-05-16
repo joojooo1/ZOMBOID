@@ -38,13 +38,15 @@ public class player_animation : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         if (Player) // 0513 JY
         {
-            float verticalInput = Input.GetAxisRaw("Vertical");
-            verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
-            float HorizontalInput = Input.GetAxisRaw("Horizontal");
-            HorizontalInput = Mathf.Clamp(HorizontalInput, -1f, 1f);
-
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
+        float HorizontalInput = Input.GetAxisRaw("Horizontal");
+        HorizontalInput = Mathf.Clamp(HorizontalInput, -1f, 1f);
+        if (playernav.GetComponent<player_movement>().uI_Main.Playing)
+        {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
                 if (Input.GetKey(KeyCode.LeftShift))
@@ -101,6 +103,7 @@ public class player_animation : MonoBehaviour
                 animatorsetBool("walk", true);
             }
         }
+        }
     }
 
 
@@ -116,7 +119,7 @@ public class player_animation : MonoBehaviour
         switch (setting) 
         {
             case 1: // N B
-                if (Last_Name_Anime.Count == 0) // ÃÊ±â »ý¼ºµµ Àü¼Û
+                if (Last_Name_Anime.Count == 0) // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     Last_Name_Anime.Add(Name);
                     Last_Bool_Anime.Add(set);
@@ -151,21 +154,21 @@ public class player_animation : MonoBehaviour
                             {
                                 Tof2 = 0;
                             }
-                            CMainGame.current.Player_Animation_Send(Name, Tof2,404,setting); // ºÒ°ª ´Ù¸¦¶§¸¸ Àü¼Û
+                            CMainGame.current.Player_Animation_Send(Name, Tof2,404,setting); // ï¿½Ò°ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             return;
                         }
                         else
                         {
-                            //°°À½ ¼­¹ö·Î Àü¼ÛÇÏÁö¾Ê°í Á¾·á
+                            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½
                             return;
                         }
                     }
                     else
                     {
-                        //¹Ýº¹
+                        //ï¿½Ýºï¿½
                     }
                 }
-                // Á¸ÀçÇÏÁö ¾ÊÀ»°æ¿ì for¹®ÀÌ ³¡³ª¹Ç·Î Ãß°¡ÇØÁÜ
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ forï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½
                 Last_Name_Anime.Add(Name);
                 Last_Bool_Anime.Add(set);
                 Last_Float_Anime.Add(404);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,7 +37,7 @@ public class player_item_controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        start_item();
     }
 
     // Update is called once per frame
@@ -49,6 +50,7 @@ public class player_item_controller : MonoBehaviour
     bool hat = false;
     bool bot = false;
     bool shooes = false;
+    bool TOP = false;
     public void current_Back_Pack(string category, int index, bool setActive)
     {
         GameObject[] targetArray = null;
@@ -137,8 +139,8 @@ public class player_item_controller : MonoBehaviour
                 targetArray = Backpack_weapon;
                 break;
             case "Back_weapon":
-                targetArray = Back_weapon;
-                break;
+                bandage_set(setActive,index);
+                return;
             case "current_weapon":
                 targetArray = current_weapon;
                 break;
@@ -166,7 +168,10 @@ public class player_item_controller : MonoBehaviour
         // 해당 배열의 요소가 존재하는지 확인 후 setActive 적용
         if (index >= 0 && index < targetArray.Length)
         {
-            targetArray[index].SetActive(setActive);
+            if(targetArray[index] != null)
+            {
+                targetArray[index].SetActive(setActive);
+            }
         }
         else
         {
@@ -182,7 +187,7 @@ public class player_item_controller : MonoBehaviour
     {
         if (set)
         {
-            if (item_type == "shit_set")
+            if (item_type == "shirt")
             {
                 shit_set = true;
                 shit_set_index = index;
@@ -195,7 +200,7 @@ public class player_item_controller : MonoBehaviour
         }
         else
         {
-            if (item_type == "shit_set")
+            if (item_type == "shirt")
             {
                 shit_set = false;
             }
@@ -215,6 +220,7 @@ public class player_item_controller : MonoBehaviour
         else
         {
             top_body.SetActive(false);
+            
         }
         if (!jacket_set && t_shit_set)
         {
@@ -227,27 +233,233 @@ public class player_item_controller : MonoBehaviour
                 T_shirt[t_shit_set_index].SetActive(true);
             }
         }
+        TOP = setActive;
+        bandage_seve_on(0);
     }
     void Hair(bool setActive)
     {
         Hat_on.SetActive(setActive);
         Hat_off.SetActive(!setActive);
+        hat = setActive;
+        bandage_seve_on(4);
     }
     void hand(bool setActive)
     {
         Hand_L.SetActive(!setActive);
         Hand_R.SetActive(!setActive);
+        Hand = setActive;
+        bandage_seve_on(2);
     }
     void foots(bool setActive)
     {
         foot.SetActive(!setActive);
+        shooes = setActive;
+        bandage_seve_on(3);
     }
     void bot_body(bool setActive)
     {
         bottom_body.SetActive(!setActive);
+        bot = setActive;
+        bandage_seve_on(1);
     }
-    void bandage_set(bool setActive)
+    List<int> bandage_seve = new List<int>();
+    void bandage_set(bool setActive,int index)
     {
+        if(index >= 2 && index <= 7)
+        {
+            if (!TOP)
+            {
+                bandage[index].SetActive(setActive);
+            }
+        }
+        else if (index >=8 && index <= 12)
+        {
+            if (!bot)
+            {
+                bandage[index].SetActive(setActive);
+            }
+        }
+        else if(index >= 13 && index <= 14)
+        {
+            if (!Hand)
+            {
+                bandage[index].SetActive(setActive);
+            }
+        }
+        else if(index >= 15 && index <= 16)
+        {
+            if (!shooes)
+            {
+                bandage[index].SetActive(setActive);
+            }
+        }
+        else if (index >= 0)
+        {
+            if (!hat)
+            {
+                bandage[index].SetActive(setActive);
+            }
+        }
+        else
+            bandage[index].SetActive(setActive);
+        if(setActive)
+        {
+            bandage_seve.Add(index);
+        }
+        else
+        {
+            bandage_seve.Remove(index);
+        }
+    }
+    void bandage_seve_on(int pos)
+    {
+        foreach(int index in bandage_seve)
+        {
+            if (index >= 2 && index <= 7 && pos == 0)
+            {
+                if (!TOP)
+                {
+                    bandage[index].SetActive(true);
+                }
+            }
+            else if (index >= 8 && index <= 12 && pos == 1)
+            {
+                if (!bot)
+                {
+                    bandage[index].SetActive(true);
+                }
+            }
+            else if (index >= 13 && index <= 14 && pos == 2)
+            {
+                if (!Hand)
+                {
+                    bandage[index].SetActive(true);
+                }
+            }
+            else if (index >= 15 && index <= 16 && pos == 3)
+            {
+                if (!shooes)
+                {
+                    bandage[index].SetActive(true);
+                }
+            }
+            else if (index >= 0 && pos == 4)
+            {
+                if (!hat)
+                {
+                    bandage[index].SetActive(true);
+                }
+            }
+        }
+    }
 
+    void start_item()
+    {
+        int a = 0;
+        foreach (var item in Hat)
+        {
+            if (item.activeSelf)
+            {
+                Hair(item.activeSelf);
+                break;
+            }
+            else
+                Hair(item.activeSelf);
+        }
+        foreach (var item in Gloves)
+        {
+            if (item.activeSelf)
+            {
+                hand(item.activeSelf);
+                break;
+            }
+            else
+                hand(item.activeSelf);
+        }
+        foreach (var item in jacket)
+        {
+            
+            if (item.activeSelf)
+            {
+                jacket_set = item.activeSelf;
+                TOP_SET("jacket", item.activeSelf, a);
+                top_body_set(item.activeSelf);
+                break;
+            }
+            else
+            {
+                jacket_set = item.activeSelf;
+                top_body_set(item.activeSelf);
+            }
+            a++;
+        }
+        a = 0;
+        foreach (var item in shirt)
+        {
+            if (item.activeSelf)
+            {
+                shit_set = item.activeSelf;
+                TOP_SET("shirt", item.activeSelf, a);
+                top_body_set(item.activeSelf);
+                break;
+            }
+            else
+            {
+                shit_set = item.activeSelf;
+                top_body_set(item.activeSelf);
+            }
+            a++;
+        }
+        a = 0;
+        foreach (var item in T_shirt)
+        {
+            if (item.activeSelf)
+            {
+                t_shit_set = item.activeSelf;
+                TOP_SET("T_shirt", item.activeSelf, a);
+                top_body_set(item.activeSelf);
+                break;
+            }
+            else
+            {
+                t_shit_set = item.activeSelf;
+                top_body_set(item.activeSelf);
+            }
+            a++;
+        }
+        foreach (var item in Bottoms)
+        {
+            if (item.activeSelf)
+            {
+                bot_body(item.activeSelf);
+                break;
+            }
+            else
+            {
+                bot_body(item.activeSelf);
+            }
+        }
+        foreach (var item in Shoes)
+        {
+            if (item.activeSelf)
+            {
+                foots(item.activeSelf);
+                break;
+            }
+            else
+            {
+                foots(item.activeSelf);
+            }
+        }
+        foreach (var item in Back_Pack)
+        {
+            if (item.activeSelf)
+            {
+                Back_Pack_on = item.activeSelf;
+                break;
+            }
+            
+        }
+        a = 0;
     }
 }

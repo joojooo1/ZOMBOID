@@ -13,6 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class player_movement : MonoBehaviour
 {
+    public UI_main uI_Main;
     public Player_main player_Main;
     private NavMeshAgent navMeshAgent;
     public float Playermovement_speed = 7;
@@ -71,6 +72,11 @@ public class player_movement : MonoBehaviour
                     }
                 }
             }
+        
+        }
+        if (uI_Main.Playing)
+        {
+
             if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
             {
                 run_set = true;
@@ -90,11 +96,15 @@ public class player_movement : MonoBehaviour
             }
         }
     }
+    }
     public bool aser = false;
     // Update is called once per frame
     void FixedUpdate()
     {
         if (Player) // 0513 JY
+        {
+
+        if (uI_Main.Playing)
         {
 
             if (navMeshAgent.enabled && UnityEngine.Input.GetAxisRaw("Horizontal") != 0 || UnityEngine.Input.GetAxisRaw("Vertical") != 0)
@@ -148,6 +158,7 @@ public class player_movement : MonoBehaviour
             {
                 animepos(new Vector3(0, 0, 0), "smoking");
             }
+        }
         }
     }
     public Vector3 playergoseverpos(Vector3 playergoseverpos)

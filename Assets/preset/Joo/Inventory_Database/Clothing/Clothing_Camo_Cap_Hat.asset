@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 0
-  Clothing_ID: 0
-  Clothing_Name: "\uAD70\uC6A9\uD65C\uB3D9\uBAA8"
-  Clothing_Name_kr: Camo_Cap_Hat
+  Clothing_ID: 13
+  Clothing_Name: Camo Cap Hat
+  Clothing_Name_kr: "\uAD70\uC6A9\uD65C\uB3D9\uBAA8"
   ClothingImage: {fileID: 21300000, guid: 604c20b872cbf2e45bee85de71bf80f0, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 1
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0
+  Neck_Defense: 0
+  Insulation: 0.1
+  Wind_resistance: 0
+  Is_Cotton: 0
+  ClothingWeight: 0.5
   Item_index: 3

@@ -18,12 +18,15 @@ public class UI_Craft_window : MonoBehaviour
     List<UI_Craft_Prefab> Crafting_item_Prefab_list;
     List<UI_Craft_Prefab> Crafting_Ingredients_Prefab_list;
     List<UI_Craft_Prefab> Crafting_Ingredients_Tool_Prefab_list;
+    List<UI_Craft_Prefab> Crafting_Ingredients_Spice_Prefab_list;
 
     public GameObject Crafting_Prefab;
     public Transform Crafting_Window;
     public GameObject Crafting_Ingredients_Prefab;
     public GameObject Crafting_Ingredients_Tool_Prefab;
     public Transform Crafting_Ingredients_Window;
+    public Transform Crafting_Ingredients_Spice_Window;
+    public Transform Crafting_Ingredients_Tool_Window;
     public GameObject Crafting_Ins_item;
     public Transform Crafting_Ins_Window;
 
@@ -39,6 +42,7 @@ public class UI_Craft_window : MonoBehaviour
         Crafting_item_Prefab_list = new List<UI_Craft_Prefab>();
         Crafting_Ingredients_Prefab_list = new List<UI_Craft_Prefab>();
         Crafting_Ingredients_Tool_Prefab_list = new List<UI_Craft_Prefab>();
+        Crafting_Ingredients_Spice_Prefab_list = new List<UI_Craft_Prefab>();
 
         Add_Crafting_list();
 
@@ -144,7 +148,6 @@ public class UI_Craft_window : MonoBehaviour
             {
                 Crafting_item_Prefab_list[i].Choice = true;
                 Selected_item = Crafting_item_Prefab_list[i];
-                break;
             }
             else
             {
@@ -176,7 +179,7 @@ public class UI_Craft_window : MonoBehaviour
     {
         Info_window.SetActive(true);
         Info_window.transform.position = pos.position;
-        Vector3 temp = new Vector3(80, -20, 0);
+        Vector3 temp = new Vector3(110, -40, 0);
         Info_window.transform.position += temp;
         item_Text.text = name;       
     }
@@ -188,48 +191,87 @@ public class UI_Craft_window : MonoBehaviour
 
     public void Ins_Ingredients_Window(UI_Craft_Prefab _item)
     {
-        if (Origin_list[_item.item_index].Ingredients_Tool_list.Count > 0)
-        {
-            GameObject obj = null;
-            obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
-            for (int i = 0; i < Origin_list[_item.item_index].Ingredients_Tool_list.Count;)
-            {
-                UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients(Origin_list[_item.item_index], i);
-
-                Crafting_Ingredients_Tool_Prefab_list.Add(item);
-                i++;
-            }
-        }
-
         if (_item.item_Info.item_type != Crafting_type.Crafting_Cook)
         {
-            for (int i = 0; i < Origin_list[_item.item_index].Ingredients_list.Count;)
+            if (Origin_list[_item.item_index].Ingredients_Tool_list.Count > 0)
+            {
+                for (int i = 0; i < Origin_list[_item.item_index].Ingredients_Tool_list.Count;)
+                {
+                    GameObject obj = null;
+                    obj = Instantiate(Crafting_Ingredients_Tool_Prefab, Crafting_Ingredients_Tool_Window);
+
+                    UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                    item.Set_Ingredients_Tool(Origin_list[_item.item_index], i);
+
+                    Crafting_Ingredients_Tool_Prefab_list.Add(item);
+                    i++;
+                }
+            }
+
+            if(Origin_list[_item.item_index].name == "Ripped Sheets")
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
 
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients(Origin_list[_item.item_index], i);
-                
-                Crafting_Ingredients_Prefab_list.Add(item);
-                i++;
+                item.Set_Ingredients(Origin_list[_item.item_index], 1);
             }
+            else
+            {
+                for (int i = 0; i < Origin_list[_item.item_index].Ingredients_list.Count;)
+                {
+                    GameObject obj = null;
+                    obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
 
+                    UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                    item.Set_Ingredients(Origin_list[_item.item_index], i);
+
+                    Crafting_Ingredients_Prefab_list.Add(item);
+                    i++;
+                }
+            }
 
         }
         else
         {
+            if (Origin_list[_item.item_index].Ingredients_Tool_list.Count > 0)
+            {
+                for (int i = 0; i < Origin_list[_item.item_index].Ingredients_Tool_list.Count;)
+                {
+                    GameObject obj = null;
+                    obj = Instantiate(Crafting_Ingredients_Tool_Prefab, Crafting_Ingredients_Tool_Window);
+
+                    UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                    item.Set_Ingredients_Tool(Origin_list[_item.item_index], i);
+
+                    Crafting_Ingredients_Tool_Prefab_list.Add(item);
+                    i++;
+                }
+            }
+
             for (int i = 0; i < 4;)
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients_Box(i);
+                item.Set_Ingredients_Box(Type.food, i);
 
                 Crafting_Ingredients_Prefab_list.Add(item);
                 i++;
             }
+
+            for (int i = 0; i < 4;)
+            {
+                GameObject obj = null;
+                obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Spice_Window);
+                UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                item.Set_Ingredients_Box(Type.food, i);
+
+                Crafting_Ingredients_Spice_Prefab_list.Add(item);
+                i++;
+            }
+            
+
         }
 
     }
@@ -249,8 +291,17 @@ public class UI_Craft_window : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        foreach (Transform child in Crafting_Ingredients_Tool_Window)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in Crafting_Ingredients_Spice_Window)
+        {
+            Destroy(child.gameObject);
+        }
         Crafting_Ingredients_Prefab_list.Clear();
         Crafting_Ingredients_Tool_Prefab_list.Clear();
+        Crafting_Ingredients_Spice_Prefab_list.Clear();
     }
 
     UI_Craft_Prefab Selected_item = null;
@@ -268,8 +319,12 @@ public class UI_Craft_window : MonoBehaviour
 
         if (Selected_item != null && check == false)//여기에 재료 조건문 추가
         {
+            //0514 EJ
+              // 도구) 리스트 중 1개만 있으면 됨. 용접 쪽만 2개
+              // 재료) 제작 시 갯수만큼 인벤토리에서 제거
+
             //0509 JY
-            
+
 
             if (!Inventory_Player_Shown.InvPS.Checking_Crafting_Canbe())
             {
@@ -288,13 +343,13 @@ public class UI_Craft_window : MonoBehaviour
                 switch (Selected_item.item_Info.item_DB_type)
                 {
                     case Type.food:
-                        Player_main.player_main.Skill.Cooking_Level.SetEXP(0.75f);
+                        Player_main.player_main.Skill.Cooking_Level.SetEXP(3.75f);
                         break;
                     case Type.Electronics:
-                        Player_main.player_main.Skill.Electrical_Level.SetEXP(0.75f);
+                        Player_main.player_main.Skill.Electrical_Level.SetEXP(6.75f);
                         break;
                     case Type.Furniture:
-                        Player_main.player_main.Skill.Carpentry_Level.SetEXP(0.75f);
+                        Player_main.player_main.Skill.Carpentry_Level.SetEXP(6.75f);
                         break;
 
                         //case Type.Farming:  // Farming_Level은 농사지어서 EXP up
