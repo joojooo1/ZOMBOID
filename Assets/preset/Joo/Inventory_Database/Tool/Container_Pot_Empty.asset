@@ -22,8 +22,7 @@ MonoBehaviour:
   Height: 3
   Width: 3
   Nesting_Depth: 1
-  Capacity_Water: 10
-  Rain_factor: 0.5
+  Water: 25
   Is_Empty: 1
   Store_Water: 1
   Store_Oil: 0

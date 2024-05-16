@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Container_Bowl_Water
   m_EditorClassIdentifier: 
   type: 5
-  Usingtype: 0c000000
+  Usingtype: 0c0000000d000000
   Tool_ID: 1
   Tool_Name: Bowl of Water
   Tool_Name_Kr: "\uADF8\uB987(\uBB3C)"
@@ -22,8 +22,7 @@ MonoBehaviour:
   Height: 1
   Width: 2
   Nesting_Depth: 1
-  Capacity_Water: 2
-  Rain_factor: 0.5
+  Water: 2
   Is_Empty: 0
   Store_Water: 1
   Store_Oil: 0

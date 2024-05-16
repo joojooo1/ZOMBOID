@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75540daaa13ebba478e67698195564d5, type: 3}
-  m_Name: Item_Nails
+  m_Name: ZZ_4_Item_Mattress
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 7
-  ETC_ID: 8
-  ETC_Name: Nails
-  ETC_Name_kr: "\uBABB"
-  ETC_Image: {fileID: 21300000, guid: 1d415ecede2036c46a52689c317cdcc4, type: 3}
-  Height: 1
-  Width: 1
-  Nesting_Depth: 30
+  ETC_ID: 22
+  ETC_Name: Mattress
+  ETC_Name_kr: "\uB9E4\uD2B8\uB9AC\uC2A4"
+  ETC_Image: {fileID: 21300000, guid: eeab81d24d775c84c91c48f380a0a571, type: 3}
+  Height: 2
+  Width: 4
+  Nesting_Depth: 1
   Is_Consumable: 1
-  ETC_Weight: 0.06
+  ETC_Weight: 8
   ETC_Capacity: 0
   ETC_value: 0

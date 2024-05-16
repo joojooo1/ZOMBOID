@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75540daaa13ebba478e67698195564d5, type: 3}
-  m_Name: Item_Nails
+  m_Name: ZZ_3_Item_Amplifier
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 7
-  ETC_ID: 8
-  ETC_Name: Nails
-  ETC_Name_kr: "\uBABB"
-  ETC_Image: {fileID: 21300000, guid: 1d415ecede2036c46a52689c317cdcc4, type: 3}
+  ETC_ID: 21
+  ETC_Name: Amplifier
+  ETC_Name_kr: "\uC99D\uD3ED\uAE30"
+  ETC_Image: {fileID: 21300000, guid: 0ea2bbeacea1beb40bf1b1b256f14535, type: 3}
   Height: 1
-  Width: 1
-  Nesting_Depth: 30
+  Width: 2
+  Nesting_Depth: 1
   Is_Consumable: 1
-  ETC_Weight: 0.06
+  ETC_Weight: 0.3
   ETC_Capacity: 0
   ETC_value: 0
