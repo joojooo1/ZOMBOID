@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 10
   Installation_type: 0
-  Furniture_ID: 7
+  Furniture_ID: 15
   Furniture_Name: Propane Barbecue
   Furniture_Name_kr: "\uD504\uB85C\uD310 \uBC14\uBCA0\uD050 \uAE30\uACC4"
   Furniture_Image: {fileID: 21300000, guid: 1f0dd586985914e4aa687991454c8907, type: 3}

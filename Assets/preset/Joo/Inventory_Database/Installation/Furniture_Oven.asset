@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 10
   Installation_type: 0
-  Furniture_ID: 6
+  Furniture_ID: 14
   Furniture_Name: Oven
   Furniture_Name_kr: "\uC624\uBE10"
   Furniture_Image: {fileID: 21300000, guid: 2ad4486fd71652b4197129ec67223750, type: 3}

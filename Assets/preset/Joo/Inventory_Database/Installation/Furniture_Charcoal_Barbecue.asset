@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 10
   Installation_type: 0
-  Furniture_ID: 1
+  Furniture_ID: 10
   Furniture_Name: Charcoal Barbecue
   Furniture_Name_kr: "\uC22F\uBD88 \uBC14\uBCA0\uD050 \uAE30\uACC4"
   Furniture_Image: {fileID: 21300000, guid: 6b7deb87fc107c746a58d99c02239955, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
-  Furniture_Weight: 0
+  Furniture_Capacity: 0
