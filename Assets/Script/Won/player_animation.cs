@@ -16,77 +16,90 @@ public class player_animation : MonoBehaviour
     public AudioClip walkClip;
     public GameObject playernav;
     player_atk _Atk;
+
+    public bool Player; // 0513 JY
+    //public string Last_ANI_NAME;
+    //public bool Last_ANI_BOOL;
+    public List<String> Last_Name_Anime;
+    public List<bool> Last_Bool_Anime;
+    public List<float> Last_Float_Anime;
+
     // Start is called before the first frame update
     void Start()
     {
         _Atk = aktob.GetComponent<player_atk>();
         audio = audioobject.GetComponent<player_rot>();
         animator = GetComponent<Animator>();
+        Last_Name_Anime = new List<string>();
+        Last_Bool_Anime = new List<bool>();
+        Last_Float_Anime = new List<float>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-        float verticalInput = Input.GetAxisRaw("Vertical");
-        verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
-        float HorizontalInput = Input.GetAxisRaw("Horizontal");
-        HorizontalInput = Mathf.Clamp(HorizontalInput, -1f, 1f);
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        if (Player) // 0513 JY
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            float verticalInput = Input.GetAxisRaw("Vertical");
+            verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
+            float HorizontalInput = Input.GetAxisRaw("Horizontal");
+            HorizontalInput = Mathf.Clamp(HorizontalInput, -1f, 1f);
+
+            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
-                animatorsetBool("run", true);
-                
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    animatorsetBool("run", true);
+
+                }
+                else
+                {
+                    animatorsetBool("walk", true);
+
+                }
             }
             else
+            {
+                animatorsetBool("run", false);
+                animatorsetBool("walk", false);
+            }
+            if (Input.GetMouseButton(1))
+            {
+
+                animatorsetBool("run", false);
+                animatorsetBool("Strife", true);
+                Vector3 input = (audioobject.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
+                input.Normalize();
+                playernav.GetComponent<player_movement>().player_Main.Is_Aiming = true;
+                animatorsetFloat("x", input.x);
+                animatorsetFloat("z", -input.z);
+                if (Input.GetMouseButton(0) && !atk)
+                {
+                    atk = true;
+                    animatersetTrigger("ATK");
+
+                }
+
+            }
+            else
+            {
+                playernav.GetComponent<player_movement>().player_Main.Is_Aiming = false;
+                animatorsetBool("Strife", false);
+            }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (test_weapon_type < 4)
+                {
+                    test_weapon_type++;
+                }
+                else
+                    test_weapon_type = 0;
+                animatorsetFloat("weapon_type", test_weapon_type);
+            }
+            if (playernav.GetComponent<player_movement>().aser)
             {
                 animatorsetBool("walk", true);
-               
             }
-        }
-        else
-        {
-            
-            animatorsetBool("run", false);
-            animatorsetBool("walk", false);
-        }
-        if (Input.GetMouseButton(1))
-        {
-            
-            animatorsetBool("run", false);
-            animatorsetBool("Strife", true);
-            Vector3 input = (audioobject.transform.localRotation * new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
-            input.Normalize();
-            playernav.GetComponent<player_movement>().player_Main.Is_Aiming = true;
-            animatorsetFloat("x", input.x);
-            animatorsetFloat("z", -input.z);
-            if (Input.GetMouseButton(0) && !atk)
-            {
-                atk = true;
-                animatersetTrigger("ATK");
-                
-            }
-
-        }
-        else
-        {
-            playernav.GetComponent<player_movement>().player_Main.Is_Aiming = false;
-            animatorsetBool("Strife", false);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (test_weapon_type < 4)
-            {
-                test_weapon_type++;
-            }
-            else
-                test_weapon_type = 0;
-            animatorsetFloat("weapon_type", test_weapon_type);
-        }
-        if (playernav.GetComponent<player_movement>().aser)
-        {
-            animatorsetBool("walk", true);
         }
     }
 
@@ -97,19 +110,102 @@ public class player_animation : MonoBehaviour
         _Atk.atkset();
 
     }
+    //0516 JY
+    public void Getting_Anime_Set_For_Server(string Name, bool set, float floatt, int setting)
+    {
+        switch (setting) 
+        {
+            case 1: // N B
+                if (Last_Name_Anime.Count == 0) // 초기 생성도 전송
+                {
+                    Last_Name_Anime.Add(Name);
+                    Last_Bool_Anime.Add(set);
+                    Last_Float_Anime.Add(404);
+
+                    int Tof3 = 0;
+                    if (set == true)
+                    {
+                        Tof3 = 1;
+                    }
+                    else
+                    {
+                        Tof3 = 0;
+                    }
+                    CMainGame.current.Player_Animation_Send(Name, Tof3,404,setting);
+                    return;
+                }
+
+                for(int ListCount = 0; ListCount < Last_Name_Anime.Count; ListCount++)
+                {
+                    if (Last_Name_Anime[ListCount] == Name)
+                    {
+                        if (Last_Bool_Anime[ListCount] != set)
+                        {
+                            Last_Bool_Anime[ListCount] = set;
+                            int Tof2 = 0;
+                            if (set == true)
+                            {
+                                Tof2 = 1;
+                            }
+                            else
+                            {
+                                Tof2 = 0;
+                            }
+                            CMainGame.current.Player_Animation_Send(Name, Tof2,404,setting); // 불값 다를때만 전송
+                            return;
+                        }
+                        else
+                        {
+                            //같음 서버로 전송하지않고 종료
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        //반복
+                    }
+                }
+                // 존재하지 않을경우 for문이 끝나므로 추가해줌
+                Last_Name_Anime.Add(Name);
+                Last_Bool_Anime.Add(set);
+                Last_Float_Anime.Add(404);
+
+                int Tof = 0;
+                if (set == true)
+                {
+                    Tof = 1;
+                }
+                else
+                {
+                    Tof = 0;
+                }
+                CMainGame.current.Player_Animation_Send(Name, Tof,404,setting);
+                return;
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
+    }
 
     public void animatorsetBool(string ANIMA_NAME, bool set)
     {
         animator.SetBool(ANIMA_NAME, set);
-
+        if (Player)
+        {
+            Getting_Anime_Set_For_Server(ANIMA_NAME, set, 404, 1);
+        }
     }
     public void animatersetTrigger(string ANIMA_NAME)
     {
+        //setting 2 JY
         animator.SetTrigger(ANIMA_NAME);
     }
     public void animatorsetFloat(string ANIMA_NAME, float set)
     {
-
+        //setting 3 JY
         animator.SetFloat(ANIMA_NAME, set);
     }
     void walkaudio()
@@ -126,5 +222,5 @@ public class player_animation : MonoBehaviour
 
 
     }
-   
+
 }

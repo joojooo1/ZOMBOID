@@ -27,6 +27,9 @@ public class ServerObjectManager : MonoBehaviour
     [SerializeField]
     GameObject[] objectPrefab; //0 플레이어, 1 좀비A
 
+    [SerializeField]
+    public GameObject[] TwoDirectionalCameras;
+
     public void ClearNull()
     {
         for (int i = 0; i < ObjectArray.Count;)
@@ -64,28 +67,30 @@ public class ServerObjectManager : MonoBehaviour
         }
         ClearNull();
     }
-    //public void MoveObject(int playeridex, Vector3 pos, float angle, OBJECT_TYPE Objecttype)
-    //{
-    //    NetObject FindNetobj = FindObject(playeridex);
-    //    if (FindNetobj == null)
-    //    {
-    //        GameObject obj = Instantiate(objectPrefab[(byte)Objecttype]);
-    //        FindNetobj = obj.GetComponent<NetObject>();
-    //        FindNetobj.CreateOjbect(playeridex, Objecttype);
-    //        ObjectArray.Add(FindNetobj);
-    //        obj.name = "Net_" + playeridex;
+    public void MoveObject(int playeridex, Vector3 pos, float angle, OBJECT_TYPE Objecttype)
+    {
+        NetObject FindNetobj = FindObject(playeridex);
+        if (FindNetobj == null)
+        {
+            GameObject obj = Instantiate(objectPrefab[(byte)Objecttype]);
+            obj.gameObject.GetComponent<player_movement>().player_Main = GameManager.gameManager.gameObject.GetComponent<Player_main>();
+            FindNetobj = obj.GetComponent<NetObject>();
+            FindNetobj.CreateOjbect(playeridex, Objecttype);
+            CMainGame.current.Is_Active_Player(FindNetobj);
+            ObjectArray.Add(FindNetobj);
+            obj.name = "Net_" + playeridex;
 
-    //        obj.transform.position = pos;
+            obj.transform.position = pos;
 
-    //        if (Objecttype == OBJECT_TYPE.PLAYER)
-    //            CMainGame.current.PlayerName_REQ(playeridex);
+            if (Objecttype == OBJECT_TYPE.PLAYER)//?
+                CMainGame.current.PlayerName_REQ(playeridex);
 
 
-    //    }
-    //    FindNetobj.SetTarget(pos, Quaternion.Euler(0, angle, 0));
-    //    FindNetobj.transform.position = pos;
-    //    FindNetobj.transform.rotation = Quaternion.Euler(0, angle, 0);
-    //}
+        }
+        //FindNetobj.SetTarget(pos, Quaternion.Euler(0, angle, 0));
+        FindNetobj.ReceivePosition(pos);
+        FindNetobj.gameObject.transform.rotation = Quaternion.Euler(-90,0, 0);
+    }
     //서버 오브젝트 매니저
     public void PlayerShoot(int playeridex, float angle)
     {
