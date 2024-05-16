@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2bf510dd84b64d4b8871e7a730a1191, type: 3}
-  m_Name: Furniture_Composter
+  m_Name: Construction_Barricade
   m_EditorClassIdentifier: 
   type: 10
-  Installation_type: 0
-  Furniture_ID: 11
-  Furniture_Name: Composter
-  Furniture_Name_kr: "\uD1F4\uBE44\uD1B5"
-  Furniture_Image: {fileID: 21300000, guid: 19d829010b455a14a91df4903b03d2c0, type: 3}
-  Furniture_Capacity: 50
+  Installation_type: 1
+  Furniture_ID: 0
+  Furniture_Name: Barricade
+  Furniture_Name_kr: "\uBC14\uB9AC\uCF00\uC774\uD2B8"
+  Furniture_Image: {fileID: 21300000, guid: 5379258910658b044991f3d8db852aa6, type: 3}
+  Furniture_Capacity: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 10
   Installation_type: 0
-  Furniture_ID: 4
+  Furniture_ID: 12
   Furniture_Name: Counter
   Furniture_Name_kr: "\uCE74\uC6B4\uD130"
   Furniture_Image: {fileID: 21300000, guid: ddd544728ac76f541bd7609faad9505c, type: 3}

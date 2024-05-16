@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2bf510dd84b64d4b8871e7a730a1191, type: 3}
-  m_Name: Furniture_Composter_full
+  m_Name: Construction_Wooden_Tiles
   m_EditorClassIdentifier: 
   type: 10
-  Installation_type: 0
-  Furniture_ID: 3
-  Furniture_Name: Composter(full)
-  Furniture_Name_kr: "\uD1F4\uBE44\uD1B5(\uAC00\uB4DD \uCC38)"
-  Furniture_Image: {fileID: 21300000, guid: 30cd8536acf34d8478be448e9079d632, type: 3}
-  Furniture_Capacity: 50
+  Installation_type: 1
+  Furniture_ID: 7
+  Furniture_Name: Wooden Tiles
+  Furniture_Name_kr: "\uB098\uBB34 \uBC14\uB2E5"
+  Furniture_Image: {fileID: 21300000, guid: 4b5faa1cc90a44144bfa2104f3177fae, type: 3}
+  Furniture_Capacity: 0

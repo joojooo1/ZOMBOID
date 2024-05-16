@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2bf510dd84b64d4b8871e7a730a1191, type: 3}
-  m_Name: ZZ_2_Construction_Wooden_Tiles
+  m_Name: Construction_Wooden_Fence
   m_EditorClassIdentifier: 
   type: 10
   Installation_type: 1
-  Furniture_ID: 12
-  Furniture_Name: Wooden Tiles
-  Furniture_Name_kr: "\uB098\uBB34 \uBC14\uB2E5"
-  Furniture_Image: {fileID: 21300000, guid: 4b5faa1cc90a44144bfa2104f3177fae, type: 3}
+  Furniture_ID: 6
+  Furniture_Name: Wooden Fence
+  Furniture_Name_kr: "\uB098\uBB34 \uC6B8\uD0C0\uB9AC"
+  Furniture_Image: {fileID: 21300000, guid: 692335d6ad4fb764ca9858f55a554388, type: 3}
   Furniture_Capacity: 0
