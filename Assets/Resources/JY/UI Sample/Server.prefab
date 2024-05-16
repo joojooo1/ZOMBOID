@@ -46,7 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dda04fd5a169b43a9e35da8c36e1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsConnecting: 0
+  Multiplaying: 0
   playerSN: -1
+  Is_Host: 0
 --- !u!114 &4409115709695476118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,4 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab:
-  - {fileID: 1086577682873172836, guid: 9962c3685ed0ca04aaa4f9f8e529cd8c, type: 3}
+  - {fileID: 4878177117217367756, guid: 34b514cfad19f1148b31ebe5e5e75ea5, type: 3}
+  TwoDirectionalCameras:
+  - {fileID: 0}
+  - {fileID: 0}
