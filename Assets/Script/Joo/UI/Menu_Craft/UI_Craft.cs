@@ -54,7 +54,7 @@ public class Crafting_item
             case Type.food:
                 if (Item_DataBase.item_database.food_Ins[item_DB_ID].FoodType == Food_Type.Cooking)
                 {
-                    if(item_Satiety == null)
+                    if(Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety != null && item_Satiety == null)
                     {
                         for(int i = 0; i < 3; i++)
                         {
@@ -62,7 +62,7 @@ public class Crafting_item
                         }               
                     }
 
-                    if(item_Unhappiness == null)
+                    if(Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness != null && item_Unhappiness == null)
                     {
                         for (int i = 0; i < 3; i++)
                         {
@@ -70,7 +70,7 @@ public class Crafting_item
                         }
                     }
 
-                    if(item_Boredom == null)
+                    if(Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom != null && item_Boredom == null)
                     {
                         for (int i = 0; i < 3; i++)
                         {
@@ -78,7 +78,7 @@ public class Crafting_item
                         }                        
                     }
 
-                    if(item_Fatigue == null)
+                    if(Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue != null && item_Fatigue == null)
                     {
                         for (int i = 0; i < 3; i++)
                         {
@@ -90,27 +90,87 @@ public class Crafting_item
                     {
                         item_Calories += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Calories * 1.05f);
                         item_Thirst += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Thirst * 1.05f);
-
+                        
                         for (int i = 0; i < 3; i++)
                         {
-                            item_Satiety[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Satiety[i] * 1.05f);
-                            item_Unhappiness[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Unhappiness[i] * 1.05f);
-                            item_Boredom[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Boredom[i] * 1.05f);
-                            item_Fatigue[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Fatigue[i] * 1.05f);
+                            if(item_Fatigue != null)
+                                item_Satiety[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Satiety[i] * 1.05f);
+                            if(item_Unhappiness != null)
+                                item_Unhappiness[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Unhappiness[i] * 1.05f);
+                            if(item_Boredom != null)
+                                item_Boredom[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Boredom[i] * 1.05f);
+                            if(item_Fatigue != null)
+                                item_Fatigue[i] += (Item_DataBase.item_database.food_Ins[Ingredients_list[j].Ingredients_DB_ID].F_Fatigue[i] * 1.05f);
                         }
                     }
                 }
                 else
                 {
+                    if (Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety != null && item_Satiety == null)
+                    {
+                        for (int i = 0; i < Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety.Length; i++)
+                        {
+                            item_Satiety.Add(0);
+                        }
+                    }
+
+                    if (Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness != null && item_Unhappiness == null)
+                    {
+                        for (int i = 0; i < Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness.Length; i++)
+                        {
+                            item_Unhappiness.Add(0);
+                        }
+                    }
+
+                    if (Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom != null && item_Boredom == null)
+                    {
+                        for (int i = 0; i < Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom.Length; i++)
+                        {
+                            item_Boredom.Add(0);
+                        }
+                    }
+
+                    if (Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue != null && item_Fatigue == null)
+                    {
+                        for (int i = 0; i < Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue.Length; i++)
+                        {
+                            item_Fatigue.Add(0);
+                        }
+                    }
+
                     item_Calories = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Calories;
                     item_Thirst = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Thirst;
 
-                    for (int i = 0; i < 3; i++)
+                    if(item_Fatigue != null)
                     {
-                        item_Satiety[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety[i];
-                        item_Unhappiness[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness[i];
-                        item_Boredom[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom[i];
-                        item_Fatigue[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue[i];
+                        for (int i = 0; i < item_Fatigue.Count; i++)
+                        {
+                            item_Satiety[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Satiety[i];
+                        }
+                    }
+
+                    if(item_Unhappiness != null)
+                    {
+                        for (int i = 0; i < item_Unhappiness.Count; i++)
+                        {
+                            item_Unhappiness[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Unhappiness[i];
+                        }
+                    }
+
+                    if(item_Boredom != null)
+                    {
+                        for (int i = 0; i < item_Boredom.Count; i++)
+                        {
+                            item_Boredom[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Boredom[i];
+                        }
+                    }
+
+                    if(item_Fatigue != null)
+                    {
+                        for (int i = 0; i < item_Fatigue.Count; i++)
+                        {
+                            item_Fatigue[i] = Item_DataBase.item_database.food_Ins[item_DB_ID].F_Fatigue[i];
+                        }
                     }
                 }
                 break;

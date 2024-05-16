@@ -116,15 +116,46 @@ public class UI_Craft_window : MonoBehaviour
 
         if (Origin_list != null)
         {
-            for (int i = 0; i < Origin_list.Count;)
+            if(type == Crafting_type.Crafting_Installation)
             {
-                GameObject obj = null;
-                obj = Instantiate(Crafting_Prefab, Crafting_Window);
-                UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
-                item.Set_item(Origin_list[i], i);
-                Crafting_item_Prefab_list.Add(item);
-                i++;
+                for (int i = 0; i < Origin_list.Count; i++)
+                {
+                    if (Item_DataBase.item_database.furniture_Ins[Origin_list[i].item_DB_ID].Installation_type == Installation_Type.Construction)
+                    {
+                        GameObject obj = null;
+                        obj = Instantiate(Crafting_Prefab, Crafting_Window);
+                        UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
+                        item.Set_item(Origin_list[i], i);
+                        Crafting_item_Prefab_list.Add(item);
+                    }
+                    
+                }
+
+                for (int i = 0; i < Origin_list.Count; i++)
+                {
+                    if (Item_DataBase.item_database.furniture_Ins[Origin_list[i].item_DB_ID].Installation_type == Installation_Type.Furniture)
+                    {
+                        GameObject obj = null;
+                        obj = Instantiate(Crafting_Prefab, Crafting_Window);
+                        UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
+                        item.Set_item(Origin_list[i], Crafting_item_Prefab_list.Count);
+                        Crafting_item_Prefab_list.Add(item);
+                    }
+                }
             }
+            else
+            {
+                for (int i = 0; i < Origin_list.Count; i++)
+                {
+                    GameObject obj = null;
+                    obj = Instantiate(Crafting_Prefab, Crafting_Window);
+                    UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
+                    item.Set_item(Origin_list[i], i);
+                    Crafting_item_Prefab_list.Add(item);
+                    
+                }
+            }
+
         }
     }
 
@@ -249,23 +280,47 @@ public class UI_Craft_window : MonoBehaviour
                 }
             }
 
-            for (int i = 0; i < 4;)
+            if(Origin_list[_item.item_index].name == "Bread" || Origin_list[_item.item_index].name == "Bowl of Rice")
             {
-                GameObject obj = null;
-                obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
-                UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients_Box(Type.food, i);
+                GameObject Temp_obj = null;
+                Temp_obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
 
-                Crafting_Ingredients_Prefab_list.Add(item);
-                i++;
+                UI_Craft_Prefab Temp_item = Temp_obj.GetComponent<UI_Craft_Prefab>();
+                Temp_item.Set_Ingredients(Origin_list[_item.item_index], 0);
+
+                Crafting_Ingredients_Prefab_list.Add(Temp_item);
+
+                for (int i = 1; i < 4;)
+                {
+                    GameObject obj = null;
+                    obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+                    UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                    item.Set_Ingredients_Box(Type.food, i, false);
+
+                    Crafting_Ingredients_Prefab_list.Add(item);
+                    i++;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 4;)
+                {
+                    GameObject obj = null;
+                    obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+                    UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                    item.Set_Ingredients_Box(Type.food, i, false);
+
+                    Crafting_Ingredients_Prefab_list.Add(item);
+                    i++;
+                }
             }
 
-            for (int i = 0; i < 4;)
+            for (int i = 0; i < 1;)
             {
                 GameObject obj = null;
                 obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Spice_Window);
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
-                item.Set_Ingredients_Box(Type.food, i);
+                item.Set_Ingredients_Box(Type.food, i, true);
 
                 Crafting_Ingredients_Spice_Prefab_list.Add(item);
                 i++;

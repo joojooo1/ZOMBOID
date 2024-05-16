@@ -19,8 +19,8 @@ public class Item_Tool : ScriptableObject   // 무기로 쓰이지 않는 도구
     public int Nesting_Depth;  // 최대로 중첩되는 갯수
 
     // Using_Type 이 Container 인 경우
-    public float Capacity_Water;
-    public float Rain_factor;  // 빗물 차는 속도
+    public float Water;
+    //public float Rain_factor;  // 빗물 차는 속도
 
     public bool Is_Empty;
 

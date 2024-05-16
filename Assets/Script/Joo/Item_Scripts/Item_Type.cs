@@ -32,7 +32,8 @@ public enum Using_Type
     Medical = 9,
     Carpentry = 10,
     Tool = 11,
-    Container = 12  // 용기
+    Container = 12,  // 용기
+    Water = 13
 }
 
 public enum Medical_Type
@@ -159,14 +160,6 @@ public enum Weapon_type
     Spear = 5,
     Gun = 6,
     None = 7
-}
-
-public enum Container_Type
-{
-    Container = 0,
-    Water_Container = 1,
-    Furniture = 2,
-    Car = 3
 }
 
 public enum CanBeEquipped_Bag
