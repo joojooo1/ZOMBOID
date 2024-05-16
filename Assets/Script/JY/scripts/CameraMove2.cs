@@ -4,30 +4,22 @@ using UnityEngine;
 
 public class CameraMove2 : MonoBehaviour
 {
-    public static CameraMove2 ThreeDirectionalCamera;
-
     // Start is called before the first frame update
 
     [SerializeField]
-    public GameObject Player;
-
-    public bool Player_Exist;
-
+    GameObject Player;
     float smoothSpeed = 0.125f;
-    private void Awake()
+    void Start()
     {
-        ThreeDirectionalCamera = this;
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Player_Exist)
-        {
-            Vector3 desiredPosition = new Vector3(Player.transform.position.x, Player.transform.position.y/*-3.4f*/, Player.transform.position.z - 2f);
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed); // 보간
+        Vector3 desiredPosition = new Vector3(Player.transform.position.x,Player.transform.position.y/*-3.4f*/,Player.transform.position.z-2f);
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed); // 보간
 
-            transform.position = smoothedPosition;
-        }
+        transform.position = smoothedPosition;
     }
 }
