@@ -116,46 +116,14 @@ public class UI_Craft_window : MonoBehaviour
 
         if (Origin_list != null)
         {
-            if(type == Crafting_type.Crafting_Installation)
+            for (int i = 0; i < Origin_list.Count; i++)
             {
-                for (int i = 0; i < Origin_list.Count; i++)
-                {
-                    if (Item_DataBase.item_database.furniture_Ins[Origin_list[i].item_DB_ID].Installation_type == Installation_Type.Construction)
-                    {
-                        GameObject obj = null;
-                        obj = Instantiate(Crafting_Prefab, Crafting_Window);
-                        UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
-                        item.Set_item(Origin_list[i], i);
-                        Crafting_item_Prefab_list.Add(item);
-                    }
-                    
-                }
-
-                for (int i = 0; i < Origin_list.Count; i++)
-                {
-                    if (Item_DataBase.item_database.furniture_Ins[Origin_list[i].item_DB_ID].Installation_type == Installation_Type.Furniture)
-                    {
-                        GameObject obj = null;
-                        obj = Instantiate(Crafting_Prefab, Crafting_Window);
-                        UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
-                        item.Set_item(Origin_list[i], Crafting_item_Prefab_list.Count);
-                        Crafting_item_Prefab_list.Add(item);
-                    }
-                }
+                GameObject obj = null;
+                obj = Instantiate(Crafting_Prefab, Crafting_Window);
+                UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
+                item.Set_item(Origin_list[i], i);
+                Crafting_item_Prefab_list.Add(item);
             }
-            else
-            {
-                for (int i = 0; i < Origin_list.Count; i++)
-                {
-                    GameObject obj = null;
-                    obj = Instantiate(Crafting_Prefab, Crafting_Window);
-                    UI_Craft_Prefab item = obj.GetComponentInChildren<UI_Craft_Prefab>();
-                    item.Set_item(Origin_list[i], i);
-                    Crafting_item_Prefab_list.Add(item);
-                    
-                }
-            }
-
         }
     }
 
