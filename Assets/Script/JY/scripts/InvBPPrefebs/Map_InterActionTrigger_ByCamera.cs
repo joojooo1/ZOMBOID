@@ -1,10 +1,19 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Map_InterActionTrigger_ByCamera : MonoBehaviour
 {
+    public static Map_InterActionTrigger_ByCamera InterActionRay;
+
     public GameObject Player;
+    public bool Player_Exiest;
+
+    private void Awake()
+    {
+        InterActionRay = this;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -52,9 +61,9 @@ public class Map_InterActionTrigger_ByCamera : MonoBehaviour
             //            Inventory_Player_Shown.InvPS.Storage_Contract(Tile.transform, (short)kid.gameObject.GetComponentInChildren<Furniture_BreakAble>().StorageNum, true);
             //        }
             //    }
-                
+
             //}
-        }    
+        }
 
     }
     private void OnTriggerExit(Collider other)
@@ -66,7 +75,9 @@ public class Map_InterActionTrigger_ByCamera : MonoBehaviour
     }
     private void Update()
     {
-        //멀티수정필
-        transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, -10f);
+        if (Player_Exiest)
+        {
+            transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, -10f);
+        }
     }
 }
