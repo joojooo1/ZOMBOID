@@ -84,7 +84,7 @@ public class Recipe_item
 
     public void Add_Recipe_Ingredients_Tool(Type _DB_type, int _DB_ID, int value)
     {
-        Recipe_Ingredients recipe_Ingredients = new Recipe_Ingredients(_DB_type, _DB_ID, value);  // 용량 없는 도구는 0
+        Recipe_Ingredients recipe_Ingredients = new Recipe_Ingredients(_DB_type, _DB_ID, value);
         Recipe_Ingredients_Tool_list.Add(recipe_Ingredients);
     }
 
@@ -132,6 +132,11 @@ public class Recipe_item
                 Current_index = UI_Craft.UI_Craft_main.Add_Crafting_list(Crafting_item_type, Crafting_item_ID, _Crafting_type,
                     Item_DataBase.item_database.furniture_Ins[Crafting_item_ID].Furniture_Image, Item_DataBase.item_database.furniture_Ins[Crafting_item_ID].Furniture_Name, 
                     Item_DataBase.item_database.furniture_Ins[Crafting_item_ID].Furniture_Name_kr, Crafting_item_number);
+                break;
+            case Type.Tool:
+                Current_index = UI_Craft.UI_Craft_main.Add_Crafting_list(Crafting_item_type, Crafting_item_ID, _Crafting_type,
+                    Item_DataBase.item_database.Tool_Ins[Crafting_item_ID].Tool_Image, Item_DataBase.item_database.Tool_Ins[Crafting_item_ID].Tool_Name,
+                    Item_DataBase.item_database.Tool_Ins[Crafting_item_ID].Tool_Name_Kr, Crafting_item_number);
                 break;
         }
 
@@ -415,9 +420,9 @@ public class Player_Crafting : MonoBehaviour
 {
     /********** Magazine Recipe *********/
     //12. Good Cooking Magazine Vol. 1
-    public Recipe_item Recipe_Make_Dough;  // 반죽
+    public Recipe_item Recipe_Make_Bread;  // 빵
     //13. Good Cooking Magazine Vol. 2 
-    public Recipe_item Recipe_Make_Bread; // 빵
+    public Recipe_item Recipe_Make_Bowl_of_Rice; // 볶음밥
 
     //14. Engineer Magazine Vol. 1
     public Recipe_item Recipe_Make_Charcoal_Barbecue;  // 숯불 바베큐 기계
@@ -452,7 +457,7 @@ public class Player_Crafting : MonoBehaviour
 
     //23. The Metalwork Magazine Vol. 1
     public Recipe_item Recipe_Make_Log_Walls;   // 통나무 벽
-                                                 //  재료: 찢어진천x4, 통나무x4, 망치   // 목공 exp 1.25
+                                                //  재료: 찢어진천x4, 통나무x4, 망치   // 목공 exp 1.25
     //24. The Metalwork Magazine Vol. 2  
     public Recipe_item Recipe_Make_Counters;   // 카운터 
                                                 //  재료: 판자x4, 못x4, 망치  + 목공level_4   // 목공 exp 1.25
@@ -495,6 +500,12 @@ public class Player_Crafting : MonoBehaviour
 
     public Recipe_item Recipe_Make_Oven;  // 오븐  // 철사x2, 접착제x2, 전자제품 부품x4 + 스크류드라이버
     public Recipe_item Recipe_Make_Refrigerator; // 냉장고  // 철사x3, 금속판x2, 전자제품 부품x4 + 스크류드라이버
+    public Recipe_item Recipe_Make_Bed;  // 침대  // 판자x6, 못x4, 매트리스x1  + 망치   + 목공level_2
+    public Recipe_item Recipe_Make_Mattress;  // 매트리스  // 실x2, 천x5  + 바늘
+    public Recipe_item Recipe_Make_Wooden_Walls;  // 나무 벽
+    public Recipe_item Recipe_Make_Wooden_Tiles;  // 나무 바닥
+    public Recipe_item Recipe_Make_Wooden_Door;  // 나무 문
+    public Recipe_item Recipe_Make_Wooden_Fence;  // 나무 울타리
 
 
     public List<Recipe_item> Recipe_Crafting_list = new List<Recipe_item>();
@@ -503,34 +514,111 @@ public class Player_Crafting : MonoBehaviour
     private void Awake()  
     {
         // Cooking
-        Recipe_Make_Dough = new Recipe_item(12, Skill_Type.Cooking, 0, Type.food, 0, 1);      //12. Good Cooking Magazine Vol. 1
+        /////////// 빵 ///////////    //12. Good Cooking Magazine Vol. 1    
+        for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.food_Ins[i].FoodName == "Bread")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.food_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Bread = new Recipe_item(12, Skill_Type.Cooking, 0, Type.food, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.food_Ins[i].FoodName == "Flour")  // 밀가루x1
+                {
+                    Recipe_Make_Bread.Add_Recipe_Ingredients(Type.food, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.food_Ins[i].Ingredients_Cooked == true)  // 요리 재료인 경우
+                {
+                    Recipe_Make_Bread.Add_Recipe_Ingredients(Type.food, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Bowl")  // 그릇_Tool
+                {
+                    Recipe_Make_Bread.Add_Recipe_Ingredients_Tool(Type.Tool, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Bread);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
-        //for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
-        //{
-        //    if (Item_DataBase.item_database.food_Ins[i].FoodName == "Flour")
-        //    {
-        //        Recipe_Make_Cake_Batter.Add_Recipe_Ingredients(Type.food, i, 1);
-        //        break;
-        //    }
-        //}
-        //for (int i = 0; i < Item_DataBase.item_database.Container_Ins.Count; i++)
-        //{
-        //    if (Item_DataBase.item_database.Container_Ins[i].ContainerName == "Bowl")
-        //    {
-        //        Recipe_Make_Cake_Batter.Add_Recipe_Ingredients(Type.Container, i, 1);
-        //        break;
-        //    }
-        //}
-        //Recipe_Crafting_list.Add(Recipe_Make_Cake_Batter);
-
-        Recipe_Make_Bread = new Recipe_item(13, Skill_Type.Cooking, 0, Type.food, 0, 1);    //13. Good Cooking Magazine Vol. 2 
-
-        //Recipe_Crafting_list.Add(Recipe_Make_Bread);
+        /////////// 볶음밥 ///////////    //13. Good Cooking Magazine Vol. 2     
+        Recipe_Make_Bowl_of_Rice = new Recipe_item(13, Skill_Type.Cooking, 0, Type.food, 0, 1);    
+        for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.food_Ins[i].FoodName == "Bowl of Rice")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.food_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Bowl_of_Rice = new Recipe_item(13, Skill_Type.Cooking, 0, Type.food, target_index, 2);
+            for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.food_Ins[i].FoodName == "Rice")  // 쌀x1
+                {
+                    Recipe_Make_Bowl_of_Rice.Add_Recipe_Ingredients(Type.food, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.food_Ins[i].Ingredients_Cooked == true)  // 요리 재료인 경우
+                {
+                    Recipe_Make_Bowl_of_Rice.Add_Recipe_Ingredients(Type.food, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Bowl")  // 그릇_Tool
+                {
+                    Recipe_Make_Bowl_of_Rice.Add_Recipe_Ingredients_Tool(Type.Tool, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Cooking Pot")  // 냄비_Tool
+                {
+                    Recipe_Make_Bowl_of_Rice.Add_Recipe_Ingredients_Tool(Type.Tool, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Bowl_of_Rice);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
         // Electronics
         /////////// 발전기 ///////////    //19. How to Use Generators :  발전기 사용법
         Recipe_Teaches_the_player_how_to_connect_generators_to_buildings = new Recipe_item(19, Skill_Type.Electrical, 0, Type.Electronics, 0, 1);
-
 
         Recipe_Can_perform_maintenance_on_heavy_duty_vehicle_types = new Recipe_item(20, Skill_Type.Electrical, 0, Type.Normal, 0, 1);    //20. Laines Auto Manual - Commercial Models :  표준 차량 유형 유지관리 가능
         Recipe_Can_perform_maintenance_on_sport_vehicle_types = new Recipe_item(21, Skill_Type.Electrical, 0, Type.Normal, 0, 1);    //21. Laines Auto Manual - Performance Models :  대형 차량 유형 유지관리 가능
@@ -573,7 +661,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
                 {
-                    Recipe_Make_Log_Walls.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Make_Log_Walls.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Log_Walls);
@@ -620,7 +708,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
                 {
-                    Recipe_Make_Counters.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Make_Counters.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Counters);
@@ -667,7 +755,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
                 {
-                    Recipe_Make_Composter.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Make_Composter.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Composter);
@@ -721,7 +809,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.clothing_Ins[i].Clothing_Name == "WeldingMask")  // 용접기마스크_Tool
                 {
-                    Recipe_Make_Charcoal_Barbecue.Add_Recipe_Ingredients_Tool(Type.clothing, i, 0);
+                    Recipe_Make_Charcoal_Barbecue.Add_Recipe_Ingredients_Tool(Type.clothing, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Charcoal_Barbecue);
@@ -775,7 +863,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.clothing_Ins[i].Clothing_Name == "WeldingMask")  // 용접기마스크_Tool
                 {
-                    Recipe_Make_Propane_Barbecue.Add_Recipe_Ingredients_Tool(Type.clothing, i, 0);
+                    Recipe_Make_Propane_Barbecue.Add_Recipe_Ingredients_Tool(Type.clothing, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Propane_Barbecue);
@@ -785,14 +873,215 @@ public class Player_Crafting : MonoBehaviour
             target_index = -1;
         }
 
+        /////////// 라디오 ///////////    //26. Guerilla Radio Vol. 1 
+        for (int i = 0; i < Item_DataBase.item_database.electronics_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.electronics_Ins[i].ElectronicsName == "Radio")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.electronics_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Makeshift_Radio = new Recipe_item(-1, Skill_Type.Electrical, 0, Type.Electronics, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Wire")  // 철사x1
+                {
+                    Recipe_Craft_Makeshift_Radio.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Amplifier")  // 증폭기x1
+                {
+                    Recipe_Craft_Makeshift_Radio.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Scrap Electronics")  // 전자제품 부품x2
+                {
+                    Recipe_Craft_Makeshift_Radio.Add_Recipe_Ingredients(Type.Normal, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Aluminum")  // 알루미늄x2
+                {
+                    Recipe_Craft_Makeshift_Radio.Add_Recipe_Ingredients(Type.Normal, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Screwdriver")  // 스크류드라이버_Tool
+                {
+                    Recipe_Craft_Makeshift_Radio.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Makeshift_Radio);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
-        Recipe_Craft_Makeshift_Radio = new Recipe_item(26, Skill_Type.Electrical, 0, Type.Normal, 0, 1);  // 라디오 제작    //26. Guerilla Radio Vol. 1 
-        Recipe_Craft_Makeshift_Walkie_Talkie = new Recipe_item(27, Skill_Type.Electrical, 0, Type.Normal, 0, 1);  // 무전기 제작    //27. Guerilla Radio Vol. 2 
+        /////////// 무전기 제작 ///////////    //27. Guerilla Radio Vol. 2
+        for (int i = 0; i < Item_DataBase.item_database.electronics_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.electronics_Ins[i].ElectronicsName == "WalkieTalkie")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.electronics_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Makeshift_Walkie_Talkie = new Recipe_item(27, Skill_Type.Electrical, 0, Type.Electronics, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Wire")  // 철사x2
+                {
+                    Recipe_Craft_Makeshift_Walkie_Talkie.Add_Recipe_Ingredients(Type.Normal, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Amplifier")  // 증폭기x1
+                {
+                    Recipe_Craft_Makeshift_Walkie_Talkie.Add_Recipe_Ingredients(Type.Normal, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Scrap Electronics")  // 전자제품 부품x3
+                {
+                    Recipe_Craft_Makeshift_Walkie_Talkie.Add_Recipe_Ingredients(Type.Normal, i, 3);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Aluminum")  // 알루미늄x3
+                {
+                    Recipe_Craft_Makeshift_Walkie_Talkie.Add_Recipe_Ingredients(Type.Normal, i, 3);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Screwdriver")  // 스크류드라이버_Tool
+                {
+                    Recipe_Craft_Makeshift_Walkie_Talkie.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Makeshift_Walkie_Talkie);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
         // Farming
-        Recipe_Make_Mildew_Cure = new Recipe_item(16, Skill_Type.Farming, 0, Type.Normal, 0, 1);    //16. The Farming Magazine
-        Recipe_Make_Flies_Cure = new Recipe_item(16, Skill_Type.Farming, 0, Type.Normal, 0, 1);    //16. The Farming Magazine
+        /////////// 살충제 스프레이 ///////////   //16. The Farming Magazine
+        for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Insecticide Spray")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.Tool_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Mildew_Cure = new Recipe_item(16, Skill_Type.Farming, 0, Type.Tool, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Gardening Spray (Empty)")  // 빈 원예용 스프레이x1
+                {
+                    Recipe_Make_Mildew_Cure.Add_Recipe_Ingredients(Type.Tool, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Water")  // 물(3)
+                {
+                    Recipe_Make_Mildew_Cure.Add_Recipe_Ingredients(Type.Normal, i, 3);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Cigarettes")  // 담배(5)
+                {
+                    Recipe_Make_Mildew_Cure.Add_Recipe_Ingredients(Type.Medical, i, 5);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Mildew_Cure);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
+        /////////// 곰팡이 스프레이 ///////////   //16. The Farming Magazine
+        for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Mildew Spray")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.Tool_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Flies_Cure = new Recipe_item(16, Skill_Type.Farming, 0, Type.Tool, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Gardening Spray (Empty)")  // 빈 원예용 스프레이x1
+                {
+                    Recipe_Make_Flies_Cure.Add_Recipe_Ingredients(Type.Tool, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.food_Ins[i].FoodName == "Milk")  // 우유x1
+                {
+                    Recipe_Make_Flies_Cure.Add_Recipe_Ingredients(Type.food, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Flies_Cure);
+        }
+        else
+        {
+            target_index = -1;
+        }
 
         // Fishing
         /////////// 낚시대 ///////////     //17. Angler USA Magazine Vol. 1
@@ -832,14 +1121,14 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Machete")  // 마테체_Tool
                 {
-                    Recipe_Make_Fishing_Rod.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Make_Fishing_Rod.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Cleaver")  // 중식도_Tool
                 {
-                    Recipe_Make_Fishing_Rod.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Make_Fishing_Rod.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Fishing_Rod);
@@ -966,7 +1255,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Bowl")  // 그릇_Tool
                 {
-                    Recipe_Craft_Salad.Add_Recipe_Ingredients_Tool(Type.Tool, i, 0);
+                    Recipe_Craft_Salad.Add_Recipe_Ingredients_Tool(Type.Tool, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Craft_Salad);
@@ -1204,14 +1493,14 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Machete")  // 마테체_Tool
                 {
-                    Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Cleaver")  // 중식도_Tool
                 {
-                    Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Craft_Spear.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Craft_Spear);
@@ -1338,7 +1627,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Handsaw")  // 톱_Tool
                 {
-                    Recipe_Craft_Sturdy_Stick.Add_Recipe_Ingredients_Tool(Type.Tool, i, 0);
+                    Recipe_Craft_Sturdy_Stick.Add_Recipe_Ingredients_Tool(Type.Tool, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Craft_Sturdy_Stick);
@@ -1385,7 +1674,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.clothing_Ins[i].Clothing_Name == "WeldingMask")  // 용접기마스크_Tool
                 {
-                    Recipe_Make_Metal_Sheet.Add_Recipe_Ingredients_Tool(Type.clothing, i, 0);
+                    Recipe_Make_Metal_Sheet.Add_Recipe_Ingredients_Tool(Type.clothing, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Metal_Sheet);
@@ -1432,7 +1721,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.clothing_Ins[i].Clothing_Name == "WeldingMask")  // 용접기마스크_Tool
                 {
-                    Recipe_Make_Small_Metal_Sheet.Add_Recipe_Ingredients_Tool(Type.clothing, i, 0);
+                    Recipe_Make_Small_Metal_Sheet.Add_Recipe_Ingredients_Tool(Type.clothing, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Small_Metal_Sheet);
@@ -1486,7 +1775,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Screwdriver")  // 스크류드라이버_Tool
                 {
-                    Recipe_Make_Oven.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Make_Oven.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Oven);
@@ -1540,7 +1829,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Screwdriver")  // 스크류드라이버_Tool
                 {
-                    Recipe_Make_Refrigerator.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Make_Refrigerator.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Make_Refrigerator);
@@ -1587,7 +1876,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치_Tool
                 {
-                    Recipe_Craft_Wooden_Crate.Add_Recipe_Ingredients_Tool(Type.weapon, i, 0);
+                    Recipe_Craft_Wooden_Crate.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Craft_Wooden_Crate);
@@ -1655,7 +1944,7 @@ public class Player_Crafting : MonoBehaviour
             {
                 if (Item_DataBase.item_database.clothing_Ins[i].Clothing_Name == "WeldingMask")  // 용접기마스크_Tool
                 {
-                    Recipe_Craft_Metal_Crate.Add_Recipe_Ingredients_Tool(Type.clothing, i, 0);
+                    Recipe_Craft_Metal_Crate.Add_Recipe_Ingredients_Tool(Type.clothing, i, 1);
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Craft_Metal_Crate);
@@ -1664,6 +1953,303 @@ public class Player_Crafting : MonoBehaviour
         {
             target_index = -1;
         }
+
+        /////////// 침대 ///////////    // 목공level_2
+        for (int i = 0; i < Item_DataBase.item_database.furniture_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.furniture_Ins[i].Furniture_Name == "Bed")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.furniture_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Bed = new Recipe_item(-1, Skill_Type.None, 2, Type.Furniture, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자x6
+                {
+                    Recipe_Make_Bed.Add_Recipe_Ingredients(Type.weapon, i, 6);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Nails")  // 못x4
+                {
+                    Recipe_Make_Bed.Add_Recipe_Ingredients(Type.Normal, i, 4);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Mattress")  // 매트리스x1
+                {
+                    Recipe_Make_Bed.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
+                {
+                    Recipe_Make_Bed.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Bed);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+        /////////// 매트리스 ///////////    
+        for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Mattress")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.ETC_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Mattress = new Recipe_item(-1, Skill_Type.None, 0, Type.Normal, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Twine")  // 실x2
+                {
+                    Recipe_Make_Mattress.Add_Recipe_Ingredients(Type.Normal, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Sheet")  // 천x5
+                {
+                    Recipe_Make_Mattress.Add_Recipe_Ingredients(Type.Normal, i, 5);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.Tool_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.Tool_Ins[i].Tool_Name == "Needle")  // 바늘
+                {
+                    Recipe_Make_Mattress.Add_Recipe_Ingredients_Tool(Type.Tool, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Mattress);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+        /////////// 나무 벽 ///////////   
+        for (int i = 0; i < Item_DataBase.item_database.furniture_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.furniture_Ins[i].Furniture_Name == "Wooden Walls")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.furniture_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Wooden_Walls = new Recipe_item(-1, Skill_Type.Carpentry, 0, Type.Furniture, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자x2
+                {
+                    Recipe_Make_Wooden_Walls.Add_Recipe_Ingredients(Type.weapon, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Nails")  // 못x4
+                {
+                    Recipe_Make_Wooden_Walls.Add_Recipe_Ingredients(Type.Normal, i, 4);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
+                {
+                    Recipe_Make_Wooden_Walls.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Wooden_Walls);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+        /////////// 나무 바닥 ///////////   
+        for (int i = 0; i < Item_DataBase.item_database.furniture_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.furniture_Ins[i].Furniture_Name == "Wooden Tiles")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.furniture_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Wooden_Tiles = new Recipe_item(-1, Skill_Type.Carpentry, 0, Type.Furniture, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자x1
+                {
+                    Recipe_Make_Wooden_Tiles.Add_Recipe_Ingredients(Type.weapon, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Nails")  // 못x1
+                {
+                    Recipe_Make_Wooden_Tiles.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
+                {
+                    Recipe_Make_Wooden_Tiles.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Wooden_Tiles);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+        /////////// 나무 문 ///////////   
+        for (int i = 0; i < Item_DataBase.item_database.furniture_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.furniture_Ins[i].Furniture_Name == "Wooden Door")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.furniture_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Wooden_Door = new Recipe_item(-1, Skill_Type.Carpentry, 0, Type.Furniture, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자x4
+                {
+                    Recipe_Make_Wooden_Door.Add_Recipe_Ingredients(Type.weapon, i, 4);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Nails")  // 못x4
+                {
+                    Recipe_Make_Wooden_Door.Add_Recipe_Ingredients(Type.Normal, i, 4);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Aluminum")  // 알루미늄x1
+                {
+                    Recipe_Make_Wooden_Door.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
+                {
+                    Recipe_Make_Wooden_Door.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Wooden_Door);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+        /////////// 나무 울타리 ///////////   
+        for (int i = 0; i < Item_DataBase.item_database.furniture_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.furniture_Ins[i].Furniture_Name == "Wooden Fence")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.furniture_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Wooden_Fence = new Recipe_item(-1, Skill_Type.Carpentry, 0, Type.Furniture, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Plank")  // 판자x2
+                {
+                    Recipe_Make_Wooden_Fence.Add_Recipe_Ingredients(Type.weapon, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Nails")  // 못x3
+                {
+                    Recipe_Make_Wooden_Fence.Add_Recipe_Ingredients(Type.Normal, i, 3);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.weapons_Ins[i].WeaponName == "Hammer")  // 망치
+                {
+                    Recipe_Make_Wooden_Fence.Add_Recipe_Ingredients_Tool(Type.weapon, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Wooden_Fence);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
     }
 
 
@@ -1688,7 +2274,11 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Craft_Sturdy_Stick.Set_Is_Crafting();
         Recipe_Make_Oven.Set_Is_Crafting();
         Recipe_Make_Refrigerator.Set_Is_Crafting();
-
+        Recipe_Make_Mattress.Set_Is_Crafting();
+        Recipe_Make_Wooden_Walls.Set_Is_Crafting();
+        Recipe_Make_Wooden_Tiles.Set_Is_Crafting();
+        Recipe_Make_Wooden_Door.Set_Is_Crafting();
+        Recipe_Make_Wooden_Fence.Set_Is_Crafting();
 
         // 테스트 후 false 로 바뀌어야하는 레시피 ( 조건에 맞을때 true로 바뀌어야 함 )
         // 레벨
@@ -1696,6 +2286,7 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Make_Small_Metal_Sheet.Is_Craftng = true;
         Recipe_Craft_Wooden_Crate.Is_Craftng = true;
         Recipe_Craft_Metal_Crate.Is_Craftng = true;
+        Recipe_Make_Bed.Is_Craftng = true;
 
 
         // 매거진
@@ -1707,6 +2298,13 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Make_Fishing_Rod.Is_Craftng = true;
         Recipe_Make_Fishing_Net.Is_Craftng = true;
         Recipe_Get_Wire_Back.Is_Craftng = true;
+        Recipe_Make_Mildew_Cure.Is_Craftng = true;
+        Recipe_Make_Flies_Cure.Is_Craftng = true;
+        Recipe_Make_Bread.Is_Craftng = true;
+        Recipe_Make_Bowl_of_Rice.Is_Craftng= true;
+        Recipe_Craft_Makeshift_Radio.Is_Craftng = true;
+        Recipe_Craft_Makeshift_Walkie_Talkie.Is_Craftng = true;
+
 
     }
 

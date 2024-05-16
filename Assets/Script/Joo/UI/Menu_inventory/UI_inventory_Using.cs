@@ -35,6 +35,27 @@ public class UI_inventory_Using : MonoBehaviour
             case Type.clothing:
                 //
                 break;
+            case Type.Medical:
+                //
+                break;
+            case Type.Farming:
+                //
+                break;
+            case Type.Normal:
+                //
+                break;
+            case Type.Tool:
+                //
+                break;
+            case Type.Container:
+                //
+                break;
+            case Type.Electronics:
+                //
+                break;
+            case Type.Furniture:
+                //
+                break;
         }
 
         // 사용할 때 호출하는 함수

@@ -6,7 +6,6 @@ using UnityEngine;
 public class Item_Container : ScriptableObject
 {
     public Type type;
-    public Container_Type container_Type;
     public Using_Type Usingtype;
     public CanBeEquipped_Bag Bag_EquipType;
     public Bag_Type bag_Type;

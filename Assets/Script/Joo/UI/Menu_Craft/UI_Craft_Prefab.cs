@@ -11,6 +11,7 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
     public bool Choice;
     public bool Is_Ingredients;
     public bool Is_Ingredients_Tool;
+    public bool Is_Spice;
     public int item_index;
     public int Ingredients_index;
     public Crafting_item item_Info;
@@ -99,11 +100,12 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
         item_Info = item_info;
     }
 
-    public void Set_Ingredients_Box(Type _item_type, int index)
+    public void Set_Ingredients_Box(Type _item_type, int index, bool Spice)
     {
         Choice = false;
         Is_Ingredients = true;
         Is_Ingredients_Tool = false;
+        Is_Spice = Spice;
         Ingredients_index = index;
         Food_Ingredients_item_type = _item_type;
     }
