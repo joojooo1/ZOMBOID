@@ -10,39 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa2c2cc2023bae049a121273dc558852, type: 3}
-  m_Name: Drink_Whiskey_Bottle
+  m_Name: ZZ_Cooking_Bowl_of_Rice
   m_EditorClassIdentifier: 
   type: 2
-  FoodType: 2
-  Food_ID: 14
-  FoodState: 0
+  FoodType: 9
+  Food_ID: 85
+  FoodState: 1
   Cooking_time_to_NextStep: 0
   Height: 1
-  Width: 1
+  Width: 2
   Nesting_Depth: 1
-  FoodName: Whiskey Bottle
-  FoodName_Kr: "\uC704\uC2A4\uD0A4"
-  FoodWeight: 1
+  FoodName: Bowl of Rice
+  FoodName_Kr: "\uBCF6\uC74C\uBC25"
+  FoodWeight: 0.8
   Food_Image:
-  - {fileID: 21300000, guid: b2281f14ff04f5e4491d4a24a5ab5c0a, type: 3}
-  - {fileID: 21300000, guid: 4e62a9d9667ef5545ad874780869b2a6, type: 3}
-  Is_Perishable: 0
+  - {fileID: 21300000, guid: 0376128a0c0e08240a093078691b7f3c, type: 3}
+  Is_Perishable: 1
   Freshness: 0
-  Preservation_period_for_freshness: 0
-  Preservation_period_for_stale: 0
+  Preservation_period_for_freshness: 2
+  Preservation_period_for_stale: 3
   Is_freezing: 0
   Is_Canned: 0
-  Is_Alcoholic: 1
+  Is_Alcoholic: 0
   Is_Spice: 0
-  Usable_as_bottle: 1
+  Usable_as_bottle: 0
   Ingredients_Cooked: 0
-  F_Calories: 1500
-  F_Thirst: -20
+  F_Calories: 0
+  F_Thirst: 0
   F_Satiety:
-  - 20
+  - 0
   F_Unhappiness:
-  - -10
-  F_Boredom: []
-  F_Fatigue: []
-  Probability_of_poisoning: 0
-  Sterilize_Power: 2
+  - 0
+  F_Boredom:
+  - 0
+  F_Fatigue:
+  - 0
+  Probability_of_poisoning: 0.1
+  Sterilize_Power: 0

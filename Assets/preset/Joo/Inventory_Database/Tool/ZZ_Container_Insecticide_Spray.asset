@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3594bc8d9c9406b4b84ceed489a766d1, type: 3}
-  m_Name: Cooking_Saucepan_Empty
+  m_Name: ZZ_Container_Insecticide_Spray
   m_EditorClassIdentifier: 
   type: 5
-  Usingtype: 04000000
-  Tool_ID: 4
-  Tool_Name: Saucepan
-  Tool_Name_Kr: "\uC18C\uC2A4 \uB0C4\uBE44"
-  Tool_Image: {fileID: 21300000, guid: c10f4e8b8aed05a46a456d9fedb3c57e, type: 3}
-  Tool_Weight: 0.7
+  Usingtype: 06000000
+  Tool_ID: 10
+  Tool_Name: Insecticide Spray
+  Tool_Name_Kr: "\uC0B4\uCDA9\uC81C \uC2A4\uD504\uB808\uC774"
+  Tool_Image: {fileID: 21300000, guid: fa19c2c1aee5ce041add5ea58eaf8b1e, type: 3}
+  Tool_Weight: 1
   Height: 2
   Width: 2
   Nesting_Depth: 1
-  Water: 20
-  Is_Empty: 1
-  Store_Water: 1
+  Water: 10
+  Is_Empty: 0
+  Store_Water: 0
   Store_Oil: 0
-  On_Fire: 1
-  On_Microwave: 1
+  On_Fire: 0
+  On_Microwave: 0
