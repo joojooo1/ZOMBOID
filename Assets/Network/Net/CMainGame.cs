@@ -15,18 +15,16 @@ public class CMainGame : MonoBehaviour
     public int playerSN = -1;
     public bool Is_Host = false;
 
-
     void Awake()
     {
-        UnityEngine.Screen.SetResolution(800, 600, false);
+        UnityEngine.Screen.SetResolution(800, 600,false);
 
         if (current == null)
             current = this;
         else
             Debug.LogError("Not Single CMainGame");
-        IsConnecting = false;
-        Multiplaying = false;
-        playerSN = -1;
+        IsConnecting=false;
+        Multiplaying=false;
     }
 
     CNetworkManager network_manager;
@@ -85,7 +83,7 @@ public class CMainGame : MonoBehaviour
         msg2.push(chatmsg);
         network_manager.send(msg2);
     }
-    public void PLAYER_MOVING_REQ(Vector3 pos, float angle)
+    public void PLAYER_MOVING_REQ(Vector3 pos,float angle)
     {
         CPacket msg2 = CPacket.create((short)PROTOCOL.PLAYER_MOVING);
         msg2.push(pos.x);
@@ -98,7 +96,7 @@ public class CMainGame : MonoBehaviour
     public void PLAYER_SHOOT_REQ(int hitindex)
     {
         CPacket msg = CPacket.create((short)PROTOCOL.PLAYER_SHOOT);
-        msg.push(hitindex);
+        msg.push(hitindex); 
         network_manager.send(msg);
     }
 
@@ -116,108 +114,45 @@ public class CMainGame : MonoBehaviour
         network_manager.send(msg2);
     }
 
-    public void Player_Animation_Send(string Ani, int Tof, float floatt, int setting)
-    {
-        CPacket msg = CPacket.create((short)PROTOCOL.PLAYER_ANIMATION);
-        msg.push(playerSN);
-        msg.push(Ani);
-        msg.push(Tof);
-        msg.push(floatt);
-        msg.push(setting);
-        network_manager.send(msg);
-    }
 
     public void Inv_Sync(CPacket InvPacket)
     {
         network_manager.send(InvPacket);
     }
 
-    public void Is_Active_Player(NetObject net)
-    {
-        bool Result = false;
-
-        if (net.player_index == playerSN)
-        {
-            Result = true;
-            net.gameObject.GetComponentInChildren<player_movement>().Player = Result;
-            net.gameObject.GetComponentInChildren<player_rot>().Player = Result;
-            foreach (player_animation anime in net.gameObject.GetComponentsInChildren<player_animation>())
-            {
-                anime.Player = Result;
-            }
-        }
-        else
-        {
-            net.gameObject.GetComponentInChildren<player_movement>().Player = Result;
-            net.gameObject.GetComponentInChildren<player_rot>().Player = Result;
-            foreach (player_animation anime in net.GetComponentsInChildren<player_animation>())
-            {
-                net.gameObject.GetComponentInChildren<player_animation>().Player = Result;
-            }
-        }
-
-
-    }
-
-    public void Player_Rotation_Sending_Req(Quaternion Rotation)
-    {
-        CPacket msg = CPacket.create((short)PROTOCOL.PLAYER_ROTATION);
-        msg.push(playerSN);
-        msg.push(Rotation.x);
-        msg.push(Rotation.y);
-        msg.push(Rotation.z);
-        msg.push(Rotation.w);
-
-        network_manager.send(msg);
-    }
-
-    //수신 메인
     public void on_recv(CPacket msg)
     {
         PROTOCOL protocol = (PROTOCOL)msg.pop_protocol_id();
         Console.WriteLine("protocol id " + protocol);
-        switch (protocol)
+        switch(protocol)
         {
             case PROTOCOL.ENTER_GAME_ROOM: //플레이어
                 {
-                    int psn = msg.pop_int32();
-
-                    if (playerSN == -1)
-                    {
-                        playerSN = psn;
-                        Debug.Log("YourSN = " + playerSN);
-                        ServerObjectManager.current.MoveObject(psn, Vector3.zero, 0, ServerObjectManager.OBJECT_TYPE.PLAYER);
-                    }
+                    playerSN = msg.pop_int32();
                     int IsH = msg.pop_int32();
-
                     if (IsH == 1)
                     {
                         Is_Host = true;
                         //자기 맵생성, db생성 시작
-                        Debug.Log("You are Host");
                     }
-                    else if (IsH == 0)
+                    else
                     {
                         //맵은 생성, db 생성하지않음*
                         CPacket msg2 = CPacket.create((short)PROTOCOL.FIRST_SYNC_REQ);
                         msg2.push(playerSN);
                         network_manager.send(msg2);
-                        Debug.Log("You are player. Requesting Packages From host. Your SN = " + playerSN);
-                    }
-                    else
-                    {
-                        Debug.Log("SomeOneEntering");
-                        ServerObjectManager.current.MoveObject(psn, Vector3.zero, 0, ServerObjectManager.OBJECT_TYPE.PLAYER);
                     }
                     //ServerObjectManager.current.MoveObject(playerSN,
-                    //    Vector3.zero, 0, ServerObjectManager.OBJECT_TYPE.PLAYER);
+                    //    Vector3.zero,0, ServerObjectManager.OBJECT_TYPE.PLAYER);
+                    Debug.Log("Recieved EnterGameRoom Successfully");
+                    Debug.Log("YourSN = " + playerSN);
                 }
                 break;
 
             case PROTOCOL.CHAT_MSG:
                 {
                     string chat = msg.pop_string();
-                    Debug.Log("Protocol Chat_Msg" + chat);
+                    Debug.Log("Protocol Chat_Msg"+chat);
                     //string recvName = msg.pop_string();
                     //string recvmsg = msg.pop_string();
                     //int playerIndex = msg.pop_int32();
@@ -232,7 +167,7 @@ public class CMainGame : MonoBehaviour
                     //}
 
                 }
-                break;
+            break;
             case PROTOCOL.PLAYER_NAME:
                 {
                     int playerIndex = msg.pop_int32();
@@ -247,18 +182,15 @@ public class CMainGame : MonoBehaviour
 
             case PROTOCOL.PLAYER_MOVING:
                 {
-                    if (playerSN != -1)
-                    {
-                        int player_index = msg.pop_int32();
-                        float x = msg.pop_float();
-                        float y = msg.pop_float();
-                        float z = msg.pop_float();
-                        float angle = msg.pop_float();
-                        byte objectType = msg.pop_byte();
+                    int player_index = msg.pop_int32();
+                    float x = msg.pop_float();
+                    float y = msg.pop_float();
+                    float z = msg.pop_float();
+                    float angle = msg.pop_float();
+                    byte objectType = msg.pop_byte();
 
-                        ServerObjectManager.current.MoveObject(player_index,
-                            new Vector3(x, y, z), angle, (ServerObjectManager.OBJECT_TYPE)objectType);
-                    }
+                    //ServerObjectManager.current.MoveObject(player_index,
+                    //    new Vector3(x,y,z), angle, (ServerObjectManager.OBJECT_TYPE)objectType);
                 }
                 break;
             case PROTOCOL.PLAYER_EXIT:
@@ -268,7 +200,7 @@ public class CMainGame : MonoBehaviour
                 }
                 break;
 
-            //클라이언트 메인 게임
+                //클라이언트 메인 게임
             case PROTOCOL.PLAYER_SHOOT:
                 {
                     int player_index = msg.pop_int32();
@@ -325,7 +257,7 @@ public class CMainGame : MonoBehaviour
                     Debug.Log("Amount changed to " + Amount);
                     Debug.Log("Direction changed to " + Direction);
 
-                    for (int Depth = 0; Depth < 5; Depth++)
+                    for(int Depth=0; Depth < 5; Depth++)
                     {
                         Inventory_Library.IL.Inventory_DB[Order][Depth, Before_X, Before_Y] = 0;
                     }
@@ -343,7 +275,7 @@ public class CMainGame : MonoBehaviour
                     {
                         switch (NSize)
                         {
-
+                            
                             case 86:
                                 if (VisualArea.GetComponent<Inventory_8x6>().Storage_Order == Order)
                                 {
@@ -354,7 +286,7 @@ public class CMainGame : MonoBehaviour
                         }
                     }
                 }
-                break;
+                    break;
 
             case PROTOCOL.FIRST_SYNC_REQ:
                 {
@@ -372,52 +304,6 @@ public class CMainGame : MonoBehaviour
                         Debug.Log("requesting Arrival 0501");
                         Inventory_Library.IL.Syncronize_Packages_If_Host(Req_SN);
                     }
-                }
-                break;
-            case PROTOCOL.PLAYER_ANIMATION:
-                {
-                    int player_index = msg.pop_int32();
-                    string ANI_NAME = msg.pop_string();
-                    int Bool = msg.pop_int32();
-                    float Floatt = msg.pop_float();
-                    int Setting = msg.pop_int32();
-
-                    bool Tof;
-                    if (Bool == 1)
-                    {
-                        Tof = true;
-                    }
-                    else
-                    {
-                        Tof = false;
-                    }
-                    NetObject Net = ServerObjectManager.current.FindObject(player_index);
-
-
-                    foreach (player_animation anime in Net.gameObject.GetComponentsInChildren<player_animation>())
-                    {
-                        switch (Setting)
-                        {
-                            case 1:
-                                anime.animatorsetBool(ANI_NAME, Tof);
-                                break;
-                        }
-                    }
-
-                }
-                break;
-            case PROTOCOL.PLAYER_ROTATION:
-                {
-                    int player_index = msg.pop_int32();
-                    float x = msg.pop_float();
-                    float y = msg.pop_float();
-                    float z = msg.pop_float();
-                    float w = msg.pop_float();
-
-                    Quaternion TargetLocation = new Quaternion(x, y, z, w);
-
-                    NetObject Net = ServerObjectManager.current.FindObject(player_index);
-                    Net.gameObject.GetComponentInChildren<player_rot>().Recieveing_Rotation(TargetLocation);
                 }
                 break;
         }

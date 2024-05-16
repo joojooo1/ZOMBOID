@@ -9,8 +9,6 @@ namespace VirusWarGameServer
 
 		// 클라이언트의 이동 요청.
 		PLAYER_MOVING,
-        PLAYER_ANIMATION,
-        PLAYER_ROTATION,
 
         // 게임 종료.
         GAME_OVER = 10,

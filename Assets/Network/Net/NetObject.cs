@@ -20,87 +20,54 @@ public class NetObject : MonoBehaviour
     {
         return IsPlayer;
     }
-    public int player_index;
-
-    private Vector3 targetPosition;
+    public int player_index { get; private set; }
 
     ServerObjectManager.OBJECT_TYPE objecttype;
     public void CreateOjbect(int playerindex, ServerObjectManager.OBJECT_TYPE _objecttype)
     {
-        //UnityEngine.Screen.SetResolution(800, 600, false);
-        objecttype = _objecttype;
-        player_index = playerindex;
-        if (CMainGame.current.playerSN == player_index)
-        {
-            IsPlayer = true;
-            foreach(GameObject obj in ServerObjectManager.current.TwoDirectionalCameras)
-            {
-                obj.GetComponent<CameraRay>().Player = this.gameObject;
-                obj.GetComponent<CameraRay>().Player_Exist = true;
-            }
-            CameraMove2.ThreeDirectionalCamera.Player = this.gameObject;
-            CameraMove2.ThreeDirectionalCamera.Player_Exist = true;
-            Map_InterActionTrigger_ByCamera.InterActionRay.Player = this.gameObject;
-            Map_InterActionTrigger_ByCamera.InterActionRay.Player_Exiest = true;
-
-            //PlayerHealth Health = GetComponent<PlayerHealth>();
-            //if (Health != null)
-            //    Health.SetPlayer();
-        }
-        else //내꺼 아닐때
-        {
-
-            //this.gameObject.layer = LayerMask.NameToLayer("HIT");
-        }
+        ////UnityEngine.Screen.SetResolution(800, 600, false);
+        //objecttype = _objecttype;
+        //player_index = playerindex;
+        //if (CMainGame.current.playerSN == player_index)
+        //{
+        //    IsPlayer = true;
+        //    PlayerHealth Health = GetComponent<PlayerHealth>();
+        //    if(Health != null)
+        //        Health.SetPlayer();
+        //}
+        //else //내꺼 아닐때
+        //{
+        //    this.gameObject.layer = LayerMask.NameToLayer("HIT");
+        //}
     }
 
-    //Animator anim;
+    Animator anim;
 
     Vector3 spawnpos;
     private void Start()
     {
-        //spawnpos = transform.position;
-        //anim = GetComponent<Animator>();
-        //if (anim == null)
-        //    anim = GetComponentInChildren<Animator>();
+        spawnpos = transform.position;
+        anim = GetComponent<Animator>();
+        if (anim == null)
+            anim = GetComponentInChildren<Animator>();
     }
 
     float timer = 0f; Vector3 prePos; Quaternion preAngle;
     private void Update()
     {
-        if (IsPlayer)
-        {
-            timer += Time.deltaTime;
-            if (transform.position != prePos ||
-               transform.rotation != preAngle)
-            {
-                if (timer >= 0.2f)
-                {
-                    PosSend();
-                    timer = 0f;
-                }
-            }
-        }
-        else
-        {
-            float distance = Vector3.Distance(transform.position, targetPosition);
-
-            // 거리가 일정 값 이상인 경우에만 이동 처리
-            if (distance > 0.1f)
-            {
-                // 이동 방향과 거리에 맞는 이동량 계산
-                Vector3 direction = (targetPosition - transform.position).normalized;
-                float step = 3.5f * Time.deltaTime;
-
-                // 이동
-                transform.position += direction * step;
-            }
-            else
-            {
-                // 목표 위치에 도달했을 때 정확한 위치로 설정
-                transform.position = targetPosition;
-            }
-        }
+        //if (IsPlayer)
+        //{
+        //    timer += Time.deltaTime;
+        //    if (transform.position != prePos ||
+        //       transform.rotation != preAngle)
+        //    {
+        //        if (timer >= 0.2f)
+        //        {
+        //            PosSend();
+        //            timer = 0f;
+        //        }
+        //    }
+        //}
         //    else //플레이어 다른애들
         //    {
         //        switch(objecttype)
@@ -166,16 +133,11 @@ public class NetObject : MonoBehaviour
         //}
 
 
-    }
+        //void PosSend()
+        //{
+        //    CMainGame.current.PLAYER_MOVING_REQ(
+        //        transform.position, transform.rotation.eulerAngles.y);
+        //}
 
-    void PosSend()
-    {
-        CMainGame.current.PLAYER_MOVING_REQ(gameObject.transform.position, gameObject.transform.rotation.eulerAngles.y);
     }
-
-    public void ReceivePosition(Vector3 newPosition)
-    {
-        targetPosition = newPosition;
-    }
-
 }
