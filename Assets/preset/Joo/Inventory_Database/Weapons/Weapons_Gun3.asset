@@ -15,7 +15,7 @@ MonoBehaviour:
   type: 11
   Usingtype: 00000000
   Power_type: 0
-  WeaponType: 6
+  WeaponType: 8
   created: 0
   Weapon_ID: 6
   WeaponName: M9 Pistol
@@ -50,3 +50,6 @@ MonoBehaviour:
   Gun_Max_Capacity: 0
   Gun_Aiming_time: 15
   Gun_Reload_time: 30
+  animType: 1
+  audioClip: {fileID: 8300000, guid: 7d8fe931da0195643a41555c3194607e, type: 3}
+  audioClip_range: 0

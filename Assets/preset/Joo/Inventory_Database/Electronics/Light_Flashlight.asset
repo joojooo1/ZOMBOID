@@ -19,6 +19,7 @@ MonoBehaviour:
   UsingPower_type: 3
   Equipping_Position: 00000000
   Electronics_ID: 4
+  animType: 6
   Height: 1
   Width: 2
   Nesting_Depth: 1

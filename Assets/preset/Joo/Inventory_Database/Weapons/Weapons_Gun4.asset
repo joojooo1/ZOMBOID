@@ -15,7 +15,7 @@ MonoBehaviour:
   type: 11
   Usingtype: 00000000
   Power_type: 0
-  WeaponType: 6
+  WeaponType: 8
   created: 0
   Weapon_ID: 7
   WeaponName: M36 Revolver
@@ -50,3 +50,6 @@ MonoBehaviour:
   Gun_Max_Capacity: 5
   Gun_Aiming_time: 10
   Gun_Reload_time: 30
+  animType: 1
+  audioClip: {fileID: 8300000, guid: 71980367ce2a9744facc0f2976903eaf, type: 3}
+  audioClip_range: 0
