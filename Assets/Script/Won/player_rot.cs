@@ -28,7 +28,6 @@ public class player_rot : MonoBehaviour
 
         if (Player)
         {
-
             if (playerpos.GetComponent<player_movement>().uI_Main.Playing)
             {
                 float horizontalInput = Input.GetAxisRaw("Horizontal");

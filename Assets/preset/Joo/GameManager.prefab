@@ -12,6 +12,13 @@ GameObject:
   - component: {fileID: 710878254988068610}
   - component: {fileID: 3782071685842955529}
   - component: {fileID: 475684720242648991}
+  - component: {fileID: 3916319485044075496}
+  - component: {fileID: 2255742624338768508}
+  - component: {fileID: 6788699511588032377}
+  - component: {fileID: 3800031299184033836}
+  - component: {fileID: 2851025790642346517}
+  - component: {fileID: 4593633766963314729}
+  - component: {fileID: 909774793809079977}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -516,3 +523,155 @@ MonoBehaviour:
   Emaciated_Characteristic: 0
   characteristics_list: []
   characteristics_Player: []
+--- !u!114 &3916319485044075496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196054039658264640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806fc61ad176e664a9f4bdd54388f68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player_Max_Health: 100
+  Player_current_Health: 100
+  HP_Recovery_Speed: 1
+--- !u!114 &2255742624338768508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196054039658264640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5970513084ceeb94b9ea7b1b374a8c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Inven_main: {fileID: 3800031299184033836}
+  Skill: {fileID: 2851025790642346517}
+  playerState: {fileID: 4593633766963314729}
+  player_HP: {fileID: 3916319485044075496}
+  playerMoodles: {fileID: 6788699511588032377}
+  crafting_recipe: {fileID: 909774793809079977}
+  Weight: 83
+  Calories: 300
+  Satiety: 50
+  Rate_of_Hunger_increase: 1
+  Min_Attack_Power: 8
+  Max_Attack_Power: 8
+  Evasion: 0.15
+  Moving_Speed: 3
+  Action_Speed: 1
+  Coughing_Noise_radius: 15
+  Endurance: 100
+  Driving_control: 1
+  Driving_Speed_min: 2
+  Driving_Speed_max: 5
+  Read_Speed: 1
+  ability_Sleeping: 1
+  ability_Eat: 1
+  ability_Read: 1
+  ability_Hear: 1
+  Is_Equipping_Weapons: 0
+  Current_equipping_Weapon: 3
+  Is_Aiming: 0
+  Is_Running: 0
+  Is_Crouch: 0
+  Is_Crawl: 0
+  Is_Resting: 0
+  Is_drunk: 0
+  Is_Cold: 0
+  Is_Sleeping: 0
+  Is_Smoking: 0
+  Is_Outdoor: 0
+  Is_Driving: 0
+  Is_Eating: 0
+  Is_food_poisoning: 0
+  Is_Reading: 0
+  Is_Fighting: 0
+  near_Zombie: 0
+  Likelihood_of_food_poisoning: 0.2
+  Time_for_food_poisoning: 200
+  Satiety_value: 0.06
+  Panic_value: 0.15
+  current_SkillBook_type: 9
+  current_SKillBook_level: -1
+  Skillbook_Readpage: -1
+  Driving_Speed: 1
+  Characteristic_Asthmatic_for_Weapon: 1
+--- !u!114 &6788699511588032377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196054039658264640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f566c0bfb1cb914391702f41a122ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3800031299184033836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196054039658264640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5019b9eaf3c71ab468ed36993c757f94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Inventory: []
+--- !u!114 &2851025790642346517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196054039658264640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c254e4c140fab74d88bcd487b79fea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4593633766963314729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196054039658264640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54e776be6ec65e40902cb60002c3fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tired_reduction_for_Sleeping: 1
+  Tired_value: 0.01
+  Thirsty_Speed: 1
+  Thirsty_speed: 1
+  Clothing_Neck_Defense: 1
+  Clothing_Defense: 1
+  Zombification: 0
+  Bleeding_total_count: 0
+  _Infection: 0
+  _Probability_of_Catching_a_cold: 0.03
+  Apparent_Temperature: 0
+  Frequency_of_Coughing: 0
+--- !u!114 &909774793809079977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196054039658264640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b5e88c0e449874d968d9b480c8844a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
