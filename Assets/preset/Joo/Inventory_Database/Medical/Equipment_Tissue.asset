@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Equipment_Tissue
   m_EditorClassIdentifier: 
   type: 9
-  MedicalType: 0
+  MedicalType: 3
   Usingtype: 9
   Power_type: 0
   created: 0
-  Medical_ID: 16
+  Medical_ID: 14
   MedicalName: Tissue
   MedicalName_Kr: "\uD2F0\uC288"
   MedicalWeight: 0.1

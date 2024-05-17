@@ -157,5 +157,12 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
 
         job_image.sprite = _job_image;
     }
+
+    public void Reset_Job()
+    {
+        job_text.text = "";
+        job_image.sprite = null;
+
+    }
 }
 

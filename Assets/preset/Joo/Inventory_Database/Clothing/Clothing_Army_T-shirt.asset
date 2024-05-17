@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 15
-  Clothing_ID: 0
-  Clothing_Name: "\uAD70\uBCF5\uBC18\uD314\uD2F0"
-  Clothing_Name_kr: Army_T_Shirt
+  Clothing_ID: 8
+  Clothing_Name: Army T Shirt
+  Clothing_Name_kr: "\uAD70\uBCF5\uBC18\uD314\uD2F0"
   ClothingImage: {fileID: 21300000, guid: 47578f9018623a44f9987ce9841ea7a2, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0
+  Neck_Defense: 0
+  Insulation: 0.4
+  Wind_resistance: 0.35
+  Is_Cotton: 1
+  ClothingWeight: 1
+  Item_index: 0

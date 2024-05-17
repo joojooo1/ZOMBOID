@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Herb_Poultice
   m_EditorClassIdentifier: 
   type: 9
-  MedicalType: 0
+  MedicalType: 2
   Usingtype: 9
   Power_type: 0
   created: 0
-  Medical_ID: 20
+  Medical_ID: 18
   MedicalName: Poultice
   MedicalName_Kr: "\uC2B5\uD3EC\uC81C"
   MedicalWeight: 0.2

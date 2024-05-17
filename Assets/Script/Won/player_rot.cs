@@ -12,6 +12,9 @@ public class player_rot : MonoBehaviour
     private AudioSource playerAudioSource;
     public LayerMask layerMask;
     public GameObject playerpos;
+
+    public bool Player; // 0513 JY
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,73 +25,90 @@ public class player_rot : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (playerpos.GetComponent<player_movement>().uI_Main.Playing)
+
+        if (Player)
         {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
-            if (UnityEngine.Input.GetMouseButton(1))
+            if (playerpos.GetComponent<player_movement>().uI_Main.Playing)
             {
-                Vector3 directionToTarget = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
-                directionToTarget.z = 0;
-                Vector3 lookDirection = new Vector3(directionToTarget.x, directionToTarget.y, 0) - transform.position;
-                float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-                targetRotation = Quaternion.Euler(0, -angle + 90, 0f);
-                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
-                //gosever(targetRotation);
-            }
-            else if (horizontalInput != 0f || verticalInput != 0f)
-            {
-                // ÀÔ·Â°ªÀ» ±âÁØÀ¸·Î È¸Àü °¢µµ¸¦ °è»ê
-                float targetAngle = Mathf.Atan2(horizontalInput, verticalInput) * Mathf.Rad2Deg;
-                // È¸Àü °¢µµ Àû¿ë
-                targetRotation = Quaternion.Euler(0, targetAngle, 0f);
-                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
-                //gosever(targetRotation);
-            }
-            if (playerpos.GetComponent<player_movement>().aser)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(playerpos.GetComponent<NavMeshAgent>().velocity.normalized);
-                Vector3 euler = targetRotation.eulerAngles;
-                Debug.Log(euler.y + "ASd" + euler.x);
-                if (euler.y < 180)
+                float horizontalInput = Input.GetAxisRaw("Horizontal");
+                float verticalInput = Input.GetAxisRaw("Vertical");
+                if (UnityEngine.Input.GetMouseButton(1))
                 {
-                    euler.y = euler.x + 90;
+                    Vector3 directionToTarget = Camera.main.ScreenToWorldPoint(UnityEngine.Input.mousePosition);
+                    directionToTarget.z = 0;
+                    Vector3 lookDirection = new Vector3(directionToTarget.x, directionToTarget.y, 0) - transform.position;
+                    float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+                    targetRotation = Quaternion.Euler(0, -angle + 90, 0f);
+                    transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    //gosever(targetRotation);
                 }
-                else
+                else if (horizontalInput != 0f || verticalInput != 0f)
                 {
-                    euler.y = euler.x - 45;
-                    if (euler.x < 50)
-                    {
-                        euler.y = euler.x - 180;
-                        Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaa");
-                    }
-                    else if (euler.x < 90)
+                    // ì…ë ¥ê°’ì„ ê¸°ì¤€ìœ¼ë¡œ íšŒì „ ê°ë„ë¥¼ ê³„ì‚°
+                    float targetAngle = Mathf.Atan2(horizontalInput, verticalInput) * Mathf.Rad2Deg;
+                    // íšŒì „ ê°ë„ ì ìš©
+                    targetRotation = Quaternion.Euler(0, targetAngle, 0f);
+                    transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    //gosever(targetRotation);
+
+                    //0516 JY
+                    CMainGame.current.Player_Rotation_Sending_Req(targetRotation);
+
+                }
+                if (playerpos.GetComponent<player_movement>().aser)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(playerpos.GetComponent<NavMeshAgent>().velocity.normalized);
+                    Vector3 euler = targetRotation.eulerAngles;
+                    Debug.Log(euler.y + "ASd" + euler.x);
+                    if (euler.y < 180)
                     {
                         euler.y = euler.x + 90;
                     }
-                }
-                euler.x = 0f;
-                euler.z = 0f;
-                targetRotation = Quaternion.Euler(euler);
-                transform.localRotation = targetRotation;
-            }
-
-            float currentVolume = playerAudioSource.volume;
-            if (currentVolume > 0.5)
-            {
-
-                //test
-                Collider[] colliders = Physics.OverlapSphere(transform.position, currentVolume * 5, layerMask);
-                foreach (Collider collider in colliders)
-                {
-                    // Ãæµ¹Ã¼°¡ °øÅëµÈ ½ºÅ©¸³Æ®¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
-                    zom_pos zomtarget = collider.GetComponent<zom_pos>();
-                    if (zomtarget != null)
+                    else
                     {
-                        zomtarget.Audioposget(transform.position);
+                        euler.y = euler.x - 45;
+                        if (euler.x < 50)
+                        {
+                            euler.y = euler.x - 180;
+                            Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaa");
+                        }
+                        else if (euler.x < 90)
+                        {
+                            euler.y = euler.x + 90;
+                        }
+                    }
+                    euler.x = 0f;
+                    euler.z = 0f;
+                    targetRotation = Quaternion.Euler(euler);
+                    transform.localRotation = targetRotation;
+                }
+
+                float currentVolume = playerAudioSource.volume;
+                if (currentVolume > 0.5)
+                {
+
+                    //test
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, currentVolume * 5, layerMask);
+                    foreach (Collider collider in colliders)
+                    {
+                        // ì¶©ëŒì²´ê°€ ê³µí†µëœ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
+                        zom_pos zomtarget = collider.GetComponent<zom_pos>();
+                        if (zomtarget != null)
+                        {
+                            zomtarget.Audioposget(transform.position);
+                        }
                     }
                 }
             }
+        }
+    }
+
+    //0516 JY
+    public void Recieveing_Rotation(Quaternion Rotation)
+    {
+        if (!Player)
+        {
+            transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Rotation, rotationSpeed * Time.deltaTime);
         }
     }
     public void audioclip(AudioClip clip, float audiosound)
@@ -99,11 +119,11 @@ public class player_rot : MonoBehaviour
 
     void gosever(Quaternion player_rot)
     {
-        //¼­¹ö·Î È¸Àü°ª Àü¼Û (¼­¹ö½ºÅ©¸³Æ®).(ÇÃ·¹ÀÌ¾î ³Ñ¹ö).(player_rot);
+        //ì„œë²„ë¡œ íšŒì „ê°’ ì „ì†¡ (ì„œë²„ìŠ¤í¬ë¦½íŠ¸).(í”Œë ˆì´ì–´ ë„˜ë²„).(player_rot);
     }
     void getseverrot(Quaternion player_rot)
     {
-        //¼­¹ö¿¡¼­ ¹Ş¾ÒÀ»‹š È¸Àü°ªÀû¿ëtransform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //ì„œë²„ì—ì„œ ë°›ì•˜ì„Â‹Âš íšŒì „ê°’ì ìš©transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
     public void getzomda(GameObject Zombie_Attack, string Zom_Type, bool IsBack, bool IsDown)
     {

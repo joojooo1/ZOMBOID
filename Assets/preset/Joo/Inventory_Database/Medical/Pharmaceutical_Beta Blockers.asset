@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Beta Blockers
   m_EditorClassIdentifier: 
   type: 9
-  MedicalType: 0
+  MedicalType: 4
   Usingtype: 9
   Power_type: 0
   created: 0
-  Medical_ID: 23
+  Medical_ID: 21
   MedicalName: Beta Blockers
   MedicalName_Kr: "\uAE34\uC7A5 \uC644\uD654\uC81C"
   MedicalWeight: 0.2

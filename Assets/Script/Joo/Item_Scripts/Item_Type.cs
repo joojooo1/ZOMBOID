@@ -32,7 +32,8 @@ public enum Using_Type
     Medical = 9,
     Carpentry = 10,
     Tool = 11,
-    Container = 12  // 용기
+    Container = 12,  // 용기
+    Water = 13
 }
 
 public enum Medical_Type
@@ -158,16 +159,7 @@ public enum Weapon_type
     ShortBlade = 4,
     Spear = 5,
     Gun = 6,
-    None = 7,
-    Pistol = 8
-}
-
-public enum Container_Type
-{
-    Container = 0,
-    Water_Container = 1,
-    Furniture = 2,
-    Car = 3
+    None = 7
 }
 
 public enum CanBeEquipped_Bag
@@ -246,13 +238,9 @@ public enum Clothing_Type
     Underwear = 16,
     None = 17
 }
-public enum animType
+
+public enum Installation_Type
 {
-    GUN = 0,
-    PISTOL = 1,
-    ONE_HAND_SWING = 2,
-    ONE_HAND_STING = 3,
-    TWO_HAND_SWING = 4,
-    TWO_HAND_STING = 5,
-    IDLE = 6
+    Furniture = 0,
+    Construction = 1
 }

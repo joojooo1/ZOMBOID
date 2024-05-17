@@ -75,9 +75,36 @@ public class Player_Characteristic : MonoBehaviour
     private void Awake()
     {
         current = this;
+        Start_Characteristic();
+    }
+
+
+    public void ReStart_Characteristic()
+    {
+        foreach (Transform child in Characteristic_P_Window)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in Characteristic_N_Window)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach (Transform child in Characteristic_S_Window)
+        {
+            Destroy(child.gameObject);
+        }
+
+        characteristics_list.Clear();
+        characteristics_Player.Clear();
+
+        Start_Characteristic();
+    }
+
+    void Start_Characteristic()
+    {
         for (int i = 0; i < 52; i++)
         {
-            if(i != 49)
+            if (i != 49)
             {
                 GameObject tempObj = null;
                 Set_Characteristic(i, false, tempObj);

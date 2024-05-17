@@ -26,7 +26,7 @@ public class UI_Title : MonoBehaviour
 
     public Transform Window_value;
     [SerializeField] GameObject Value_Prefab;
-    List<UI_Title_Characteristic_value_prefab> value_List = new List<UI_Title_Characteristic_value_prefab>();
+    public List<UI_Title_Characteristic_value_prefab> value_List = new List<UI_Title_Characteristic_value_prefab>();
 
     [SerializeField] UnityEngine.UI.Text Total_Point_Window;
     int Total_Point;
@@ -125,6 +125,46 @@ public class UI_Title : MonoBehaviour
             Button_Job[1].colors = col_1;
             col_2.normalColor = new Color32(96, 96, 96, 153);
             Button_Job[2].colors = col_2;
+        }
+        else if (index == 3)
+        {
+            Button_Job[0].onClick.RemoveListener(Job_fisher);
+            Button_Job[1].onClick.RemoveListener(Job_Burglar);
+            Button_Job[2].onClick.RemoveListener(Job_Veteran);
+
+            col_0.normalColor = new Color32(0, 0, 0, 26);
+            Button_Job[0].colors = col_0;
+            col_1.normalColor = new Color32(0, 0, 0, 26);
+            Button_Job[1].colors = col_1;
+            col_2.normalColor = new Color32(0, 0, 0, 26);
+            Button_Job[2].colors = col_2;
+
+            UI_main.ui_main.ui_player_state.Reset_Job();
+            if (Player_Characteristic.current.player_Job == Player_Job.Burglar)
+            {
+                Set_TotalPoint_text(6);
+            }
+            else if (Player_Characteristic.current.player_Job == Player_Job.Veteran)
+            {
+                Set_TotalPoint_text(8);
+            }
+            else if(Player_Characteristic.current.player_Job == Player_Job.fisher)
+            {
+                Set_TotalPoint_text(4);
+            }
+
+            for (int i = 0; i < value_List.Count;)
+            {
+                Destroy(value_List[i].gameObject);
+                value_List.RemoveAt(i);
+            }
+
+            foreach (Transform child in Window_value)
+            {
+                Destroy(child.gameObject);
+            }
+
+            value_List.Clear();
         }
     }
 
@@ -423,5 +463,4 @@ public class UI_Title : MonoBehaviour
 
         UI_main.ui_main.ui_player_state.Set_Job("Veteran", "Åð¿ª ±ºÀÎ", job_image[2]);
     }
-
 }

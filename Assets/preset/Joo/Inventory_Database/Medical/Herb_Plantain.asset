@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Herb_Plantain
   m_EditorClassIdentifier: 
   type: 9
-  MedicalType: 0
+  MedicalType: 2
   Usingtype: 9
   Power_type: 0
   created: 0
-  Medical_ID: 19
+  Medical_ID: 17
   MedicalName: Plantain
   MedicalName_Kr: "\uC9C8\uACBD\uC774"
   MedicalWeight: 0.1

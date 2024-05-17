@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 3
-  Clothing_ID: 0
-  Clothing_Name: "\uCCAD\uC790\uCF13"
-  Clothing_Name_kr: Denim_Jacket
+  Clothing_ID: 1
+  Clothing_Name: Denim Jacket
+  Clothing_Name_kr: "\uCCAD\uC790\uCF13"
   ClothingImage: {fileID: 21300000, guid: 5d4270d3fd2abfc40bff661e6aef8a53, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 3
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0.175
+  Neck_Defense: 0.5
+  Insulation: 0.5
+  Wind_resistance: 0.35
+  Is_Cotton: 1
+  ClothingWeight: 2
+  Item_index: 0

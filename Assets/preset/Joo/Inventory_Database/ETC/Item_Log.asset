@@ -23,5 +23,5 @@ MonoBehaviour:
   Nesting_Depth: 1
   Is_Consumable: 1
   ETC_Weight: 9
-  ETC_Capacity: 1
+  ETC_Capacity: 0
   ETC_value: 0

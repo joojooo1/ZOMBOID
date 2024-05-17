@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Equipment_MortarPestle
   m_EditorClassIdentifier: 
   type: 9
-  MedicalType: 0
-  Usingtype: 9
+  MedicalType: 3
+  Usingtype: 11
   Power_type: 0
   created: 0
   Medical_ID: 13

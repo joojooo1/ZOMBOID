@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 9
-  Clothing_ID: 0
-  Clothing_Name: "\uCCAD\uBC14\uC9C0"
-  Clothing_Name_kr: Denim_Bottoms
+  Clothing_ID: 21
+  Clothing_Name: Denim Bottoms
+  Clothing_Name_kr: "\uCCAD\uBC14\uC9C0"
   ClothingImage: {fileID: 21300000, guid: d0a8800d9a59ba840bbfa5a9d77063f9, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0.15
+  Neck_Defense: 0
+  Insulation: 0.7
+  Wind_resistance: 0.55
+  Is_Cotton: 0
+  ClothingWeight: 1
   Item_index: 2

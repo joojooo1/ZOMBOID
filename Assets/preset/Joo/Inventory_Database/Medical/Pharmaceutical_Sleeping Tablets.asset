@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Sleeping Tablets
   m_EditorClassIdentifier: 
   type: 9
-  MedicalType: 0
+  MedicalType: 4
   Usingtype: 9
   Power_type: 0
   created: 0
-  Medical_ID: 26
+  Medical_ID: 24
   MedicalName: Sleeping Tablets
   MedicalName_Kr: "\uC218\uBA74\uC81C"
   MedicalWeight: 0.2

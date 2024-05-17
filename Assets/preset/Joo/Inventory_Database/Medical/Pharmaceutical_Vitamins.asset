@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Pharmaceutical_Vitamins
   m_EditorClassIdentifier: 
   type: 9
-  MedicalType: 0
+  MedicalType: 4
   Usingtype: 9
   Power_type: 0
   created: 0
-  Medical_ID: 27
+  Medical_ID: 25
   MedicalName: Vitamins
   MedicalName_Kr: "\uBE44\uD0C0\uBBFC"
   MedicalWeight: 0.2

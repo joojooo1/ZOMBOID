@@ -181,20 +181,41 @@ public class Player_body_Location
         Debug.Log("ddddddd"+Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack());
 
         bool Is_Block = false;
-        if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
+        if(_Body_Location_Code == body_point.Neck)
         {
-            if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack()))
+            if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
             {
-                Is_Block = true;
+                if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack() * PlayerState.playerState.Clothing_Neck_Defense))
+                {
+                    Is_Block = true;
+                }
+            }
+            else
+            {
+                if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * PlayerState.playerState.Clothing_Neck_Defense)
+                {
+                    Is_Block = true;
+                }
             }
         }
         else
         {
-            if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance())
+            if (!IsBack)  // 정면일 경우 Moodle_Endurance의 영향으로 방어확률 감소할 수 있음
             {
-                Is_Block = true;
+                if (rand_Block / 100 > (Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * Player_main.player_main.playerSkill_ActivationProbability.Get_Chance_of_Blocking_zombie_frontal_attack() * PlayerState.playerState.Clothing_Defense))
+                {
+                    Is_Block = true;
+                }
+            }
+            else
+            {
+                if (rand_Block / 100 > Player_main.player_main.playerSkill_ActivationProbability.Get_Block_chance() * PlayerState.playerState.Clothing_Defense)
+                {
+                    Is_Block = true;
+                }
             }
         }
+
         Debug.Log("좀비가 qewqwr !!");
         if (!Is_Block)
         {
@@ -406,9 +427,19 @@ public class PlayerState : MonoBehaviour
     public Player_body_Location Right_foot;
 
     public List<Player_body_Location> Player_body_point= new List<Player_body_Location>();
+    public List<List<float>> Clothing_list = new List<List<float>>();
     private void Awake()
     {
         playerState = this;
+        for(int i = 0; i < 17; i++)    // Clothing_Type 갯수(0~16)만큼
+        {
+            Clothing_list.Add(new List<float>());
+            Clothing_list[i].Add(i);
+            Clothing_list[i].Add(1);  // Defense
+            Clothing_list[i].Add(1);  // Neck_Defense
+            Clothing_list[i].Add(1);  // Insulation
+            Clothing_list[i].Add(1);  // Wind_resistance
+        }
 
         Left_hand = new Player_body_Location(body_point.Left_hand);
         Right_hand = new Player_body_Location(body_point.Right_hand);
@@ -461,9 +492,14 @@ public class PlayerState : MonoBehaviour
     public float Thirsty_Speed = 1f;  // 갈증 진행 속도
     public float Thirsty_speed = 1f;
 
+    public float Clothing_Neck_Defense = 1f;
+    public float Clothing_Defense = 1f;
+
     public float Zombification = 0.0f;
 
     float DamageCounting_Timer = 0.0f;
+
+    int a = 0;
     private void Update()
     {
         if (Zombification == 1)
@@ -793,6 +829,7 @@ public class PlayerState : MonoBehaviour
     // 옷으로 오르는 최고온도, 찬바람으로 내려가는 최저온도 조절  ( 20 ~ 50 )
     // Hot = 옷, Cold = 찬바람
     float Apparent_Temperature_forMoodle = 0f;
+    float Apparent_Temperature_forClothing = 1f;
 
     public float Get_Apparent_Temperature()
     {        
@@ -807,6 +844,11 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
+            if(value < 0)
+            {
+                value *= Apparent_Temperature_forClothing;
+            }
+
             if(Player_Characteristic.current.Prone_to_Illness_Characteristic && value < 0)
             {
                 Apparent_Temperature += value * 0.8f;
@@ -828,7 +870,142 @@ public class PlayerState : MonoBehaviour
 
     public void Set_Apparent_Temperature_forMoodle(float value)
     {
-        Apparent_Temperature_forMoodle = value;
+        Apparent_Temperature_forMoodle = 1 + value;
+    }
+
+
+    public void Set_Wear(int item_ID)
+    {
+        switch (Item_DataBase.item_database.clothing_Ins[item_ID].ClothingType)
+        {
+            case Clothing_Type.Hat:
+                Clothing_list[(int)Clothing_Type.Hat][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Hat][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Hat][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Hat][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+
+                break;
+            case Clothing_Type.Glasses:
+                Clothing_list[(int)Clothing_Type.Glasses][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Glasses][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Glasses][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Glasses][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Mask:
+                Clothing_list[(int)Clothing_Type.Mask][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Mask][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Mask][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Mask][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Jacket:
+                Clothing_list[(int)Clothing_Type.Jacket][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Jacket][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Jacket][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Jacket][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Vest:
+                Clothing_list[(int)Clothing_Type.Vest][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Vest][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Vest][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Vest][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Watch:
+                Clothing_list[(int)Clothing_Type.Watch][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Watch][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Watch][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Watch][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Gloves:
+                Clothing_list[(int)Clothing_Type.Gloves][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Gloves][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Gloves][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Gloves][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Belt:
+                Clothing_list[(int)Clothing_Type.Belt][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Belt][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Belt][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Belt][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Shoes:
+                Clothing_list[(int)Clothing_Type.Shoes][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Shoes][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Shoes][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Shoes][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Bottoms:
+                Clothing_list[(int)Clothing_Type.Bottoms][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Bottoms][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Bottoms][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Bottoms][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.protectiveGear:
+                Clothing_list[(int)Clothing_Type.protectiveGear][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.protectiveGear][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.protectiveGear][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.protectiveGear][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.subBottoms:
+                Clothing_list[(int)Clothing_Type.subBottoms][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.subBottoms][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.subBottoms][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.subBottoms][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.miniBag:
+                break;
+            case Clothing_Type.Bag:
+                break;
+            case Clothing_Type.Shirt:
+                Clothing_list[(int)Clothing_Type.Shirt][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Shirt][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Shirt][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Shirt][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.T_shirt:
+                Clothing_list[(int)Clothing_Type.T_shirt][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.T_shirt][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.T_shirt][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.T_shirt][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+            case Clothing_Type.Underwear:
+                Clothing_list[(int)Clothing_Type.Underwear][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
+                Clothing_list[(int)Clothing_Type.Underwear][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
+                Clothing_list[(int)Clothing_Type.Underwear][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
+                Clothing_list[(int)Clothing_Type.Underwear][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                break;
+        }
+
+        float _Defense = 1;
+        float _Neck_Defense = 1;
+        float _Insulation = 1;
+        float _Wind_resistance = 1;
+        for (int i = 0; i < Clothing_list.Count; i++)
+        {
+            if (Clothing_list[i][1] > 0)
+            {
+                _Defense *= Clothing_list[i][1];
+            }
+
+            if (Clothing_list[i][2] > 0)
+            {
+                _Neck_Defense *= Clothing_list[i][2];
+            }
+
+            if (Clothing_list[i][3] > 0)
+            {
+                _Insulation *= Clothing_list[i][3];
+            }
+
+            if (Clothing_list[i][4] > 0)
+            {
+                _Wind_resistance *= Clothing_list[i][4];
+            }
+        }
+
+        Apparent_Temperature_forClothing = _Insulation;
+        Clothing_Neck_Defense = 1 + _Neck_Defense;
+        Clothing_Defense = 1 + _Defense;
+        GameManager.gameManager.Clothing_Wind_resistance = _Wind_resistance;
     }
 
     [SerializeField] int Frequency_of_Coughing = 0;

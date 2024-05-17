@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 6
   ClothingType: 10
-  Clothing_ID: 0
-  Clothing_Name: "\uC6D0\uD615\uBB34\uB98E\uBCF4\uD638\uB300"
-  Clothing_Name_kr: Circle_protectiveGear
+  Clothing_ID: 18
+  Clothing_Name: Circle protectiveGear
+  Clothing_Name_kr: "\uC6D0\uD615\uBB34\uB98E\uBCF4\uD638\uB300"
   ClothingImage: {fileID: 21300000, guid: ec72cf42881b1b74b90f127948e10f80, type: 3}
-  Height: 0
-  Width: 0
-  Nesting_Depth: 0
+  Height: 2
+  Width: 2
+  Nesting_Depth: 1
   Is_Equipping: 0
-  Equipping_Position: 0
-  ClothingWeight: 0
+  Defense: 0.3
+  Neck_Defense: 0
+  Insulation: 0
+  Wind_resistance: 0
+  Is_Cotton: 0
+  ClothingWeight: 0.5
+  Item_index: 0

@@ -22,7 +22,7 @@ MonoBehaviour:
   Nesting_Depth: 1
   FoodName: Stew
   FoodName_Kr: "\uC2A4\uD29C"
-  FoodWeight: 1
+  FoodWeight: 2
   Food_Image:
   - {fileID: 21300000, guid: b3998d519a762004ab85d41fecce0db3, type: 3}
   Is_Perishable: 1

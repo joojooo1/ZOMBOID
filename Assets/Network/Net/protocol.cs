@@ -2,18 +2,22 @@
 
 namespace VirusWarGameServer
 {
-	public enum PROTOCOL : short
-	{
-		BEGIN = 0,
+    public enum PROTOCOL : short
+    {
+        BEGIN = 0,
         ENTER_GAME_ROOM,
 
-		// 클라이언트의 이동 요청.
-		PLAYER_MOVING,
+        // 클라이언트의 이동 요청.
+        PLAYER_MOVING,
+        PLAYER_ANIMATION,
+        PLAYER_ROTATION,
+        HOST_ZOM_SPAWN,
+        ZOMBIE_TARGET,
 
         // 게임 종료.
         GAME_OVER = 10,
-		//메시지 전송
-		CHAT_MSG,
+        //메시지 전송
+        CHAT_MSG,
         //캐릭터 나감
         PLAYER_EXIT,
         //플레이어 이름 요청

@@ -22,7 +22,7 @@ MonoBehaviour:
   Nesting_Depth: 1
   FoodName: Salad
   FoodName_Kr: "\uC0D0\uB7EC\uB4DC"
-  FoodWeight: 0
+  FoodWeight: 1
   Food_Image:
   - {fileID: 21300000, guid: 3cda10c33d5b85e44aae31ce4e427c26, type: 3}
   Is_Perishable: 1

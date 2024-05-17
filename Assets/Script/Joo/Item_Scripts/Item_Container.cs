@@ -6,7 +6,6 @@ using UnityEngine;
 public class Item_Container : ScriptableObject
 {
     public Type type;
-    public Container_Type container_Type;
     public Using_Type Usingtype;
     public CanBeEquipped_Bag Bag_EquipType;
     public Bag_Type bag_Type;
@@ -37,7 +36,7 @@ public class Item_Container : ScriptableObject
 
     public bool Is_Empty;
 
-    public float Capacity_Water;
+    public float Capacity;  // 물
     public float Rain_factor;  // 빗물 차는 속도
     public int Item_Index;
 
