@@ -46,11 +46,11 @@ public class zombieHp : MonoBehaviour
         
     }
 
-    public void GetDamage(AudioClip weapon_hit_sound,float Damage)//좀비가 받는 데미지
+    public void GetDamage(Type type, int Weapon_ID, float Damage)//좀비가 받는 데미지
     {
         curret_zombie_hp -= Damage;
         anime.animatersetTrigger("hit");
-        audio.PlayOneShot(weapon_hit_sound,1);
+        //audio.PlayOneShot(weapon_hit_sound,1);
         Debug.Log("데미지 들어옴");
     }
     public void up_down()
@@ -123,5 +123,10 @@ public class zombieHp : MonoBehaviour
     {
         zom_target = zombie_target;
         zom_crawl = zombie_crawl;
+    }
+
+    void go_sever()
+    {
+
     }
 }
