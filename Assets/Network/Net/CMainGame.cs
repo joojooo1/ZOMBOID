@@ -15,6 +15,10 @@ public class CMainGame : MonoBehaviour
     public int playerSN = -1;
     public bool Is_Host = false;
 
+    public GameObject[] Zombie_Spawn_Point;
+    public GameObject[] Zombie_ReSpawn;
+
+    public int ZomSN_Started_Thu;
 
     void Awake()
     {
@@ -32,6 +36,7 @@ public class CMainGame : MonoBehaviour
     CNetworkManager network_manager;
     private void Start()
     {
+        ZomSN_Started_Thu = 1000;
         network_manager = GetComponent<CNetworkManager>();
         //if (CNetworkManager.CNetManager.Multiplayer == true)
         //{
@@ -194,6 +199,26 @@ public class CMainGame : MonoBehaviour
                     {
                         Is_Host = true;
                         //자기 맵생성, db생성 시작
+                        foreach(GameObject ZSP in Zombie_Spawn_Point)
+                        {
+                            ZSP.SetActive(true);
+                            foreach(GameObject zombie_Name_Nav in ZSP.GetComponent<respawn_Controller>().zom_nav)
+                            {
+                                zombie_Name_Nav.gameObject.SetActive(true);
+                                zombie_Name_Nav.GetComponent<zom_pos>().ZOM_SN = ZomSN_Started_Thu;
+                                ZomSN_Started_Thu++;
+                                
+                                CPacket msg_Zom = CPacket.create((short)PROTOCOL.HOST_ZOM_SPAWN);
+                                msg_Zom.push(zombie_Name_Nav.GetComponent<zom_pos>().ZOM_SN);
+                                float x = zombie_Name_Nav.gameObject.transform.position.x;
+                                float y = zombie_Name_Nav.gameObject.transform.position.y;
+                                float z = zombie_Name_Nav.gameObject.transform.position.z;
+                                msg_Zom.push(x);
+                                msg_Zom.push(y);
+                                msg_Zom.push(z);
+                                network_manager.send(msg_Zom);
+                            }
+                        }
                         Debug.Log("You are Host");
                     }
                     else if (IsH == 0)
@@ -203,6 +228,7 @@ public class CMainGame : MonoBehaviour
                         msg2.push(playerSN);
                         network_manager.send(msg2);
                         Debug.Log("You are player. Requesting Packages From host. Your SN = " + playerSN);
+                        
                     }
                     else
                     {
@@ -418,6 +444,25 @@ public class CMainGame : MonoBehaviour
 
                     NetObject Net = ServerObjectManager.current.FindObject(player_index);
                     Net.gameObject.GetComponentInChildren<player_rot>().Recieveing_Rotation(TargetLocation);
+                }
+                break;
+            case PROTOCOL.HOST_ZOM_SPAWN:
+                {
+                    int Zomdex = msg.pop_int32();
+                    Debug.Log(Zomdex);
+                    foreach (GameObject ZSP in Zombie_Spawn_Point)
+                    {
+                        ZSP.SetActive(true);
+                        foreach (GameObject zombie_Name_Nav in ZSP.GetComponent<respawn_Controller>().zom_nav)
+                        {
+                            if (zombie_Name_Nav.activeSelf == false)
+                            {
+                                zombie_Name_Nav.gameObject.SetActive(true);
+                                zombie_Name_Nav.GetComponent<zom_pos>().ZOM_SN = Zomdex;
+                                return;
+                            }
+                        }
+                    }
                 }
                 break;
         }

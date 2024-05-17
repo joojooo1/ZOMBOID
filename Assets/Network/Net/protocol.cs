@@ -11,6 +11,8 @@ namespace VirusWarGameServer
         PLAYER_MOVING,
         PLAYER_ANIMATION,
         PLAYER_ROTATION,
+        HOST_ZOM_SPAWN,
+        ZOMBIE_TARGET,
 
         // 게임 종료.
         GAME_OVER = 10,
