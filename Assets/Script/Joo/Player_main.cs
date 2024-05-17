@@ -63,7 +63,7 @@ public class Player_main : MonoBehaviour
     public bool ability_Hear = true;
 
     public bool Is_Equipping_Weapons = false;
-    public int Current_equipping_Weapon = 3;  // 무기 착용시, 착용한 무기로 변경
+    public int Current_equipping_Weapon = -1;  // 무기 착용시, 착용한 무기로 변경
     public bool Is_Aiming = false;  // 조준
     public bool Is_Running = false;  // 달릴때
     public bool Is_Crouch = false;  // 쪼그려앉을때
@@ -122,25 +122,23 @@ public class Player_main : MonoBehaviour
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.P))
         {
-            //GameObject a = new GameObject();
+            //GameObject a = null;
             //Calculate_HitForce(a, "easy", false, false);
-            Current_equipping_Weapon = 8;
+
+            Set_Attack_Power_for_Equipping_Weapons();
+            Calculate_damage_to_Zombie();
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            GameManager.gameManager.Set_Info_from_Server();
+            UI_main.ui_main.ui_player_state.Damagelist[0].Using_Medical_item(11);
         }
-
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            //Debug.Log("Read book");
-            //Is_Reading = true;
-            //current_SkillBook_type = Skill_Type.Hunting;
-            //current_SKillBook_level = 1;
-            //Skillbook_Readpage = 0;
-            //Skill.Hunting_Level.Set_S_Books_Point(current_SKillBook_level, Skillbook_Readpage);
-            Current_equipping_Weapon = 7;
-
+            UI_main.ui_main.ui_player_state.Damagelist[0].Using_Bandage(0);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            UI_main.ui_main.ui_player_state.Damagelist[0].Remove_Bandage();
         }
 
         if (!ability_Sleeping) { Is_Sleeping = false; }
@@ -980,12 +978,17 @@ public class Player_main : MonoBehaviour
     }
 
 
-    public void Set_Attack_Power_for_Equipping_Weapons(Item_Weapons Current_Equipping_weapon)  // 무기를 끼면 함수 호출
+    public void Set_Attack_Power_for_Equipping_Weapons()  // 무기를 끼면 함수 호출
     {
         // 무기 Script 구현사항
         // 무기별 타입
         // 무기별 공격력
         // 무기별 내구도
+
+        Item_Weapons Current_Equipping_weapon = Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon];
+        Current_Equipping_weapon.Is_Equipping = true;
+        Min_Attack_Power = 8 + Current_Equipping_weapon.W_Minimum_damage;
+        Max_Attack_Power = 8 + Current_Equipping_weapon.W_Maximum_damage;
 
         switch (Current_Equipping_weapon.WeaponType)
         {
@@ -1008,12 +1011,51 @@ public class Player_main : MonoBehaviour
                 Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
                 break;
             case Weapon_type.Gun:
-                Skill.Aiming_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
-                Skill.Reloading_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                Skill.Aiming_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping, Current_equipping_Weapon);
+                Skill.Reloading_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping, Current_equipping_Weapon);
                 break;
             default:
                 break;
         }
+    }
+
+    public void Set_Attack_Power_for_Basic()  // 무기 해제시 함수 호출
+    {
+        Item_Weapons Current_Equipping_weapon = Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon];
+        Current_Equipping_weapon.Is_Equipping = false;
+        Min_Attack_Power = 8;
+        Max_Attack_Power = 8;
+
+        switch (Current_Equipping_weapon.WeaponType)
+        {
+            case Weapon_type.Axe:
+                Skill.Axe_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.LongBlunt:
+                Skill.LongBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.ShortBlunt:
+                Skill.ShortBlunt_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.LongBlade:
+                Skill.LongBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.ShortBlade:
+                Skill.ShortBlade_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.Spear:
+                Skill.Spear_Level.Set_Weapon_Equipping_Effect(Current_Equipping_weapon.Is_Equipping);
+                break;
+            case Weapon_type.Gun:
+                Skill.Aiming_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping, Current_equipping_Weapon);
+                Skill.Reloading_Level.Set_Gun_Equipping_Effect(Current_Equipping_weapon.Is_Equipping, Current_equipping_Weapon);
+                break;
+            default:
+                break;
+        }
+
+        Is_Equipping_Weapons = false;
+        Current_equipping_Weapon = -1;
     }
 
     public float Characteristic_Asthmatic_for_Weapon = 1f;
@@ -1021,11 +1063,6 @@ public class Player_main : MonoBehaviour
     {
         Is_Fighting = true;
         Lightfooted_Timer = 0;
-
-        Min_Attack_Power = 8 + 0;
-        Max_Attack_Power = 8 + 0;
-        System.Random rand_Damage = new System.Random();
-        float Total_Damage = (rand_Damage.Next((int)(Min_Attack_Power*100), (int)(Max_Attack_Power*100)))/100; // 8 ~ 8
 
         if (Is_Equipping_Weapons)
         {
@@ -1035,16 +1072,23 @@ public class Player_main : MonoBehaviour
             // + 총기 사용시 조준 등 반영
             if(playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon]) > 0)  // 무기 레벨에 따른 공격력 증가
             {
-                Weapon_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon]);
-            }
-            
+                Min_Attack_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon]);
+                Max_Attack_Power *= playerSkill_ActivationProbability.Get_Increase_in_Attack_Power(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon]);
 
-            if(Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].WeaponType != Weapon_type.Gun)  // 근접 공격력
+            }
+
+
+            if (Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].WeaponType != Weapon_type.Gun)  // 근접 공격력
             {
-                Weapon_Power *= playerSkill_ActivationProbability.Get_Melee_Attack_Power_Ratio();
+                Min_Attack_Power *= playerSkill_ActivationProbability.Get_Melee_Attack_Power_Ratio();
+                Max_Attack_Power *= playerSkill_ActivationProbability.Get_Melee_Attack_Power_Ratio();
             }
 
         }
+
+        System.Random rand_Damage = new System.Random();
+        float Total_Damage = (rand_Damage.Next((int)(Min_Attack_Power * 100), (int)(Max_Attack_Power * 100))) / 100;
+
 
         // 치명타 확률
         float Critical_Attack_Bonus = 0;
@@ -1083,6 +1127,54 @@ public class Player_main : MonoBehaviour
                 Skill.Reloading_Level.SetEXP(20);
                 break;
             default: break;
+        }
+
+        // 사용중인 무기 내구도 연산
+        System.Random rand_W = new System.Random();
+        int rand_W_Condition = rand_W.Next(100);
+        if (rand_W_Condition / 100 < Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].W_Condition_lower_chance)
+        {
+            float temp_Weapon = 0;
+            switch (Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].WeaponType)
+            {
+                case Weapon_type.Axe:
+                    temp_Weapon = Skill.Axe_Level.Get_W_Level() / 2;
+                    break;
+                case Weapon_type.LongBlunt:
+                    temp_Weapon = Skill.LongBlunt_Level.Get_W_Level() / 2;
+                    break;
+                case Weapon_type.ShortBlunt:
+                    temp_Weapon = Skill.ShortBlunt_Level.Get_W_Level() / 2;
+                    break;
+                case Weapon_type.LongBlade:
+                    temp_Weapon = Skill.LongBlade_Level.Get_W_Level() / 2;
+                    break;
+                case Weapon_type.ShortBlade:
+                    temp_Weapon = Skill.ShortBlade_Level.Get_W_Level() / 2;
+                    break;
+                case Weapon_type.Spear:
+                    temp_Weapon = Skill.Spear_Level.Get_W_Level() / 2;
+                    break;
+                case Weapon_type.Gun:
+                    //temp_Weapon = Skill.Aiming_Level.Get_W_Level() / 2;
+                    //Skill.Reloading_Level.SetEXP(20);
+                    break;
+                default: break;
+            }
+
+            float maintenancemod = (Skill.Maintenance_Level.Get_M_Level() + temp_Weapon) / 2;
+            float lower = 1 / (Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].W_Condition_lower_chance + (maintenancemod * 2));
+            GameManager.gameManager.Weapon_ID_Count[Current_equipping_Weapon][2] *= lower;
+
+            if(GameManager.gameManager.Weapon_ID_Count[Current_equipping_Weapon][2] <= 0)
+            {
+                // 장착중인 무기 부서짐
+                GameManager.gameManager.Weapon_ID_Count[Current_equipping_Weapon][2] = Item_DataBase.item_database.weapons_Ins[Current_equipping_Weapon].W_Max_Condition;
+            }
+        }
+        else
+        {
+            Skill.Maintenance_Level.SetEXP(30);
         }
 
         Is_Fighting = false;

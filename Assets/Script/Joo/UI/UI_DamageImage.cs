@@ -30,7 +30,7 @@ public class UI_DamageImage : MonoBehaviour
         }
         else
         {
-            point = (int)position * 3;
+            point = (int)position * 4;
         }
         
 
@@ -64,7 +64,10 @@ public class UI_DamageImage : MonoBehaviour
                 }
                 else
                 {
-                    DamageImagelist[k].ChangeColor(position, Player_main.player_main.playerState.Player_body_point[(int)position].Get_DamageCount());
+                    if (Player_main.player_main.playerState.Player_body_point[(int)position].Get_Is_Bleeding() == false)
+                        DamageImagelist[k].ChangeColor_recovery(position);
+                    else
+                        DamageImagelist[k].ChangeColor(position, Player_main.player_main.playerState.Player_body_point[(int)position].Get_DamageCount());
 
                 }
 

@@ -45,6 +45,10 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
                     {
                         UI_Craft_window.ui_Craft_Window.Open_name_window(item_Transform, "의류(천)");
                     }
+                    else if (item_Info.name == "Sterilized Ripped Sheets" && Ingredients_index == 1)
+                    {
+                        UI_Craft_window.ui_Craft_Window.Open_name_window(item_Transform, "알코올");
+                    }
                     else
                     {
                         UI_Craft_window.ui_Craft_Window.Open_name_window(item_Transform, item_Info.Get_Ingredients_name(Ingredients_index));
@@ -98,6 +102,7 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
         Ingredients_index = index;
         item_Image.sprite = item_info.Get_Ingredients_Tool_Image(index);
         item_Info = item_info;
+        item_Value.text = item_info.Get_Ingredients_Tool_value(index).ToString();
     }
 
     public void Set_Ingredients_Box(Type _item_type, int index, bool Spice)

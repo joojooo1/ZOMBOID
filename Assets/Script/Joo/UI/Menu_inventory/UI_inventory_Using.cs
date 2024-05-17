@@ -29,31 +29,13 @@ public class UI_inventory_Using : MonoBehaviour
             case Type.food:
                 Check_item_Food(item_ID);
                 break;
-            case Type.weapon:
-                //
-                break;
-            case Type.clothing:
-                //
-                break;
-            case Type.Medical:
-                //
-                break;
             case Type.Farming:
-                //
-                break;
-            case Type.Normal:
-                //
+                // 농사 가능한 타일인지 확인
                 break;
             case Type.Tool:
                 //
                 break;
-            case Type.Container:
-                //
-                break;
             case Type.Electronics:
-                //
-                break;
-            case Type.Furniture:
                 //
                 break;
         }
@@ -326,10 +308,28 @@ public class UI_inventory_Using : MonoBehaviour
 
                     break;
                 case Type.weapon:
+                    if(Player_main.player_main.Current_equipping_Weapon >= 0)
+                    {
+                        //if (Item_DataBase.item_database.weapons_Ins[item_ID].Is_TwoHand == true 
+                        //    || Item_DataBase.item_database.weapons_Ins[Player_main.player_main.Current_equipping_Weapon].Is_TwoHand == true)
+                        //{
+                        //    Player_main.player_main.Set_Attack_Power_for_Basic();
+                        //}                
+                        Player_main.player_main.Set_Attack_Power_for_Basic();
+                    }
+                    Player_main.player_main.Is_Equipping_Weapons = true;
                     Player_main.player_main.Current_equipping_Weapon = item_ID;
+                    Player_main.player_main.Set_Attack_Power_for_Equipping_Weapons();
                     break;
                 case Type.clothing:
+                    if (Player_main.player_main.playerState.Clothing_list[item_ID][5] == 1)
+                    {
+                        Player_main.player_main.playerState.Set_Wear_Basic(item_ID);
+                    }
                     Player_main.player_main.playerState.Set_Wear(item_ID);
+                    break;
+                case Type.Medical:
+
                     break;
             }
         }

@@ -35,8 +35,8 @@ public class Item_Medical : ScriptableObject
      Herb_Poultice: 상처회복속도
      Pharmaceutical_Power: 
         - Antibiotics : 상처감염확률 50% down
-        - Antidepressants : 불행 지속적으로 down
-        - Beta Blockers : 긴장감소속도 1.5배 up
+        - Antidepressants : 불행 지속적으로 down  한번에 power*10 만큼 감소로 정정
+        - Beta Blockers : 긴장감소속도 1.5배 up  한번에 power*15 만큼 감소로 정정
         - Cigarettes : 스트레스 5 down
         - Painkillers : 통증 10 down
         - Sleeping Tablets : 통증 down ( 잘수있게 )
