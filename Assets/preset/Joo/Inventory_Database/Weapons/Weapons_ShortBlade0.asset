@@ -50,3 +50,4 @@ MonoBehaviour:
   Gun_Max_Capacity: 0
   Gun_Aiming_time: 0
   Gun_Reload_time: 0
+  animType: 3

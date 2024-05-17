@@ -50,3 +50,6 @@ MonoBehaviour:
   Gun_Max_Capacity: 2
   Gun_Aiming_time: 20
   Gun_Reload_time: 25
+  animType: 0
+  audioClip: {fileID: 8300000, guid: c572e1b3179c3304cbf63fa445870d4b, type: 3}
+  audioClip_range: 0

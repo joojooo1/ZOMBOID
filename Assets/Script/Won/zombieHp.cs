@@ -7,6 +7,7 @@ using UnityEngine.XR;
 
 public class zombieHp : MonoBehaviour
 {
+    AudioSource audio;
     public float curret_zombie_hp;//현재 좀비의 체력
     public float curret_speed;//현재 좀비의 이동속도
     public float easy_max_hp = 50;//약한 좀비의 최대 체력
@@ -25,6 +26,7 @@ public class zombieHp : MonoBehaviour
     void Awake()
     {
         zom_stet();
+        audio = GetComponent<AudioSource>();
         _Movement = GetComponent<zom_targetpos>();
         anime = zom_body.GetComponent<zom_anime>();
     }
@@ -44,10 +46,11 @@ public class zombieHp : MonoBehaviour
         
     }
 
-    public void GetDamage(GameObject player,float Damage)//좀비가 받는 데미지
+    public void GetDamage(AudioClip weapon_hit_sound,float Damage)//좀비가 받는 데미지
     {
         curret_zombie_hp -= Damage;
         anime.animatersetTrigger("hit");
+        audio.PlayOneShot(weapon_hit_sound,1);
         Debug.Log("데미지 들어옴");
     }
     public void up_down()

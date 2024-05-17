@@ -158,7 +158,8 @@ public enum Weapon_type
     ShortBlade = 4,
     Spear = 5,
     Gun = 6,
-    None = 7
+    None = 7,
+    Pistol = 8
 }
 
 public enum Container_Type
@@ -244,4 +245,14 @@ public enum Clothing_Type
     T_shirt = 15,
     Underwear = 16,
     None = 17
+}
+public enum animType
+{
+    GUN = 0,
+    PISTOL = 1,
+    ONE_HAND_SWING = 2,
+    ONE_HAND_STING = 3,
+    TWO_HAND_SWING = 4,
+    TWO_HAND_STING = 5,
+    IDLE = 6
 }

@@ -11,7 +11,7 @@ public class player_atk : MonoBehaviour
     public bool atk = false;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         audio = audioobject.GetComponent<player_rot>();
     }
 
@@ -24,9 +24,9 @@ public class player_atk : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && !atk)
             {
                 atk = true;
-                audio.audioclip(Clip, 1);
                 Vector3 forwardDirection = transform.forward;
-
+                //searchDistance = Random.Range(Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Minimum_Range, Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Maximum_Range);
+                AudioClip hitaudio;// = Equipment.audioClip;
                 // 레이캐스트를 쏴서 zombieLayer를 가진 오브젝트를 찾음
                 RaycastHit[] hits = Physics.RaycastAll(transform.position, forwardDirection, searchDistance, characterLayer);
                 List<RaycastHit> zomHits = new List<RaycastHit>();
@@ -46,7 +46,7 @@ public class player_atk : MonoBehaviour
                 System.Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
 
                 // 최대 3명의 좀비에 대해 처리
-                for (int i = 0; i < Mathf.Min(maxZombiesDetected, hits.Length); i++)
+                for (int i = 0; i < Mathf.Min(Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Multi_Hit, hits.Length); i++)
                 {
                     // 레이에 맞은 오브젝트 가져오기
                     GameObject hitObject = hits[i].collider.gameObject;
@@ -58,8 +58,9 @@ public class player_atk : MonoBehaviour
                     // ZombieHp 스크립트가 있다면 GetDamage 함수 호출
                     if (zomHp != null)
                     {
+
                         Debug.Log("레이에 좀비 걸림 데미지 전송");
-                        zomHp.GetDamage(gameObject, damagePerAttack);  // 또는 다른 처리를 수행
+                        //zomHp.GetDamage(hitaudio, audioobject.GetComponent<player_rot>().playerpos.GetComponent<player_movement>().player_Main.Calculate_damage_to_Zombie());  // 또는 다른 처리를 수행
                     }
                 }
                 Debug.DrawRay(transform.position, forwardDirection * searchDistance, Color.red);
