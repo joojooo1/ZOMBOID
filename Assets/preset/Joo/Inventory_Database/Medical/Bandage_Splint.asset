@@ -29,4 +29,4 @@ MonoBehaviour:
   Is_Clean: 1
   Is_Ins: 0
   Capacity: 0
-  Power: 0
+  Power: 10
