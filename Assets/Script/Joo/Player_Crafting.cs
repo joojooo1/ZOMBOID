@@ -175,23 +175,23 @@ public class Recipe_item
                 {
                     case Crafting_type.Crafting_General:
                         UI_Craft.UI_Craft_main.Crafting_General_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_Tool_list[i].Recipe_value);
                         break;
                     case Crafting_type.Crafting_Tool:
                         UI_Craft.UI_Craft_main.Crafting_Tool_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_Tool_list[i].Recipe_value);
                         break;
                     case Crafting_type.Crafting_Cook:
                         UI_Craft.UI_Craft_main.Crafting_Cook_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_Tool_list[i].Recipe_value);
                         break;
                     case Crafting_type.Crafting_Medical:
                         UI_Craft.UI_Craft_main.Crafting_Medical_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_Tool_list[i].Recipe_value);
                         break;
                     case Crafting_type.Crafting_Installation:
                         UI_Craft.UI_Craft_main.Crafting_Furniture_list[Current_index].Add_Ingredients_Tool(
-                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID);
+                            Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_type, Recipe_Ingredients_Tool_list[i].Recipe_Ingredients_DB_ID, Recipe_Ingredients_Tool_list[i].Recipe_value);
                         break;
                 }
             }
@@ -478,6 +478,8 @@ public class Player_Crafting : MonoBehaviour
     public Recipe_item Recipe_Craft_Salad;  // 샐러드
 
     public Recipe_item Recipe_Craft_RippedSheets;  // 찢어진 천
+    //public Recipe_item Recipe_Craft_RippedSheets_1;  // 찢어진 천
+    public Recipe_item Recipe_Craft_Sterilized_RippedSheets;  // 소독된 찢어진 천
     public Recipe_item Recipe_Craft_Sheets;  // 천
     public Recipe_item Recipe_Craft_SheetRope;  // 천 밧줄
     public Recipe_item Recipe_Craft_Plank;  // 판자
@@ -510,6 +512,8 @@ public class Player_Crafting : MonoBehaviour
     public Recipe_item Recipe_Make_Barricade;  // 바리케이트
     public Recipe_item Recipe_Make_Metal_Barricade;  // 금속 바리케이트
     public Recipe_item Recipe_Make_Campfire;  // 모닥불
+
+    public Recipe_item Recipe_Make_Poultice;  // 습포제
 
 
     public List<Recipe_item> Recipe_Crafting_list = new List<Recipe_item>();
@@ -1180,6 +1184,53 @@ public class Player_Crafting : MonoBehaviour
                 }
             }
             Recipe_Crafting_list.Add(Recipe_Craft_RippedSheets);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+        /////////// 소독된 찢어진 천 ///////////
+        for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Sterilized Ripped Sheets")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.medical_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Craft_Sterilized_RippedSheets = new Recipe_item(-1, Skill_Type.None, 0, Type.Medical, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Ripped Sheets")  // 찢어진 천
+                {
+                    Recipe_Craft_Sterilized_RippedSheets.Add_Recipe_Ingredients(Type.Medical, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.food_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.food_Ins[i].FoodName == "Whiskey Bottle")  // 알코올
+                {
+                    Recipe_Craft_Sterilized_RippedSheets.Add_Recipe_Ingredients(Type.food, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Bottle of Disinfectant")  // 알코올
+                {
+                    Recipe_Craft_Sterilized_RippedSheets.Add_Recipe_Ingredients(Type.Medical, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Craft_Sterilized_RippedSheets);
         }
         else
         {
@@ -2419,6 +2470,46 @@ public class Player_Crafting : MonoBehaviour
         {
             target_index = -1;
         }
+
+        /////////// 습포제 /////////// 
+        for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Poultice")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.medical_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Make_Poultice = new Recipe_item(-1, Skill_Type.FirstAid, 0, Type.Medical, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "Plantain")  // 질경이x2
+                {
+                    Recipe_Make_Poultice.Add_Recipe_Ingredients(Type.Medical, i, 2);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.medical_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.medical_Ins[i].MedicalName == "MortarPestle")  // 약사발_Tool
+                {
+                    Recipe_Make_Poultice.Add_Recipe_Ingredients_Tool(Type.Medical, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Make_Poultice);
+        }
+        else
+        {
+            target_index = -1;
+        }
     }
 
 
@@ -2447,6 +2538,8 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Make_Barricade.Set_Is_Crafting();
         Recipe_Make_Campfire.Set_Is_Crafting();
         Recipe_Make_Metal_Barricade.Set_Is_Crafting();
+        Recipe_Craft_Sterilized_RippedSheets.Set_Is_Crafting();
+        Recipe_Make_Poultice.Set_Is_Crafting();
 
         // 테스트 후 false 로 바뀌어야하는 레시피 ( 조건에 맞을때 true로 바뀌어야 함 )
         // 레벨

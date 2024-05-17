@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public bool Is_Water = true;
     public bool Is_Electricity = true;
 
+    public List<float[]> Weapon_ID_Count = new List<float[]>();   // 무기 DB 순서와 동일 // 각 노드안의 배열은 [0]: 무기index, [1]: 처치한 좀비 수, [2]: 무기의 내구도
+
     private void Start()
     {
         gameManager = this;
@@ -37,21 +39,17 @@ public class GameManager : MonoBehaviour
 
         for(int i = 0; i < Item_DataBase.item_database.weapons_Ins.Count; i++)
         {
-            int[] Kill_count = new int[2];
-            Kill_count[0] = i;
-            Kill_count[1] = 0;
-            Weapon_ID_Count.Add(Kill_count);
+            float[] Weapon_count = new float[3];
+            Weapon_count[0] = i;
+            Weapon_count[1] = 0;
+            Weapon_count[2] = Item_DataBase.item_database.weapons_Ins[i].W_Max_Condition;
+            Weapon_ID_Count.Add(Weapon_count);
         }
 
     }
 
     private void Update()
     {
-        if (Option_Canvas.activeSelf)
-            UI_main.ui_main.Playing = false;
-        else
-            UI_main.ui_main.Playing = true;
-
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             if(!Option_Canvas.activeSelf)
@@ -60,6 +58,11 @@ public class GameManager : MonoBehaviour
 
         if (UI_main.ui_main.Playing)
         {
+            if (Option_Canvas.activeSelf)
+                UI_main.ui_main.Playing = false;
+            else
+                UI_main.ui_main.Playing = true;
+
             Weight_text.text = Player_main.player_main.Get_Weight().ToString();
 
             Timer += Time.deltaTime;
@@ -143,7 +146,6 @@ public class GameManager : MonoBehaviour
     // Info) 처치한 좀비 수, 주 사용 무기, 생존일수
     int Zombies_killed_count = 0;
     [SerializeField] UnityEngine.UI.Text Zombies_killed_count_text;
-    List<int[]> Weapon_ID_Count = new List<int[]>();   // 무기 DB 순서와 동일 // 각 노드안의 배열은 [0]: 무기index, [1]: 처치한 좀비 수
     [SerializeField] UnityEngine.UI.Text primary_Weapon_text;
 
     public void Set_Info_from_Server()
@@ -155,7 +157,7 @@ public class GameManager : MonoBehaviour
         Weapon_ID_Count[current_index][1]++;
 
         int target_index = -1;
-        int current_kill_count = 0;
+        float current_kill_count = 0;
         for(int i = 0; i < Weapon_ID_Count.Count; i++)
         {
             if (Weapon_ID_Count[i][1] > current_kill_count)

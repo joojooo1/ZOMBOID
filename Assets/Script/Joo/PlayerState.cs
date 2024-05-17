@@ -16,16 +16,29 @@ public class Player_body_Location_Damage
     public Damage_Pattern Attack_Pattern;
     public int index;
     public bool _Bandage = false;  // 붕대 감았는지 여부로 hp 깎이는 속도 조절
+    public bool _Bandage_Dirty = false;
+    public float _Bandage_power = 0;
     public bool _disinfection = false;  // 소독 했는지 여부로 상처 낫는 속도 조절
     public bool _Bleeding = true;
-    public float recovery_Count = 0f;
+    public float recovery_Count;
+    public int recovery_damagecount = 50;
     public float Characteristic_recovery_Count = 1f;
+    public float item_recovery = 0f;
+
+    public float item_Antibiotics = 1f;
 
     public Player_body_Location_Damage(body_point Body_Code, Damage_Pattern _Attack_Pattern, int _index)
     {
         Location = Body_Code;
         Attack_Pattern = _Attack_Pattern;
         index = _index;
+        recovery_Count = 0;
+        if (_Attack_Pattern == Damage_Pattern.Fracture)
+        {
+            _Bleeding = false;
+            recovery_damagecount = 80;
+        }
+
         if (Player_Characteristic.current.Fast_Healer_Characteristic == true)
         {
             switch (Attack_Pattern)
@@ -70,55 +83,102 @@ public class Player_body_Location_Damage
     public void Set_Is_disinfection(bool Is_disinfection) { _disinfection = Is_disinfection; }
     public bool Get_Is_disinfection() { return _disinfection; }
 
-    public void Set_Is_Bandage(bool Is_Bandage)
+    public void Set_Is_Bandage(bool Is_Bandage, float power)
     {
         _Bandage = Is_Bandage;
+        _Bandage_power = power;
+        if (_Bandage)
+            Set_Is_Bleeding(false);
+        else
+            Set_Is_Bleeding(true);
     }
     public bool Get_Is_Bandage() { return _Bandage; }
 
     public void Set_Is_Bleeding(bool Is_Bleeding)
     {
         _Bleeding = Is_Bleeding;
+        Player_main.player_main.playerState.Player_body_point[(int)Location].Set_Is_Bleeding();
     }
     public bool Get_Is_Bleeding() { return _Bleeding; }
 
+    public bool Get_Is_Bandage_Dirty() { return _Bandage_Dirty; }
+
+    public void Set_Is_Bandage_Dirty(bool Is_Dirty)
+    {
+        _Bandage_Dirty = !Is_Dirty;
+    }
+
+
     public void Set_recovery_Count()
     {
-        if (_disinfection == true)  // 소독하고
+        if(Attack_Pattern == Damage_Pattern.Fracture)
         {
-            if (_Bandage)  // 붕대를 감은 경우
+            if (Get_Is_Bandage())  // 부목을 감은 경우
             {
-                recovery_Count += (3 * Characteristic_recovery_Count);
-                Set_Is_Bleeding(false);
-                // PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
+                recovery_Count += (2 * Characteristic_recovery_Count + _Bandage_power + item_recovery);
             }
-            else  // 붕대를 감지 않은 경우
+            else  // 부목을 감지 않은 경우
             {
-                recovery_Count += (2 * Characteristic_recovery_Count);
-                Set_Is_Bleeding(true);
-                //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
-                PlayerState.playerState.Calculating_Infection(20);  // 20% 확률로 감염
+                recovery_Count += (2 * Characteristic_recovery_Count + item_recovery);
             }
         }
-        else if (_disinfection == false)  // 소독하지 않고
+        else
         {
-            if (_Bandage)  // 붕대를 감은 경우
+            if (Get_Is_disinfection())  // 소독하고
             {
-                recovery_Count += (1 * Characteristic_recovery_Count);
-                Set_Is_Bleeding(false);
-                //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(false);
+                if (Get_Is_Bandage())  // 붕대를 감은 경우
+                {
+                    recovery_Count += (3 * Characteristic_recovery_Count + _Bandage_power + item_recovery);
+                    if(Get_Is_Bandage_Dirty())
+                        PlayerState.playerState.Calculating_Infection(10 * item_Antibiotics);  // 20% 확률로 감염
+                }
+                else  // 붕대를 감지 않은 경우
+                {
+                    recovery_Count += (2 * Characteristic_recovery_Count + item_recovery);
+                    PlayerState.playerState.Calculating_Infection(20 * item_Antibiotics);  // 20% 확률로 감염
+                }
             }
-            else  // 붕대를 감지 않은 경우
+            else  // 소독하지 않고
             {
-                recovery_Count += (0.5f * Characteristic_recovery_Count);
-                Set_Is_Bleeding(true);
-                //PlayerState.playerState.Player_body_point[(int)Location].Set_Is_Bleeding(true);
-                PlayerState.playerState.Calculating_Infection(30);  // 30% 확률로 감염
+                if (Get_Is_Bandage())  // 붕대를 감은 경우
+                {
+                    recovery_Count += (1 * Characteristic_recovery_Count + _Bandage_power + item_recovery);
+                    if (Get_Is_Bandage_Dirty())
+                        PlayerState.playerState.Calculating_Infection(20 * item_Antibiotics);  // 20% 확률로 감염
+                }
+                else  // 붕대를 감지 않은 경우
+                {
+                    recovery_Count += (0.5f * Characteristic_recovery_Count + item_recovery);
+                    PlayerState.playerState.Calculating_Infection(30 * item_Antibiotics);  // 30% 확률로 감염
+                }
             }
         }
 
+        Change_Back_Image();
 
     }
+
+    public bool Check_recovery_damagecount()
+    {
+        if (recovery_Count > recovery_damagecount)
+            return true;
+        else
+            return false;
+    }
+
+    public void Change_Back_Image()
+    {
+        for (int i = 0; i < UI_main.ui_main.ui_player_state.Damagelist.Count; i++)
+        {
+            if (UI_main.ui_main.ui_player_state.Damagelist[i].body_position == Location
+                && UI_main.ui_main.ui_player_state.Damagelist[i].position_Damage_Num == index)
+            {
+                if (Get_Is_Bandage())
+                    UI_main.ui_main.ui_player_state.Damagelist[i].Change_recovery_color(recovery_Count / recovery_damagecount);
+            }
+        }
+    }
+
 
 }
 
@@ -129,12 +189,15 @@ public class Player_body_Location
 
     public bool _Bleeding = false; // 출혈.. Moodles
     int DamageCount = 0;
-    public int recovery_damagecount = 50;
     public Player_body_Location_Damage[] Body_Damage_array = new Player_body_Location_Damage[3];
 
     public Player_body_Location(body_point Body_Code)
     {
         _Body_Location_Code = Body_Code;
+        for(int i = 0; i < 3; i++)
+        {
+            Body_Damage_array[i] = null;
+        }
     }
 
     public body_point Get_body_point()
@@ -320,29 +383,15 @@ public class Player_body_Location
         if (Add)
         {
             DamageCount++;
-            Body_Damage_array[index] = new Player_body_Location_Damage(position, damagetype, DamageCount);
+            Body_Damage_array[index] = new Player_body_Location_Damage(position, damagetype, index);
             Set_Is_Bleeding();
         }
         else
         {
             DamageCount--;
-            Body_Damage_array = Set_new_Array(Body_Damage_array, index);
+            //Body_Damage_array = Set_new_Array(Body_Damage_array, index);
             Set_Is_Bleeding();
         }
-    }
-
-    Player_body_Location_Damage[] Set_new_Array(Player_body_Location_Damage[] Origin, int index)
-    {
-        Player_body_Location_Damage[] newArray = new Player_body_Location_Damage[3];
-        for(int i = 0; i < Origin.Length; i++)
-        {
-            if (Origin[i] != null && i != index)
-            {
-                newArray[i] = Origin[i];
-            }
-        }
-
-        return newArray;
     }
 
     public int Get_DamageCount()
@@ -357,7 +406,7 @@ public class Player_body_Location
             if (Body_Damage_array[j] != null)
             {
                 Body_Damage_array[j].Set_recovery_Count();
-                if (Body_Damage_array[j].recovery_Count > recovery_damagecount)
+                if (Body_Damage_array[j].Check_recovery_damagecount())
                 {
                     UI_main.ui_main.ui_player_state.icon_Destroy(_Body_Location_Code, Body_Damage_array[j].Attack_Pattern, j);
                 }
@@ -384,7 +433,8 @@ public enum body_point
     Left_lowerleg = 13,
     Right_lowerleg = 14,
     Left_foot = 15,
-    Right_foot = 16
+    Right_foot = 16,
+    None = 17
 }
 
 public class PlayerState : MonoBehaviour
@@ -439,6 +489,7 @@ public class PlayerState : MonoBehaviour
             Clothing_list[i].Add(1);  // Neck_Defense
             Clothing_list[i].Add(1);  // Insulation
             Clothing_list[i].Add(1);  // Wind_resistance
+            Clothing_list[i].Add(0);  // 0: 미착용, 1: 착용
         }
 
         Left_hand = new Player_body_Location(body_point.Left_hand);
@@ -516,6 +567,7 @@ public class PlayerState : MonoBehaviour
                 {
                     Player_body_point[i].Check_recovery();
                 }
+                DamageCounting_Timer = 0;
             }
 
             /****************** Player_Has_a_Cold ******************/
@@ -760,6 +812,11 @@ public class PlayerState : MonoBehaviour
         {
             if (Player_body_point[i].Get_Is_Bleeding())
                 Bleeding_total_count++;
+
+            if(Player_body_point[i].Get_Is_Bleeding() == false && Player_body_point[i].Body_Damage_array.Length > 0)
+            {
+                UI_DamageImage.UI_Damage_Pre.Damage_Change(Player_body_point[i].Get_body_point());
+            }
         }
         Player_main.player_main.playerMoodles.Moodle_Bleeding.Set_Moodles_state(Bleeding_total_count);  // 출혈
         Bleeding_total_count = 0;
@@ -874,7 +931,7 @@ public class PlayerState : MonoBehaviour
     }
 
 
-    public void Set_Wear(int item_ID)
+    public void Set_Wear(int item_ID)  // 옷 입었을 때
     {
         switch (Item_DataBase.item_database.clothing_Ins[item_ID].ClothingType)
         {
@@ -883,6 +940,7 @@ public class PlayerState : MonoBehaviour
                 Clothing_list[(int)Clothing_Type.Hat][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Hat][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Hat][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Hat][5] = 1;
 
                 break;
             case Clothing_Type.Glasses:
@@ -890,66 +948,77 @@ public class PlayerState : MonoBehaviour
                 Clothing_list[(int)Clothing_Type.Glasses][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Glasses][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Glasses][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Glasses][5] = 1;
                 break;
             case Clothing_Type.Mask:
                 Clothing_list[(int)Clothing_Type.Mask][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Mask][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Mask][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Mask][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Mask][5] = 1;
                 break;
             case Clothing_Type.Jacket:
                 Clothing_list[(int)Clothing_Type.Jacket][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Jacket][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Jacket][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Jacket][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Jacket][5] = 1;
                 break;
             case Clothing_Type.Vest:
                 Clothing_list[(int)Clothing_Type.Vest][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Vest][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Vest][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Vest][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Vest][5] = 1;
                 break;
             case Clothing_Type.Watch:
                 Clothing_list[(int)Clothing_Type.Watch][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Watch][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Watch][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Watch][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Watch][5] = 1;
                 break;
             case Clothing_Type.Gloves:
                 Clothing_list[(int)Clothing_Type.Gloves][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Gloves][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Gloves][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Gloves][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Gloves][5] = 1;
                 break;
             case Clothing_Type.Belt:
                 Clothing_list[(int)Clothing_Type.Belt][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Belt][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Belt][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Belt][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Belt][5] = 1;
                 break;
             case Clothing_Type.Shoes:
                 Clothing_list[(int)Clothing_Type.Shoes][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Shoes][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Shoes][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Shoes][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Shoes][5] = 1;
                 break;
             case Clothing_Type.Bottoms:
                 Clothing_list[(int)Clothing_Type.Bottoms][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Bottoms][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Bottoms][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Bottoms][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Bottoms][5] = 1;
                 break;
             case Clothing_Type.protectiveGear:
                 Clothing_list[(int)Clothing_Type.protectiveGear][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.protectiveGear][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.protectiveGear][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.protectiveGear][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.protectiveGear][5] = 1;
                 break;
             case Clothing_Type.subBottoms:
                 Clothing_list[(int)Clothing_Type.subBottoms][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.subBottoms][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.subBottoms][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.subBottoms][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.subBottoms][5] = 1;
                 break;
             case Clothing_Type.miniBag:
                 break;
@@ -960,18 +1029,21 @@ public class PlayerState : MonoBehaviour
                 Clothing_list[(int)Clothing_Type.Shirt][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Shirt][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Shirt][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Shirt][5] = 1;
                 break;
             case Clothing_Type.T_shirt:
                 Clothing_list[(int)Clothing_Type.T_shirt][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.T_shirt][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.T_shirt][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.T_shirt][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.T_shirt][5] = 1;
                 break;
             case Clothing_Type.Underwear:
                 Clothing_list[(int)Clothing_Type.Underwear][1] = Item_DataBase.item_database.clothing_Ins[item_ID].Defense;
                 Clothing_list[(int)Clothing_Type.Underwear][2] = Item_DataBase.item_database.clothing_Ins[item_ID].Neck_Defense;
                 Clothing_list[(int)Clothing_Type.Underwear][3] = Item_DataBase.item_database.clothing_Ins[item_ID].Insulation;
                 Clothing_list[(int)Clothing_Type.Underwear][4] = Item_DataBase.item_database.clothing_Ins[item_ID].Wind_resistance;
+                Clothing_list[(int)Clothing_Type.Underwear][5] = 1;
                 break;
         }
 
@@ -1006,6 +1078,128 @@ public class PlayerState : MonoBehaviour
         Clothing_Neck_Defense = 1 + _Neck_Defense;
         Clothing_Defense = 1 + _Defense;
         GameManager.gameManager.Clothing_Wind_resistance = _Wind_resistance;
+    }
+
+    public void Set_Wear_Basic(int item_ID)  // 옷 벗었을 때
+    {
+        Apparent_Temperature_forClothing = 1;
+        Clothing_Neck_Defense = 1;
+        Clothing_Defense = 1;
+        GameManager.gameManager.Clothing_Wind_resistance = 1;
+
+        switch (Item_DataBase.item_database.clothing_Ins[item_ID].ClothingType)
+        {
+            case Clothing_Type.Hat:
+                Clothing_list[(int)Clothing_Type.Hat][1] = 1;
+                Clothing_list[(int)Clothing_Type.Hat][2] = 1;
+                Clothing_list[(int)Clothing_Type.Hat][3] = 1;
+                Clothing_list[(int)Clothing_Type.Hat][4] = 1;
+                Clothing_list[(int)Clothing_Type.Hat][5] = 0;
+
+                break;
+            case Clothing_Type.Glasses:
+                Clothing_list[(int)Clothing_Type.Glasses][1] = 1;
+                Clothing_list[(int)Clothing_Type.Glasses][2] = 1;
+                Clothing_list[(int)Clothing_Type.Glasses][3] = 1;
+                Clothing_list[(int)Clothing_Type.Glasses][4] = 1;
+                Clothing_list[(int)Clothing_Type.Glasses][5] = 0;
+                break;
+            case Clothing_Type.Mask:
+                Clothing_list[(int)Clothing_Type.Mask][1] = 1;
+                Clothing_list[(int)Clothing_Type.Mask][2] = 1;
+                Clothing_list[(int)Clothing_Type.Mask][3] = 1;
+                Clothing_list[(int)Clothing_Type.Mask][4] = 1;
+                Clothing_list[(int)Clothing_Type.Mask][5] = 0;
+                break;
+            case Clothing_Type.Jacket:
+                Clothing_list[(int)Clothing_Type.Jacket][1] = 1;
+                Clothing_list[(int)Clothing_Type.Jacket][2] = 1;
+                Clothing_list[(int)Clothing_Type.Jacket][3] = 1;
+                Clothing_list[(int)Clothing_Type.Jacket][4] = 1;
+                Clothing_list[(int)Clothing_Type.Jacket][5] = 0;
+                break;
+            case Clothing_Type.Vest:
+                Clothing_list[(int)Clothing_Type.Vest][1] = 1;
+                Clothing_list[(int)Clothing_Type.Vest][2] = 1;
+                Clothing_list[(int)Clothing_Type.Vest][3] = 1;
+                Clothing_list[(int)Clothing_Type.Vest][4] = 1;
+                Clothing_list[(int)Clothing_Type.Vest][5] = 0;
+                break;
+            case Clothing_Type.Watch:
+                Clothing_list[(int)Clothing_Type.Watch][1] = 1;
+                Clothing_list[(int)Clothing_Type.Watch][2] = 1;
+                Clothing_list[(int)Clothing_Type.Watch][3] = 1;
+                Clothing_list[(int)Clothing_Type.Watch][4] = 1;
+                Clothing_list[(int)Clothing_Type.Watch][5] = 0;
+                break;
+            case Clothing_Type.Gloves:
+                Clothing_list[(int)Clothing_Type.Gloves][1] = 1;
+                Clothing_list[(int)Clothing_Type.Gloves][2] = 1;
+                Clothing_list[(int)Clothing_Type.Gloves][3] = 1;
+                Clothing_list[(int)Clothing_Type.Gloves][4] = 1;
+                Clothing_list[(int)Clothing_Type.Gloves][5] = 0;
+                break;
+            case Clothing_Type.Belt:
+                Clothing_list[(int)Clothing_Type.Belt][1] = 1;
+                Clothing_list[(int)Clothing_Type.Belt][2] = 1;
+                Clothing_list[(int)Clothing_Type.Belt][3] = 1;
+                Clothing_list[(int)Clothing_Type.Belt][4] = 1;
+                Clothing_list[(int)Clothing_Type.Belt][5] = 0;
+                break;
+            case Clothing_Type.Shoes:
+                Clothing_list[(int)Clothing_Type.Shoes][1] = 1;
+                Clothing_list[(int)Clothing_Type.Shoes][2] = 1;
+                Clothing_list[(int)Clothing_Type.Shoes][3] = 1;
+                Clothing_list[(int)Clothing_Type.Shoes][4] = 1;
+                Clothing_list[(int)Clothing_Type.Shoes][5] = 0;
+                break;
+            case Clothing_Type.Bottoms:
+                Clothing_list[(int)Clothing_Type.Bottoms][1] = 1;
+                Clothing_list[(int)Clothing_Type.Bottoms][2] = 1;
+                Clothing_list[(int)Clothing_Type.Bottoms][3] = 1;
+                Clothing_list[(int)Clothing_Type.Bottoms][4] = 1;
+                Clothing_list[(int)Clothing_Type.Bottoms][5] = 0;
+                break;
+            case Clothing_Type.protectiveGear:
+                Clothing_list[(int)Clothing_Type.protectiveGear][1] = 1;
+                Clothing_list[(int)Clothing_Type.protectiveGear][2] = 1;
+                Clothing_list[(int)Clothing_Type.protectiveGear][3] = 1;
+                Clothing_list[(int)Clothing_Type.protectiveGear][4] = 1;
+                Clothing_list[(int)Clothing_Type.protectiveGear][5] = 0;
+                break;
+            case Clothing_Type.subBottoms:
+                Clothing_list[(int)Clothing_Type.subBottoms][1] = 1;
+                Clothing_list[(int)Clothing_Type.subBottoms][2] = 1;
+                Clothing_list[(int)Clothing_Type.subBottoms][3] = 1;
+                Clothing_list[(int)Clothing_Type.subBottoms][4] = 1;
+                Clothing_list[(int)Clothing_Type.subBottoms][5] = 0;
+                break;
+            case Clothing_Type.miniBag:
+                break;
+            case Clothing_Type.Bag:
+                break;
+            case Clothing_Type.Shirt:
+                Clothing_list[(int)Clothing_Type.Shirt][1] = 1;
+                Clothing_list[(int)Clothing_Type.Shirt][2] = 1;
+                Clothing_list[(int)Clothing_Type.Shirt][3] = 1;
+                Clothing_list[(int)Clothing_Type.Shirt][4] = 1;
+                Clothing_list[(int)Clothing_Type.Shirt][5] = 0;
+                break;
+            case Clothing_Type.T_shirt:
+                Clothing_list[(int)Clothing_Type.T_shirt][1] = 1;
+                Clothing_list[(int)Clothing_Type.T_shirt][2] = 1;
+                Clothing_list[(int)Clothing_Type.T_shirt][3] = 1;
+                Clothing_list[(int)Clothing_Type.T_shirt][4] = 1;
+                Clothing_list[(int)Clothing_Type.T_shirt][5] = 0;
+                break;
+            case Clothing_Type.Underwear:
+                Clothing_list[(int)Clothing_Type.Underwear][1] = 1;
+                Clothing_list[(int)Clothing_Type.Underwear][2] = 1;
+                Clothing_list[(int)Clothing_Type.Underwear][3] = 1;
+                Clothing_list[(int)Clothing_Type.Underwear][4] = 1;
+                Clothing_list[(int)Clothing_Type.Underwear][5] = 0;
+                break;
+        }
     }
 
     [SerializeField] int Frequency_of_Coughing = 0;
