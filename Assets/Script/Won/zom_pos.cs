@@ -16,6 +16,8 @@ public class zom_pos : MonoBehaviour
     public bool audioposget = false;
     public float zomspeed;
     public GameObject[] respawn;
+
+    public int ZOM_SN=0;
     // Start is called before the first frame update
     void Awake()
     {
