@@ -32,6 +32,9 @@ public class player_movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //0517 jy
+        player_Main = GameManager.gameManager.gameObject.GetComponent<Player_main>();
+        uI_Main = UI_main.ui_main;
         for (int i = 0; i < playeraimeobject.Length; i++)
         {
             playeranime[i] = playeraimeobject[i].GetComponent<player_animation>();
@@ -104,7 +107,6 @@ public class player_movement : MonoBehaviour
     {
         if (Player) // 0513 JY
         {
-
             if (uI_Main.Playing)
             {
 
