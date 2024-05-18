@@ -41,12 +41,17 @@ public class UI_State_detailwindow : MonoBehaviour, IPointerEnterHandler
         }
     }
 
-    Vector3 pos = new Vector3(1f, -60f, 1);
+    Vector3 pos = new Vector3(0f, -60f, 1);
     public void OnPointerEnter(PointerEventData eventData)
     {
         UI_main.ui_main.ui_player_state.TreatmentBar.transform.position = Damage_icon_position.position + pos;
         UI_main.ui_main.ui_player_state.TreatmentBar.SetActive(true);
         UI_main.ui_main.ui_player_state.Choice_Damage(body_position, position_Damage_Num);
+    }
+
+    void OnDisable()
+    {
+        UI_main.ui_main.ui_player_state.TreatmentBar.SetActive(false);
     }
 
     public void Using_Medical_item(int item_iD)

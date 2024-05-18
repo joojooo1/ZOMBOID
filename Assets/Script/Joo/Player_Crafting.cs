@@ -514,6 +514,8 @@ public class Player_Crafting : MonoBehaviour
     public Recipe_item Recipe_Make_Campfire;  // 모닥불
 
     public Recipe_item Recipe_Make_Poultice;  // 습포제
+    public Recipe_item Recipe_Charge_Magazine;  // 탄창 충전
+    public Recipe_item Recipe_Open_NailBox;  // 못 상자 -> 못
 
 
     public List<Recipe_item> Recipe_Crafting_list = new List<Recipe_item>();
@@ -2510,6 +2512,81 @@ public class Player_Crafting : MonoBehaviour
         {
             target_index = -1;
         }
+
+        /////////// 탄창 충전 /////////// 
+        for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Magazine")  // 총 30발 전부 충전
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.ETC_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Charge_Magazine = new Recipe_item(-1, Skill_Type.None, 1, Type.Normal, target_index, 1);
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "BulletBox")  // 탄약상자
+                {
+                    Recipe_Charge_Magazine.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Magazine (Empty)")  // 빈 탄창
+                {
+                    Recipe_Charge_Magazine.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Charge_Magazine);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+        /////////// 못 /////////// 
+        for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+        {
+            if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "Nails")
+            {
+                target_index = i;
+                break;
+            }
+            else
+            {
+                if (i == Item_DataBase.item_database.ETC_Ins.Count - 1)
+                {
+                    target_index = -1;
+                }
+            }
+        }
+        if (target_index >= 0)
+        {
+            Recipe_Open_NailBox = new Recipe_item(-1, Skill_Type.None, 1, Type.Normal, target_index, 100);
+            for (int i = 0; i < Item_DataBase.item_database.ETC_Ins.Count; i++)
+            {
+                if (Item_DataBase.item_database.ETC_Ins[i].ETC_Name == "NailsBox")  // 못상자
+                {
+                    Recipe_Open_NailBox.Add_Recipe_Ingredients(Type.Normal, i, 1);
+                }
+            }
+            Recipe_Crafting_list.Add(Recipe_Open_NailBox);
+        }
+        else
+        {
+            target_index = -1;
+        }
+
+
     }
 
 
@@ -2540,6 +2617,10 @@ public class Player_Crafting : MonoBehaviour
         Recipe_Make_Metal_Barricade.Set_Is_Crafting();
         Recipe_Craft_Sterilized_RippedSheets.Set_Is_Crafting();
         Recipe_Make_Poultice.Set_Is_Crafting();
+        Recipe_Charge_Magazine.Set_Is_Crafting();
+        Recipe_Open_NailBox.Set_Is_Crafting();
+
+
 
         // 테스트 후 false 로 바뀌어야하는 레시피 ( 조건에 맞을때 true로 바뀌어야 함 )
         // 레벨

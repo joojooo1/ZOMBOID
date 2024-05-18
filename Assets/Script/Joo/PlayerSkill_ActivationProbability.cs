@@ -719,9 +719,6 @@ public class PlayerSkill_ActivationProbability
                 if (IsEquipping)
                     Critical_Hit_Chance = Basic_Critical_Hit_Chance + Others_BonusState;
                 break;
-            case Weapon_type.Gun:
-
-                break;
             default:
                 break;
         }

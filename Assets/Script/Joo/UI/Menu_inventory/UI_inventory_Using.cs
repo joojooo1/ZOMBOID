@@ -44,7 +44,6 @@ public class UI_inventory_Using : MonoBehaviour
         // if (Possibility) Using_item_in_inven(itemtype);
     }
 
-
     public void Check_item_Literature(int item_ID)
     {
         switch (Item_DataBase.item_database.literature_Ins[item_ID].LiteratureType)
@@ -309,27 +308,57 @@ public class UI_inventory_Using : MonoBehaviour
                     break;
                 case Type.weapon:
                     if(Player_main.player_main.Current_equipping_Weapon >= 0)
-                    {
-                        //if (Item_DataBase.item_database.weapons_Ins[item_ID].Is_TwoHand == true 
-                        //    || Item_DataBase.item_database.weapons_Ins[Player_main.player_main.Current_equipping_Weapon].Is_TwoHand == true)
-                        //{
-                        //    Player_main.player_main.Set_Attack_Power_for_Basic();
-                        //}                
+                    {           
                         Player_main.player_main.Set_Attack_Power_for_Basic();
                     }
-                    Player_main.player_main.Is_Equipping_Weapons = true;
-                    Player_main.player_main.Current_equipping_Weapon = item_ID;
-                    Player_main.player_main.Set_Attack_Power_for_Equipping_Weapons();
+                    Player_main.player_main.Set_Attack_Power_for_Equipping_Weapons(item_ID);
                     break;
                 case Type.clothing:
-                    if (Player_main.player_main.playerState.Clothing_list[item_ID][5] == 1)
+                    if (Player_main.player_main.playerState.Clothing_list[(int)Item_DataBase.item_database.clothing_Ins[item_ID].ClothingType][5] == 1)
                     {
                         Player_main.player_main.playerState.Set_Wear_Basic(item_ID);
                     }
                     Player_main.player_main.playerState.Set_Wear(item_ID);
                     break;
                 case Type.Medical:
+                    // UI_main.ui_main.ui_player_state.Use_Medical_item(Item_DataBase.item_database.medical_Ins[item_ID].MedicalType, item_ID);
+                    // 상태창에서 상처프리팹 통해서 들어가야 상처위치, 상처index 정보 받아올 수 있음
+                    break;
+                case Type.Normal:
+                    if(Item_DataBase.item_database.ETC_Ins[item_ID].ETC_Name == "Magazine")
+                    {
+                        if(Player_main.player_main.Is_Equipping_Gun_Magazine == false)
+                        {
+                            Player_main.player_main.Set_Equipping_Magazine(true);
+                        }
+                    }
+                    else if(Item_DataBase.item_database.ETC_Ins[item_ID].ETC_Name == "Fertilizer"
+                        || Item_DataBase.item_database.ETC_Ins[item_ID].ETC_Name == "Compost")
+                    {
+                        // 농사 시간 단축
+                    }
+                    break;  // 이 외에는 직접적으로 사용하는 아이템 없음
+                case Type.Tool:
+                    for(int i = 0; i < Item_DataBase.item_database.Tool_Ins[item_ID].Usingtype.Length; i++)
+                    {
+                        if (Item_DataBase.item_database.Tool_Ins[item_ID].Usingtype[i] == Using_Type.Water)
+                        {
+                            Player_main.player_main.playerMoodles.Moodle_Thirsty.Set_Moodles_state(Item_DataBase.item_database.Tool_Ins[item_ID].Water / 100);
+                        }
+                    }
+                    
+                    break;
+                case Type.Container:
 
+                    break;
+                case Type.Electronics:
+
+                    break;
+                case Type.Furniture:
+                    // 맵에서 상호작용
+                    break;
+                case Type.Farming:
+                    // 맵에서 상호작용
                     break;
             }
         }
