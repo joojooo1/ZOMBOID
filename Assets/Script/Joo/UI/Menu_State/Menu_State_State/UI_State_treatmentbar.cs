@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_State_treatmentbar : MonoBehaviour, IPointerExitHandler  //, IPointerEnterHandler
+public class UI_State_treatmentbar : MonoBehaviour, IPointerExitHandler
 {
     public GameObject Treatment_bar;
-
-    //public void OnPointerEnter(PointerEventData eventData)
-    //{
-    //    Treatment_detail.SetActive(true);
-    //}
 
     public void OnPointerExit(PointerEventData eventData)
     {

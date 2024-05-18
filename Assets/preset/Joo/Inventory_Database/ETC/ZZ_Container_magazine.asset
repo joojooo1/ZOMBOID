@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75540daaa13ebba478e67698195564d5, type: 3}
-  m_Name: Container_BulletBox
+  m_Name: ZZ_Container_magazine
   m_EditorClassIdentifier: 
   type: 3
   Usingtype: 12
-  ETC_ID: 0
-  ETC_Name: BulletBox
-  ETC_Name_kr: "\uD0C4\uC57D \uC0C1\uC790"
-  ETC_Image: {fileID: 21300000, guid: a9d48e5f18ffd1745be9ddd29f8f7ab1, type: 3}
-  Height: 1
-  Width: 2
+  ETC_ID: 23
+  ETC_Name: Magazine
+  ETC_Name_kr: "\uD0C4\uCC3D"
+  ETC_Image: {fileID: 21300000, guid: da900e34bd83e8e449c4cc5801c794b2, type: 3}
+  Height: 2
+  Width: 1
   Nesting_Depth: 1
-  Is_Consumable: 1
-  ETC_Weight: 1
-  ETC_Capacity: 0
+  Is_Consumable: 0
+  ETC_Weight: 0.5
+  ETC_Capacity: 30
   ETC_value: 0

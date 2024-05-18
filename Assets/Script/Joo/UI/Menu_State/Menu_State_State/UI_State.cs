@@ -138,7 +138,7 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void Choice_Damage(body_point position, int index)
+    public void Choice_Damage(body_point position, int index)  // 상태창의 상처프리팹 위에 마우스 대면 호출됨
     {
         Current_body_position = position;
         Current_Damage_index = index;

@@ -773,7 +773,7 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
     public float Gun_Time_for_reloading = 0;
 
     // 무기 착용, 해제 시 각각 반영되는 효과 설정
-    public void Set_Gun_Equipping_Effect(bool IsEquipping, int Item_ID)
+    public void Set_Gun_Equipping_Effect(int Item_ID)
     {
         // 무기 정보 받아서 정확도 등 계산
 
@@ -796,24 +796,21 @@ public class PlayerGunSkill_Level  // 조준(총), 재장전(총)
             Player_main.player_main.playerSkill_ActivationProbability.Set_Time_for_reloading(Gun_Level);
         }
 
-        if (IsEquipping)
+        if (Gun_SkillName == "Aiming")
         {
-            if (Gun_SkillName == "Aiming")
-            {
-                // 정확도
-                Gun_Accuracy = Item_DataBase.item_database.weapons_Ins[Item_ID].Gun_Accuracy * (1 + Player_main.player_main.playerSkill_ActivationProbability.Get_Gun_Accuracy());
-                // 정밀도
-                Gun_Precision = 0.5f + Player_main.player_main.playerSkill_ActivationProbability.Get_Precision();
-                // 사거리
-                // 발사각도
-                // 조준시간 감소
-                Gun_Time_for_aiming = Item_DataBase.item_database.weapons_Ins[Item_ID].Gun_Aiming_time * Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_aiming();
-            }
-            else if (Gun_SkillName == "Reloading")
-            {
-                // 재장전 시간 감소
-                Gun_Time_for_reloading = Item_DataBase.item_database.weapons_Ins[Item_ID].Gun_Reload_time * Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_reloading();
-            }
+            // 정확도
+            Gun_Accuracy = Item_DataBase.item_database.weapons_Ins[Item_ID].Gun_Accuracy * (1 + Player_main.player_main.playerSkill_ActivationProbability.Get_Gun_Accuracy());
+            // 정밀도
+            Gun_Precision = 0.5f + Player_main.player_main.playerSkill_ActivationProbability.Get_Precision();
+            // 사거리
+            // 발사각도
+            // 조준시간 감소
+            Gun_Time_for_aiming = Item_DataBase.item_database.weapons_Ins[Item_ID].Gun_Aiming_time * Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_aiming();
+        }
+        else if (Gun_SkillName == "Reloading")
+        {
+            // 재장전 시간 감소
+            Gun_Time_for_reloading = Item_DataBase.item_database.weapons_Ins[Item_ID].Gun_Reload_time * Player_main.player_main.playerSkill_ActivationProbability.Get_Time_for_reloading();
         }
     }
 }
