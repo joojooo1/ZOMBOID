@@ -188,6 +188,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 33900620da6542b48a6230bcb83441c0, type: 3}
   BGM_AudioSource: {fileID: 4952859530908235474}
   Effect_AudioSource: {fileID: 5864062692396758596}
+  masterMixer: {fileID: 24100000, guid: 094a108d27b14b245b5a958b37db8bd0, type: 2}
+  Master_Slider: {fileID: 0}
+  BGM_Slider: {fileID: 0}
+  SFX_Slider: {fileID: 0}
 --- !u!1 &3707059585574687991
 GameObject:
   m_ObjectHideFlags: 0

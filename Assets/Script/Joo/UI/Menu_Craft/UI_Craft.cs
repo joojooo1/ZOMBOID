@@ -512,13 +512,13 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
     {
         if (Craft_window.activeSelf)
         {
-            AudioManager.SoundManager.System_Open();
+            AudioManager.SoundManager.System_Window();
             Craft_window.SetActive(false);
             Craft_Button_current.sprite = Craft_Button_Image[0];
         }
         else
         {
-            AudioManager.SoundManager.System_Open();
+            AudioManager.SoundManager.System_Window();
             Craft_window.SetActive(true);
             Craft_Button_current.sprite = Craft_Button_Image[1];
             Craft_window.transform.SetAsLastSibling();
