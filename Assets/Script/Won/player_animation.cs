@@ -88,16 +88,7 @@ public class player_animation : MonoBehaviour
                     playernav.GetComponent<player_movement>().player_Main.Is_Aiming = false;
                     animatorsetBool("Strife", false);
                 }
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    if (test_weapon_type < 4)
-                    {
-                        test_weapon_type++;
-                    }
-                    else
-                        test_weapon_type = 0;
-                    animatorsetFloat("weapon_type", test_weapon_type);
-                }
+                
                 if (playernav.GetComponent<player_movement>().aser)
                 {
                     animatorsetBool("walk", true);
@@ -105,8 +96,26 @@ public class player_animation : MonoBehaviour
             }
         }
     }
-
-
+    public void weapon_set_0()
+    {
+        animatorsetFloat("atk_type", 0);
+        animatorsetFloat("weapon_type", 0);
+    }
+    public void weapon_set_1()
+    {
+        animatorsetFloat("atk_type", 1);
+        animatorsetFloat("weapon_type", 0);
+    }
+    public void weapon_set_2()
+    {
+        animatorsetFloat("atk_type", 2);
+        animatorsetFloat("weapon_type", 2);
+    }
+    public void weapon_set_3()
+    {
+        animatorsetFloat("atk_type", 3);
+        animatorsetFloat("weapon_type", 2);
+    }
     public void aktEnd()
     {
         atk = false;
@@ -300,12 +309,80 @@ public class player_animation : MonoBehaviour
             }
             animatorsetFloat("Healing", 1);
         }
-        
+        animatorsetting(1, 0);
     }
     void Medical_END()
     {
+        animatorsetting(1, 0.7f);
         audio.GetComponent<player_item_controller>().current_Back_Pack("bandage", _item_3d, true);
         animatorsetFloat("Healing", 0);
     }
-
+    bool special_object_set = false;
+    void smoking_item()
+    {
+        audio.GetComponent<player_item_controller>().special_Object_ITEM(!special_object_set, 0);
+        special_object_set = !special_object_set;
+    }
+    void woodcaw_item()
+    {
+        if (special_object_set)
+        {
+            animatorsetBool("woodcut", false);
+            animatorsetting(1, 0.7f);
+        }
+        else
+        {
+            animatorsetting(1, 0);
+        }
+        audio.GetComponent<player_item_controller>().special_Object_ITEM(!special_object_set, 6);
+        special_object_set = !special_object_set;
+    }
+    void woodsaw_item()
+    {
+        if (special_object_set)
+        {
+            animatorsetBool("woodsaw", false);
+            animatorsetting(1, 0.7f);
+        }
+        else
+        {
+            animatorsetting(1, 0);
+        }
+        audio.GetComponent<player_item_controller>().special_Object_ITEM(!special_object_set, 1);
+        special_object_set = !special_object_set;
+    }
+    void watering_item()
+    {
+        if (special_object_set)
+        {
+            animatorsetting(1, 0.7f);
+        }
+        else
+        {
+            animatorsetting(1, 0);
+        }
+        audio.GetComponent<player_item_controller>().special_Object_ITEM(!special_object_set, 2);
+        special_object_set = !special_object_set;
+    }
+    public void resding_item()
+    {
+        if (special_object_set)
+        {
+            animatorsetBool("reading", false);
+            animatorsetting(1, 0.7f);
+        }
+        else
+        {
+            animatorsetBool("reading", true);
+            animatorsetting(1, 0);
+        }
+        audio.GetComponent<player_item_controller>().special_Object_ITEM(!special_object_set, 2);
+        special_object_set = !special_object_set;
+    }
+    public AudioClip dieclip;
+    void player_Die()
+    {
+        playernav.GetComponent<player_movement>().Player = false;
+        audio.audioclip(dieclip, 1);
+    }
 }
