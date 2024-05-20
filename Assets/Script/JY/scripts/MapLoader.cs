@@ -40,7 +40,7 @@ public class MapLoader : MonoBehaviour
     {
         ML = this;
     }
-    //private void OnValidate()
+    //private void OnValidate()81
     //{
     //    List<Transform> round = new List<Transform>(GroundLevel.GetComponentsInChildren<Transform>());
     //    if (10 > round.Count) { StartGeneratingTiles(15, 15); }
@@ -48,8 +48,8 @@ public class MapLoader : MonoBehaviour
     //}
     private void Start()
     {
-        LengthofX = 50;
-        LengthofY = 50;
+        LengthofX = 20;
+        LengthofY = 21;
         ImageNum = 0;
         TilesList = new List<GameObject> { };
         //StartGeneratingTiles(10, 10);
@@ -63,7 +63,7 @@ public class MapLoader : MonoBehaviour
         LoadComplete = true;
         //Debug.Log("MLCMP");
         Inventory_Library.IL.Spawn_Items(7);
-
+        
     }
 
     public void Checking_Map_Load()

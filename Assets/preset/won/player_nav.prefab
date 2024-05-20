@@ -21465,6 +21465,7 @@ MonoBehaviour:
   - {fileID: 4827488348002017974}
   - {fileID: 2473180360763749802}
   - {fileID: 2244415571915392579}
+  special_Object: []
 --- !u!4 &7761588308345144921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6643881372575143024, guid: a57f07bc7d77b6a418a75fd0cbe2d771, type: 3}
