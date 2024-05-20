@@ -40,8 +40,18 @@ public class UI_Title : MonoBehaviour
         ui_title = this;
     }
 
+    float Timer = 0;
     private void OnEnable()
     {
+        if(Timer == 0)
+        {
+            Timer += Time.deltaTime;
+        }
+        else
+        {
+            AudioManager.SoundManager.Open_Title();
+        }
+
         Total_Point = 8;
         Total_Point_Window.text = Total_Point.ToString();
         Total_Point_Window.color = Color.green;
