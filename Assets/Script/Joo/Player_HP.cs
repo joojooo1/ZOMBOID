@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player_HP : MonoBehaviour
 {
+    public GameObject Ending;
+
     [SerializeField] float Player_Max_Health = 100.0f;  // Ã¼·Â ( Fitness_Level: 5 / Strength_Level: 5 )
     float Player_Min_Health = 0f;
     [SerializeField] float Player_current_Health = 100.0f;
@@ -158,7 +160,7 @@ public class Player_HP : MonoBehaviour
             else
             {
                 /************************* Player_Zombie, Dead *************************/
-                Player_current_Health = Player_Min_Health;
+                UI_main.ui_main.Playing = false;
                 if (Player_main.player_main.playerState.Get_Is_Infection())
                 {
                     Player_main.player_main.playerMoodles.Moodle_Zombie.Set_Moodles_state(1);
@@ -167,6 +169,7 @@ public class Player_HP : MonoBehaviour
                 {
                     Player_main.player_main.playerMoodles.Moodle_Dead.Set_Moodles_state(1);
                 }
+                Ending.SetActive(true);
             }
         }
         

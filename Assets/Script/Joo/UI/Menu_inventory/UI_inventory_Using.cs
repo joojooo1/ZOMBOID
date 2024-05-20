@@ -342,7 +342,10 @@ public class UI_inventory_Using : MonoBehaviour, IPointerClickHandler
                             break;
                         default: break;
                     }
-
+                    if(Item_DataBase.item_database.food_Ins[item_ID].FoodType == Food_Type.Drink || Item_DataBase.item_database.food_Ins[item_ID].FoodType == Food_Type.Water)
+                        AudioManager.SoundManager.Player_Drinking();
+                    else
+                        AudioManager.SoundManager.Player_Eating();
                     break;
                 case Type.weapon:
                     if(Player_main.player_main.Current_equipping_Weapon >= 0)
