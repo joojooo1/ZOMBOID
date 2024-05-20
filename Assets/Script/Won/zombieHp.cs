@@ -54,7 +54,7 @@ public class zombieHp : MonoBehaviour
         curret_zombie_hp -= Damage;
         anime.animatersetTrigger("hit");
         Debug.Log("데미지 들어옴");
-        audio.PlayOneShot(clip);
+        audio.clip(clip);
     }
     public void up_down()
     {
