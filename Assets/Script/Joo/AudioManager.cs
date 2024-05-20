@@ -123,7 +123,7 @@ public class AudioManager : MonoBehaviour
         Effect_AudioSource.Play();
     }
 
-    public void System_Open()
+    public void System_Window()
     {
         Effect_AudioSource.clip = SFX_audioClips[5];
         Effect_AudioSource.Play();

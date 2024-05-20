@@ -553,6 +553,7 @@ MonoBehaviour:
   Canvas_Title_Starting_Window: {fileID: 0}
   InputField_title: {fileID: 0}
   dropdown_title: {fileID: 0}
+  Nextbutton_title_name: {fileID: 0}
 --- !u!1 &8450300843211011608
 GameObject:
   m_ObjectHideFlags: 0
