@@ -27,5 +27,18 @@ public class UI_DamagePref : MonoBehaviour
 
     }
 
+    public void ChangeColor_recovery(body_point position)
+    {
+        if (UI_main.ui_main.Is_Female)
+        {
+            Image.sprite = UI_DamageImage.UI_Damage_Pre.Female_Image[startNum + 3];
+        }
+        else
+        {
+            Image.sprite = UI_DamageImage.UI_Damage_Pre.Male_Image[startNum + 3];
+
+        }
+    }
+
 
 }

@@ -223,9 +223,9 @@ public class Crafting_item
         }
     }
 
-    public void Add_Ingredients_Tool(Type _DB_type, int _DB_ID)
+    public void Add_Ingredients_Tool(Type _DB_type, int _DB_ID, int value)
     {
-        Crafting_Ingredients_Tool Ingredients_Tool = new Crafting_Ingredients_Tool(_DB_type, _DB_ID);
+        Crafting_Ingredients_Tool Ingredients_Tool = new Crafting_Ingredients_Tool(_DB_type, _DB_ID, value);
         if (Ingredients_Tool_list.Count > 0)
         {
             for (int i = 0; i < Ingredients_Tool_list.Count; i++)
@@ -296,6 +296,11 @@ public class Crafting_item
     public int Get_Ingredients_value(int index)
     {
         return Ingredients_list[index].Value;
+    }
+
+    public int Get_Ingredients_Tool_value(int index)
+    {
+        return Ingredients_Tool_list[index].Value;
     }
 
     //0509 JY
@@ -404,12 +409,14 @@ public class Crafting_Ingredients_Tool
     public Sprite Ingredients_Tool_Image;
     public string Ingredients_Tool_name;
     public string Ingredients_Tool_name_kr;
+    public int Value;  // 필요한 갯수
     public bool fulfill; // 완성조건
 
-    public Crafting_Ingredients_Tool(Type _DB_type, int _DB_ID)
+    public Crafting_Ingredients_Tool(Type _DB_type, int _DB_ID, int value)
     {
         Ingredients_Tool_DB_type = _DB_type;
         Ingredients_Tool_DB_ID = _DB_ID;
+        Value = value;
         fulfill = false;
 
         switch (_DB_type)
@@ -609,6 +616,7 @@ public class UI_Craft : MonoBehaviour, IPointerClickHandler
                         {
                             current_index = i;
                             break;
+
                         }
                         else
                         {

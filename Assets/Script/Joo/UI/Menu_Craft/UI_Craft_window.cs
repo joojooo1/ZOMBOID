@@ -215,6 +215,17 @@ public class UI_Craft_window : MonoBehaviour
                 UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
                 item.Set_Ingredients(Origin_list[_item.item_index], 1);
             }
+            else if (Origin_list[_item.item_index].name == "Sterilized Ripped Sheets")
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    GameObject obj = null;
+                    obj = Instantiate(Crafting_Ingredients_Prefab, Crafting_Ingredients_Window);
+
+                    UI_Craft_Prefab item = obj.GetComponent<UI_Craft_Prefab>();
+                    item.Set_Ingredients(Origin_list[_item.item_index], i);
+                }
+            }
             else
             {
                 for (int i = 0; i < Origin_list[_item.item_index].Ingredients_list.Count;)

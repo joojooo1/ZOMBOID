@@ -95,6 +95,7 @@ MonoBehaviour:
   _Bandage_Count: 0
   Damage_icon_position: {fileID: 3878273905480125352}
   icon_Image: {fileID: 5060719438905456659}
+  icon_Background_Image: {fileID: 1133634485158339290}
 --- !u!1 &1801469869199687983
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class UI_State : MonoBehaviour, IPointerClickHandler
 {
-    public UI_State_Skill ui_state_skill;
-
     public GameObject UI_window;
     public Sprite[] UI_window_Image;
     public UnityEngine.UI.Image Image;
@@ -15,6 +15,7 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
     public UnityEngine.UI.Image player_gender_Image;
 
     public Sprite[] player_damage_SpriteArray;
+    public Sprite[] player_damage_Back_SpriteArray;
 
     [SerializeField] GameObject icon_prefab;
     [SerializeField] GameObject[] icon_position;
@@ -22,6 +23,8 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
     public GameObject TreatmentBar;
 
     public List<UI_State_detailwindow> Damagelist = new List<UI_State_detailwindow>();
+    public body_point Current_body_position = body_point.None;
+    public int Current_Damage_index = -1;
 
     public UnityEngine.UI.Text job_text;
     public UnityEngine.UI.Image job_image;
@@ -72,19 +75,13 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
                 tempObj = Instantiate(icon_prefab, icon_position[(int)position].transform);
                 UI_State_detailwindow temp = tempObj.GetComponent<UI_State_detailwindow>();
                 Player_main.player_main.playerState.Player_body_point[(int)position].Set_DamageArray(i, true, damagetype, position);
-                temp.SetImage(player_damage_SpriteArray[(int)damagetype], position, damagetype);
-                UI_DamageImage.UI_Damage_Pre.Damage_Ins(position, temp.position_Damage_Num);
+                temp.SetImage(player_damage_SpriteArray[(int)damagetype], position, damagetype, i);
+                UI_DamageImage.UI_Damage_Pre.Damage_Ins(position, Player_main.player_main.playerState.Player_body_point[(int)position].Get_DamageCount());
                 Damagelist.Add(temp);
                 break;
             }
         }
 
-
-        //if(Damagelist.Count == 1)
-        //{
-        //    UI_main.ui_main.UI_Damage.SetActive(true);
-        //    UI_main.ui_main.Set_UIDamage();
-        //}
     }
 
     public void icon_Destroy(body_point position, Damage_Pattern Attack_Pattern, int Damage_Num)
@@ -139,9 +136,33 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
             }
             
         }
+    }
 
+    public void Choice_Damage(body_point position, int index)  // 상태창의 상처프리팹 위에 마우스 대면 호출됨
+    {
+        Current_body_position = position;
+        Current_Damage_index = index;
+    }
 
+    public void Use_Medical_item(Medical_Type type, int item_ID)
+    {
+        for (int k = 0; k < Damagelist.Count; k++)
+        {
+            if (Damagelist[k].position_Damage_Num == Current_Damage_index && Damagelist[k].body_position == Current_body_position)
+            {
+                if(type == Medical_Type.Bandage)
+                {
+                    Damagelist[k].Using_Bandage(item_ID);
+                    break;
+                }
+                else
+                {
+                    Damagelist[k].Using_Medical_item(item_ID);
+                    break;
+                }
 
+            }
+        }
     }
 
     public void Set_Job(string _job_name, string _job_name_kr, Sprite _job_image)

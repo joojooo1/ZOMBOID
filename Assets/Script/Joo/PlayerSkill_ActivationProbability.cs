@@ -203,7 +203,7 @@ public class PlayerSkill_ActivationProbability
     }
 
     // 공격력 증가 ( * )  // Axe 등 무기 레벨 up시 적용  // Moodle_Panic
-    float Basic_Increase_in_Attack_Power = 0.3f;  // 무기 미착용 시
+    float Basic_Increase_in_Attack_Power = 1.0f;  // 무기 미착용 시
     float Increase_in_Attack_Power = 1.0f;  // 무기 착용 시
     float Increase_in_Attack_Power_forMoodle = 0.0f;
     public float Get_Increase_in_Attack_Power(Item_Weapons current_weapon)
@@ -718,9 +718,6 @@ public class PlayerSkill_ActivationProbability
                 Others_BonusState = 0.1f * (SkillLevel - 1);
                 if (IsEquipping)
                     Critical_Hit_Chance = Basic_Critical_Hit_Chance + Others_BonusState;
-                break;
-            case Weapon_type.Gun:
-
                 break;
             default:
                 break;
