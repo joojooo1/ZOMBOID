@@ -22,6 +22,8 @@ public class zombieHp : MonoBehaviour
     public zom_anime anime;
     public GameObject zom_nav;
     public GameObject zom_body;
+    public AudioClip clip;
+    public AudioClip Dieclip;
     // Start is called before the first frame update
     void Awake()
     {
@@ -46,11 +48,11 @@ public class zombieHp : MonoBehaviour
         
     }
 
-    public void GetDamage(Type type, int Weapon_ID, float Damage)//좀비가 받는 데미지
+    public void GetDamage(GameObject player, float Damage)//좀비가 받는 데미지
     {
         curret_zombie_hp -= Damage;
         anime.animatersetTrigger("hit");
-        //audio.PlayOneShot(weapon_hit_sound,1);
+        audio.PlayOneShot(clip);
         Debug.Log("데미지 들어옴");
     }
     public void up_down()
@@ -60,6 +62,7 @@ public class zombieHp : MonoBehaviour
         if (curret_zombie_hp <= 0)
         {
             gameObject.GetComponent<Collider>().enabled = false;
+            audio.PlayOneShot(Dieclip);
             down += 10;
         }
         if (down > 7)

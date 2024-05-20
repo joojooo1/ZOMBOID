@@ -7031,6 +7031,7 @@ MonoBehaviour:
   - {fileID: 0}
   playerrot: {fileID: 7675246435763910234}
   low_Fen: 0
+  Player_index: 0
   Player: 0
   test: 1.25
   aser: 0
@@ -10054,7 +10055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3a26ac4e8cd8443b86dc01b6293a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: a74f550b881b2884998af5171b30da0b, type: 3}
+  Clip: {fileID: 8300000, guid: 01b04366701ffb84c98d5a3e1ef35483, type: 3}
   audioobject: {fileID: 7675246435763910234}
   atk: 0
   searchDistance: 10

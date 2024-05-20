@@ -25,8 +25,8 @@ public class player_atk : MonoBehaviour
             {
                 atk = true;
                 Vector3 forwardDirection = transform.forward;
-                //searchDistance = Random.Range(Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Minimum_Range, Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Maximum_Range);
-                AudioClip hitaudio;// = Equipment.audioClip;
+                searchDistance =  5;//Random.Range(Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Minimum_Range, Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Maximum_Range);
+                AudioClip hitaudio= Clip;// = Equipment.audioClip;
                 // 레이캐스트를 쏴서 zombieLayer를 가진 오브젝트를 찾음
                 RaycastHit[] hits = Physics.RaycastAll(transform.position, forwardDirection, searchDistance, characterLayer);
                 List<RaycastHit> zomHits = new List<RaycastHit>();
@@ -112,7 +112,7 @@ public class player_atk : MonoBehaviour
             if (zomHp != null)
             {
                 Debug.Log("레이에 좀비 걸림 데미지 전송");
-                //zomHp.GetDamage(gameObject, damagePerAttack);  // 또는 다른 처리를 수행
+                zomHp.GetDamage(gameObject, damagePerAttack);  // 또는 다른 처리를 수행
             }
         }
         Debug.DrawRay(transform.position, forwardDirection * searchDistance, Color.red);
