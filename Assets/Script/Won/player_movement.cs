@@ -159,10 +159,6 @@ public class player_movement : MonoBehaviour
                         navMeshAgent.enabled = true;
                     }
                 }
-                if (UnityEngine.Input.GetKeyDown(KeyCode.F11))
-                {
-                    animepos(new Vector3(0, 0, 0), "smoking");
-                }
 
             }
         }
@@ -233,7 +229,8 @@ public class player_movement : MonoBehaviour
             {
 
                 playeranime[i].animatorsetting(1, 0f);
-                playeranime[i].animatersetTrigger("end");
+                playeranime[i].animatorsetFloat("interaction",0);
+                playeranime[i].animatersetTrigger("wall");
 
             }
 
@@ -270,7 +267,6 @@ public class player_movement : MonoBehaviour
             {
 
                 Debug.Log("시작");
-                playeranime[i].animatersetTrigger("don`t_move");
                 playeranime[i].animatorsetBool("sleep", true);
                 playeranime[i].animatorsetting(1, 0f);
                 anima_name = "sleep";

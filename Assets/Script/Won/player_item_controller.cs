@@ -34,7 +34,7 @@ public class player_item_controller : MonoBehaviour
     public GameObject[] Back_weapon; // 배낭x 보조무기
     public GameObject[] current_weapon; // 현재 착용무기 0: 도끼 1:벌목도끼 2:손도끼 3:m14 4:더블베럴 5:js산탄 6:권총 7:리볼버 8:카타나 9:마체테 10: 야구방망이 11: 못야구방망이 12: 쇠지렛대 13:괭이 14:삽 15:대형망치 16:낚시대 17:판자 18: 사냥용칼 19: 손낫 20: 중식도 21: 스크류드라이버 22:모종삽 23:빵칼 24:진압봉 25:파이브렌치 26: 망치 27: 둥근머리망치 28: 금속파이프 29: 후라이팬 30:마체테창 31:쇠스랑 32:나무창 33:제작된창
     public GameObject[] bandage;//0: 머리 1 : 목 2: 어깨 3: 복부 4: 왼 팔 위 5:왼팔아래 6: 오 팔 위 7: 오팔 아래 8: 사타구니 9:왼 허벅지 10: 왼 종아리 11: 오 허벅지 12: 오 종아리 13:왼손 14:오른손 15 :왼발 16:오른발   
-    public GameObject[] special_Object; // 상황별 오브젝트 
+    public GameObject[] special_Object; // 상황별 오브젝트 0: 담배 1: 톱 2: 바게스 3: 기름통 4: 렌턴 5: 책 6: 도끼
     // Start is called before the first frame update
     void Start()
     {
@@ -104,7 +104,7 @@ public class player_item_controller : MonoBehaviour
                 break;
             case "Vest":
                 targetArray = Vest;
-                break;
+                break; 
             case "Watch":
                 // Watch는 단일 GameObject이므로 배열에 넣을 필요가 없습니다.
                 // 그냥 Watch GameObject에 직접 setActive를 호출합니다.
@@ -151,6 +151,9 @@ public class player_item_controller : MonoBehaviour
                 break;
             case "bandage":
                 targetArray = bandage;
+                break;
+            case "special_Object":
+                targetArray = special_Object;
                 break;
             default:
                 Debug.LogError("잘못된 카테고리입니다.");
@@ -555,5 +558,9 @@ public class player_item_controller : MonoBehaviour
     public void Weapon_ITEM(bool SET, int INDEX)
     {
         current_Back_Pack("Weapon", INDEX, SET);
+    }
+    public void special_Object_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("special_Object", INDEX, SET);
     }
 }
