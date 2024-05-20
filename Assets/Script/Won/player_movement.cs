@@ -26,12 +26,14 @@ public class player_movement : MonoBehaviour
     public GameObject playerrot;
     public bool low_Fen = false;
     private readonly float[] targetAngles = { -45f, 45f, 135f, -135f };
-
+    public int Player_index;
     public bool Player; // 0513 JY
 
     // Start is called before the first frame update
     void Start()
     {
+        Player_index = gameObject.GetComponent<NetObject>().player_index;
+        Player = gameObject.GetComponent<NetObject>().GetIsPlayer();
         //0517 jy
         player_Main = GameManager.gameManager.gameObject.GetComponent<Player_main>();
         uI_Main = UI_main.ui_main;

@@ -84,9 +84,12 @@ public class player_rot : MonoBehaviour
                 }
 
                 float currentVolume = playerAudioSource.volume;
-                if (currentVolume > 0.5)
+                if (currentVolume > 0.3)
                 {
-
+                    if (playerAudioSource.clip.name == "batSwing")
+                    {
+                        currentVolume += (float)0.3;
+                    }
                     //test
                     Collider[] colliders = Physics.OverlapSphere(transform.position, currentVolume * 5, layerMask);
                     foreach (Collider collider in colliders)
