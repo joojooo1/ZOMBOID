@@ -12,7 +12,7 @@ public class Item_Electronics : ScriptableObject
     public PowerSources_Type UsingPower_type;  // 사용하는 연료의 타입
     public body_point[] Equipping_Position;
     public int Electronics_ID;
-    //public animType animType;
+    public animType animType;
 
     public float Height;
     public float Width;

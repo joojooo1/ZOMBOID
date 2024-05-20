@@ -46,7 +46,7 @@ public class player_atk : MonoBehaviour
                 System.Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
 
                 // 최대 3명의 좀비에 대해 처리
-                for (int i = 0; i < Mathf.Min(Inventory_Player_Shown.InvPS.NowWeapon.W_Multi_Hit, hits.Length); i++)
+                for (int i = 0; i < Mathf.Min(Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Multi_Hit, hits.Length); i++)
                 {
                     // 레이에 맞은 오브젝트 가져오기
                     GameObject hitObject = hits[i].collider.gameObject;
@@ -112,7 +112,7 @@ public class player_atk : MonoBehaviour
             if (zomHp != null)
             {
                 Debug.Log("레이에 좀비 걸림 데미지 전송");
-                //zomHp.GetDamage(gameObject, damagePerAttack);  // 또는 다른 처리를 수행
+                zomHp.GetDamage(gameObject, damagePerAttack);  // 또는 다른 처리를 수행
             }
         }
         Debug.DrawRay(transform.position, forwardDirection * searchDistance, Color.red);

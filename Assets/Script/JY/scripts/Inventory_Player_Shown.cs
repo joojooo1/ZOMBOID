@@ -100,12 +100,6 @@ public class Inventory_Player_Shown : MonoBehaviour
     //Crafting 연동
     public List<short[]> CraftingResources;
 
-    [SerializeField]
-    public Sprite[] Icons;
-    public Item_Weapons NowWeapon; // 착용 무기정보
-
-
-
     private void Awake()
     {
         InvPS = this;
@@ -114,6 +108,12 @@ public class Inventory_Player_Shown : MonoBehaviour
         inven_open = false;
     }
 
+    public void SetAnim(bool open)
+    {
+        inven_open = open;
+        Anim.SetBool("Open", inven_open);
+        SubAnim.SetBool("Open", inven_open);
+    }
 
     private void Start()
     {
@@ -183,13 +183,6 @@ public class Inventory_Player_Shown : MonoBehaviour
         //======================================================================
 
 
-    }
-
-    public void SetAnim(bool open)
-    {
-        inven_open = open;
-        Anim.SetBool("Open", inven_open);
-        SubAnim.SetBool("Open", inven_open);
     }
 
     private void Generating_Acting_Inventory(short Backpack_ID, short[,,] Exiest_Packages, short Order)
@@ -358,16 +351,21 @@ public class Inventory_Player_Shown : MonoBehaviour
             int BP_RealSize = Unchangeable_Size;
             switch (BP_RealSize)
             {
-                case 8140:
+                case 814:
 
-                    
-                        Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(Inventory_Library.IL.Getting_Package(Storage_Order_HaveToChange));
+                    if (Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Slots.Length == 0)
+                    {
+                        Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Generating_Slots_First(Inventory_Library.IL.Getting_Package(Storage_Order_HaveToChange), 0);
                         Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Slot_Image.GetComponent<Image>().sprite = Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().GroundImage_Only_For8x14;
+                    }
+                    else
+                    {
+                        Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Refreshing_Changed_Slots(Inventory_Library.IL.Getting_Package(Storage_Order_HaveToChange));
                         Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Storage_Order = Storage_Order_HaveToChange;
 
                         Inventory_Library.IL.Resetting_Package(Storage_Order_HaveToChange, Tile_Basic_Format_Never_Delete.GetComponent<Inventory_8x14>().Recent_Recieved_Package);
 
-                    
+                    }
 
                     break;
 

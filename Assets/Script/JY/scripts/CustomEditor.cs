@@ -44,7 +44,7 @@ public class CustomInspector : Editor
 
 
         string[] Choosen_Sprite_Package_Options = new string[] {"Wall_Sprite", "Ground_Sprite", "Roof_Sprite", "Window_Sprite", "Door_Sprite", "Storage_Furniture_Sprite","Bedding_Furniture_Sprite","Sitting_Furniture","Fence_Sprite", "Ground_Deco"};
-        int[] Choosen_Sprite_Package_Values = new int[] {0,1,2,3,4,5,6,7,8,9};
+        int[] Choosen_Sprite_Package_Values = new int[] {0,1,2,3,4,5,6,7,8};
         int Choosen_Sprite_Package = EditorGUILayout.IntPopup("Choose_Sprite_Package", customClass.ChangeAble_Sprite_Package, Choosen_Sprite_Package_Options, Choosen_Sprite_Package_Values);
 
 

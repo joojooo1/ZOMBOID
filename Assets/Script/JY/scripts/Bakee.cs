@@ -16,7 +16,6 @@ public class Bakee : MonoBehaviour
     private void Start()
     {
         TryBake();
-        StartCoroutine(ExecuteEverySecond());
         //StartCoroutine("CheckDistance");
         //StartCoroutine("BK");
     }
@@ -47,18 +46,6 @@ public class Bakee : MonoBehaviour
             yield return new WaitForSeconds(3f);
             TryBake();
             Debug.Log("bk");    
-        }
-    }
-
-    IEnumerator ExecuteEverySecond()
-    {
-        while (true)
-        {
-            // 1초 대기
-            yield return new WaitForSeconds(1.0f);
-
-            // 1초마다 실행할 코드
-            TryBake();
         }
     }
     public void TryBake()

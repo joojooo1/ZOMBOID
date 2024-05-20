@@ -19,7 +19,7 @@ public class Map_InterActionTrigger_ByCamera : MonoBehaviour
     {
         if (other.GetComponentInParent<TileItsInfo>() != null)
         {
-            Inventory_Player_Shown.InvPS.Storage_Contact_Refresh((short)other.GetComponentInParent<TileItsInfo>().Storage_Order, 8140, true);
+            Inventory_Player_Shown.InvPS.Storage_Contact_Refresh((short)other.GetComponentInParent<TileItsInfo>().Storage_Order, 814, true);
             other.GetComponentInParent<TileItsInfo>().gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 0, 1, 1);
             GameObject Tile = other.GetComponentInParent<TileItsInfo>().gameObject;
 

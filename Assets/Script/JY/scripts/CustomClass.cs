@@ -329,7 +329,7 @@ public class CustomClass : MonoBehaviour
                             /*1~11*/
                             GameObject Instans = Instantiate(Prefebs[Building_Type_Value], new Vector3(0f, 0f, 0f), Quaternion.Euler(0f, 0f, 0f));//초기 생성
 
-                            Instans.GetComponent<SpriteRenderer>().sortingOrder = (Hit.GetComponent<SpriteRenderer>().sortingOrder); //레이어 복사
+                            Instans.GetComponent<SpriteRenderer>().sortingOrder = Hit.GetComponent<SpriteRenderer>().sortingOrder; //레이어 복사
                             Instans.transform.position = new Vector3(Hit.transform.position.x, Hit.transform.position.y + 0.99f, Hit.transform.position.z); // 위치이동
                             Instans.transform.SetParent(Hit.transform); // 자식으로
                             Instans.transform.localPosition = Vector3.zero; // 위치 초기화
@@ -410,7 +410,6 @@ public class CustomClass : MonoBehaviour
                                             Instans.GetComponent<DoorsAct>().Door_Opened = ChangeAble_Sprite_Arr[ChangeAble_Sprite_Num + 2];
                                             Instans.layer = 6;
                                             Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
-
                                             break;
                                         case 10: // 문 우측
 
@@ -451,12 +450,6 @@ public class CustomClass : MonoBehaviour
                                             Instans.GetComponent<SpriteRenderer>().sortingOrder += 2;
                                             Instans.transform.localPosition = Vector3.zero;
                                             Instans.transform.localPosition += new Vector3(0f, 0.97f, 0f); // 위치고정 ★
-
-                                            SpriteRenderer[] SpriteNum = Hit.GetComponentsInChildren<SpriteRenderer>();
-                                            if (SpriteNum.Length > 2)
-                                            {
-                                                Instans.GetComponent<SpriteRenderer>().sortingOrder += SpriteNum.Length;
-                                            }
                                             break;
                                         case 17: // 우하로 향하는 펜스
                                             Instans.GetComponent<SpriteRenderer>().sortingLayerName = "Level1_Wall";
