@@ -16,6 +16,7 @@ public class UI_DamageImage : MonoBehaviour
     private void OnEnable()
     {
         UI_Damage_Pre = this;
+        UI_main.ui_main.Set_UI_gender_Image();
     }
 
     List<UI_DamagePref> DamageImagelist = new List<UI_DamagePref>();

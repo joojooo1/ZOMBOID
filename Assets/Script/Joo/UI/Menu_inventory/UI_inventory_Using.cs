@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 //using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using static Item_DataBase;
 
-public class UI_inventory_Using : MonoBehaviour
+public class UI_inventory_Using : MonoBehaviour, IPointerClickHandler
 {
     public static UI_inventory_Using Using_item;
     public Type itemtype;   // 우클릭 상호작용시 확인하는 변수
@@ -15,10 +17,28 @@ public class UI_inventory_Using : MonoBehaviour
         Using_item = this;
     }
 
-    public void Open_Choice_Window(Type _itemtype, int _item_ID)
+    float clickTime = 0;
+    public void OnPointerClick(PointerEventData eventData)
     {
-        itemtype = _itemtype;
-        item_ID = _item_ID;
+        // 인벤토리의 아이템에서 itemtype, item_ID 가져와서 각각 저장
+        //itemtype = _itemtype;
+        //item_ID = _item_ID;
+
+        if ((Time.time - clickTime) < 0.3f)
+        {
+            Open_Choice_Window();
+            clickTime = -1;
+        }
+        else
+        {
+            clickTime = Time.time;
+        }
+    }
+
+    public void Open_Choice_Window()
+    {
+        //itemtype = _itemtype;
+        //item_ID = _item_ID;
 
         Possibility = false;
         switch (itemtype)
@@ -33,15 +53,33 @@ public class UI_inventory_Using : MonoBehaviour
                 // 농사 가능한 타일인지 확인
                 break;
             case Type.Tool:
-                //
+                Possibility = true;
                 break;
             case Type.Electronics:
                 //
                 break;
+            case Type.weapon:
+                Possibility = true;
+                break;
+            case Type.clothing:
+                Possibility = true;
+                break;
+            case Type.Medical:
+                Possibility = true;
+                break;
+            case Type.Normal:
+                Possibility = true;
+                break;
+            case Type.Container:
+                //
+                break;
+            case Type.Furniture:
+                Possibility = true;
+                break;
+
         }
 
-        // 사용할 때 호출하는 함수
-        // if (Possibility) Using_item_in_inven(itemtype);
+        if (Possibility) Using_item_in_inven(itemtype);
     }
 
     public void Check_item_Literature(int item_ID)
@@ -323,6 +361,8 @@ public class UI_inventory_Using : MonoBehaviour
                 case Type.Medical:
                     // UI_main.ui_main.ui_player_state.Use_Medical_item(Item_DataBase.item_database.medical_Ins[item_ID].MedicalType, item_ID);
                     // 상태창에서 상처프리팹 통해서 들어가야 상처위치, 상처index 정보 받아올 수 있음
+                    //UI_main.ui_main.ui_player_state.Damagelist[0].Using_Medical_item(item_ID);
+                    UI_main.ui_main.ui_player_state.Use_Medical_item(item_ID);
                     break;
                 case Type.Normal:
                     if(Item_DataBase.item_database.ETC_Ins[item_ID].ETC_Name == "Magazine")
@@ -362,7 +402,9 @@ public class UI_inventory_Using : MonoBehaviour
                     break;
             }
         }
-        
+
+
+
     }
 
 

@@ -15,7 +15,7 @@ public class UI_main : MonoBehaviour
 
     public bool player_Setting_Language_to_Korean = true;  // Korean 으로 시작
 
-    public bool Is_Female = true;
+    public bool Is_Female;
     public Sprite[] player_gender;
     public GameObject UI_Damage;
     public UnityEngine.UI.Image UI_DamageImage;
@@ -75,6 +75,20 @@ public class UI_main : MonoBehaviour
         UI_Damage.SetActive(false);
     }
 
+    public void Set_UI_gender_Image()
+    {
+        if (Is_Female)
+        {
+            UI_DamageImage.sprite = player_gender[3];
+            UI_DamageImage_base.sprite = player_gender[1];
+        }
+        else
+        {
+            UI_DamageImage.sprite = player_gender[2];
+            UI_DamageImage_base.sprite = player_gender[0];
+        }
+        ui_player_state.Set_UI_gender_Image();
+    }
     public bool Get_Setting_Language_Type()
     {
         return player_Setting_Language_to_Korean;
