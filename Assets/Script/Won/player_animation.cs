@@ -220,10 +220,73 @@ public class player_animation : MonoBehaviour
         animator.SetLayerWeight(A, setting);
 
     }
+    void Medical_body_pos()
+    {
+        Medical_body_pos_set(playernav.GetComponent<player_movement>().uI_Main.ui_player_state.Current_body_position);
+    }
     void end()
     {
 
 
     }
-
+    void Medical_body_pos_set(body_point body)
+    {
+        int _item_3d = 0;
+        switch (body)
+        {
+            case body_point.Left_hand:
+                _item_3d = 13;
+                break;
+            case body_point.Right_hand:
+                _item_3d = 14;
+                break;
+            case body_point.Left_lowerarm:
+                _item_3d = 5;
+                break;
+            case body_point.Right_lowerarm:
+                _item_3d = 7;
+                break;
+            case body_point.Left_upperarm:
+                _item_3d = 4;
+                break;
+            case body_point.Right_upperarm:
+                _item_3d = 6;
+                break;
+            case body_point.Chest:
+                _item_3d = 2;
+                break;
+            case body_point.Abdomen:
+                _item_3d = 3;
+                break;
+            case body_point.Head:
+                _item_3d = 0;
+                break;
+            case body_point.Neck:
+                _item_3d = 1;
+                break;
+            case body_point.Groin:
+                _item_3d = 8;
+                break;
+            case body_point.Left_upperleg:
+                _item_3d = 9;
+                break;
+            case body_point.Right_upperleg:
+                _item_3d = 11;
+                break;
+            case body_point.Left_lowerleg:
+                _item_3d = 10;
+                break;
+            case body_point.Right_lowerleg:
+                _item_3d = 12;
+                break;
+            case body_point.Left_foot:
+                _item_3d = 15;
+                break;
+            case body_point.Right_foot:
+                _item_3d = 16;
+                break;
+            default:
+                break;
+        }
+    }
 }
