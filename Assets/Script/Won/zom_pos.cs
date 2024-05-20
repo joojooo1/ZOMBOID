@@ -15,12 +15,13 @@ public class zom_pos : MonoBehaviour
     public bool re = false;
     public bool audioposget = false;
     public float zomspeed;
-    public GameObject[] respawn;
+    public GameObject respawn;
 
     public int ZOM_SN=0;
     // Start is called before the first frame update
     void Awake()
     {
+        zombody.GetComponent<zom_targetpos>().enabled = true;
         nav = GetComponent<NavMeshAgent>();
         zom_Targetpos = zombody.GetComponent<zom_targetpos>();
 
@@ -94,10 +95,10 @@ public class zom_pos : MonoBehaviour
     public void respawn_set()
     {
         nav.enabled = false;
-        int I = Random.Range(0, respawn.Length);
-        Debug.Log("리스폰 위치로"+ I);
+        
+        Debug.Log("리스폰 위치로");
         targetpos.SetActive(false);
-        transform.position = respawn[I].transform.position;
+        transform.position = respawn.transform.position;
         restart();
     }
     void restart()

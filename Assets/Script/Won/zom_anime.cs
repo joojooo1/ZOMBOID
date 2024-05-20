@@ -26,6 +26,7 @@ public class zom_anime : MonoBehaviour
         zompos = zomnav.GetComponent<zom_pos>();
         zomtarget = asd.GetComponent<zom_targetpos>();
         HP = parentTransform.GetComponent<zombieHp>();
+        HP.enabled = true;
         if (nav == null)
         {
             nav = zomnav.GetComponent<NavMeshAgent>();
@@ -124,7 +125,7 @@ public class zom_anime : MonoBehaviour
             Debug.Log("죽음");
             zompos.respawn_set();
         }
-        SET();
+
     }
     public bool atking = false;
     void zom_atk_end()//좀비의 다시 공격하기위한 작업zzzzzzz
