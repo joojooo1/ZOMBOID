@@ -25,12 +25,11 @@ public class player_atk : MonoBehaviour
             {
                 atk = true;
                 Vector3 forwardDirection = transform.forward;
-                searchDistance =  5;//Random.Range(Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Minimum_Range, Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Maximum_Range);
+               // searchDistance =  5;//Random.Range(Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Minimum_Range, Inventory_Player_Shown.Equipment[XLine].GetComponent<Item_Weapons>().W_Maximum_Range);
                 AudioClip hitaudio= Clip;// = Equipment.audioClip;
                 // 레이캐스트를 쏴서 zombieLayer를 가진 오브젝트를 찾음
                 RaycastHit[] hits = Physics.RaycastAll(transform.position, forwardDirection, searchDistance, characterLayer);
                 List<RaycastHit> zomHits = new List<RaycastHit>();
-
                 foreach (RaycastHit hit in hits)
                 {
                     // 레이에 맞은 오브젝트의 태그가 "zom"인 경우에만 리스트에 추가
@@ -39,14 +38,14 @@ public class player_atk : MonoBehaviour
                         zomHits.Add(hit);
                     }
                 }
-
+                Debug.Log("레이에 좀비 걸림 데미지 전송");
                 // 리스트를 배열로 변환하여 저장
                 hits = zomHits.ToArray();
                 // 레이캐스트 결과를 거리에 따라 정렬
                 System.Array.Sort(hits, (x, y) => x.distance.CompareTo(y.distance));
 
                 // 최대 3명의 좀비에 대해 처리
-                for (int i = 0; i < Mathf.Min(Inventory_Player_Shown.InvPS.NowWeapon.W_Multi_Hit, hits.Length); i++)
+                for (int i = 0; i < 3; i++)
                 {
                     // 레이에 맞은 오브젝트 가져오기
                     GameObject hitObject = hits[i].collider.gameObject;
@@ -60,7 +59,7 @@ public class player_atk : MonoBehaviour
                     {
 
                         Debug.Log("레이에 좀비 걸림 데미지 전송");
-                        //zomHp.GetDamage(hitaudio, audioobject.GetComponent<player_rot>().playerpos.GetComponent<player_movement>().player_Main.Calculate_damage_to_Zombie());  // 또는 다른 처리를 수행
+                        zomHp.GetDamage(gameObject,10);  // 또는 다른 처리를 수행
                     }
                 }
                 Debug.DrawRay(transform.position, forwardDirection * searchDistance, Color.red);
