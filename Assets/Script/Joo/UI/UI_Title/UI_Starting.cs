@@ -63,6 +63,7 @@ public class UI_Starting : MonoBehaviour
                     text_Object.transform.localPosition += pos;
                     anim.SetBool("start", true);
                     Timer = 0;
+                    UI_main.ui_main.Set_UI_gender_Image();
                 }
             }
 
