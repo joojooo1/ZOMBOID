@@ -248,6 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Storage_Order: 0
   IsPlayers: 0
+  IsBasic: 0
   Slot_Image: {fileID: 7725856993226656712}
   Slot_Weight: {fileID: 3258740861757825265}
   SlotPrefeb: {fileID: 2537107107453752010, guid: 76fd615f02f7cb44594ece95e1550c31, type: 3}
@@ -7369,6 +7370,8 @@ MonoBehaviour:
   LS_Is_Player: 0
   Storage_s: {fileID: 7093594991606743123}
   inven_open: 1
+  Icons: []
+  NowWeapon: {fileID: 0}
 --- !u!95 &4984669976893301232
 Animator:
   serializedVersion: 5
@@ -12880,6 +12883,7 @@ MonoBehaviour:
   Damagelist: []
   Current_body_position: 17
   Current_Damage_index: -1
+  Bandage_anim: 0
   job_text: {fileID: 5484063580366527999}
   job_image: {fileID: 7893718461167322583}
 --- !u!114 &6672415734825934360
@@ -14222,7 +14226,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -5.9809, y: -93.40106}
+  m_AnchoredPosition: {x: -5.9809, y: -93.40112}
   m_SizeDelta: {x: 159.6582, y: 1334.3}
   m_Pivot: {x: 0.5, y: 0.93}
 --- !u!222 &972732022642906258

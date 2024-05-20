@@ -56,7 +56,7 @@ MonoBehaviour:
   Option_Canvas: {fileID: 0}
   Elapsed_time_text: {fileID: 0}
   Weight_text: {fileID: 0}
-  Is_Water: 0
+  Is_Water: 1
   Is_Electricity: 1
   Clothing_Wind_resistance: 1
   Zombies_killed_count_text: {fileID: 0}
@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806fc61ad176e664a9f4bdd54388f68a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Ending: {fileID: 0}
   Player_Max_Health: 100
   Player_current_Health: 100
   HP_Recovery_Speed: 1
