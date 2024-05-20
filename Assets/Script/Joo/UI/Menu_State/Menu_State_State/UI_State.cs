@@ -48,13 +48,13 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
     {
         if (UI_window.activeSelf)
         {
-            AudioManager.SoundManager.System_Open();
+            AudioManager.SoundManager.System_Window();
             UI_window.SetActive(false);
             Image.sprite = UI_window_Image[0];
         }
         else
         {
-            AudioManager.SoundManager.System_Open();
+            AudioManager.SoundManager.System_Window();
             UI_window.SetActive(true);
             Image.sprite = UI_window_Image[1];
             UI_window.transform.SetAsLastSibling();

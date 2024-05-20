@@ -45,6 +45,7 @@ public class UI_main : MonoBehaviour
         else
         {
             Playing = true;
+
         }
     }
 
@@ -87,6 +88,7 @@ public class UI_main : MonoBehaviour
             UI_DamageImage.sprite = player_gender[2];
             UI_DamageImage_base.sprite = player_gender[0];
         }
+
         ui_player_state.Set_UI_gender_Image();
     }
     public bool Get_Setting_Language_Type()

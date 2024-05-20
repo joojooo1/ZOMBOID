@@ -179,7 +179,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3736491dae39bba46bf8d9feca221445, type: 3}
   - {fileID: 8300000, guid: 66cca367f62255941815fe31c06dd161, type: 3}
   - {fileID: 8300000, guid: d5671376cf44f6845bfb0173340ba30a, type: 3}
-  Effect_audioClips:
+  SFX_audioClips:
   - {fileID: 8300000, guid: b2d0d64cfffd2644a91d055935c0bc5a, type: 3}
   - {fileID: 8300000, guid: f80b41b1e6344b6438d0241bdb0c8d1f, type: 3}
   - {fileID: 8300000, guid: e8f50003b2481b649b77981eb684e3e5, type: 3}
@@ -188,6 +188,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 33900620da6542b48a6230bcb83441c0, type: 3}
   BGM_AudioSource: {fileID: 4952859530908235474}
   Effect_AudioSource: {fileID: 5864062692396758596}
+  masterMixer: {fileID: 24100000, guid: 094a108d27b14b245b5a958b37db8bd0, type: 2}
+  Master_Slider: {fileID: 0}
+  BGM_Slider: {fileID: 0}
+  SFX_Slider: {fileID: 0}
 --- !u!1 &3707059585574687991
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +203,7 @@ GameObject:
   - component: {fileID: 8919036619739674304}
   - component: {fileID: 5864062692396758596}
   m_Layer: 0
-  m_Name: Effect
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

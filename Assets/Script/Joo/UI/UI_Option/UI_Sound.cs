@@ -16,7 +16,7 @@ public class UI_Sound : MonoBehaviour
     {
         for(int i = 0; i < slider.Length; i++)
         {
-            slider[i].value = 1;
+            slider[i].value = 0;
         }
     }
 
@@ -33,7 +33,7 @@ public class UI_Sound : MonoBehaviour
     {
         for (int i = 0; i < slider.Length; i++)
         {
-            if (slider[i].value > 0)
+            if (slider[i].value > -40)
             {
                 Sound_Image[i].sprite = Sound_Image_array[0];
             }
@@ -43,7 +43,7 @@ public class UI_Sound : MonoBehaviour
             }
         }
 
-        if (slider[0].value <= 0)
+        if (slider[0].value <= -40)
         {
             for(int i = 0; i < Buttons.Length; i++)
             {
@@ -65,10 +65,10 @@ public class UI_Sound : MonoBehaviour
 
     public void Mute_Sound(UnityEngine.UI.Slider this_slider)
     {
-        if(this_slider.value > 0)   // Mute
+        if(this_slider.value > -40)   // Mute
         {
             temp = this_slider.value;
-            this_slider.value = 0;
+            this_slider.value = -40;
         }
         else
         {
