@@ -476,4 +476,84 @@ public class player_item_controller : MonoBehaviour
         }
         special_Object[index].SetActive(!special);
     }
+    public void Hat_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Hat", INDEX, SET);
+    }
+    public void Glasses_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Glasses", INDEX, SET);
+    }
+    public void Mask_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Mask", INDEX, SET);
+    }
+    public void jacket_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("jacket", INDEX, SET);
+    }
+    public void T_shirt_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("T_shirt", INDEX, SET);
+    }
+    public void shirt_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("shirt", INDEX, SET);
+    }
+    public void Vest_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Vest", INDEX, SET);
+    }
+    public void Watch_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Watch", INDEX, SET);
+    }
+    public void Gloves_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Gloves", INDEX, SET);
+    }
+    public void Shoes_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Shoes", INDEX, SET);
+    }
+    public void Bottoms_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Bottoms", INDEX, SET);
+    }
+    public void protectiveGear_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("protectiveGear", INDEX, SET);
+    }
+    public void Cargo_pocket_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Cargo_pocket", INDEX, SET);
+    }
+    public void MiniBag_forward_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("MiniBag_forward", INDEX, SET);
+    }
+    public void MiniBag_back_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("MiniBag_back", INDEX, SET);
+    }
+    public void Back_Pack_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Back_Pack", INDEX, SET);
+    }
+    public void Handheld_Pack_R_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Handheld_Pack_R", INDEX, SET);
+    }
+    public void Handheld_Pack_L_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Handheld_Pack_L", INDEX, SET);
+    }
+    public void current_weapon_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("current_weapon", INDEX, SET);
+    }
+    public void Weapon_ITEM(bool SET, int INDEX)
+    {
+        current_Back_Pack("Weapon", INDEX, SET);
+    }
 }
