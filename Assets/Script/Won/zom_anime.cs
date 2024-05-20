@@ -90,6 +90,7 @@ public class zom_anime : MonoBehaviour
         {
             atking = true;
             animatersetTrigger("playeratk 0");
+            zomtarget.player.GetComponent<player_movement>().playeranime[0].animatersetTrigger("zombie_hit"); 
         }
         
     }
