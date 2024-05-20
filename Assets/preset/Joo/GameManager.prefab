@@ -167,6 +167,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e479048f037dcfd4ea668b67265d8df1, type: 2}
   - {fileID: 11400000, guid: 02834660cdc9fb344b66a628b083abd0, type: 2}
   - {fileID: 11400000, guid: ddf54ae0fcc8cab4d8cff7ea401bcf10, type: 2}
+  - {fileID: 11400000, guid: adca76f6cf8e6104687e70c6344442d1, type: 2}
   Farming_Ins:
   - {fileID: 11400000, guid: eec828fc5f6e26441ad7b093849c0229, type: 2}
   - {fileID: 11400000, guid: 2a39303abee3cff48a8ac0eaeef7ce77, type: 2}
@@ -264,12 +265,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 33fd9b9465f104742a412499787f01cf, type: 2}
   furniture_Ins:
   - {fileID: 11400000, guid: 6ce430f6d933c3249b1cfac8c095a0cb, type: 2}
-  - {fileID: 11400000, guid: 8031702232438924d9a68bda461cd419, type: 2}
-  - {fileID: 11400000, guid: 9d79fd03f0759654a843067b10608710, type: 2}
-  - {fileID: 11400000, guid: 0329d56f0d9eb8d46b0b1f07aefb7827, type: 2}
+  - {fileID: 11400000, guid: 8324e4961e633a94bbc980fec4d0b89c, type: 2}
   - {fileID: 11400000, guid: c99daa8407a26164390d0bca94ce57a9, type: 2}
+  - {fileID: 11400000, guid: de624f7dc5d4b214e94060aa3e6eaf67, type: 2}
   - {fileID: 11400000, guid: ff1422940da20664c8a53672aad41106, type: 2}
-  - {fileID: 11400000, guid: b108a1171302b6d4e98a85120dbec204, type: 2}
   - {fileID: 11400000, guid: a94bb0bdf27107445aedf7425e028a3f, type: 2}
   - {fileID: 11400000, guid: 3272c4503205c694fb3094c9fd01317d, type: 2}
   - {fileID: 11400000, guid: 422a02cca81723a4e8b281a209f2e907, type: 2}
@@ -277,7 +276,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f7cc6a2935a63814f9a1a68786620eb3, type: 2}
   - {fileID: 11400000, guid: 8924306bd56ecaf4b82e531eb1b98e7f, type: 2}
   - {fileID: 11400000, guid: 410c40cb6329a7140969229fdd13d57a, type: 2}
-  - {fileID: 11400000, guid: 3a5cbef2a00f4554b8357e67937701e6, type: 2}
   - {fileID: 11400000, guid: e21d3cc4b6d6d20499152fff2227b56d, type: 2}
   - {fileID: 11400000, guid: 251b20bc00f7aad40bb19d5771689c76, type: 2}
   - {fileID: 11400000, guid: f9f3d56582060474d8c5cfd87208e264, type: 2}
@@ -558,7 +556,7 @@ MonoBehaviour:
   crafting_recipe: {fileID: 909774793809079977}
   Weight: 83
   Calories: 300
-  Satiety: 50
+  Satiety: 30
   Rate_of_Hunger_increase: 1
   Min_Attack_Power: 8
   Max_Attack_Power: 8
@@ -575,8 +573,10 @@ MonoBehaviour:
   ability_Eat: 1
   ability_Read: 1
   ability_Hear: 1
-  Is_Equipping_Weapons: 0
-  Current_equipping_Weapon: 3
+  Is_Equipping_Weapons: 1
+  Current_equipping_Weapon: 9
+  Is_Equipping_Gun_Magazine: 0
+  Current_Magazine_Capacity: 0
   Is_Aiming: 0
   Is_Running: 0
   Is_Crouch: 0
@@ -654,7 +654,6 @@ MonoBehaviour:
   Tired_reduction_for_Sleeping: 1
   Tired_value: 0.01
   Thirsty_Speed: 1
-  Thirsty_speed: 1
   Clothing_Neck_Defense: 1
   Clothing_Defense: 1
   Zombification: 0

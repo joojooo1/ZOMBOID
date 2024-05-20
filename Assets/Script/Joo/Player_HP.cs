@@ -7,7 +7,7 @@ public class Player_HP : MonoBehaviour
     [SerializeField] float Player_Max_Health = 100.0f;  // 체력 ( Fitness_Level: 5 / Strength_Level: 5 )
     float Player_Min_Health = 0f;
     [SerializeField] float Player_current_Health = 100.0f;
-    [SerializeField] float HP_Recovery_Speed = 1f;  // 체력 회복속도
+    [SerializeField] float HP_Recovery_Speed = 4f;  // 체력 회복속도
     float HP_Recovery_Speed_forMoodle = 1.0f;
 
     bool Is_HP_Recovery = true;
@@ -27,7 +27,7 @@ public class Player_HP : MonoBehaviour
     {
         if (UI_main.ui_main.Playing)
         {
-            if (Is_HP_Recovery)  // 1초 * 체력회복속도(Moodle)마다 체력 회복
+            if (Is_HP_Recovery)  // 2초 * 체력회복속도(Moodle)마다 체력 회복
             {
                 HP_Recovery_Timer += Time.deltaTime;
                 if (HP_Recovery_Timer > HP_Recovery_Speed * HP_Recovery_Speed_forMoodle)
@@ -58,7 +58,7 @@ public class Player_HP : MonoBehaviour
                 if (Player_main.player_main.playerMoodles.Moodle_Hungry.Get_Moodle_current_step() > 3)
                 {
                     Hungry_Timer += Time.deltaTime;
-                    if (Hungry_Timer > 2f)
+                    if (Hungry_Timer > 5f)
                     {
                         Player_current_Health -= 0.0025f;
                         Hungry_Timer = 0.0f;
@@ -72,9 +72,9 @@ public class Player_HP : MonoBehaviour
                 /************************* Player_Bleeding *************************/
                 if (Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_step() > 0)
                 {
-                    // 출혈 발생 시 1초마다 체력 감소 ( Bleeding step에 따라 감소량 다름 )
+                    // 출혈 발생 시 4초마다 체력 감소 ( Bleeding step에 따라 감소량 다름 )
                     Bleeding_Timer += Time.deltaTime;
-                    if (Bleeding_Timer > 1.0f)
+                    if (Bleeding_Timer > 4.0f)
                     {
                         switch (Player_main.player_main.playerMoodles.Moodle_Bleeding.Get_Moodle_current_step())
                         {
@@ -112,7 +112,7 @@ public class Player_HP : MonoBehaviour
                 if (Player_main.player_main.playerMoodles.Moodle_Thirsty.Get_Moodle_current_step() > 3)  // Thirsty 4단계 이상
                 {
                     Thirsty_Timer += Time.deltaTime;
-                    if (Thirsty_Timer > 2.0f)
+                    if (Thirsty_Timer > 4.0f)
                     {
                         Player_current_Health -= 1;
                         Thirsty_Timer = 0f;
@@ -127,7 +127,7 @@ public class Player_HP : MonoBehaviour
                 if (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Cold.Get_Moodle_current_step() > 3 && (Player_current_Health / Player_Max_Health) > 0.01f)
                 {
                     Hyperthermia_Cold_Timer += Time.deltaTime;
-                    if (Hyperthermia_Cold_Timer > 2f)
+                    if (Hyperthermia_Cold_Timer > 5f)
                     {
                         Set_Player_HP_for_Damage(1f);
                         Hyperthermia_Cold_Timer = 0f;
@@ -142,7 +142,7 @@ public class Player_HP : MonoBehaviour
                 if (Player_main.player_main.playerMoodles.Moodle_Sick.Get_Moodle_current_step() > 3)
                 {
                     Sick_Timer += Time.deltaTime;
-                    if (Sick_Timer > 1f)
+                    if (Sick_Timer > 6f)
                     {
                         Set_Player_HP_for_Damage(2.5f);
                         Sick_Timer = 0f;

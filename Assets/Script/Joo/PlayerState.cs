@@ -289,7 +289,11 @@ public class Player_body_Location
             if ((float)rand_Evasion / 100 > Player_main.player_main.Get_Evasion())  // 회피율 계산
             {
                 Debug.Log("qqqqq" + Enemy_Type);
-                if (UI_main.ui_main.UI_Damage.activeSelf == false) { UI_main.ui_main.UI_Damage.SetActive(true); }
+                if (UI_main.ui_main.UI_Damage.activeSelf == false) 
+                { 
+                    UI_main.ui_main.UI_Damage.SetActive(true); 
+
+                }
 
                 if (Enemy_Type != "User")
                 {
@@ -539,7 +543,7 @@ public class PlayerState : MonoBehaviour
     float Infection_Timer = 0.0f;
 
     public float Tired_reduction_for_Sleeping = 1f;  // 수면으로 경감되는 피로도
-    public float Tired_value = 0.01f;  // 피로도 증가량
+    public float Tired_value = 0.005f;  // 피로도 증가량
     public float Thirsty_Speed = 1f;  // 갈증 진행 속도
 
     public float Clothing_Neck_Defense = 1f;
@@ -588,7 +592,7 @@ public class PlayerState : MonoBehaviour
 
             /****************** Player_Thirsty ******************/
             Thirsty_Timer += Time.deltaTime;
-            if (Thirsty_Timer > Thirsty_Speed)
+            if (Thirsty_Timer > Thirsty_Speed * 4)
             {
                 switch (Player_main.player_main.playerMoodles.Moodle_Hyperthermia_Hot.Get_Moodle_current_step())
                 {
@@ -615,7 +619,7 @@ public class PlayerState : MonoBehaviour
             if (Player_main.player_main.Is_Sleeping == false)
             {
                 Tired_Timer += Time.deltaTime;
-                if (Tired_Timer > 3f)
+                if (Tired_Timer > 5f)  // 5초마다 0.005 * 상태
                 {
                     int Endurance_level;  // 지구력 상태에 비례해서 오름
                     if (Player_main.player_main.playerMoodles.Moodle_Endurance.Get_Moodle_current_step() > 2)
@@ -700,7 +704,7 @@ public class PlayerState : MonoBehaviour
             if (Player_main.player_main.Is_Running)
             {
                 Endurance_Timer += Time.deltaTime;
-                if (Endurance_Timer > 0.3f)
+                if (Endurance_Timer > 5f)
                 {
                     float Temp = 2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Depletion_Rate();
                     Player_main.player_main.Set_Endurance(-Temp);
@@ -713,9 +717,9 @@ public class PlayerState : MonoBehaviour
                 if (Player_main.player_main.playerMoodles.Moodle_Tired.Get_Moodle_current_step() < 4)
                 {
                     Endurance_Timer += Time.deltaTime;
-                    if (Endurance_Timer > 0.5f)
+                    if (Endurance_Timer > 10f)
                     {
-                        float Temp = 3.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate();
+                        float Temp = 2.0f * Player_main.player_main.playerSkill_ActivationProbability.Get_Endurance_Recovery_Rate();
                         Player_main.player_main.Set_Endurance(Temp);
                         Endurance_Timer = 0.0f;
                     }
@@ -726,7 +730,7 @@ public class PlayerState : MonoBehaviour
             if (Player_main.player_main.playerMoodles.Moodle_Stressed.Get_Moodle_current_step() > 2)
             {
                 Unhappy_Timer += Time.deltaTime;
-                if (Unhappy_Timer > 3f)
+                if (Unhappy_Timer > 6f)
                 {
                     Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(0.015f);
                 }
@@ -738,7 +742,7 @@ public class PlayerState : MonoBehaviour
                 if (Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Get_Moodle_current_value() <= 1)
                 {
                     Has_a_Cold_Timer += Time.deltaTime;
-                    if (Has_a_Cold_Timer > 5f)
+                    if (Has_a_Cold_Timer > 15f)
                     {
                         Player_main.player_main.playerMoodles.Moodle_Has_a_Cold.Set_Moodles_state(0.05f);
                         Has_a_Cold_Timer = 0;
@@ -754,7 +758,7 @@ public class PlayerState : MonoBehaviour
             if (Player_main.player_main.playerMoodles.Moodle_Drunk.Get_Moodle_current_step() > 0)
             {
                 Drunk_Timer += Time.deltaTime;
-                if (Drunk_Timer > 1.5f)
+                if (Drunk_Timer > 8f)
                 {
                     Player_main.player_main.playerMoodles.Moodle_Unhappy.Set_Moodles_state(-0.05f);
                     Drunk_Timer = 0;
@@ -770,7 +774,7 @@ public class PlayerState : MonoBehaviour
                 Infection_Timer += Time.deltaTime;
                 if (Player_Characteristic.current.Prone_to_Illness_Characteristic)
                 {
-                    if (Infection_Timer > 3.75f)
+                    if (Infection_Timer > 13f)
                     {
                         if (Player_Characteristic.current.Resilient_Characteristic)
                         {
@@ -784,7 +788,7 @@ public class PlayerState : MonoBehaviour
                 }
                 else
                 {
-                    if (Infection_Timer > 5f)
+                    if (Infection_Timer > 18f)
                     {
                         if (Player_Characteristic.current.Resilient_Characteristic)
                         {
