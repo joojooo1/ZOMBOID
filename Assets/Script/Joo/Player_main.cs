@@ -130,18 +130,18 @@ public class Player_main : MonoBehaviour
 
         //    //Calculate_damage_to_Zombie();
         //}
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    UI_main.ui_main.ui_player_state.Damagelist[0].Using_Medical_item(11);
-        //}
+        ////if (Input.GetKeyDown(KeyCode.O))
+        ////{
+        ////    UI_main.ui_main.ui_player_state.Damagelist[0].Using_Medical_item(11);
+        ////}
         //if (Input.GetKeyDown(KeyCode.Y))
         //{
         //    UI_main.ui_main.ui_player_state.Damagelist[0].Using_Bandage(0);
         //}
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            UI_main.ui_main.ui_player_state.Damagelist[0].Remove_Bandage();
-        }
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    UI_main.ui_main.ui_player_state.Damagelist[0].Remove_Bandage();
+        //}
 
         if (!ability_Sleeping) { Is_Sleeping = false; }
         if (!ability_Eat) { Is_Eating = false; }
