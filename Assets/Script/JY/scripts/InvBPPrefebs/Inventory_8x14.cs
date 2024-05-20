@@ -12,6 +12,7 @@ public class Inventory_8x14 : MonoBehaviour
     public short Storage_Order;
     public bool IsPlayers;
     public short[,,] Recent_Recieved_Package; // v
+    public bool IsBasic;
 
     public Transform Slot_Image;
     public Transform Slot_Weight;
@@ -80,8 +81,17 @@ public class Inventory_8x14 : MonoBehaviour
     private void Start()
     {
         ThisID = Item_DataBase.item_database.Container_Ins[0];
-        Slot_Image.gameObject.GetComponent<Image>().sprite = ThisID.Container_Image;
-        Slot_Weight.gameObject.GetComponent<TextMeshProUGUI>().text = "..";
+        if (IsBasic == true)
+        {
+            Slot_Image.gameObject.GetComponent<Image>().sprite = Inventory_Player_Shown.InvPS.Icons[0];
+            Slot_Weight.gameObject.GetComponent<TextMeshProUGUI>().text = "¹Ù´Ú";
+        }
+        else
+        {
+            Slot_Image.gameObject.GetComponent<Image>().sprite = ThisID.Container_Image;
+            Slot_Weight.gameObject.GetComponent<TextMeshProUGUI>().text = "..";
+        }
+        Generating_Slots_First(example, 0);
         //¹Ù´Ú¿¹½Ã 0429 Áö¿ï°Í
         //Generating_Slots_First(example,99);
     }

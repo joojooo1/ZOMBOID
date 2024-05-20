@@ -49,7 +49,7 @@ public class Item_Weapons : ScriptableObject
     public float Gun_Max_Capacity;
     public float Gun_Aiming_time;
     public float Gun_Reload_time;
-    public animType animType;
+    //public animType animType;
     public AudioClip audioClip;
     public float audioClip_range;
 }
