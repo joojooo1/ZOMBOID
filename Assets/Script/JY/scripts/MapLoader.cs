@@ -48,8 +48,8 @@ public class MapLoader : MonoBehaviour
     //}
     private void Start()
     {
-        LengthofX = 20;
-        LengthofY = 21;
+        LengthofX = 0;
+        LengthofY = 0;
         ImageNum = 0;
         TilesList = new List<GameObject> { };
         //StartGeneratingTiles(10, 10);

@@ -25,8 +25,9 @@ public class WallBehind : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        int collisionLayer = collision.gameObject.layer;
         Debug.Log("2Dcolsuc");
-        if (collision.CompareTag("Player"))
+        if (collisionLayer == 3)
         {
             this.gameObject.layer = 4;
             spr.color = new Color(1, 1, 1, 0.2f);
