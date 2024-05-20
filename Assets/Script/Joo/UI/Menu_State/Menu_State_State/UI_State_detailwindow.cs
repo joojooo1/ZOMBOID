@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.HighDefinition.ScalableSettingLevelParameter;
 
-public class UI_State_detailwindow : MonoBehaviour, IPointerEnterHandler
+public class UI_State_detailwindow : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
     public body_point body_position;
     public Damage_Pattern _damagetype;
@@ -52,6 +52,20 @@ public class UI_State_detailwindow : MonoBehaviour, IPointerEnterHandler
     void OnDisable()
     {
         UI_main.ui_main.ui_player_state.TreatmentBar.SetActive(false);
+    }
+
+    float clickTime = 0;
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if ((Time.time - clickTime) < 0.3f)
+        {
+            Remove_Bandage();
+            clickTime = -1;
+        }
+        else
+        {
+            clickTime = Time.time;
+        }
     }
 
     public void Using_Medical_item(int item_iD)
