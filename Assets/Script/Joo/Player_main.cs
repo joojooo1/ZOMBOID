@@ -88,8 +88,8 @@ public class Player_main : MonoBehaviour
 
     public float Likelihood_of_food_poisoning = 0.2f;  // 식중독에 걸릴 확률
     public float Time_for_food_poisoning = 200f;  // 식중독 유지 시간
-    public float Satiety_value = 0.25f;  // 포만감 감소되는 양
-    public float Panic_value = 0.15f;
+    public float Satiety_value = 0.15f;  // 포만감 감소되는 양
+    public float Panic_value = 0.1f;
 
     public Skill_Type current_SkillBook_type = Skill_Type.None;
     public int current_SKillBook_level = -1;
@@ -123,21 +123,21 @@ public class Player_main : MonoBehaviour
 
     void Update()
     {
-        if (UnityEngine.Input.GetKeyDown(KeyCode.P))
-        {
-            GameObject a = null;
-            Calculate_HitForce(a, "easy", false, false);
+        //if (UnityEngine.Input.GetKeyDown(KeyCode.P))
+        //{
+        //    GameObject a = null;
+        //    Calculate_HitForce(a, "easy", false, false);
 
-            //Calculate_damage_to_Zombie();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            UI_main.ui_main.ui_player_state.Damagelist[0].Using_Medical_item(11);
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            UI_main.ui_main.ui_player_state.Damagelist[0].Using_Bandage(0);
-        }
+        //    //Calculate_damage_to_Zombie();
+        //}
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    UI_main.ui_main.ui_player_state.Damagelist[0].Using_Medical_item(11);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    UI_main.ui_main.ui_player_state.Damagelist[0].Using_Bandage(0);
+        //}
         if (Input.GetKeyDown(KeyCode.I))
         {
             UI_main.ui_main.ui_player_state.Damagelist[0].Remove_Bandage();
@@ -151,7 +151,7 @@ public class Player_main : MonoBehaviour
         {
             /************************************* Player_Satiety **************************************/
             Satiety_Timer += Time.deltaTime;
-            if (Satiety_Timer > 1.0f)  // 포만감 1초에 0.25씩 감소
+            if (Satiety_Timer > 2f)  // 포만감 2초에 0.15씩 감소
             {
                 Satiety -= (Satiety_value * Rate_of_Hunger_increase);  // 포만감 -300 ~ 300
                 if (Satiety < -300) { Satiety = -300.0f; }
@@ -172,7 +172,7 @@ public class Player_main : MonoBehaviour
             /************************************* Player_Calories **************************************/
 
             Calories_Timer += Time.deltaTime;  // 칼로리 -2200 ~ 3700 
-            if (Calories_Timer > 1f)
+            if (Calories_Timer > 2f)
             {
                 if (Is_Running)
                 {
@@ -191,7 +191,7 @@ public class Player_main : MonoBehaviour
                 if (Is_Outdoor)
                 {
                     Panic_Timer_for_Agoraphobic += Time.deltaTime;
-                    if (Panic_Timer > 1f)
+                    if (Panic_Timer > 2.5f)
                     {
                         playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
                         Panic_Timer_for_Agoraphobic = 0;
@@ -203,7 +203,7 @@ public class Player_main : MonoBehaviour
                 if (!Is_Outdoor)
                 {
                     Panic_Timer_for_Agoraphobic += Time.deltaTime;
-                    if (Panic_Timer > 1f)
+                    if (Panic_Timer > 2.5f)
                     {
                         playerMoodles.Moodle_Panic.Set_Moodles_state(Panic_value);
                         Panic_Timer_for_Agoraphobic = 0;
@@ -214,7 +214,7 @@ public class Player_main : MonoBehaviour
             if (Is_Resting)
             {
                 Panic_Timer += Time.deltaTime;
-                if (Panic_Timer > 1.0f)  // 휴식중에 Panic 수치 down
+                if (Panic_Timer > 1.3f)  // 휴식중에 Panic 수치 down
                 {
                     if (Is_drunk == false)
                     {

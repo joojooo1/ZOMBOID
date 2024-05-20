@@ -25,6 +25,7 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
     public List<UI_State_detailwindow> Damagelist = new List<UI_State_detailwindow>();
     public body_point Current_body_position = body_point.None;
     public int Current_Damage_index = -1;
+    public bool Bandage_anim = false;
 
     public UnityEngine.UI.Text job_text;
     public UnityEngine.UI.Image job_image;
@@ -34,10 +35,15 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
         if (UI_window.activeSelf) { Image.sprite = UI_window_Image[1]; }
         else { Image.sprite = UI_window_Image[0]; }
 
+        //if (ui_main.ui_main.is_female) { player_gender_image.sprite = gender_image[1]; }
+        //else { player_gender_image.sprite = gender_image[0]; }
+    }
+
+    public void Set_UI_gender_Image()
+    {
         if (UI_main.ui_main.Is_Female) { player_gender_Image.sprite = gender_Image[1]; }
         else { player_gender_Image.sprite = gender_Image[0]; }
     }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (UI_window.activeSelf)
@@ -144,15 +150,16 @@ public class UI_State : MonoBehaviour, IPointerClickHandler
         Current_Damage_index = index;
     }
 
-    public void Use_Medical_item(Medical_Type type, int item_ID)
+    public void Use_Medical_item(int item_ID)
     {
         for (int k = 0; k < Damagelist.Count; k++)
         {
             if (Damagelist[k].position_Damage_Num == Current_Damage_index && Damagelist[k].body_position == Current_body_position)
             {
-                if(type == Medical_Type.Bandage)
+                if(Item_DataBase.item_database.medical_Ins[item_ID].MedicalType == Medical_Type.Bandage)
                 {
                     Damagelist[k].Using_Bandage(item_ID);
+                    Bandage_anim = true;
                     break;
                 }
                 else

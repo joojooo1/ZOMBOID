@@ -2624,28 +2624,28 @@ public class Player_Crafting : MonoBehaviour
 
         // 테스트 후 false 로 바뀌어야하는 레시피 ( 조건에 맞을때 true로 바뀌어야 함 )
         // 레벨
-        Recipe_Make_Metal_Sheet.Is_Craftng = true;
-        Recipe_Make_Small_Metal_Sheet.Is_Craftng = true;
-        Recipe_Craft_Wooden_Crate.Is_Craftng = true;
-        Recipe_Craft_Metal_Crate.Is_Craftng = true;
-        Recipe_Make_Bed.Is_Craftng = true;
+        Recipe_Make_Metal_Sheet.Set_Is_Crafting();
+        Recipe_Make_Small_Metal_Sheet.Set_Is_Crafting();
+        Recipe_Craft_Wooden_Crate.Set_Is_Crafting();
+        Recipe_Craft_Metal_Crate.Set_Is_Crafting();
+        Recipe_Make_Bed.Set_Is_Crafting();
 
 
         // 매거진
-        Recipe_Make_Log_Walls.Is_Craftng = true;
-        Recipe_Make_Counters.Is_Craftng = true;
-        Recipe_Make_Composter.Is_Craftng = true;
-        Recipe_Make_Charcoal_Barbecue.Is_Craftng = true;
-        Recipe_Make_Propane_Barbecue.Is_Craftng = true;
-        Recipe_Make_Fishing_Rod.Is_Craftng = true;
-        Recipe_Make_Fishing_Net.Is_Craftng = true;
-        Recipe_Get_Wire_Back.Is_Craftng = true;
-        Recipe_Make_Mildew_Cure.Is_Craftng = true;
-        Recipe_Make_Flies_Cure.Is_Craftng = true;
-        Recipe_Make_Bread.Is_Craftng = true;
-        Recipe_Make_Bowl_of_Rice.Is_Craftng= true;
-        Recipe_Craft_Makeshift_Radio.Is_Craftng = true;
-        Recipe_Craft_Makeshift_Walkie_Talkie.Is_Craftng = true;
+        Recipe_Make_Log_Walls.Set_Is_Crafting();
+        Recipe_Make_Counters.Set_Is_Crafting();
+        Recipe_Make_Composter.Set_Is_Crafting();
+        Recipe_Make_Charcoal_Barbecue.Set_Is_Crafting();
+        Recipe_Make_Propane_Barbecue.Set_Is_Crafting();
+        Recipe_Make_Fishing_Rod.Set_Is_Crafting();
+        Recipe_Make_Fishing_Net.Set_Is_Crafting();
+        Recipe_Get_Wire_Back.Set_Is_Crafting();
+        Recipe_Make_Mildew_Cure.Set_Is_Crafting();
+        Recipe_Make_Flies_Cure.Set_Is_Crafting();
+        Recipe_Make_Bread.Set_Is_Crafting();
+        Recipe_Make_Bowl_of_Rice.Set_Is_Crafting();
+        Recipe_Craft_Makeshift_Radio.Set_Is_Crafting();
+        Recipe_Craft_Makeshift_Walkie_Talkie.Set_Is_Crafting();
 
 
     }
