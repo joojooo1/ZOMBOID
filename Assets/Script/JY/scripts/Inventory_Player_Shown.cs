@@ -175,8 +175,9 @@ public class Inventory_Player_Shown : MonoBehaviour
         // 0424 1차 라이브러리 테스팅 ============================================================================================
         Inventory_Form_Location.gameObject.GetComponentInChildren<Inventory_8x6>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[1], 1);
         //0426 초기 가방 테스팅=================================================
-        Equipment_Package_Notbe_Synchronized[0, 14, 0] = 8;
-        Equipment_Package_Notbe_Synchronized[4, 14, 0] = 2;
+        Equipment_Package_Notbe_Synchronized[0, 14, 0] = 7;
+        Equipment_Package_Notbe_Synchronized[1, 14, 0] = 1;
+        Equipment_Package_Notbe_Synchronized[4, 14, 0] = 3;
         Refreshing_Equipment_Slots(Equipment_Package_Notbe_Synchronized);
 
         Resetting_BPICons_Order();
@@ -897,6 +898,7 @@ public class Inventory_Player_Shown : MonoBehaviour
                                 New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs.transform;
 
                                 New_Bp_Tabs.GetComponent<Inventory_8x10>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]], Equipment_Package_Notbe_Synchronized[4, XLine, 0]);
+                                Equipment[XLine].GetComponent<InventorySlot>().IsShown_OnPlayer = true;
                                 break;
                             case 202:
                                 GameObject New_Bp_Tabs1 = Instantiate(Inventory_Form_Prefebs[2], new Vector3(0f, 0f, 0f), Quaternion.identity);
@@ -910,11 +912,16 @@ public class Inventory_Player_Shown : MonoBehaviour
                                 //0426
                                 New_BP_Image.GetComponent<BPIcon_SimpleAct>().Reverse_Lovation = New_Bp_Tabs1.transform;
 
-                                New_Bp_Tabs1.GetComponent<Inventory_8x10>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]], Equipment_Package_Notbe_Synchronized[4, XLine, 0]);
+                                New_Bp_Tabs1.GetComponent<Inventory_4x4>().Generating_Slots_First(Inventory_Library.IL.Inventory_DB[Equipment_Package_Notbe_Synchronized[4, XLine, 0]]/*, Equipment_Package_Notbe_Synchronized[4, XLine, 0]*/);
+                                Equipment[XLine].GetComponent<InventorySlot>().IsShown_OnPlayer = true;
                                 break;
                         }
 
                     }
+                }
+                if (XLine == 6)// 11,12,13,14 가방라인
+                {
+                    //무기 장착
                 }
                 //Equipment[XLine].GetComponent<InventorySlot>().Is_Changed--;
             }
@@ -936,6 +943,10 @@ public class Inventory_Player_Shown : MonoBehaviour
                     Destroy(Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D.gameObject);
                     Equipment[XLine].GetComponent<InventorySlot>().This_Own_Form_IFDE_D = null;
                 }
+                if (XLine == 6)
+                {
+                    //무기 장착해제
+                }
                 Equipment[XLine].GetComponent<InventorySlot>().Image.GetComponent<Image>().sprite = Equipment_Sample_Array[XLine];
                 Equipment[XLine].GetComponent<InventorySlot>().BackgroundColor.GetComponent<Image>().color = new Color(0.6f, 0.6f, 0.6f, 1f); // ?
                 Equipment[XLine].GetComponent<InventorySlot>().Item_Type = 0;
@@ -946,8 +957,8 @@ public class Inventory_Player_Shown : MonoBehaviour
                 //short SizeOfItem = Item_DataBase.item_database.Requesting_Size(changedPackage[0, XLine, YLine], changedPackage[1, XLine, YLine]);
                 //Equipment[XLine].GetComponent<InventorySlot>().Size = SizeOfItem;
             }
+            
         }
-
 
 
         Equipment_Package_Notbe_Synchronized = changedPackage;

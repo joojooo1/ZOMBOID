@@ -104,6 +104,9 @@ public class Item_DataBase : MonoBehaviour
             case 10:
                 Sprite Img10 = furniture_Ins[ID].Furniture_Image;
                 return Img10;
+            case 11:
+                Sprite Img11 = weapons_Ins[ID].ItemImage;
+                return Img11;
             default:
                 return null;
         }
@@ -118,6 +121,12 @@ public class Item_DataBase : MonoBehaviour
                 num2 += (short)0;
                 num2 += (short)(food_Ins[ID].Height);
                 return num2;
+            case 6:
+                short num6 = 0;
+                num6 += (short)(clothing_Ins[ID].Width * 100);
+                num6 += (short)0;
+                num6 += (short)(clothing_Ins[ID].Height);
+                return num6;
             case 7: //∝ 啊规率 抗寇贸府
                 short num7 = 0;
                 if (ID < 8)
@@ -139,6 +148,12 @@ public class Item_DataBase : MonoBehaviour
                 num9 += (short)0;
                 num9 += (short)(medical_Ins[ID].Height);
                 return num9;
+            case 11:
+                short num11=0;
+                num11 += (short)(weapons_Ins[ID].Width * 100);
+                num11 += (short)0;
+                num11 += (short)(weapons_Ins[ID].Height);
+                return num11;
             default:
                 return 0;
         }

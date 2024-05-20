@@ -15,19 +15,19 @@ public class Inventory_Library : MonoBehaviour
     short[,,] packageExample_8x6 =
     {
         {
-            {0,8,0,0,0,0},
+            {11,0,0,0,0,0},
             {0,0,0,0,0,0},
-            {1,0,0,0,0,0},
+            {6,0,0,0,0,0},
             {0,0,0,0,0,0},
-            {1,0,0,0,0,0},
+            {0,0,0,0,0,0},
             {0,0,0,0,0,0},
             {0,0,0,0,0,0},
             {0,0,0,0,0,0}
         },
         {
-            {0,16,0,0,0,0},
             {0,0,0,0,0,0},
-            {9,0,0,0,0,0},
+            {0,0,0,0,0,0},
+            {28,0,0,0,0,0},
             {0,0,0,0,0,0},
             {0,0,0,0,0,0},
             {0,0,0,0,0,0},
@@ -281,15 +281,11 @@ public class Inventory_Library : MonoBehaviour
         IL = this;
         Inventory_DB = new List<short[,,]>();
         Inventory_DB.Add(packageExample_2x4);
-
         Inventory_DB.Add(packageExample_8x6);
-
+        Debug.Log("num" + Inventory_DB.Count);
         Inventory_DB.Add(packageExample_8x10);
-
         Inventory_DB.Add(packageExample_4x4);
-
         Inventory_DB.Add(packageExample_4x3);
-
         short[,,] copy = new short[5, 8, 14];
         Inventory_DB.Add(copy);
         Debug.Log("Furniture Sample Num = " + Inventory_DB.Count);
