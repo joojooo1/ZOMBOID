@@ -8,6 +8,7 @@ public class UI_Ending : MonoBehaviour
     public UnityEngine.UI.Text text1;
     private void OnEnable()
     {
+        AudioManager.SoundManager.Player_Dead();
         text0.text = "당신은 " + GameManager.gameManager.Get_Elapsed_time() + "일동안 생존하였습니다.";
         text1.text = "당신은 생존하는 동안 " + GameManager.gameManager.Get_killed_count() + "마리의 좀비를 제거하였습니다.";
     }

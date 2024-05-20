@@ -50,10 +50,11 @@ public class zombieHp : MonoBehaviour
 
     public void GetDamage(GameObject player, float Damage)//좀비가 받는 데미지
     {
+        Debug.Log("qwe");
         curret_zombie_hp -= Damage;
         anime.animatersetTrigger("hit");
-        audio.PlayOneShot(clip);
         Debug.Log("데미지 들어옴");
+        audio.PlayOneShot(clip);
     }
     public void up_down()
     {
@@ -62,8 +63,8 @@ public class zombieHp : MonoBehaviour
         if (curret_zombie_hp <= 0)
         {
             gameObject.GetComponent<Collider>().enabled = false;
-            audio.PlayOneShot(Dieclip);
             down += 10;
+           // audio.PlayOneShot(Dieclip);
         }
         if (down > 7)
         {

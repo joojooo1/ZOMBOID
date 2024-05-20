@@ -12,7 +12,7 @@ public class zom_targetpos : MonoBehaviour
     public float durationTime = 5f;//플레이어 인지범위 초과시 추적하는 시간
     public int rayCount = 18; // 원형으로 쏘는 Ray의 개수
     public LayerMask playerLayer; //플레이어 레이어
-    public zom_pos zompos;
+    zom_pos zompos;
     public GameObject zomnav;
     public bool live = true;
     public GameObject zombody;
@@ -20,18 +20,19 @@ public class zom_targetpos : MonoBehaviour
     
     void Awake()
     {
+        gameObject.GetComponent<zombieHp>().enabled = true;
         //Transform parentTransform = transform.parent;
-        zom_pos zompos = zomnav.GetComponent<zom_pos>();
+        zompos = zomnav.GetComponent<zom_pos>();
 
         if (zompos == null)
         {
             zompos = zomnav.GetComponent<zom_pos>();
         }
-
+        Debug.Log("asd");
     }
     public void Restart()
     {
-        zom_pos zompos = zomnav.GetComponent<zom_pos>();
+       zompos = zomnav.GetComponent<zom_pos>();
 
         if (zompos == null)
         {

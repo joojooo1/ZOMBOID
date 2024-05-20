@@ -24,11 +24,13 @@ public class UI_inventory : MonoBehaviour, IPointerClickHandler
     {
         if (Inventory_Player_Shown.InvPS.inven_open)
         {
+            AudioManager.SoundManager.Close_Bag();
             Image.sprite = UI_window_Image[0];
             Inventory_Player_Shown.InvPS.SetAnim(false);
         }
         else
         {
+            AudioManager.SoundManager.Open_Bag();
             Inventory_Player_Shown.InvPS.SetAnim(true);
             Image.sprite = UI_window_Image[1];
         }

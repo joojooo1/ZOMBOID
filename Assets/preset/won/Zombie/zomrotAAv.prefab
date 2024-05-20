@@ -55,7 +55,6 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  zompos: {fileID: 0}
   zomnav: {fileID: 0}
   live: 1
   zombody: {fileID: 3691237702065318688}
@@ -88,7 +87,7 @@ MonoBehaviour:
   zom_crawl: 0
   zom_target: {fileID: 0}
   _Movement: {fileID: 0}
-  anime: {fileID: 0}
+  anime: {fileID: 3844893459474495195}
   zom_nav: {fileID: 0}
   zom_body: {fileID: 3691237702065318688}
   clip: {fileID: 8300000, guid: 5f51ec9dceadf5849bef12f11d9a1d2f, type: 3}

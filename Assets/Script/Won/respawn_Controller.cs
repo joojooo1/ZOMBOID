@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class respawn_Controller : MonoBehaviour
 {
+    public GameObject spawn;
     Vector3 zom_spawn_pos;
     public GameObject[] zom_nav;
     // Start is called before the first frame update
     void Start()
     {
-        zom_spawn_pos = transform.position;
+        zom_spawn_pos = spawn.transform.position;
         for (int i = 0; i < zom_nav.Length; i++)
         {
             zom_nav[i] = zom_nav[i];

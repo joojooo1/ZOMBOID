@@ -27,12 +27,17 @@ public class WallBehind : MonoBehaviour
     {
         int collisionLayer = collision.gameObject.layer;
         Debug.Log("2Dcolsuc");
-        if (collisionLayer == 3)
+        if (collisionLayer == 3&&collision.CompareTag("Character"))
         {
             this.gameObject.layer = 4;
             spr.color = new Color(1, 1, 1, 0.2f);
             //GetComponent<ShadowCaster2D>().enabled = false;
         }
+        else if(collisionLayer == 3)
+        {
+            this.gameObject.layer = 4;
+        }
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
