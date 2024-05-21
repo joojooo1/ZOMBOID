@@ -94,6 +94,16 @@ public class UI_Craft_Prefab : MonoBehaviour, IPointerClickHandler, IPointerEnte
         //0509 JY
     }
 
+    public void Full_Ingredients(bool Full, int index)
+    {
+        Color temp = item_Image.color;
+        if (Full)
+            temp.a = 1f;
+        else
+            temp.a = 0.3764706f;
+        item_Image.color = temp;
+    }
+
     public void Set_Ingredients_Tool(Crafting_item item_info, int index)
     {
         Choice = false;
