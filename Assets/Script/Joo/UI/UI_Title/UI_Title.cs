@@ -35,6 +35,9 @@ public class UI_Title : MonoBehaviour
 
     public Sprite[] job_image;
 
+    public UnityEngine.UI.Text Name_InputField;
+    public GameObject Name_next_button;
+
     void Awake()
     {
         ui_title = this;
@@ -482,5 +485,13 @@ public class UI_Title : MonoBehaviour
 #else
         Application.Quit(); // 어플리케이션 종료
 #endif
+    }
+
+    public void Set_Name()
+    {
+        if (Name_InputField.text == "")
+            Name_next_button.SetActive(false);
+        else
+            Name_next_button.SetActive(true);
     }
 }
