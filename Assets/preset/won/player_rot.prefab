@@ -11514,6 +11514,7 @@ MonoBehaviour:
   Last_Name_Anime: []
   Last_Bool_Anime: 
   Last_Float_Anime: []
+  dieclip: {fileID: 0}
 --- !u!1 &2060484817095925193
 GameObject:
   m_ObjectHideFlags: 0
@@ -45311,6 +45312,7 @@ MonoBehaviour:
   Last_Name_Anime: []
   Last_Bool_Anime: 
   Last_Float_Anime: []
+  dieclip: {fileID: 0}
 --- !u!1001 &7395338824803938142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45916,6 +45918,7 @@ MonoBehaviour:
   Last_Name_Anime: []
   Last_Bool_Anime: 
   Last_Float_Anime: []
+  dieclip: {fileID: 0}
 --- !u!1001 &8420902103199867138
 PrefabInstance:
   m_ObjectHideFlags: 0

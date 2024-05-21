@@ -919,9 +919,16 @@ public class Inventory_Player_Shown : MonoBehaviour
 
                     }
                 }
-                if (XLine == 6)// 11,12,13,14 가방라인
+                if (XLine == 6)
                 {
-                    //무기 장착
+                    foreach(NetObject The3DS in ServerObjectManager.current.ObjectArray)
+                    {
+                        if (The3DS.player_index == CMainGame.current.playerSN)
+                        {
+                            The3DS.gameObject.GetComponentInChildren<player_item_controller>().current_Back_Pack("Weapon", Equipment_Package_Notbe_Synchronized[1, XLine, 0], true);
+                            Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        }
+                    }
                 }
                 //Equipment[XLine].GetComponent<InventorySlot>().Is_Changed--;
             }

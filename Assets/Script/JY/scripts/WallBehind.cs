@@ -27,13 +27,14 @@ public class WallBehind : MonoBehaviour
     {
         int collisionLayer = collision.gameObject.layer;
         Debug.Log("2Dcolsuc");
-        if (collisionLayer == 3&&collision.CompareTag("Character"))
+        if (collisionLayer == 3 && collision.CompareTag("Player"))
         {
+            Debug.Log("isisisissisiis" + collision.gameObject.layer + collision.tag);
             this.gameObject.layer = 4;
-            spr.color = new Color(1, 1, 1, 0.2f);
+            //spr.color = new Color(1, 1, 1, 0.2f);
             //GetComponent<ShadowCaster2D>().enabled = false;
         }
-        else if(collisionLayer == 3)
+        else if (collisionLayer == 3 &&collision.CompareTag("zom"))
         {
             this.gameObject.layer = 4;
         }
