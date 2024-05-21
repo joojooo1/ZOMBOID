@@ -10,7 +10,9 @@ public class Right_Click_Ui : MonoBehaviour,IPointerExitHandler
     public Camera camera;
     public Transform Selection_Box;
     public GameObject Selection_Prefebs;
-
+    public int NowActing;
+    public Vector3 ActingPosition;
+    
     public static Right_Click_Ui RCU;
 
     private void Awake()
@@ -26,6 +28,20 @@ public class Right_Click_Ui : MonoBehaviour,IPointerExitHandler
     public void Something_Selectec()
     {
         Selection_Box.transform.localPosition = new Vector3(150f, 400f, 0);
+        switch (NowActing)
+        {
+            case 1://¿”Ω√ »Ìø¨
+                foreach (NetObject The3DS in ServerObjectManager.current.ObjectArray)
+                {
+                    if (The3DS.player_index == CMainGame.current.playerSN)
+                    {
+                        
+                        The3DS.gameObject.GetComponentInChildren<player_movement>().animepos(ActingPosition, "smoking");
+                        Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    }
+                }
+                break;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -56,6 +72,8 @@ public class Right_Click_Ui : MonoBehaviour,IPointerExitHandler
                                 foreach(Transform SelectionChildren in Selection_Box.GetComponentsInChildren<Transform>())
                                 {
                                     Text gannet = SelectionChildren.GetComponentInChildren<Text>();
+                                    NowActing = 1;
+                                    ActingPosition = Hit.transform.position;
                                     gannet.text = "æ…±‚";
                                 }
                             }
@@ -64,6 +82,7 @@ public class Right_Click_Ui : MonoBehaviour,IPointerExitHandler
                                 foreach (Transform SelectionChildren in Selection_Box.GetComponentsInChildren<Transform>())
                                 {
                                     Text gannet = SelectionChildren.GetComponentInChildren<Text>();
+                                    NowActing = 2;
                                     gannet.text = "¥Ø±‚";
                                 }
                             }
@@ -72,6 +91,7 @@ public class Right_Click_Ui : MonoBehaviour,IPointerExitHandler
                                 foreach (Transform SelectionChildren in Selection_Box.GetComponentsInChildren<Transform>())
                                 {
                                     Text gannet = SelectionChildren.GetComponentInChildren<Text>();
+                                    NowActing = 3;
                                     gannet.text = "ø≠±‚/¥›±‚";
                                 }
                             }
@@ -80,6 +100,7 @@ public class Right_Click_Ui : MonoBehaviour,IPointerExitHandler
                                 foreach (Transform SelectionChildren in Selection_Box.GetComponentsInChildren<Transform>())
                                 {
                                     Text gannet = SelectionChildren.GetComponentInChildren<Text>();
+                                    NowActing = 4;
                                     gannet.text = "≥—±‚";
                                 }
                             }

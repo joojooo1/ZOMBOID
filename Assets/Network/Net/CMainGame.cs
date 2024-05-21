@@ -47,6 +47,7 @@ public class CMainGame : MonoBehaviour
         //    //string EX_Name = "Dummy";
         //    //MatchingRoom(EX_Name);
         //}
+        UnityEngine.Screen.SetResolution(1920, 1080, false);
     }
 
     public void Connecting_Req()

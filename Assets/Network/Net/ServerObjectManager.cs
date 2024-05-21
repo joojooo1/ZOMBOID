@@ -16,6 +16,8 @@ public class ServerObjectManager : MonoBehaviour
         }
         else
             Debug.LogError("Not single ServerObjectManager");
+
+
     }
 
     public enum OBJECT_TYPE : byte
@@ -31,6 +33,8 @@ public class ServerObjectManager : MonoBehaviour
     [SerializeField]
     public GameObject[] TwoDirectionalCameras;
 
+
+
     public void ClearNull()
     {
         for (int i = 0; i < ObjectArray.Count;)
@@ -41,7 +45,7 @@ public class ServerObjectManager : MonoBehaviour
                 ++i;
         }
     }
-    List<NetObject> ObjectArray = new List<NetObject>();
+    public List<NetObject> ObjectArray = new List<NetObject>();
     public NetObject FindObject(int playerindex)
     {
         ClearNull();
